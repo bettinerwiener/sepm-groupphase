@@ -1,10 +1,20 @@
 @startuml
-(*)  --> "Register as Client"
---> "Fill in Form"
-If "data is valid" then
---> [true] "logged in as client"
---> (*)
-else
--right-> [false] "Fill in Form"
-Endif
+|Customer|
+start
+:Register as Customer;
+:Fill in Form;
+:Send data;
+|Ticketline|
+:validate data;
+if (data is valid) then (true)
+:Create new Customer;
+:Send message of success;
+|Customer|
+:Logged in;
+:Send failure message;
+else (false)
+|Customer|
+:May start again;
+endif
+stop
 @enduml
