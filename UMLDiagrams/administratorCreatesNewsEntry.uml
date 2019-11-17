@@ -1,17 +1,29 @@
 @startuml
-
+|Administrator|
 start
-partition Administrator {
 :Login;
+:Send Login Date;
+|Ticketline|
 while (Login successful) is (false)
+:Send failure message;
+|Administrator|
 :Login;
 endwhile (true)
+:Send Administrator Page;
+|Administrator|
 :New News Entry;
 :Fill in Form;
+:Send Data;
+|Ticketline|
 while (data is valid) is (false)
+:Send failure message;
+|Administrator|
 :Fill in Form;
 endwhile (true)
-:Show new News Entry;
-}
+|Ticketline|
+:Create new news entry;
+:Send new news etnry;
+|Administrator|
+:See new news entry;
 stop
 @enduml
