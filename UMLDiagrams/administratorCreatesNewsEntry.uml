@@ -1,0 +1,17 @@
+@startuml
+
+start
+partition Administrator {
+:Login;
+while (Login successful) is (false)
+:Login;
+endwhile (true)
+:New News Entry;
+:Fill in Form;
+while (data is valid) is (false)
+:Fill in Form;
+endwhile (true)
+:Show new News Entry;
+}
+stop
+@enduml
