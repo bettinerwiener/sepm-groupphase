@@ -1,0 +1,10 @@
+@startuml
+(*)  --> "Register as Client"
+--> "Fill in Form"
+If "data is valid" then
+--> [true] "logged in as client"
+--> (*)
+else
+-right-> [false] "Fill in Form"
+Endif
+@enduml

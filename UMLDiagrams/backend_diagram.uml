@@ -1,0 +1,85 @@
+@startuml
+abstract class Person {
+    - id: Long
+    - first_name: String
+    - last_name: String
+}
+
+class Customer {
+    - email: String
+    - password: String
+}
+
+class Administrator {
+    - email: String
+}
+
+class Artist
+
+class Ticket {
+    - price: float
+}
+
+class News {
+    - event_id: Long
+    - image: Binary
+}
+
+class Event {
+    - id: Long
+    - title: String
+    - date: LocalDate
+    - duration: Duration
+    - contents: String
+    - abstract: String
+}
+
+class Location {
+    - id: Long
+    - name: String
+    - street: String
+    - postal_code: int
+    - city: String
+}
+
+class Room {
+    - id: Long
+    - name: String
+}
+
+class Section {
+    - letter: char
+    - colour: Color
+    - price_category: PrizeCategory
+    - seats_selectable: Boolean
+}
+
+class Seat {
+    - number: int
+    - row: int
+}
+
+enum PriceCategory {
+    PREMIUM
+    BUSINESS
+    BUDGET
+}
+
+Person <|-- Customer
+Person <|-- Administrator
+Person <|-- Artist
+
+Customer "0..1" -- "0..*" Ticket
+
+Ticket "0..*" -- "1" Event
+
+Artist "1" -- "0..*" Event
+
+News "0..1" -- "1" Event
+
+Event "0..*" -- "1" Location
+
+Location "1" *-- "0..*" Room
+Room "1" *-- "0..*" Section
+Section "1" *-- "0..*" Seat
+@enduml

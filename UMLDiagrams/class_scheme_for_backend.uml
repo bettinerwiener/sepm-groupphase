@@ -1,0 +1,46 @@
+@startuml
+package at.ac.tuwien.sepm.groupphase.backend #dddddd {
+    class Endpoint {
+        {method} getAll()
+    }
+
+    interface Service {
+        getAll()
+    }
+
+    class ServiceImplementation
+
+    interface JpaRepository {
+
+    }
+
+    class JpaRepositoryImplementation
+
+    class JpaEntity {
+
+    }
+
+    class ServiceException
+
+    class JpaException
+
+    class Validation {
+        validateNewClient() throws ValidationException
+    }
+
+    class ValidationException {
+
+    }
+
+
+    Endpoint "*" <-- "1" Service
+    Service <|-- ServiceImplementation : implements
+    ServiceImplementation "*" <-- "1" JpaRepository
+    ServiceImplementation "*" <-- "*" Validation
+    ServiceImplementation ..> ServiceException : <<throws>>
+    Validation ..> ValidationException : <<throws>>
+    JpaRepository <|-- JpaRepositoryImplementation : implements
+    JpaRepositoryImplementation "*" <-- "1" JpaEntity : ?
+    JpaRepositoryImplementation ..> JpaException : <<throws>>
+}
+@enduml
