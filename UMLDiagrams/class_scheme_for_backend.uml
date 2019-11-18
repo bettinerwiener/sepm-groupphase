@@ -1,23 +1,26 @@
 @startuml
 package at.ac.tuwien.sepm.groupphase.backend #dddddd {
     class Endpoint {
-        {method} getAll()
+        {method} restEndpointMethod()
     }
 
     interface Service {
-        getAll()
+        {method} serviceMethod()
     }
 
     class ServiceImplementation
 
-    interface JpaRepository {
+    interface JpaRepository
 
+    interface JpaObjectInterface {
+        {mehtod} specialJpaMethod()
     }
 
     class JpaRepositoryImplementation
 
     class JpaEntity {
-
+        {method} getX()
+        {method} setX()
     }
 
     class ServiceException
@@ -25,12 +28,12 @@ package at.ac.tuwien.sepm.groupphase.backend #dddddd {
     class JpaException
 
     class Validation {
-        validateNewClient() throws ValidationException
+        {method} validateX()
     }
 
-    class ValidationException {
+    class ValidationException
 
-    }
+    class RuntimeException
 
 
     Endpoint "*" <-- "1" Service
@@ -39,8 +42,12 @@ package at.ac.tuwien.sepm.groupphase.backend #dddddd {
     ServiceImplementation "*" <-- "*" Validation
     ServiceImplementation ..> ServiceException : <<throws>>
     Validation ..> ValidationException : <<throws>>
-    JpaRepository <|-- JpaRepositoryImplementation : implements
+    JpaRepository <|-- JpaObjectInterface: extends
+    JpaObjectInterface <|-- JpaRepositoryImplementation : implements
     JpaRepositoryImplementation "*" <-- "1" JpaEntity : ?
     JpaRepositoryImplementation ..> JpaException : <<throws>>
+    RuntimeException <|-- ValidationException: extends
+    RuntimeException <|-- ServiceException: extends
+    RuntimeException <|-- JpaException: extends
 }
 @enduml
