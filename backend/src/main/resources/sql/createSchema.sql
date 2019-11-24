@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS ticket (
 
 CREATE TABLE IF NOT EXISTS news (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    entry       VARCHAR(255)
+    entry       VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS event (
@@ -39,20 +39,15 @@ CREATE TABLE IF NOT EXISTS event (
     title       VARCHAR(100) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     contents    VARCHAR(511),
-    type        VARCHAR(25) CHECK (type IN ('CONCERT', 'FILM')),
-    duration    DECIMAL DEFAULT 0 CHECK (duration >= 0 AND duration <= 10)//the time is given in h
+    type        VARCHAR(25) CHECK (type IN ('CONCERT', 'FILM', 'THEATER')),
+    duration    DECIMAL DEFAULT 0 CHECK (duration >= 0 AND duration <= 10),//the time is given in h
+    employee    BIGINT REFERENCES employee(id)
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (
     event    BIGINT REFERENCES event(id),
     artist   BIGINT REFERENCES artist(id),
     CONSTRAINT artist_event_pk PRIMARY KEY (event, artist)
-);
-
-CREATE TABLE IF NOT EXISTS employee_adds_event (
-    employee   BIGINT REFERENCES  employee(id),
-    event   BIGINT REFERENCES event(id),
-    CONSTRAINT employee_adds_event_pk PRIMARY KEY (employee, event)
 );
 
 CREATE TABLE IF NOT EXISTS employee_adds_news (
@@ -64,15 +59,15 @@ CREATE TABLE IF NOT EXISTS employee_adds_news (
 
 CREATE TABLE IF NOT EXISTS location (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(50),
-    street      VARCHAR(50),
-    city        VARCHAR(50),
+    name        VARCHAR(50) NOT NULL,
+    street      VARCHAR(50) NOT NULL,
+    city        VARCHAR(50) NOT NULL,
     postal_code BIGINT,
 );
 
 CREATE TABLE IF NOT EXISTS room (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(50),
+    name        VARCHAR(50) NOT NULL,
     location BIGINT REFERENCES location(id)
 );
 
@@ -84,8 +79,8 @@ CREATE TABLE IF NOT EXISTS section (
 );
 
 CREATE TABLE IF NOT EXISTS seat (
-    number      INTEGER,
-    row         VARCHAR(1),
+    number      INTEGER NOT NULL,
+    row         VARCHAR(1) NOT NULL,
     section     VARCHAR(1) REFERENCES section(letter),
     CONSTRAINT seat_pk PRIMARY KEY (row, number)
 );
@@ -93,7 +88,7 @@ CREATE TABLE IF NOT EXISTS seat (
 CREATE TABLE IF NOT EXISTS is_performed_at (
     event   BIGINT REFERENCES event(id),
     location BIGINT REFERENCES location(id),
-    date    DATETIME,
+    date    DATE NOT NULL,
     CONSTRAINT is_performed_at_pk PRIMARY KEY (event, location)
 );
 

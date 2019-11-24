@@ -1,6 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.ApplicationUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -9,16 +9,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepository {
 
-    private final ApplicationUser user;
-    private final ApplicationUser admin;
+    private final Customer user;
+    private final Customer admin;
 
     @Autowired
     public UserRepository(PasswordEncoder passwordEncoder) {
-        user = new ApplicationUser("user@email.com", passwordEncoder.encode("password"), false);
-        admin = new ApplicationUser("admin@email.com", passwordEncoder.encode("password"), true);
+        user = new Customer("user@email.com", passwordEncoder.encode("password"), false);
+        admin = new Customer("admin@email.com", passwordEncoder.encode("password"), true);
     }
 
-    public ApplicationUser findUserByEmail(String email) {
+    public Customer findUserByEmail(String email) {
         if (email.equals(user.getEmail())) return user;
         if (email.equals(admin.getEmail())) return admin;
         return null; // In this case null is returned to fake Repository behavior
