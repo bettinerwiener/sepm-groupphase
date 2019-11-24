@@ -25,6 +25,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     Set<Event> events;
 
+    @OneToMany(mappedBy = "employee")
+    Set<EmployeeNewsEvent> employeeNewsEvents;
+
     @ManyToMany
     @JoinTable (
         name = "employee_buys_ticket",
@@ -81,5 +84,29 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    public Set<EmployeeNewsEvent> getEmployeeNewsEvents() {
+        return employeeNewsEvents;
+    }
+
+    public void setEmployeeNewsEvents(Set<EmployeeNewsEvent> employeeNewsEvents) {
+        this.employeeNewsEvents = employeeNewsEvents;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class News {
@@ -12,6 +13,9 @@ public class News {
     @Column(nullable = false, length = 255)
     private String entry;
 
+    @OneToMany(mappedBy = "news")
+    private Set<EmployeeNewsEvent> employeeNewsEvents;
+    
     public News() {};
     public News(String entry) {
         this.entry = entry;

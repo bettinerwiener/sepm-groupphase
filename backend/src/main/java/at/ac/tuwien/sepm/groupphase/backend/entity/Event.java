@@ -39,10 +39,116 @@ public class Event {
     @OneToMany(mappedBy = "event")
     Set<EventPerformance> eventPerformances;
 
+    @OneToMany(mappedBy = "event")
+    Set<EmployeeNewsEvent> employeeNewsEvents;
+
     @ManyToOne
     @JoinColumn(name = "employee")
     private Employee employee;
 
     @ManyToMany(mappedBy = "events")
     Set<Artist> artists;
+
+    public Event() {}
+
+    public Event(String title, String shortDescription, String contents, Type type, Long duration, Set<Ticket> tickets, Set<EventPerformance> eventPerformances, Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
+        this.title = title;
+        this.shortDescription = shortDescription;
+        this.contents = contents;
+        this.type = type;
+        this.duration = duration;
+        this.tickets = tickets;
+        this.eventPerformances = eventPerformances;
+        this.employeeNewsEvents = employeeNewsEvents;
+        this.employee = employee;
+        this.artists = artists;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Set<EventPerformance> getEventPerformances() {
+        return eventPerformances;
+    }
+
+    public void setEventPerformances(Set<EventPerformance> eventPerformances) {
+        this.eventPerformances = eventPerformances;
+    }
+
+    public Set<EmployeeNewsEvent> getEmployeeNewsEvents() {
+        return employeeNewsEvents;
+    }
+
+    public void setEmployeeNewsEvents(Set<EmployeeNewsEvent> employeeNewsEvents) {
+        this.employeeNewsEvents = employeeNewsEvents;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Set<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(Set<Artist> artists) {
+        this.artists = artists;
+    }
 }

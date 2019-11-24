@@ -22,7 +22,7 @@ public class Artist {
         inverseJoinColumns = @JoinColumn(name = "event"))
     Set<Event> events;
 
-    public Artist() {};
+    public Artist() {}
 
     public Artist(String firstName, String lastName) {
         this.firstName = firstName;

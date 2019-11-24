@@ -24,7 +24,7 @@ public class EventPerformance {
     @Column(nullable = false)
     private Date date;
 
-    public EventPerformance() {};
+    public EventPerformance() {}
 
     public EventPerformance(EventPerformanceKey id, Event event, Location location, Date date) {
         this.id = id;
