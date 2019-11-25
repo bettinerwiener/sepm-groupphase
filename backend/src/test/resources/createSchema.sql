@@ -103,10 +103,10 @@ CREATE TABLE IF NOT EXISTS employee_buys_ticket (
 );
 
 CREATE TABLE IF NOT EXISTS customer_news (
-     customer    BIGINT REFERENCES customer(id),
-     news        BIGINT REFERENCES news(id),
-     read        SMALLINT CHECK (read IN (0, 1)) DEFAULT 0,
-     CONSTRAINT  customer_news_pk PRIMARY KEY (customer, news)
+    customer    BIGINT REFERENCES customer(id),
+    news        BIGINT REFERENCES news(id),
+    read        SMALLINT CHECK (read IN (0, 1)) DEFAULT 0,
+    CONSTRAINT  customer_news_pk PRIMARY KEY (customer, news)
 );
 
 

@@ -15,7 +15,7 @@ public class News {
 
     @OneToMany(mappedBy = "news")
     private Set<EmployeeNewsEvent> employeeNewsEvents;
-    
+
     public News() {};
     public News(String entry) {
         this.entry = entry;
