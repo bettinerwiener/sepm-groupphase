@@ -2,9 +2,11 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
-public class CustomerNewsKey {
+public class CustomerNewsKey implements Serializable {
 
     @Column
     private Long customer;
@@ -34,4 +36,17 @@ public class CustomerNewsKey {
         this.news = news;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CustomerNewsKey)) return false;
+        CustomerNewsKey that = (CustomerNewsKey) o;
+        return getCustomer().equals(that.getCustomer()) &&
+            getNews().equals(that.getNews());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCustomer(), getNews());
+    }
 }

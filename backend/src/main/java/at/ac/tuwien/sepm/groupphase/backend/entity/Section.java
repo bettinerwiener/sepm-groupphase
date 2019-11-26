@@ -18,14 +18,8 @@ public class Section {
     }
 
     private enum PriceCategory {
-        A,
-        B,
-        C,
-        D,
-        E,
-        F,
-        G,
-        H
+        EXPENSIVE,
+        CHEAP
     }
 
     @Id

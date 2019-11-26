@@ -1,13 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.util.Set;
 
 @Entity
 public class Event {
 
-    private enum Type {
+    private enum Category {
         CONCERT,
         FILM,
         THEATER
@@ -27,7 +26,7 @@ public class Event {
     private String contents;
 
     @Column(nullable = false)
-    private Type type;
+    private Category category;
 
     /* think about the data type */
     @Column(nullable = false)
@@ -51,11 +50,11 @@ public class Event {
 
     public Event() {}
 
-    public Event(String title, String shortDescription, String contents, Type type, Long duration, Set<Ticket> tickets, Set<EventPerformance> eventPerformances, Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
+    public Event(String title, String shortDescription, String contents, Category category, Long duration, Set<Ticket> tickets, Set<EventPerformance> eventPerformances, Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
-        this.type = type;
+        this.category = category;
         this.duration = duration;
         this.tickets = tickets;
         this.eventPerformances = eventPerformances;
@@ -96,12 +95,12 @@ public class Event {
         this.contents = contents;
     }
 
-    public Type getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Long getDuration() {

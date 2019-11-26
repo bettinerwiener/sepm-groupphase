@@ -3,20 +3,22 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "employee_news")
+@Table(name = "customer_news")
 public class CustomerNews {
 
-    @Embedded
+    @EmbeddedId
     private CustomerNewsKey id;
 
     @Column
     private Boolean read;
 
     @ManyToOne
+    @MapsId("customer")
     @JoinColumn(name = "customer")
     private Customer customer;
 
     @ManyToOne
+    @MapsId("news")
     @JoinColumn(name = "news")
     private News news;
 

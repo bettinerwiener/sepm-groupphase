@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -33,7 +34,17 @@ public class Customer {
     )
     private Set<Ticket> tickets;
 
+    @OneToMany(mappedBy = "customer")
+    private Set<CustomerNews> customerNews;
+
+
     public Customer() {
+    }
+
+    public Customer(String firstName, String lastName, Boolean locked) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.locked = locked;
     }
 
     public Customer(String firstName, String lastName, String email, String password) {
@@ -90,5 +101,34 @@ public class Customer {
 
     public void setLocked(Boolean locked) {
         this.locked = locked;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Set<CustomerNews> getCustomerNews() {
+        return customerNews;
+    }
+
+    public void setCustomerNews(Set<CustomerNews> customerNews) {
+        this.customerNews = customerNews;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return getId().equals(customer.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getLocked(), getTickets());
     }
 }

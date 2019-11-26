@@ -7,7 +7,7 @@ import java.sql.Date;
 @Table(name = "is_performed_at")
 public class EventPerformance {
 
-    @Embedded
+    @EmbeddedId
     private EventPerformanceKey id;
 
     @ManyToOne

@@ -3,21 +3,24 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import javax.persistence.*;
 
 @Entity
-@IdClass(SeatKeys.class)
 public class Seat {
 
     @Id
-    private int number;
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Long id;
 
-    @Id
-    private char row;
+    @Column (name = "row_letter", nullable = false)
+    private String row;
+
+    @Column (name = "seat_number", nullable = false)
+    private int number;
 
     @ManyToOne
     @JoinColumn(name = "section")
     private Section section;
 
     public Seat() {};
-    public Seat(int number, char row, Section section) {
+    public Seat(int number, String row, Section section) {
         this.number = number;
         this.row = row;
         this.section = section;
@@ -31,11 +34,11 @@ public class Seat {
         this.number = number;
     }
 
-    public char getRow() {
+    public String getRow() {
         return row;
     }
 
-    public void setRow(char row) {
+    public void setRow(String row) {
         this.row = row;
     }
 

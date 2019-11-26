@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "employee_adds_news")
 public class EmployeeNewsEvent {
 
-    @Embedded
+    @EmbeddedId
     private EmployeeNewsEventKey id;
 
     @ManyToOne

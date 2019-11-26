@@ -2,9 +2,10 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class EventPerformanceKey {
+public class EventPerformanceKey implements Serializable {
 
     @Column(name = "event")
     private Long event;

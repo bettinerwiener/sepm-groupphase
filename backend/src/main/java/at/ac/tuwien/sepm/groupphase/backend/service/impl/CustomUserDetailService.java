@@ -35,9 +35,9 @@ public class CustomUserDetailService implements UserService {
             Customer customer = findApplicationUserByEmail(email);
 
             List<GrantedAuthority> grantedAuthorities;
-            if (customer.getAdmin())
+            /*if (customer.getAdmin())
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
-            else
+            else*/
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
 
             return new User(customer.getEmail(), customer.getPassword(), grantedAuthorities);
