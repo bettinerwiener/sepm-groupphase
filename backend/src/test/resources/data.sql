@@ -51,18 +51,17 @@ values (1, 1, NOW()),
        (2, 2, NOW());
 
 insert into ticket (id, event, location, seat, status)
-    values (1, 1, 1, 1, 'AVAILABLE'),
-           (2, 1, 1, 2, 'AVAILABLE'),
-           (3, 1, 1, 3, 'AVAILABLE'),
-           (4, 1, 1, 4, 'AVAILABLE'),
-           (5, 1, 1, 5, 'AVAILABLE'),
-           (6, 1, 1, 6, 'AVAILABLE'),
-           (7, 1, 1, 7, 'AVAILABLE'),
-           (8, 1, 1, 8, 'AVAILABLE'),
-           (9, 1, 1, 9, 'AVAILABLE'),
-           (10, 2, 2, 10, 'AVAILABLE'),
-           (11, 2, 2, 11, 'AVAILABLE'),
-           (12, 2, 2, 12, 'AVAILABLE'),
-           (13, 2, 2, 13, 'AVAILABLE');
-
+values (1, 1, 1, 1, 'AVAILABLE'),
+       (2, 1, 1, 2, 'AVAILABLE'),
+       (3, 1, 1, 3, 'AVAILABLE'),
+       (4, 1, 1, 4, 'AVAILABLE'),
+       (5, 1, 1, 5, 'AVAILABLE'),
+       (6, 1, 1, 6, 'AVAILABLE'),
+       (7, 1, 1, 7, 'AVAILABLE'),
+       (8, 1, 1, 8, 'AVAILABLE'),
+       (9, 1, 1, 9, 'AVAILABLE'),
+       (10, 2, 2, 10, 'AVAILABLE'),
+       (11, 2, 2, 11, 'AVAILABLE'),
+       (12, 2, 2, 12, 'AVAILABLE'),
+       (13, 2, 2, 13, 'AVAILABLE');
 
