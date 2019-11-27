@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -12,7 +12,17 @@ import {LoginComponent} from './components/login/login.component';
 import {MessageComponent} from './components/message/message.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
-
+import { ConcertComponent } from './components/concert/concert.component';
+import { TheatreComponent } from './components/theatre/theatre.component';
+import { CabaretComponent } from './components/cabaret/cabaret.component';
+import { MoviesComponent } from './components/movies/movies.component';
+import { RegisterComponent } from './components/register/register.component'
+import { SearchAreaComponent } from './components/search-area/search-area.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { CartComponent } from './components/cart/cart.component';
+import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +31,17 @@ import {httpInterceptorProviders} from './interceptors';
     HomeComponent,
     LoginComponent,
     MessageComponent,
+    ConcertComponent,
+    TheatreComponent,
+    CabaretComponent,
+    RegisterComponent,
+    SearchAreaComponent,
+    MoviesComponent,
+    LocationsComponent,
+    ProfileComponent,
+    OrdersComponent,
+    CartComponent,
+    EventListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +49,8 @@ import {httpInterceptorProviders} from './interceptors';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
