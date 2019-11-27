@@ -1,0 +1,50 @@
+.superslider {
+    display: inline-flex;
+    overflow: hidden;
+    scrollbar-width: none;
+    max-height: fit-content;
+}
+
+#superslider::-webkit-scrollbar {
+    display: none;
+}
+
+.slider {
+    display: inline-flex;
+    overflow: scroll;
+    scrollbar-width: none;
+    z-index: 1;
+}
+#slider::-webkit-scrollbar {
+    display: none;
+}
+
+.card {
+    //width: 100px;
+    float: left;
+    margin-right: 1.25%;
+}
+
+card:nth-child(5) {
+    margin-right: 0;
+}
+
+.swipe {
+    display: block;
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 50%;
+    background-color: white;
+    border-width: thin;
+    border-color: #777777;
+    z-index: 2;
+}
+
+#swiperight {
+    margin-left: -20px;
+}
+
+#swipeleft {
+    margin-right: -20px;
+}

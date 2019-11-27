@@ -22,6 +22,7 @@ import { LocationsComponent } from './components/locations/locations.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { CartComponent } from './components/cart/cart.component';
+import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { EventListItemComponent } from './components/event-list-item/event-list-
     OrdersComponent,
     CartComponent,
     EventListItemComponent,
+    SliderComponent,
   ],
   imports: [
     BrowserModule,
