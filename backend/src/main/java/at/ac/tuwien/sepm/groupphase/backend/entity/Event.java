@@ -6,7 +6,7 @@ import java.util.Set;
 @Entity
 public class Event {
 
-    private enum Category {
+    public enum Category {
         CONCERT,
         FILM,
         THEATER
@@ -50,7 +50,28 @@ public class Event {
 
     public Event() {}
 
-    public Event(String title, String shortDescription, String contents, Category category, Long duration, Set<Ticket> tickets, Set<EventPerformance> eventPerformances, Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
+    public Event(String title, String shortDescription, String contents, Category category, Long duration) {
+        this.title = title;
+        this.shortDescription = shortDescription;
+        this.contents = contents;
+        this.category = category;
+        this.duration = duration;
+    }
+
+    public Event(Long id, String title, String shortDescription, String contents,
+                 Category category, Long duration) {
+        this.id = id;
+        this.title = title;
+        this.shortDescription = shortDescription;
+        this.contents = contents;
+        this.category = category;
+        this.duration = duration;
+    }
+
+
+    public Event(String title, String shortDescription, String contents, Category category, Long duration,
+                 Set<Ticket> tickets, Set<EventPerformance> eventPerformances,
+                 Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
