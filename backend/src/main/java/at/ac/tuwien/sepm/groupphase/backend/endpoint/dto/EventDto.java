@@ -2,7 +2,6 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,12 +25,13 @@ public class EventDto extends BaseDto {
 
     /* think about the data type */
     @NotNull
-    private Long duration;
+    @Size(min = 0, max = 10)
+    private Double duration;
 
     public EventDto() {}
 
     public EventDto(String title, String shortDescription,
-                    String contents, Event.Category category, Long duration) {
+                    String contents, Event.Category category, Double duration) {
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
@@ -40,7 +40,7 @@ public class EventDto extends BaseDto {
     }
 
     public EventDto(Long id, String title, String shortDescription,
-                    String contents, Event.Category category, Long duration) {
+                    String contents, Event.Category category, Double duration) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -89,11 +89,11 @@ public class EventDto extends BaseDto {
         this.category = category;
     }
 
-    public Long getDuration() {
+    public Double getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(Double duration) {
         this.duration = duration;
     }
 

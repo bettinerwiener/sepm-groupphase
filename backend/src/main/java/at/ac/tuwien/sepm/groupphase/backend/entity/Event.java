@@ -30,7 +30,7 @@ public class Event {
 
     /* think about the data type */
     @Column(nullable = false)
-    private Long duration;
+    private  Double duration;
 
     @OneToMany(mappedBy = "event")
     Set<Ticket> tickets;
@@ -42,7 +42,7 @@ public class Event {
     Set<EmployeeNewsEvent> employeeNewsEvents;
 
     @ManyToOne
-    @JoinColumn(name = "employee")
+    @JoinColumn(name = "employee", nullable = false)
     private Employee employee;
 
     @ManyToMany(mappedBy = "events")
@@ -50,7 +50,7 @@ public class Event {
 
     public Event() {}
 
-    public Event(String title, String shortDescription, String contents, Category category, Long duration) {
+    public Event(String title, String shortDescription, String contents, Category category, Double duration) {
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
@@ -59,7 +59,7 @@ public class Event {
     }
 
     public Event(Long id, String title, String shortDescription, String contents,
-                 Category category, Long duration) {
+                 Category category, Double duration) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -69,7 +69,7 @@ public class Event {
     }
 
 
-    public Event(String title, String shortDescription, String contents, Category category, Long duration,
+    public Event(String title, String shortDescription, String contents, Category category, Double duration,
                  Set<Ticket> tickets, Set<EventPerformance> eventPerformances,
                  Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
         this.title = title;
@@ -124,11 +124,11 @@ public class Event {
         this.category = category;
     }
 
-    public Long getDuration() {
+    public Double getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(Double duration) {
         this.duration = duration;
     }
 

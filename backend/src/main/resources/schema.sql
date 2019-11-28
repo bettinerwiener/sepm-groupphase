@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS event (
     title       VARCHAR(100) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     contents    VARCHAR(511),
-    category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
+    category    VARCHAR(25),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
     employee    BIGINT REFERENCES employee(id)
 );
