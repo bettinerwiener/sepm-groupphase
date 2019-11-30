@@ -29,7 +29,7 @@ public class EventEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     public EventDto create(@RequestBody EventDto eventDto) throws ResponseStatusException {
         try {
-            return eventMapper.EntityToDto(eventService.create(eventMapper.DtoToEntity(eventDto)));
+            return eventMapper.EntityToDto(eventService.create(eventMapper.DtoToEntity(eventDto), eventDto.getEmpId()));
         } catch (NotCreatedException nce) {
             LOGGER.error("EventEndpoint: event has not been created: " + nce.getMessage());
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, nce.getMessage(), nce);

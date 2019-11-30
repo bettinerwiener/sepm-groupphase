@@ -17,7 +17,7 @@ public class Employee {
     private String lastName;
 
     @Column(nullable=false, length = 150)
-    private String email;
+    private String username;
 
     @Column(nullable=false, length = 20)
     private String password;
@@ -39,10 +39,10 @@ public class Employee {
 
     public Employee() {};
 
-    public Employee(String firstName, String lastName, String email, String password) {
+    public Employee(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -70,12 +70,12 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String email) {
+        this.username = username;
     }
 
     public String getPassword() {

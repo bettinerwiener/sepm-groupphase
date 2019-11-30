@@ -28,25 +28,30 @@ public class EventDto extends BaseDto {
     @Size(min = 0, max = 10)
     private Double duration;
 
+    @NotNull
+    private Long empId;
+
     public EventDto() {}
 
     public EventDto(String title, String shortDescription,
-                    String contents, Event.Category category, Double duration) {
+                    String contents, Event.Category category, Double duration, Long empId) {
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
         this.category = category;
         this.duration = duration;
+        this.empId = empId;
     }
 
     public EventDto(Long id, String title, String shortDescription,
-                    String contents, Event.Category category, Double duration) {
+                    String contents, Event.Category category, Double duration, Long empId) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
         this.category = category;
         this.duration = duration;
+        this.empId = empId;
     }
 
     public Long getId() {
@@ -97,4 +102,11 @@ public class EventDto extends BaseDto {
         this.duration = duration;
     }
 
+    public Long getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(Long empId) {
+        this.empId = empId;
+    }
 }

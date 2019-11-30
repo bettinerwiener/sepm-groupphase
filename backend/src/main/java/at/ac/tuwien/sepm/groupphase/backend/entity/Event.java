@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(
+    uniqueConstraints = @UniqueConstraint(columnNames={"title", "category"})
+)
 public class Event {
 
     public enum Category {
@@ -26,6 +29,7 @@ public class Event {
     private String contents;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     /* think about the data type */

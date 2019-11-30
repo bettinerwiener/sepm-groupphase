@@ -12,5 +12,5 @@ public interface EventService {
      * @return the created event
      * @throws NotCreatedException in case something went wrong when accessing the database
      */
-    Event create(Event event) throws NotCreatedException;
+    Event create(Event event, Long empId) throws NotCreatedException;
 }
