@@ -1,6 +1,6 @@
 DROP ALL OBJECTS;
 
-CREATE TABLE IF NOT EXISTS  customer
+CREATE TABLE IF NOT EXISTS  user
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -102,9 +102,9 @@ CREATE TABLE IF NOT EXISTS ticket (
 
 
 CREATE TABLE IF NOT EXISTS customer_buys_ticket (
-    customer BIGINT REFERENCES customer(id),
+    user BIGINT REFERENCES user(id),
     ticket BIGINT REFERENCES ticket(id),
-    CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (customer, ticket)
+    CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (user, ticket)
 );
 
 CREATE TABLE IF NOT EXISTS employee_buys_ticket (
@@ -115,10 +115,10 @@ CREATE TABLE IF NOT EXISTS employee_buys_ticket (
 
 
 CREATE TABLE IF NOT EXISTS customer_news (
-     customer    BIGINT REFERENCES customer(id),
+     user    BIGINT REFERENCES user(id),
      news        BIGINT REFERENCES news(id),
      read        SMALLINT CHECK (read IN (0, 1)),
-     CONSTRAINT  customer_news_pk PRIMARY KEY (customer, news)
+     CONSTRAINT  customer_news_pk PRIMARY KEY (user, news)
 );
 
 

@@ -1,31 +1,26 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
 public class CustomerNewsKey implements Serializable {
 
-    @Column
-    private Long customer;
+    private Long user;
 
-    @Column
     private Long news;
 
     public CustomerNewsKey() {};
-    public CustomerNewsKey(Long customer, Long news) {
-        this.customer = customer;
+    public CustomerNewsKey(Long user, Long news) {
+        this.user = user;
         this.news = news;
     }
 
-    public Long getCustomer() {
-        return customer;
+    public Long getUser() {
+        return user;
     }
 
-    public void setCustomer(Long customer) {
-        this.customer = customer;
+    public void setUser(Long user) {
+        this.user = user;
     }
 
     public Long getNews() {
@@ -41,12 +36,12 @@ public class CustomerNewsKey implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CustomerNewsKey)) return false;
         CustomerNewsKey that = (CustomerNewsKey) o;
-        return getCustomer().equals(that.getCustomer()) &&
+        return getUser().equals(that.getUser()) &&
             getNews().equals(that.getNews());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCustomer(), getNews());
+        return Objects.hash(getUser(), getNews());
     }
 }

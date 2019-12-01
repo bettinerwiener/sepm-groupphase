@@ -28,10 +28,10 @@ public class Ticket {
     private Location location;
 
     @ManyToMany(mappedBy = "tickets")
-    private Set<Employee> employees;
+    private Set<User> employees;
 
     @ManyToMany(mappedBy = "tickets")
-    private Set<Customer> customers;
+    private Set<User> users;
 
     public Ticket() {};
 

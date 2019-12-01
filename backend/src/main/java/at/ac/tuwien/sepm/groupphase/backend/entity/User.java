@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Customer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,9 @@ public class Customer {
     @Column(nullable = false)
     private Boolean locked;
 
+    @Column(nullable = false, name = "is_employee")
+    private Boolean isEmployee;
+
     @ManyToMany
     @JoinTable (
         name = "customer_buys_ticket",
@@ -34,20 +37,28 @@ public class Customer {
     )
     private Set<Ticket> tickets;
 
-    @OneToMany(mappedBy = "customer")
+    @ManyToMany
+    @JoinTable (
+        name = "employee_buys_ticket",
+        joinColumns = @JoinColumn(name = "employee"),
+        inverseJoinColumns = @JoinColumn(name = "ticket")
+    )
+    private Set<Ticket> ticketsOfEmployee;
+
+    @OneToMany(mappedBy = "user")
     private Set<CustomerNews> customerNews;
 
 
-    public Customer() {
+    public User() {
     }
 
-    public Customer(String firstName, String lastName, Boolean locked) {
+    public User(String firstName, String lastName, Boolean locked) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.locked = locked;
     }
 
-    public Customer(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -119,12 +130,28 @@ public class Customer {
         this.customerNews = customerNews;
     }
 
+    public Boolean getEmployee() {
+        return isEmployee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        isEmployee = employee;
+    }
+
+    public Set<Ticket> getTicketsOfEmployee() {
+        return ticketsOfEmployee;
+    }
+
+    public void setTicketsOfEmployee(Set<Ticket> ticketsOfEmployee) {
+        this.ticketsOfEmployee = ticketsOfEmployee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-        Customer customer = (Customer) o;
-        return getId().equals(customer.getId());
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId().equals(user.getId());
     }
 
     @Override

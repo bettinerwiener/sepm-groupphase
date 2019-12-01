@@ -5,40 +5,31 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "is_performed_at")
+@IdClass(EventPerformanceKey.class)
 public class EventPerformance {
 
-    @EmbeddedId
-    private EventPerformanceKey id;
-
+    @Id
     @ManyToOne
     @MapsId("event")
     @JoinColumn(name = "event")
     private Event event;
 
+    @Id
     @ManyToOne
     @MapsId("location")
     @JoinColumn(name = "location")
     private Location location;
 
-
+    @Id
     @Column(nullable = false)
     private Date date;
 
     public EventPerformance() {}
 
-    public EventPerformance(EventPerformanceKey id, Event event, Location location, Date date) {
-        this.id = id;
+    public EventPerformance(Event event, Location location, Date date) {
         this.event = event;
         this.location = location;
         this.date = date;
-    }
-
-    public EventPerformanceKey getId() {
-        return id;
-    }
-
-    public void setId(EventPerformanceKey id) {
-        this.id = id;
     }
 
     public Event getEvent() {

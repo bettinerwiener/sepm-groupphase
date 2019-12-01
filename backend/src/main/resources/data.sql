@@ -1,10 +1,10 @@
-insert into customer (id, first_name, last_name, email, password)
+insert into user (id, first_name, last_name, email, password)
     values (1, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo'),
            (2, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan');
 
-insert into employee (id, first_name, last_name, username, password)
-    values (1, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo'),
-(           2, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan');
+insert into user (id, first_name, last_name, email, password, is_employee)
+    values (3, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo', 1),
+(           4, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan', 1);
 
 insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),

@@ -4,19 +4,19 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "customer_news")
+@IdClass(CustomerNewsKey.class)
 public class CustomerNews {
-
-    @EmbeddedId
-    private CustomerNewsKey id;
 
     @Column
     private Boolean read;
 
+    @Id
     @ManyToOne
-    @MapsId("customer")
-    @JoinColumn(name = "customer")
-    private Customer customer;
+    @MapsId("user")
+    @JoinColumn(name = "user")
+    private User user;
 
+    @Id
     @ManyToOne
     @MapsId("news")
     @JoinColumn(name = "news")
@@ -24,17 +24,9 @@ public class CustomerNews {
 
     public CustomerNews() {};
 
-    public CustomerNews(Customer customer, News news) {
-        this.customer = customer;
+    public CustomerNews(User user, News news) {
+        this.user = user;
         this.news = news;
-    }
-
-    public CustomerNewsKey getId() {
-        return id;
-    }
-
-    public void setId(CustomerNewsKey id) {
-        this.id = id;
     }
 
     public Boolean getRead() {
@@ -45,12 +37,12 @@ public class CustomerNews {
         this.read = read;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public News getNews() {
