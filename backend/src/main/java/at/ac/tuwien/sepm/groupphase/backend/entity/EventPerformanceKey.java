@@ -1,22 +1,22 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.Objects;
 
-@Embeddable
 public class EventPerformanceKey implements Serializable {
 
-    @Column(name = "event")
     private Long event;
 
-    @Column(name = "location")
     private Long location;
 
+    private Date date;
+
     public EventPerformanceKey() {};
-    public EventPerformanceKey(Long event, Long location) {
+    public EventPerformanceKey(Long event, Long location, Date date) {
         this.event = event;
         this.location = location;
+        this.date = date;
     }
 
     public Long getEvent() {
@@ -33,5 +33,28 @@ public class EventPerformanceKey implements Serializable {
 
     public void setLocation(Long location) {
         this.location = location;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EventPerformanceKey)) return false;
+        EventPerformanceKey that = (EventPerformanceKey) o;
+        return event.equals(that.event) &&
+            location.equals(that.location) &&
+            date.equals(that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(event, location, date);
     }
 }

@@ -89,8 +89,8 @@ CREATE TABLE IF NOT EXISTS seat (
 CREATE TABLE IF NOT EXISTS is_performed_at (
     event   BIGINT REFERENCES event(id),
     location BIGINT REFERENCES location(id),
-    date    DATE NOT NULL,
-    CONSTRAINT is_performed_at_pk PRIMARY KEY (event, location)
+    `date`    DATE NOT NULL,
+    CONSTRAINT is_performed_at_pk PRIMARY KEY (event, location, `date`)
 );
 
 CREATE TABLE IF NOT EXISTS ticket (
