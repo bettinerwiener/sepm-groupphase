@@ -1,0 +1,21 @@
+package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
+
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
+
+import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserMapper {
+
+    public UserDto entityToDto(User user) {
+        return new UserDto( user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getLocked(), user.getEmployee());
+    }
+
+    public User dtoToEntity(UserDto userDto) {
+
+        return new User(userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), userDto.getPassword());
+
+    }
+}
+

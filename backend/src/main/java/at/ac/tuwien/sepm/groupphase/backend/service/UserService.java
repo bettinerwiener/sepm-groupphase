@@ -1,6 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import at.ac.tuwien.sepm.groupphase.backend.exception.EmailExistsException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,4 +29,15 @@ public interface UserService extends UserDetailsService {
      * @return a application user
      */
     User findApplicationUserByEmail(String email);
+
+    /**
+     * Create a new user
+     *
+     * @param user to be created
+     * @return the user created
+     * @throws EmailExistsException in case a user with given email already exists
+     * @throws NotCreatedException in case something went wrong when accessing the database
+     */
+
+    User createUser(User user);
 }

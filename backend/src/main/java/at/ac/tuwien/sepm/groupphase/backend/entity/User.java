@@ -64,6 +64,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.locked = false;
+        this.isEmployee =false;
     }
 
     public Long getId() {

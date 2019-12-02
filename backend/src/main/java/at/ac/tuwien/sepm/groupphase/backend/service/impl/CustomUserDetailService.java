@@ -1,6 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import at.ac.tuwien.sepm.groupphase.backend.exception.EmailExistsException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
@@ -11,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
@@ -21,6 +24,7 @@ public class CustomUserDetailService implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public CustomUserDetailService(UserRepository userRepository) {
@@ -48,8 +52,34 @@ public class CustomUserDetailService implements UserService {
     @Override
     public User findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
-        User user = userRepository.findUserByEmail(email);
-        if (user != null) return user;
-        throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+
+        if (userRepository.findByEmail(email) != null) {
+            return userRepository.findByEmail(email).get(0);
+        }else{
+            throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+        }
+
+
     }
+
+    @Override
+    public User createUser (User user) throws EmailExistsException {
+        LOGGER.info("Creating user");
+
+        if(findApplicationUserByEmail(user.getEmail())!=null){
+            throw new EmailExistsException( "There already is an account with the email adress: " + user.getEmail());
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        try{
+            return this.userRepository.save(user);
+        }catch(NotCreatedException e){
+            throw new NotCreatedException (String.format("The user with emailadress: %s could not be created: %s",
+                user.getEmail(), e.getMessage()));
+        }
+
+
+    }
+
 }
