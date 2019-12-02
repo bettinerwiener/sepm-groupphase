@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS event (
     contents    VARCHAR(511),
     category    VARCHAR(25),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES user(id)
+    employee    BIGINT REFERENCES user(id),
+    CONSTRAINT event_unique UNIQUE (title, category)
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (

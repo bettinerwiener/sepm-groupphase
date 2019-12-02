@@ -109,7 +109,7 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getLocked() {
+    public Boolean isLocked() {
         return locked;
     }
 
@@ -133,7 +133,7 @@ public class User {
         this.customerNews = customerNews;
     }
 
-    public Boolean getEmployee() {
+    public Boolean isEmployee() {
         return isEmployee;
     }
 
@@ -167,6 +167,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getLocked(), getTickets());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword());
     }
 }

@@ -47,7 +47,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "employee", nullable = false)
-    private Employee employee;
+    private User employee;
 
     @ManyToMany(mappedBy = "events")
     Set<Artist> artists;
@@ -75,7 +75,7 @@ public class Event {
 
     public Event(String title, String shortDescription, String contents, Category category, Double duration,
                  Set<Ticket> tickets, Set<EventPerformance> eventPerformances,
-                 Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
+                 Set<EmployeeNewsEvent> employeeNewsEvents, User employee, Set<Artist> artists) {
         this.title = title;
         this.shortDescription = shortDescription;
         this.contents = contents;
@@ -160,11 +160,11 @@ public class Event {
         this.employeeNewsEvents = employeeNewsEvents;
     }
 
-    public Employee getEmployee() {
+    public User getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(User employee) {
         this.employee = employee;
     }
 
