@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.username = this.authService.getUserName();
     } else {
-      this.username = 'Max Mustermann'
+      this.username = 'Max Mustermann';
     }
   }
 
