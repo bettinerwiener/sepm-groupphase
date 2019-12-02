@@ -76,4 +76,11 @@ export class AuthService {
     return date;
   }
 
+  getUserName(){
+    if (this.getToken() != null) {
+      const decoded: any = jwt_decode(this.getToken());
+      return decoded.sub;
+    }
+  }
+
 }

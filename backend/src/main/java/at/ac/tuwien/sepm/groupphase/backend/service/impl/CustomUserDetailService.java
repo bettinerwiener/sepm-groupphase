@@ -34,9 +34,9 @@ public class CustomUserDetailService implements UserService {
             User user = findApplicationUserByEmail(email);
 
             List<GrantedAuthority> grantedAuthorities;
-            /*if (customer.getAdmin())
+            if (user.getEmployee())
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
-            else*/
+            else
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
 
             return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
@@ -48,8 +48,9 @@ public class CustomUserDetailService implements UserService {
     @Override
     public User findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
-        User user = userRepository.findUserByEmail(email);
-        if (user != null) return user;
+        List<User> user = userRepository.findByEmail(email);
+        if (!user.isEmpty()) return user.get(0);
+        // TODO: GLEICHE EMAILS SOLLTE NICHT ERLAUBT SEIN
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
     }
 }

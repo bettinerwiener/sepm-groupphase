@@ -1,9 +1,9 @@
 insert into user (id, first_name, last_name, email, password)
-    values (1, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo'),
+    values (1, 'Hugo', 'Deval', 'hugo@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq'),
            (2, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan');
 
 insert into user (id, first_name, last_name, email, password, is_employee)
-    values (3, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo', 1),
+    values (3, 'Hugo', 'Deval', 'hugo@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', 1),
 (           4, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan', 1);
 
 insert into artist (id, first_name, last_name)

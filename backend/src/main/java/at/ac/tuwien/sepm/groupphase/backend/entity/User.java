@@ -52,9 +52,9 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, Boolean locked) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String email, String password, Boolean locked) {
+        this.email = email;
+        this.password = password;
         this.locked = locked;
     }
 
