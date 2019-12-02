@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EventService} from '../../services/event.service';
 import {Event} from '../../dtos/event';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-event',
@@ -12,46 +13,68 @@ export class CreateEventComponent implements OnInit {
   createEventForm: FormGroup;
   event: Event;
   error: boolean = false;
+  private events: Event[];
 
   // After first submission attempt, form validation will start
   submitted: boolean = false;
   errorMessage: string = 'This is a useless errormessage';
-  constructor(private formbuilder: FormBuilder, private eventService: EventService) {
+  constructor(private formbuilder: FormBuilder, private eventService: EventService, private authService: AuthService) {
     this.createEventForm = this.formbuilder.group({
       title:        ['', Validators.required],
-      description:  ['', Validators.required],
-      date:         [Validators.required],
-      duration:     [Validators.required],
-      location:     ['', Validators.required],
       category:     [Validators.required],
+      shortDescription:  ['', Validators.required],
+      contents:         ['', Validators.required],
+      duration:     [Validators.required],
     });
-   }
+  }
 
   ngOnInit() {
   }
 
-  public createEvent() {
+   /**
+   * Returns true if the authenticated user is an admin
+   */
+  isAdmin(): boolean {
+    return this.authService.getUserRole() === 'ADMIN';
+  }
+
+  addEvent() {
     this.submitted = true;
-    console.log(this.createEventForm.controls.title.value);
     if (this.createEventForm.valid) {
-      console.log(this.createEventForm.controls.duration.value);
-      this.eventService.createEvent(this.createEventForm.controls.title.value,
-        this.createEventForm.controls.description.value,
-        this.createEventForm.controls.date.value,
-        this.createEventForm.controls.duration.value,
-        this.createEventForm.controls.location.value,
-        this.createEventForm.controls.category.value).subscribe(
-        (event: Event) => {
-          this.event = event;
-        },
-        error => {
-          console.log(this.createEventForm.controls.title.value);
-          this.defaultServiceErrorHandling(error);
-        }
+      const event: Event = new Event(
+        this.createEventForm.controls.title.value,
+        this.createEventForm.controls.category.value,
+        this.createEventForm.controls.shortDescription.value,
+        this.createEventForm.controls.contents.value,
+        this.createEventForm.controls.duration.value
       );
+      this.createEvent(event);
+      this.clearForm();
     } else {
-      console.log('Invalid form');
+      console.log('Invalid input');
     }
+  }
+
+  public createEvent(event: Event) {
+    this.eventService.createEvent(event).subscribe(
+      () => {
+        this.loadEvent();
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private loadEvent() {
+    this.eventService.getEvent().subscribe(
+      (event: Event[]) => {
+        this.events = event;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
   private defaultServiceErrorHandling(error: any) {
@@ -70,6 +93,11 @@ export class CreateEventComponent implements OnInit {
 
   vanishError() {
     this.error = false;
+  }
+
+  private clearForm() {
+    this.createEventForm.reset();
+    this.submitted = false;
   }
 
 

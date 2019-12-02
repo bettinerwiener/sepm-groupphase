@@ -16,22 +16,21 @@ export class EventService {
   /**
    * Loads all events from the backend
    */
-  getEvents(): Observable<Event[]> {
+  getEvent(): Observable<Event[]> {
     console.log('Get all events');
     return this.httpClient.get<Event[]>(this.eventBaseUri);
   }
 
   /**
-   * Creates a Event with following params:
-   * @param title Title of the Event
-   * @param description Description of the Event
-   * @param date Date on which this Event takes Place
-   * @param location Location where this Event takes place
-   * @param price How much this event costs
+   * Creates event with following parameters:
+   * @param title Title of the evevnt
+   * @param category which category: film, concert, theater,
+   * @param shortDescription short description, shown at the preview
+   * @param contents detailed description
+   * @param duration how long the event lasts
    */
-  createEvent(title: string, description: string, date: Date, duration: number, location: string, category: string): Observable<Event> {
-    console.log('Post Event with title ' + title);
-    const event: Event = new Event(title, description, date, duration, location, category);
+  createEvent(event: Event): Observable<Event> {
+    console.log('Post Event with title ' + event.title);
     return this.httpClient.post<Event>(this.eventBaseUri, event);
   }
 }

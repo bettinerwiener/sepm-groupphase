@@ -30,22 +30,32 @@
             </div>
 
             <div class="form-group">
-              <input type="text" name="description" formControlName="description" class="form-control" id="description"
-                     placeholder="Description">
-              <div *ngIf="submitted && createEventForm.controls.description.errors" class="error">
-                <small class="form-text text-warning" *ngIf="createEventForm.controls.description.errors.required">Description is
+              <select name="duration" formControlName="duration" class="form-control" id= "category" placeholder="Category">
+                      <option value="" hidden >Category</option>
+                      <option value="Concert" >Concert</option>
+                      <option value="Film" >Film</option>
+                      <option value="Theater" >Theater</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="shortDescription" formControlName="shortDescription" class="form-control" id="shortDescription"
+                     placeholder="shortDescription">
+              <div *ngIf="submitted && createEventForm.controls.shortDescription.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventForm.controls.shortDescription.errors.required">Description is
                   required!
                 </small>
               </div>
             </div>
 
             <div class="form-group">
-                  <input type="date" name="date" formControlName="date" class="form-control" id= "date" placeholder="Date">
-                  <div *ngIf="submitted && createEventForm.controls.date.errors" class="error">
-                    <small class="form-text text-warning" *ngIf="createEventForm.controls.date.errors.required">Date is
-                      required!
-                    </small>
-                  </div>
+              <input type="text" name="contents" formControlName="contents" class="form-control" id="contents"
+                     placeholder="contents">
+              <div *ngIf="submitted && createEventForm.controls.contents.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventForm.controls.contents.errors.required">Description is
+                  required!
+                </small>
+              </div>
             </div>
 
             <div class="form-group">
@@ -56,24 +66,6 @@
                     </small>
                   </div>
             </div>
-
-            <div class="form-group">
-                  <input type="text" name="location" formControlName="location" class="form-control" id= "location" placeholder="Location">
-                  <div *ngIf="submitted && createEventForm.controls.location.errors" class="error">
-                    <small class="form-text text-warning" *ngIf="createEventForm.controls.location.errors.required">Location is
-                      required!
-                    </small>
-                  </div>
-            </div>
-
-            <div class="form-group">
-                  <select name="duration" formControlName="duration" class="form-control" id= "category" placeholder="Category">
-                          <option value="" hidden >Category</option>
-                          <option value="Concert" >Concert</option>
-                          <option value="Film" >Film</option>
-                          <option value="Theater" >Theater</option>
-                  </select>
-              </div>
 
             <button type="button" (click)="createEvent()" class="btn btn-success float-right">Create Event</button>
 
