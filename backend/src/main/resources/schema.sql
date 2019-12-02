@@ -1,21 +1,15 @@
 DROP ALL OBJECTS;
 
-CREATE TABLE IF NOT EXISTS  customer
+CREATE TABLE IF NOT EXISTS  user
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name  VARCHAR(50) NOT NULL,
-    email      VARCHAR(150) NOT NULL,
-    password   VARCHAR(20) NOT NULL,
-    locked     SMALLINT CHECK (locked IN (0, 1))
-);
-
-CREATE TABLE IF NOT EXISTS employee (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    first_name  VARCHAR(50) NOT NULL,
-    last_name   VARCHAR(50) NOT NULL,
-    username    VARCHAR(50) NOT NULL,
-    password    VARCHAR(20) NOT NULL
+    email      VARCHAR(150) UNIQUE NOT NULL,
+    password   VARCHAR(255) NOT NULL,
+    locked     SMALLINT DEFAULT 0 CHECK (locked IN (0, 1)),
+    is_employee SMALLINT DEFAULT 0 CHECK (is_employee IN (0,1)),
+    login_count INTEGER DEFAULT 0 CHECK (login_count >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS artist (
@@ -40,8 +34,7 @@ CREATE TABLE IF NOT EXISTS event (
     contents    VARCHAR(511),
     category    VARCHAR(25),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES employee(id),
-    CONSTRAINT unique_title_category UNIQUE (title, category)
+    employee    BIGINT REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (
@@ -51,7 +44,7 @@ CREATE TABLE IF NOT EXISTS artist_creates_event (
 );
 
 CREATE TABLE IF NOT EXISTS employee_adds_news (
-    employee    BIGINT REFERENCES employee(id),
+    employee    BIGINT REFERENCES user(id),
     news     BIGINT REFERENCES news(id),
     event    BIGINT REFERENCES event(id),
     CONSTRAINT admin_adds_news PRIMARY KEY (employee, news, event)
@@ -103,22 +96,22 @@ CREATE TABLE IF NOT EXISTS ticket (
 
 
 CREATE TABLE IF NOT EXISTS customer_buys_ticket (
-    customer BIGINT REFERENCES customer(id),
+    user BIGINT REFERENCES user(id),
     ticket BIGINT REFERENCES ticket(id),
-    CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (customer, ticket)
+    CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (user, ticket)
 );
 
 CREATE TABLE IF NOT EXISTS employee_buys_ticket (
-    employee BIGINT REFERENCES employee(id),
+    employee BIGINT REFERENCES user(id),
     ticket BIGINT REFERENCES ticket(id),
     CONSTRAINT employee_buys_ticket_pk PRIMARY KEY (employee, ticket)
 );
 
 CREATE TABLE IF NOT EXISTS customer_news (
-     customer    BIGINT REFERENCES customer(id),
+     user    BIGINT REFERENCES user(id),
      news        BIGINT REFERENCES news(id),
      read        SMALLINT CHECK (read IN (0, 1)),
-     CONSTRAINT  customer_news_pk PRIMARY KEY (customer, news)
+     CONSTRAINT  customer_news_pk PRIMARY KEY (user, news)
 );
 
 

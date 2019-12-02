@@ -8,29 +8,30 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "employee_adds_news")
+@IdClass(EmployeeNewsEventKey.class)
 public class EmployeeNewsEvent {
 
-    @EmbeddedId
-    private EmployeeNewsEventKey id;
-
+    @Id
     @ManyToOne
     @MapsId("event")
     @JoinColumn(name = "event")
     private Event event;
 
+    @Id
     @ManyToOne
     @MapsId("news")
     @JoinColumn(name = "news")
     private News news;
 
+    @Id
     @ManyToOne
     @MapsId("employee")
     @JoinColumn(name = "employee")
-    private Employee employee;
+    private User employee;
 
     public EmployeeNewsEvent() {}
 
-    public EmployeeNewsEvent(Event event, News news, Employee employee) {
+    public EmployeeNewsEvent(Event event, News news, User employee) {
         this.event = event;
         this.news = news;
         this.employee = employee;

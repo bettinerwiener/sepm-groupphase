@@ -26,7 +26,7 @@ public class EventPerformance {
 
     public EventPerformance() {}
 
-    public EventPerformance(EventPerformanceKey id, Event event, Location location, Date date) {
+    public EventPerformance(Event event, Location location, Date date) {
         this.event = event;
         this.location = location;
         this.date = date;

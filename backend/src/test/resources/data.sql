@@ -1,4 +1,4 @@
-insert into customer (id, first_name, last_name, email, password)
+insert into user (id, first_name, last_name, email, password)
     values (1, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo'),
            (2, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan');
 
