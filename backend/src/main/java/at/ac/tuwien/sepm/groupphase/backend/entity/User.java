@@ -20,7 +20,7 @@ public class User {
     @Column(nullable=false, length = 150)
     private String email;
 
-    @Column(nullable=false, length = 20)
+    @Column(nullable=false, length = 255)
     private String password;
 
     @Column(nullable = false)
@@ -28,6 +28,9 @@ public class User {
 
     @Column(nullable = false, name = "is_employee")
     private Boolean isEmployee;
+
+    @Column(nullable = false, name = "login_count")
+    private int loginCount;
 
     @ManyToMany
     @JoinTable (
@@ -144,6 +147,14 @@ public class User {
 
     public void setTicketsOfEmployee(Set<Ticket> ticketsOfEmployee) {
         this.ticketsOfEmployee = ticketsOfEmployee;
+    }
+
+    public int getLoginCount() {
+        return loginCount;
+    }
+
+    public void setLoginCount(int loginCount) {
+        this.loginCount = loginCount;
     }
 
     @Override
