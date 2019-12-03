@@ -70,6 +70,13 @@
             <artifactId>springfox-bean-validators</artifactId>
             <version>${springfox.swagger.version}</version>
         </dependency>
+        <!-- lombok support added -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- security -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
