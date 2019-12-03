@@ -1,10 +1,15 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@ToString
 public class EventDto extends BaseDto {
 
     private Long id;
@@ -31,82 +36,67 @@ public class EventDto extends BaseDto {
     @NotNull
     private Long empId;
 
-    public EventDto() {}
+    public static final class EventDtoBuilder {
+        private Long id;
+        private String title;
+        private String shortDescription;
+        private String contents;
+        private Event.Category category;
+        private Double duration;
+        private Long empId;
 
-    public EventDto(String title, String shortDescription,
-                    String contents, Event.Category category, Double duration, Long empId) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-        this.empId = empId;
-    }
+        private EventDtoBuilder() {
+        }
 
-    public EventDto(Long id, String title, String shortDescription,
-                    String contents, Event.Category category, Double duration, Long empId) {
-        this.id = id;
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-        this.empId = empId;
-    }
+        public static EventDto.EventDtoBuilder anEventDto() {
+            return new EventDto.EventDtoBuilder();
+        }
 
-    public Long getId() {
-        return id;
-    }
+        public EventDto.EventDtoBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+        public EventDto.EventDtoBuilder withEmpId(Long empId) {
+            this.empId = empId;
+            return this;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public EventDto.EventDtoBuilder withShortDescription(String shortDescription) {
+            this.shortDescription = shortDescription;
+            return this;
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public EventDto.EventDtoBuilder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
 
-    public String getShortDescription() {
-        return shortDescription;
-    }
+        public EventDto.EventDtoBuilder withContents(String contents) {
+            this.contents = contents;
+            return this;
+        }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
+        public EventDto.EventDtoBuilder withDuration(Double Duration) {
+            this.duration = duration;
+            return this;
+        }
 
-    public String getContents() {
-        return contents;
-    }
+        public EventDto.EventDtoBuilder withCategory(Event.Category category) {
+            this.category = category;
+            return this;
+        }
 
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public Event.Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Event.Category category) {
-        this.category = category;
-    }
-
-    public Double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Double duration) {
-        this.duration = duration;
-    }
-
-    public Long getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(Long empId) {
-        this.empId = empId;
+        public EventDto build() {
+            EventDto eventDto = new EventDto();
+            eventDto.setId(id);
+            eventDto.setShortDescription(shortDescription);
+            eventDto.setTitle(title);
+            eventDto.setContents(contents);
+            eventDto.setDuration(duration);
+            eventDto.setCategory(category);
+            eventDto.setEmpId(empId);
+            return eventDto;
+        }
     }
 }

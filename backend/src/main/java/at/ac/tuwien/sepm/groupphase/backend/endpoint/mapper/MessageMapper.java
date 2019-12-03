@@ -7,6 +7,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Message;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

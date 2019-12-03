@@ -33,7 +33,7 @@ public class SimpleEventService implements EventService {
         LOGGER.info("EventService: creating event");
         try {
             Optional<User> employee = this.userRepository.findById(empId);
-            if (employee.isPresent() && employee.get().isEmployee()) {
+            if (employee.isPresent() && employee.get().getIsEmployee()) {
                 event.setEmployee(employee.get());
                 return this.eventRepository.save(event);
             } else {
