@@ -1,11 +1,14 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "is_performed_at")
 @IdClass(EventPerformanceKey.class)
+@Data
 public class EventPerformance {
 
     @Id
@@ -22,37 +25,6 @@ public class EventPerformance {
 
     @Id
     @Column(nullable = false)
-    private Date date;
+    private LocalDateTime date;
 
-    public EventPerformance() {}
-
-    public EventPerformance(Event event, Location location, Date date) {
-        this.event = event;
-        this.location = location;
-        this.date = date;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }

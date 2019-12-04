@@ -32,9 +32,10 @@ CREATE TABLE IF NOT EXISTS event (
     title       VARCHAR(100) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     contents    VARCHAR(511),
-    category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
+    category    VARCHAR(25),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES user(id)
+    employee    BIGINT REFERENCES user(id),
+    CONSTRAINT event_unique UNIQUE (title, category)
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (
@@ -82,7 +83,7 @@ CREATE TABLE IF NOT EXISTS seat (
 CREATE TABLE IF NOT EXISTS is_performed_at (
     event   BIGINT REFERENCES event(id),
     location BIGINT REFERENCES location(id),
-    `date`    DATE NOT NULL,
+    `date`    DATETIME NOT NULL,
     CONSTRAINT is_performed_at_pk PRIMARY KEY (event, location, `date`)
 );
 

@@ -1,9 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Data
 public class Ticket {
 
     private enum Status {
@@ -32,44 +35,4 @@ public class Ticket {
 
     @ManyToMany(mappedBy = "tickets")
     private Set<User> users;
-
-    public Ticket() {};
-
-    public Ticket(Event event, Location location, Status status) {
-        this.event = event;
-        this.location = location;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 }

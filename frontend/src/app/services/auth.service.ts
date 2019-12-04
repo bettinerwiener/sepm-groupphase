@@ -35,6 +35,10 @@ export class AuthService {
     return !!this.getToken() && (this.getTokenExpirationDate(this.getToken()).valueOf() > new Date().valueOf());
   }
 
+  isAdmin() {
+    return this.getUserRole() === 'ADMIN';
+  }
+
   logoutUser() {
     console.log('Logout');
     localStorage.removeItem('authToken');
