@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import lombok.*;
 
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class EventDto extends BaseDto {
+
 
     private Long id;
 
@@ -33,9 +35,6 @@ public class EventDto extends BaseDto {
     @Size(min = 0, max = 10)
     private Double duration;
 
-    @NotNull
-    private Long empId;
-
     public static final class EventDtoBuilder {
         private Long id;
         private String title;
@@ -43,7 +42,6 @@ public class EventDto extends BaseDto {
         private String contents;
         private Event.Category category;
         private Double duration;
-        private Long empId;
 
         private EventDtoBuilder() {
         }
@@ -54,11 +52,6 @@ public class EventDto extends BaseDto {
 
         public EventDto.EventDtoBuilder withId(Long id) {
             this.id = id;
-            return this;
-        }
-
-        public EventDto.EventDtoBuilder withEmpId(Long empId) {
-            this.empId = empId;
             return this;
         }
 
@@ -95,7 +88,6 @@ public class EventDto extends BaseDto {
             eventDto.setContents(contents);
             eventDto.setDuration(duration);
             eventDto.setCategory(category);
-            eventDto.setEmpId(empId);
             return eventDto;
         }
     }

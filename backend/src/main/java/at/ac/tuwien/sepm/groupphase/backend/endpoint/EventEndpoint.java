@@ -8,10 +8,12 @@ import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/events")
@@ -26,12 +28,22 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
+    public List<EventDto> getAll() {
+        List<EventDto> eventDtos = eventService.getAll().stream().
+            map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());
+        return eventDtos;
+    }
+
     //@Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    @ApiOperation(value = "Publish a new message", authorizations = {@Authorization(value = "apiKey")})
-    public EventDto create(@RequestBody EventDto eventDto) {
-        return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), eventDto.getEmpId()));
+    @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
+    public EventDto create(@RequestBody EventDto eventDto, @AuthenticationPrincipal String username) {
+        return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
 
     }
+
 }

@@ -1,5 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,6 +9,7 @@ import java.util.Set;
 @Table(
     uniqueConstraints = @UniqueConstraint(columnNames={"title", "category"})
 )
+@Data
 public class Event {
 
     public enum Category {
@@ -52,127 +55,4 @@ public class Event {
     @ManyToMany(mappedBy = "events")
     Set<Artist> artists;
 
-    public Event() {}
-
-    public Event(String title, String shortDescription, String contents, Category category, Double duration) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-    }
-
-    public Event(Long id, String title, String shortDescription, String contents,
-                 Category category, Double duration) {
-        this.id = id;
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-    }
-
-
-    public Event(String title, String shortDescription, String contents, Category category, Double duration,
-                 Set<Ticket> tickets, Set<EventPerformance> eventPerformances,
-                 Set<EmployeeNewsEvent> employeeNewsEvents, User employee, Set<Artist> artists) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-        this.tickets = tickets;
-        this.eventPerformances = eventPerformances;
-        this.employeeNewsEvents = employeeNewsEvents;
-        this.employee = employee;
-        this.artists = artists;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Double duration) {
-        this.duration = duration;
-    }
-
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public Set<EventPerformance> getEventPerformances() {
-        return eventPerformances;
-    }
-
-    public void setEventPerformances(Set<EventPerformance> eventPerformances) {
-        this.eventPerformances = eventPerformances;
-    }
-
-    public Set<EmployeeNewsEvent> getEmployeeNewsEvents() {
-        return employeeNewsEvents;
-    }
-
-    public void setEmployeeNewsEvents(Set<EmployeeNewsEvent> employeeNewsEvents) {
-        this.employeeNewsEvents = employeeNewsEvents;
-    }
-
-    public User getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(User employee) {
-        this.employee = employee;
-    }
-
-    public Set<Artist> getArtists() {
-        return artists;
-    }
-
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
-    }
 }

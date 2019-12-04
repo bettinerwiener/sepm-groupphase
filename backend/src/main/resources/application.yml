@@ -31,7 +31,6 @@ security:
     login-uri: /api/v1/authentication
     white-list:
       # Browser requests
-      - /events
       - /
       - /favicon.ico
       - /csrf
