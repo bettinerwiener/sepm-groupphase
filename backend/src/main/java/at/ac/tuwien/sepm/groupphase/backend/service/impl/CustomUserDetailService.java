@@ -24,6 +24,8 @@ public class CustomUserDetailService implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -53,8 +55,8 @@ public class CustomUserDetailService implements UserService {
     public User findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
 
-        if (userRepository.findByEmail(email) != null) {
-            return userRepository.findByEmail(email).get(0);
+        if (userRepository.findFirstByEmail(email) != null) {
+            return userRepository.findFirstByEmail(email);
         }else{
             throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
         }
@@ -63,22 +65,21 @@ public class CustomUserDetailService implements UserService {
     }
 
     @Override
-    public User createUser (User user) throws EmailExistsException {
+    public User createUser (User user) throws EmailExistsException, NotCreatedException{
         LOGGER.info("Creating user");
 
-        if(findApplicationUserByEmail(user.getEmail())!=null){
+
+
+        if (userRepository.findFirstByEmail(user.getEmail()) != null) {
             throw new EmailExistsException( "There already is an account with the email adress: " + user.getEmail());
         }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         try{
             return this.userRepository.save(user);
-        }catch(NotCreatedException e){
+        }catch(NotCreatedException notCreated){
             throw new NotCreatedException (String.format("The user with emailadress: %s could not be created: %s",
-                user.getEmail(), e.getMessage()));
+                user.getEmail(), notCreated.getMessage()));
         }
-
 
     }
 

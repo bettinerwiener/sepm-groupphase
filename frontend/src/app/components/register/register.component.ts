@@ -48,10 +48,12 @@ export class RegisterComponent implements OnInit {
       this.userService.newUser(newUser)
         .subscribe(user => {
             this.user = user;
+            this.router.navigate(['']);
           },
           error => {
             this.defaultServiceErrorHandling(error);
           });
+      this.clearForm();
     } else {
       console.log('Invalid input');
     }

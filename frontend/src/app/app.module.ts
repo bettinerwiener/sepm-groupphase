@@ -16,7 +16,7 @@ import { ConcertComponent } from './components/concert/concert.component';
 import { TheatreComponent } from './components/theatre/theatre.component';
 import { CabaretComponent } from './components/cabaret/cabaret.component';
 import { MoviesComponent } from './components/movies/movies.component';
-import { RegisterComponent } from './components/register/register.component'
+import { RegisterComponent } from './components/register/register.component';
 import { SearchAreaComponent } from './components/search-area/search-area.component';
 import { LocationsComponent } from './components/locations/locations.component';
 import { ProfileComponent } from './components/profile/profile.component';

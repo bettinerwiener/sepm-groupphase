@@ -8,8 +8,8 @@ import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  faShoppingCart = faShoppingCart
-  faUser = faUser
+  faShoppingCart = faShoppingCart;
+  faUser = faUser;
   constructor(public authService: AuthService) { }
 
   ngOnInit() {

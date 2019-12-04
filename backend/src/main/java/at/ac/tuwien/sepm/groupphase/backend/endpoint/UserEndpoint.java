@@ -30,7 +30,7 @@ public class UserEndpoint {
         this.userMapper = userMapper;
     }
 
-
+    @CrossOrigin
     @PostMapping(value= "/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto post(@RequestBody UserDto userDto) {

@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      *
      * @return all users with given email
      */
-    List<User> findByEmail (String email);
+    User findFirstByEmail (String email);
 
 
 

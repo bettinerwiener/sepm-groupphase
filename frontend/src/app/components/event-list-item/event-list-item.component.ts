@@ -8,8 +8,8 @@ import { faCalendarDay, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons
 })
 export class EventListItemComponent implements OnInit {
 
-  faCalendarDay = faCalendarDay
-  faMapMarkerAlt = faMapMarkerAlt
+  faCalendarDay = faCalendarDay;
+  faMapMarkerAlt = faMapMarkerAlt;
 
   @Input() title: string;
   @Input() description: string;
