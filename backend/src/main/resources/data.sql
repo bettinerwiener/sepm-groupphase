@@ -3,8 +3,8 @@ insert into user (id, first_name, last_name, email, password)
            (2, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan');
 
 insert into user (id, first_name, last_name, email, password, is_employee)
-    values (3, 'Hugo', 'Deval', 'hugo@gmail.com', 'hugo', 1),
-(           4, 'Susan', 'Bigfoot', 'susan@gmx.at', 'susan', 1);
+    values (3, 'Hugo', 'Deval', 'hugo123@gmail.com', 'hugo', 1),
+(           4, 'Susan', 'Bigfoot', 'susan123@gmx.at', 'susan', 1);
 
 insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),

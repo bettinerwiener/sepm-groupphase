@@ -28,7 +28,7 @@ public class UserMappingTest implements RegistrationTestData {
     private UserMapper userMapper;
 
     @Test
-    public void givenNothing_whenMapDetailedMessageDtoToEntity_thenEntityHasAllProperties() {
+    public void givenNothing_whenMapUserDtoToEntity_thenEntityHasAllProperties() {
 
         user.setId(ID);
         user.setFirstName(TEST_FIRST_NAME);
@@ -47,20 +47,5 @@ public class UserMappingTest implements RegistrationTestData {
         );
     }
 
-   /* @Test
-    public void givenNothing_whenMapListWithTwoMessageEntitiesToSimpleDto_thenGetListWithSizeTwoAndAllProperties() {
-        List<User> users = new ArrayList<>();
-        users.add(user);
-        users.add(user);
 
-        List<UserDto> userDtoList = userMapper.entityToDto(users);
-        assertEquals(2, simpleMessageDtos.size());
-        UserDto simpleMessageDto = simpleMessageDtos.get(0);
-        assertAll(
-            () -> assertEquals(ID, simpleMessageDto.getId()),
-            () -> assertEquals(TEST_NEWS_TITLE, simpleMessageDto.getTitle()),
-            () -> assertEquals(TEST_NEWS_SUMMARY, simpleMessageDto.getSummary()),
-            () -> assertEquals(TEST_NEWS_PUBLISHED_AT, simpleMessageDto.getPublishedAt())
-        );
-    }*/
 }

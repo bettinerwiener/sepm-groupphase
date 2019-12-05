@@ -23,7 +23,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
     private UserRepository userRepository;
 
     @Test
-    public void givenNothing_whenSaveMessage_thenFindListWithOneElementAndFindMessageById() {
+    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindUserById() {
         User user = new User();
         user.setId(ID);
         user.setFirstName(TEST_FIRST_NAME);
