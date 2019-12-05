@@ -12,7 +12,7 @@ public class EventPerformanceKey implements Serializable {
 
     private Long event;
 
-    private Long location;
+    private Long room;
 
     private LocalDateTime date;
 }

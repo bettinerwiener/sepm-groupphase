@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @ToString
 public class EventDto extends BaseDto {
 
-
     private Long id;
 
     @NotNull

@@ -26,11 +26,5 @@ public class Location {
     private Long postalCode;
 
     @OneToMany(mappedBy = "location")
-    Set<Ticket> tickets;
-
-    @OneToMany(mappedBy = "location")
-    Set<EventPerformance> eventPerformances;
-
-    @OneToMany(mappedBy = "location")
     Set<Room> rooms;
 }

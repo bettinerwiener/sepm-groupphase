@@ -23,4 +23,10 @@ public class Room {
     @OneToMany(mappedBy = "room")
     Set<Section> sections;
 
+    @OneToMany(mappedBy = "room")
+    Set<Ticket> tickets;
+
+    @OneToMany(mappedBy = "room")
+    Set<EventPerformance> eventPerformances;
+
 }

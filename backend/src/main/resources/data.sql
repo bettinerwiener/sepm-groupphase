@@ -46,11 +46,11 @@ insert into seat (id, seat_number, row_letter, section)
            (12, 1, 'C', 6),
            (13, 2, 'C', 7);
 
-insert into is_performed_at(event, location, date)
+insert into is_performed_at(event, room, date)
 values (1, 1, NOW()),
        (2, 2, NOW());
 
-insert into ticket (id, event, location, seat, status)
+insert into ticket (id, event, room, seat, status)
     values (1, 1, 1, 1, 'AVAILABLE'),
            (2, 1, 1, 2, 'AVAILABLE'),
            (3, 1, 1, 3, 'AVAILABLE'),

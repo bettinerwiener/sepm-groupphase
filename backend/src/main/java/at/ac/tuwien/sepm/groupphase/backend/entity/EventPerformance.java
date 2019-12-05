@@ -19,9 +19,9 @@ public class EventPerformance {
 
     @Id
     @ManyToOne
-    @MapsId("location")
-    @JoinColumn(name = "location")
-    private Location location;
+    @MapsId("room")
+    @JoinColumn(name = "room")
+    private Room room;
 
     @Id
     @Column(nullable = false)
