@@ -22,6 +22,8 @@ public class PerformanceDto {
     private static final SimpleDateFormat dateFormat
         = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    Long id;
+
     @NotNull
     private Event event;
     @NotNull
@@ -40,6 +42,7 @@ public class PerformanceDto {
     }
     private static final class PerformanceDtoBuilder {
 
+        private Long id;
         private Event event;
 
         private Room room;
@@ -48,6 +51,10 @@ public class PerformanceDto {
 
         public PerformanceDtoBuilder() {};
 
+        public PerformanceDto.PerformanceDtoBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
         public PerformanceDto.PerformanceDtoBuilder withEvent(Event event) {
             this.event = event;
             return this;
@@ -63,6 +70,7 @@ public class PerformanceDto {
 
         public PerformanceDto build() {
             PerformanceDto performanceDto = new PerformanceDto();
+            performanceDto.setId(id);
             performanceDto.setEvent(event);
             performanceDto.setRoom(room);
             performanceDto.setDate(date);

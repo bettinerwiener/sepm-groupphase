@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -43,7 +44,11 @@ public class Event {
     @JoinColumn(name = "employee", nullable = false)
     private User employee;
 
-    @ManyToMany(mappedBy = "events")
-    Set<Artist> artists;
+    @ManyToOne
+    @JoinTable(
+        name = "artist_creates_event",
+        joinColumns = @JoinColumn(name = "artist"),
+        inverseJoinColumns = @JoinColumn(name = "event"))
+    Artist artists;
 
 }

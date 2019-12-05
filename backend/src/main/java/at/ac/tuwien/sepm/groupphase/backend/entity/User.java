@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -33,24 +34,5 @@ public class User {
 
     @Column(nullable = false, name = "login_count")
     private int loginCount;
-
-    @ManyToMany
-    @JoinTable (
-        name = "customer_buys_ticket",
-        joinColumns = @JoinColumn(name = "customer"),
-        inverseJoinColumns = @JoinColumn(name = "ticket")
-    )
-    private Set<Ticket> tickets;
-
-    @ManyToMany
-    @JoinTable (
-        name = "employee_buys_ticket",
-        joinColumns = @JoinColumn(name = "employee"),
-        inverseJoinColumns = @JoinColumn(name = "ticket")
-    )
-    private Set<Ticket> ticketsOfEmployee;
-
-    @OneToMany(mappedBy = "user")
-    private Set<CustomerNews> customerNews;
 
 }

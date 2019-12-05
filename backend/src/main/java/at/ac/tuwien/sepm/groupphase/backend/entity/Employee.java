@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,6 +32,6 @@ public class Employee {
         joinColumns = @JoinColumn(name = "employee"),
         inverseJoinColumns = @JoinColumn(name = "ticket")
     )
-    Set<Ticket> tickets;
+    Set<Ticket> tickets = new HashSet<>();
 
 }
