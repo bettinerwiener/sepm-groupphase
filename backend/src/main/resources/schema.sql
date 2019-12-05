@@ -81,10 +81,11 @@ CREATE TABLE IF NOT EXISTS seat (
 );
 
 CREATE TABLE IF NOT EXISTS is_performed_at (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     event   BIGINT REFERENCES event(id),
     room BIGINT REFERENCES room(id),
     `date`    DATETIME NOT NULL,
-    CONSTRAINT is_performed_at_pk PRIMARY KEY (event, room, `date`)
+    CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
 );
 
 CREATE TABLE IF NOT EXISTS ticket (
@@ -96,16 +97,10 @@ CREATE TABLE IF NOT EXISTS ticket (
 );
 
 
-CREATE TABLE IF NOT EXISTS customer_buys_ticket (
+CREATE TABLE IF NOT EXISTS user_buys_ticket (
     user BIGINT REFERENCES user(id),
     ticket BIGINT REFERENCES ticket(id),
     CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (user, ticket)
-);
-
-CREATE TABLE IF NOT EXISTS employee_buys_ticket (
-    employee BIGINT REFERENCES user(id),
-    ticket BIGINT REFERENCES ticket(id),
-    CONSTRAINT employee_buys_ticket_pk PRIMARY KEY (employee, ticket)
 );
 
 CREATE TABLE IF NOT EXISTS customer_news (

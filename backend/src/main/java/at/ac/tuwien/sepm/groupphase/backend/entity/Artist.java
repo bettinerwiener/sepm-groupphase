@@ -19,10 +19,4 @@ public class Artist {
     @Column(nullable = false, name = "last_name", length = 50)
     private String lastName;
 
-    @ManyToMany
-    @JoinTable(name = "artist_creates_event",
-        joinColumns = @JoinColumn(name = "artist"),
-        inverseJoinColumns = @JoinColumn(name = "event"))
-    Set<Event> events;
-
 }
