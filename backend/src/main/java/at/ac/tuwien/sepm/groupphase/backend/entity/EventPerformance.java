@@ -3,7 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "is_performed_at")
@@ -13,18 +13,17 @@ public class EventPerformance {
 
     @Id
     @ManyToOne
-    @MapsId("event")
     @JoinColumn(name = "event")
     private Event event;
 
     @Id
     @ManyToOne
-    @MapsId("location")
-    @JoinColumn(name = "location")
-    private Location location;
+    @JoinColumn(name = "room")
+    private Room room;
 
     @Id
     @Column(nullable = false)
-    private LocalDateTime date;
+    @Temporal(TemporalType.TIME)
+    private Date date;
 
 }

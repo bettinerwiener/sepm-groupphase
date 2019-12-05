@@ -1,8 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,8 +22,5 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "location")
     private Location location;
-
-    @OneToMany(mappedBy = "room")
-    Set<Section> sections;
 
 }

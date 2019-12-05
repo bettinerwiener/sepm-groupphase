@@ -17,10 +17,4 @@ public class News {
     @Column(nullable = false, length = 255)
     private String entry;
 
-    @OneToMany(mappedBy = "news")
-    private Set<EmployeeNewsEvent> employeeNewsEvents;
-
-    @OneToMany(mappedBy = "news", cascade = CascadeType.PERSIST)
-    private Set<CustomerNews> customerNews;
-
 }

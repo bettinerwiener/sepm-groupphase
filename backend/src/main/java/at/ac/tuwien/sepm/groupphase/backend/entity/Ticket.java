@@ -27,8 +27,8 @@ public class Ticket {
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "location")
-    private Location location;
+    @JoinColumn(name = "room")
+    private Room room;
 
     @ManyToMany(mappedBy = "tickets")
     private Set<User> employees;

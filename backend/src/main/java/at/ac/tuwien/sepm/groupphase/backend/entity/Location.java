@@ -25,12 +25,4 @@ public class Location {
     @Column(nullable = false, name = "postal_code")
     private Long postalCode;
 
-    @OneToMany(mappedBy = "location")
-    Set<Ticket> tickets;
-
-    @OneToMany(mappedBy = "location")
-    Set<EventPerformance> eventPerformances;
-
-    @OneToMany(mappedBy = "location")
-    Set<Room> rooms;
 }
