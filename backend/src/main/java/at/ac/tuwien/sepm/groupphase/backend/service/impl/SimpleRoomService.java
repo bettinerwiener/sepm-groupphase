@@ -18,8 +18,6 @@ public class SimpleRoomService implements RoomService {
 
     private RoomRepository roomRepository;
 
-    public SimpleRoomService() {};
-
     public SimpleRoomService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }

@@ -25,12 +25,6 @@ public class Employee {
     @Column(nullable=false, length = 20)
     private String password;
 
-    @OneToMany(mappedBy = "employee")
-    Set<Event> events;
-
-    @OneToMany(mappedBy = "employee")
-    Set<EmployeeNewsEvent> employeeNewsEvents;
-
     @ManyToMany
     @JoinTable (
         name = "employee_buys_ticket",

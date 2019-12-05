@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,14 +21,13 @@ public class SimplePerformanceService implements PerformanceService {
 
     private PerformanceRepository performanceRepository;
 
-    public SimplePerformanceService() {}
-
     public SimplePerformanceService(PerformanceRepository performanceRepository) {
         this.performanceRepository = performanceRepository;
     }
 
     @Override
-    public EventPerformance create(Event event, Room room, LocalDateTime dateTime) throws NotCreatedException {
+    public EventPerformance create(Event event, Room room, Date dateTime) throws NotCreatedException {
+        log.info("Creating performance for event %s ...", event.getTitle());
         try {
             EventPerformance eventPerformance = new EventPerformance();
             eventPerformance.setEvent(event);
@@ -43,11 +43,26 @@ public class SimplePerformanceService implements PerformanceService {
 
     @Override
     public List<EventPerformance> getAll() throws NotFoundException {
-        return null;
+        log.info("Getting all performances ...");
+        try {
+            List<EventPerformance> eventPerformances = this.performanceRepository.findAll();
+            if (eventPerformances != null && !eventPerformances.isEmpty()) {
+                return eventPerformances;
+            } else {
+                log.error("No performances could be found");
+                throw new NotFoundException(String.format("No performances could be found"));
+            }
+        } catch (DataAccessException dae) {
+            log.error("No performances could be found: %s",
+                dae.getMessage());
+            throw new NotFoundException(String.format("No performances could be found: %s",
+                dae.getMessage()));
+        }
     }
 
     @Override
     public List<EventPerformance> findByEvent(Event event) throws NotFoundException {
+        log.info("Getting all performances for event %s ...", event.getTitle());
         try {
             List<EventPerformance> eventPerformances = this.performanceRepository.findByEvent(event);
             if (eventPerformances != null && !eventPerformances.isEmpty()) {

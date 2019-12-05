@@ -39,15 +39,6 @@ public class Event {
     @Column(nullable = false)
     private  Double duration;
 
-    @OneToMany(mappedBy = "event")
-    Set<Ticket> tickets;
-
-    @OneToMany(mappedBy = "event")
-    Set<EventPerformance> eventPerformances;
-
-    @OneToMany(mappedBy = "event")
-    Set<EmployeeNewsEvent> employeeNewsEvents;
-
     @ManyToOne
     @JoinColumn(name = "employee", nullable = false)
     private User employee;

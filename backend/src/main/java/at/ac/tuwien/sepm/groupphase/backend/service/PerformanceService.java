@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Room;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface PerformanceService {
      * @return the created performance
      * @throws NotCreatedException in case something goes wrong while persisting the entity
      */
-    public EventPerformance create(Event event, Room room, LocalDateTime dateTime) throws NotCreatedException;
+    public EventPerformance create(Event event, Room room, Date dateTime) throws NotCreatedException;
 
     public List<EventPerformance> getAll() throws NotFoundException;
 

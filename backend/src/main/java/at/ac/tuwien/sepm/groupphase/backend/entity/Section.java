@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,19 +27,18 @@ public class Section {
     }
 
     @Id
+    @Enumerated(EnumType.STRING)
     private Letter id;
 
     @Column(nullable = false, name = "seats_selectable")
     private Boolean seatsSelectable;
 
     @Column(nullable = false, name = "price_category")
+    @Enumerated(EnumType.STRING)
     private PriceCategory priceCategory;
 
     @ManyToOne
     @JoinColumn(name = "room")
     private Room room;
-
-    @OneToMany(mappedBy = "section")
-    Set<Seat> seats;
 
 }
