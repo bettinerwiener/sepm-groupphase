@@ -48,9 +48,10 @@ public class CustomUserDetailService implements UserService {
     @Override
     public User findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
-        List<User> user = userRepository.findByEmail(email);
-        if (!user.isEmpty()) return user.get(0);
-        // TODO: GLEICHE EMAILS SOLLTE NICHT ERLAUBT SEIN
+       User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return user;
+        }
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
     }
 }

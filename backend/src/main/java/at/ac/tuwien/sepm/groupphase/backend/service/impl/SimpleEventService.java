@@ -34,9 +34,9 @@ public class SimpleEventService implements EventService {
     public Event create(Event event, String email) throws NotCreatedException {
         LOGGER.info("EventService: creating event");
         try {
-            List<User> employees = this.userRepository.findByEmail(email);
-            if (employees != null && !employees.isEmpty()) {
-                event.setEmployee(employees.get(0));
+            User employee = this.userRepository.findByEmail(email);
+            if (employee != null) {
+                event.setEmployee(employee);
                 return this.eventRepository.save(event);
             } else {
                 throw new NotCreatedException(String.format(
