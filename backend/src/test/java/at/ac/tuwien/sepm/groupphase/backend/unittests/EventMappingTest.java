@@ -47,8 +47,8 @@ public class EventMappingTest {
             .withTitle("Les Misérables")
             .withCategory(Event.Category.FILM)
             .withDuration(4.5)
-            .withShortDescription("lajdfl")
-            .withContents("kalsdjf")
+            .withShortDescription("kenn ich nicht")
+            .withContents("une histoire cruelle")
             .build();
 
         Event event = eventMapper.eventDtoToEvent(eventDto);

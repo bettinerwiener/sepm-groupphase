@@ -62,14 +62,14 @@ CREATE TABLE IF NOT EXISTS location (
 CREATE TABLE IF NOT EXISTS room (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(50) NOT NULL,
-    location BIGINT REFERENCES location(id)
+    location BIGINT NOT NULL REFERENCES location(id)
 );
 
 CREATE TABLE IF NOT EXISTS section (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     letter      VARCHAR(1) CHECK (letter IN ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')),
     price_category  VARCHAR(10) CHECK (price_category IN ('EXPENSIVE', 'CHEAP')),
-    room    BIGINT REFERENCES room(id),
+    room    BIGINT NOT NULL REFERENCES room(id),
     seats_selectable SMALLINT CHECK (seats_selectable IN (0, 1))
 );
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS seat (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     seat_number     INTEGER NOT NULL,
     row_letter      VARCHAR(1) NOT NULL,
-    section     BIGINT REFERENCES section(id)
+    section     BIGINT NOT NULL REFERENCES section(id)
 );
 
 CREATE TABLE IF NOT EXISTS is_performed_at (

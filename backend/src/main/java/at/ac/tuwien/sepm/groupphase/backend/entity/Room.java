@@ -20,7 +20,7 @@ public class Room {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "location")
+    @JoinColumn(name = "location",nullable = false)
     private Location location;
 
 }
