@@ -32,7 +32,6 @@ public class CustomUserDetailService implements UserService {
         LOGGER.debug("Load all user by email");
         try {
             User user = findApplicationUserByEmail(email);
-
             List<GrantedAuthority> grantedAuthorities;
             if (user.getIsEmployee())
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
@@ -52,5 +51,51 @@ public class CustomUserDetailService implements UserService {
         if (!user.isEmpty()) return user.get(0);
         // TODO: GLEICHE EMAILS SOLLTE NICHT ERLAUBT SEIN
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+    }
+
+    @Override
+    public boolean addLogincount(String email) {
+        List<User> users = userRepository.findByEmail(email);
+        if (!users.isEmpty()) {
+            User user = users.get(0);
+            user.setLoginCount(user.getLoginCount() + 1);
+            if (user.getLoginCount() > 3) {
+                user.setLocked(true);
+            }
+            userRepository.saveAndFlush(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean resetLogincount(String email) {
+        List<User> users = userRepository.findByEmail(email);
+        if (!users.isEmpty()) {
+            users.get(0).setLoginCount(0);
+            userRepository.saveAndFlush(users.get(0));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean unlockUser(String email) {
+        List<User> users = userRepository.findByEmail(email);
+        if (!users.isEmpty()) {
+            users.get(0).setLocked(false);
+            userRepository.saveAndFlush(users.get(0));
+            return true;
+        }
+        throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+    }
+
+    @Override
+    public boolean isLocked(String email) {
+        List<User> users = userRepository.findByEmail(email);
+        if (!users.isEmpty()) {
+            return users.get(0).getLocked();
+        }
+        return false;
     }
 }

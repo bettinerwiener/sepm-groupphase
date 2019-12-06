@@ -2,6 +2,8 @@ package at.ac.tuwien.sepm.groupphase.backend.security;
 
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
+import at.ac.tuwien.sepm.groupphase.backend.exception.LockedException;
+import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +28,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
+    private final UserService userService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecurityProperties securityProperties,
-                                   JwtTokenizer jwtTokenizer) {
+                                   JwtTokenizer jwtTokenizer, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
         setFilterProcessesUrl(securityProperties.getLoginUri());
+        this.userService = userService;
     }
 
     @Override
@@ -39,6 +43,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         throws AuthenticationException {
         try {
             UserLoginDto user = new ObjectMapper().readValue(request.getInputStream(), UserLoginDto.class);
+            //count login trys
+            this.userService.addLogincount(user.getEmail());
+            if (this.userService.isLocked(user.getEmail())) {
+                throw new BadCredentialsException(user.getEmail() + " is locked!");
+            }
+
             //Compares the user with CustomUserDetailService#loadUserByUsername and check if the credentials are correct
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 user.getEmail(),
@@ -62,7 +72,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException {
+
         User user = ((User) authResult.getPrincipal());
+        String userName = user.getUsername();
+
+        this.userService.resetLogincount(userName);
 
         List<String> roles = user.getAuthorities()
             .stream()
