@@ -24,6 +24,8 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
+import { SeatplanComponent } from './components/seatplan/seatplan.component';
+import { EventItemComponent } from './components/event-item/event-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +46,8 @@ import { EventListItemComponent } from './components/event-list-item/event-list-
     CartComponent,
     EventListItemComponent,
     SliderComponent,
+    SeatplanComponent,
+    EventItemComponent,
   ],
   imports: [
     BrowserModule,
