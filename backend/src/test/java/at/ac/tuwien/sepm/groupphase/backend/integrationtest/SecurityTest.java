@@ -1,4 +1,4 @@
-package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
+/*package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 /**
  * Security is a cross-cutting concern, however for the sake of simplicity it is tested against the message endpoint
  */
+/*
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -144,4 +145,4 @@ public class SecurityTest implements TestData {
 
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
     }
-}
+}*/

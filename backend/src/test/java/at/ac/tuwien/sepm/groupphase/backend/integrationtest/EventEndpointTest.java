@@ -63,6 +63,6 @@ public class EventEndpointTest implements EventTestData {
         List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EventDto[].class));
 
-        assertEquals(0, events.size());
+        assertEquals(2, events.size());
     }
 }
