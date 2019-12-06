@@ -1,0 +1,9 @@
+<div class="stage">Stage</div>
+<div class="seatplan">
+    <div *ngFor="let row of seatplan.rows" class="singleRow">
+        <button (click)="select(seat)" *ngFor="let seat of row" [ngClass]="{'selected': seat.selected, 'btn': true,  'seat': true,
+            'blue': (seat.sector === 0), 'red': (seat.sector === 1), 'orange': (seat.sector === 2), 'yellow': (seat.sector === 3), 'aqua': (seat.sector === 4)}"
+            data-toggle="button" aria-pressed="false" autocomplete="off" [disabled]="seat.taken">
+        </button>
+    </div>
+</div>
