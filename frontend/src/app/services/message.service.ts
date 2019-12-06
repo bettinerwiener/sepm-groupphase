@@ -38,5 +38,4 @@ export class MessageService {
     console.log('Create message with title ' + message.title);
     return this.httpClient.post<Message>(this.messageBaseUri, message);
   }
-
 }

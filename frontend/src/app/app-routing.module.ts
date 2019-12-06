@@ -18,9 +18,6 @@ import {CartComponent} from './components/cart/cart.component';
 
 import {AuthGuard} from './guards/auth.guard';
 import {MessageComponent} from './components/message/message.component';
-import { SeatplanComponent } from './components/seatplan/seatplan.component';
-import { EventItemComponent } from './components/event-item/event-item.component';
-import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -34,10 +31,7 @@ const routes: Routes = [
   {path: 'cart', component: CartComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'orders', component: OrdersComponent},
-  {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
-  {path: 'test', component: SeatplanComponent},
-  {path: 'event', component: EventItemComponent},
-  {path: 'event-list-item', component: EventListItemComponent}
+  {path: 'message', canActivate: [AuthGuard], component: MessageComponent}
 ];
 
 @NgModule({
