@@ -36,9 +36,9 @@ public class PerformanceEndpoint {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PerformanceDto create(@RequestBody EventDto eventDto, @RequestBody RoomDto roomDto, @RequestBody Date date) {
-        return this.performanceMapper.performanceToPerformanceDto(this.performanceService.create(this.eventMapper.eventDtoToEvent(eventDto),
-            this.roomMapper.roomDtoToRoom(roomDto), date));
+    public PerformanceDto create(@RequestBody PerformanceDto performanceDto) {
+        return this.performanceMapper.performanceToPerformanceDto(
+            this.performanceService.create(this.performanceMapper.performanceDtoToPerformance(performanceDto)));
     }
 
     @GetMapping

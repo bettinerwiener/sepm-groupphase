@@ -26,13 +26,9 @@ public class SimplePerformanceService implements PerformanceService {
     }
 
     @Override
-    public EventPerformance create(Event event, Room room, Date dateTime) throws NotCreatedException {
-        log.info("Creating performance for event %s ...", event.getTitle());
+    public EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException {
+        log.info("Creating performance for event %s ...", eventPerformance.getEvent().getTitle());
         try {
-            EventPerformance eventPerformance = new EventPerformance();
-            eventPerformance.setEvent(event);
-            eventPerformance.setDate(dateTime);
-            eventPerformance.setRoom(room);
             this.performanceRepository.save(eventPerformance);
             return eventPerformance;
         } catch (DataAccessException dae) {

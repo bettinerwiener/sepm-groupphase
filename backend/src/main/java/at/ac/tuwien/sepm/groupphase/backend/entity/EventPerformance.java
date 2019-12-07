@@ -1,10 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.Generated;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "is_performed_at")
@@ -24,7 +23,6 @@ public class EventPerformance {
     private Room room;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date date;
+    private LocalDateTime date;
 
 }
