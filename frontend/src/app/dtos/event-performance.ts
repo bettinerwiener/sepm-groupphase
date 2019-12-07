@@ -1,10 +1,10 @@
 import { RouterModule } from '@angular/router';
 import { Room } from './room';
 
-export class Performance {
+export class EventPerformance {
     constructor(
         public event: Event,
-        room: Room,
-        date: Date,
+        public room: Room,
+        public date: Date,
     ) {}
 }
