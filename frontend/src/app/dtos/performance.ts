@@ -3,7 +3,7 @@ import { Room } from './room';
 
 export class Performance {
     constructor(
-        event: Event,
+        public event: Event,
         room: Room,
         date: Date,
     ) {}
