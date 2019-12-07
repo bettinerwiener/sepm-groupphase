@@ -27,7 +27,7 @@ import { EventListItemComponent } from './components/event-list-item/event-list-
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { EventItemComponent } from './components/event-item/event-item.component';
 import { SeatplanComponent } from './components/seatplan/seatplan.component';
-import { CreatePerformanceComponent } from './components/create-event-performance/create-event-performance.component';
+import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import { CreatePerformanceComponent } from './components/create-event-performanc
     CreateEventComponent,
     EventItemComponent,
     SeatplanComponent,
-    CreatePerformanceComponent
+    CreateEventPerformanceComponent
   ],
   imports: [
     BrowserModule,
