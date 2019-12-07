@@ -20,25 +20,29 @@ public class Ticket {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "event")
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "location")
+    @JoinColumn(name = "location_id")
     private Location location;
 
-    @ManyToMany(mappedBy = "tickets")
-    private Set<User> employees;
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
-    @ManyToMany(mappedBy = "tickets")
-    private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Ticket() {};
 
-    public Ticket(Event event, Location location, Status status) {
+    public Ticket(Event event, Location location, Status status, Seat seat) {
         this.event = event;
         this.location = location;
         this.status = status;
+
     }
 
     public Long getId() {

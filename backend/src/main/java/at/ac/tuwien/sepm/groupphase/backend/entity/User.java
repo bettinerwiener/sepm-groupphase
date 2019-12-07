@@ -1,10 +1,16 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Data
 public class User {
 
     @Id
@@ -31,43 +37,6 @@ public class User {
 
     @Column(nullable = false, name = "login_count")
     private int loginCount;
-
-    @ManyToMany
-    @JoinTable (
-        name = "customer_buys_ticket",
-        joinColumns = @JoinColumn(name = "customer"),
-        inverseJoinColumns = @JoinColumn(name = "ticket")
-    )
-    private Set<Ticket> tickets;
-
-    @ManyToMany
-    @JoinTable (
-        name = "employee_buys_ticket",
-        joinColumns = @JoinColumn(name = "employee"),
-        inverseJoinColumns = @JoinColumn(name = "ticket")
-    )
-    private Set<Ticket> ticketsOfEmployee;
-
-    @OneToMany(mappedBy = "user")
-    private Set<CustomerNews> customerNews;
-
-
-    public User() {
-    }
-
-    public User(String email, String password, Boolean locked) {
-        this.email = email;
-        this.password = password;
-        this.locked = locked;
-    }
-
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.locked = false;
-    }
 
     public Long getId() {
         return id;
@@ -117,36 +86,12 @@ public class User {
         this.locked = locked;
     }
 
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public Set<CustomerNews> getCustomerNews() {
-        return customerNews;
-    }
-
-    public void setCustomerNews(Set<CustomerNews> customerNews) {
-        this.customerNews = customerNews;
-    }
-
     public Boolean getEmployee() {
         return isEmployee;
     }
 
     public void setEmployee(Boolean employee) {
         isEmployee = employee;
-    }
-
-    public Set<Ticket> getTicketsOfEmployee() {
-        return ticketsOfEmployee;
-    }
-
-    public void setTicketsOfEmployee(Set<Ticket> ticketsOfEmployee) {
-        this.ticketsOfEmployee = ticketsOfEmployee;
     }
 
     public int getLoginCount() {
@@ -157,16 +102,4 @@ public class User {
         this.loginCount = loginCount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getId().equals(user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getLocked(), getTickets());
-    }
 }
