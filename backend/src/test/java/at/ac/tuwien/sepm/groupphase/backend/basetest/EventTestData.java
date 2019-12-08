@@ -10,6 +10,7 @@ public interface EventTestData {
 
     String BASE_URI = "/api/v1";
     String EVENT_BASE_URI = BASE_URI + "/events";
+    String EVENT_BASE_URI_TOP_TEN = "/api/v1/events/topten";
 
     String ADMIN_USER = "hugo1@gmail.com";
     List<String> ADMIN_ROLES = new ArrayList<>() {

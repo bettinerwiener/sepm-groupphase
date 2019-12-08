@@ -24,4 +24,6 @@ public interface EventService {
      * @throws NotFoundException in case something went wrong when accessing the database
      */
     List<Event> getAll() throws NotFoundException;
+
+    List<Event> getTopEvents() throws NotFoundException;
 }

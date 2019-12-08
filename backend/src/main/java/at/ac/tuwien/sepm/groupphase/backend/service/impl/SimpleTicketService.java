@@ -24,4 +24,9 @@ public class SimpleTicketService implements TicketService {
     public List<Ticket> createForPerformance(EventPerformance eventPerformance) throws NotCreatedException {
         return null;
     }
+
+    @Override
+    public List<Ticket> getAll() {
+        return this.ticketRepository.findAll();
+    }
 }

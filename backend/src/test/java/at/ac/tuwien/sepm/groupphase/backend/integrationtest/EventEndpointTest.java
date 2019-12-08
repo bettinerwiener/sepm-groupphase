@@ -65,4 +65,21 @@ public class EventEndpointTest implements EventTestData {
 
         assertEquals(2, events.size());
     }
+
+    @Test
+    public void givenNothing_whenFindTopTen_thenListSizeEquals1() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI_TOP_TEN)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventDto[].class));
+
+        assertEquals(1, events.size());
+    }
 }

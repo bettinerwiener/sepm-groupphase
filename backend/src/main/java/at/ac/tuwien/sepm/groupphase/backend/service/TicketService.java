@@ -15,4 +15,6 @@ public interface TicketService {
      * @throws NotCreatedException in case something goes while creating tickets
      */
     public List<Ticket> createForPerformance(EventPerformance eventPerformance) throws NotCreatedException;
+
+    List<Ticket> getAll();
 }

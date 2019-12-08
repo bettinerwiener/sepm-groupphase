@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +63,25 @@ public class SimpleEventService implements EventService {
             LOGGER.error("EventService: no event found: " + dae.getMessage());
             throw new NotFoundException(String.format("No event found: %s",
                 dae.getMessage()));
+        }
+    }
+
+    public List<Event> getTopEvents() throws NotFoundException {
+        LOGGER.info("EventService: getting top events ...");
+        try {
+            List<Event> top10Events = new ArrayList<>(10);
+            int count = 0;
+            for (Event event : this.eventRepository.findTopEvents()) {
+                if (count > 9) {
+                    break;
+                }
+                top10Events.add(event);
+                count++;
+            }
+            return top10Events;
+        } catch (DataAccessException dae) {
+            LOGGER.error("Could not fetch top ten events: {}", dae.getMessage());
+            throw new NotFoundException(String.format("Could not fetch top ten events: %s", dae.getMessage()));
         }
     }
 }
