@@ -27,9 +27,5 @@ public class OrderDto {
 
     private List<Ticket> tickets;
 
-    private String status;
-
-
-
 
 }

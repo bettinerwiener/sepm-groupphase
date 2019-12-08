@@ -42,9 +42,8 @@ public class Event {
     @Column(nullable = false)
     private  Double duration;
 
-    @ManyToOne
-    @JoinColumn(name = "employee", nullable = false)
-    private User employee;
+
+    private Long employee;
 
     @ManyToOne
     @JoinTable(

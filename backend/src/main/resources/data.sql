@@ -11,12 +11,9 @@ insert into artist (id, first_name, last_name)
            (2, 'Kathryn', 'Bigelow');
 
 insert into customer_order (id, user_id, status)
-    values (1, 3, 'RESERVATION'),
-           (2, 4, 'RESERVATION'),
-           (3, 1, 'RESERVATION'),
+    values (3, 1, 'PURCHASE'),
            (4, 1, 'RESERVATION'),
-           (5, 1, 'RESERVATION'),
-           (6, 3, 'RESERVATION');
+           (5, 1, 'RESERVATION');
 
 
 insert into event (id, title, abstract, contents, category, duration, employee)
@@ -60,9 +57,11 @@ values (1, 1, 1, NOW()),
        (2, 2, 2, NOW());
 
 insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
-    values (1, 200,1,  3, 1, 'RESERVED'),
-           (2, 100,1, 3, 4, 'RESERVED'),
-           (3, 30,2, 3, 6, 'RESERVED'),
-           (4, 24,2, 1, 5, 'RESERVED');
+    values (1, 200, 1, 3, 1, 'RESERVED'),
+           (2, 100, 1, 3, 4, 'RESERVED'),
+           (3, 30,2, 4, 6, 'RESERVED'),
+           (4, 24,2, 4, 5, 'RESERVED'),
+          (5, 35,2, 5, 6, 'RESERVED'),
+           (6, 22,2, 5, 5, 'RESERVED');
 
 

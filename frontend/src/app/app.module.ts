@@ -24,6 +24,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
+import { OrderComponent } from './components/order/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { EventListItemComponent } from './components/event-list-item/event-list-
     CartComponent,
     EventListItemComponent,
     SliderComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
