@@ -8,11 +8,40 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByEmail(String email);
+    /**
+     * Find all users with the given email.
+     *
+     * @return all users with given email
+     */
+    User findFirstByEmail (String email);
+
+    List<User> findByEmail (String email);
 
 
+
+
+
+
+ /*
+    private final Customer user;
+    private final Customer admin;
+
+    @Autowired
+    public UserRepository(PasswordEncoder passwordEncoder) {
+        user = new Customer("user@email.com", passwordEncoder.encode("password"), false);
+        admin = new Customer("admin@email.com", passwordEncoder.encode("password"), true);
+    }
+
+    public Customer findUserByEmail(String email) {
+        if (email.equals(user.getEmail())) return user;
+        if (email.equals(admin.getEmail())) return admin;
+        return null; // In this case null is returned to fake Repository behavior
+    }
+*/
 
 }

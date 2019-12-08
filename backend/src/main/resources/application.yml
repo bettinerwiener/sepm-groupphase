@@ -32,6 +32,7 @@ security:
     white-list:
       # Browser requests
       - /
+      - /api/v1/user/register
       - /favicon.ico
       - /csrf
       # Swagger

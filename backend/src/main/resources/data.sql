@@ -6,6 +6,7 @@ insert into user (id, first_name, last_name, email, password, is_employee)
     values (3, 'Hugo', 'Deval', 'hugo1@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', 1),
 (           4, 'Susan', 'Bigfoot', 'susan1@gmx.at', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', 1);
 
+
 insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),
            (2, 'Kathryn', 'Bigelow');
