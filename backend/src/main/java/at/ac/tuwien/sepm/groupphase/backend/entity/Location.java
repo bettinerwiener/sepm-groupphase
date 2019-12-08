@@ -24,9 +24,6 @@ public class Location {
     private Long postalCode;
 
     @OneToMany(mappedBy = "location")
-    Set<Ticket> tickets;
-
-    @OneToMany(mappedBy = "location")
     Set<EventPerformance> eventPerformances;
 
     @OneToMany(mappedBy = "location")
@@ -81,13 +78,7 @@ public class Location {
         this.postalCode = postalCode;
     }
 
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
 
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
 
     public Set<Room> getRooms() {
         return rooms;

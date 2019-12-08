@@ -32,8 +32,6 @@ public class Event {
     @Column(nullable = false)
     private Long duration;
 
-    @OneToMany(mappedBy = "event")
-    Set<Ticket> tickets;
 
     @OneToMany(mappedBy = "event")
     Set<EventPerformance> eventPerformances;
@@ -77,7 +75,6 @@ public class Event {
         this.contents = contents;
         this.category = category;
         this.duration = duration;
-        this.tickets = tickets;
         this.eventPerformances = eventPerformances;
         this.employeeNewsEvents = employeeNewsEvents;
         this.employee = employee;
@@ -132,13 +129,6 @@ public class Event {
         this.duration = duration;
     }
 
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
 
     public Set<EventPerformance> getEventPerformances() {
         return eventPerformances;

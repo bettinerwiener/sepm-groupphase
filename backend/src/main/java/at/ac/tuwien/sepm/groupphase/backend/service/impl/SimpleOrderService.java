@@ -36,7 +36,7 @@ public class SimpleOrderService implements OrderService {
 
     public List<Order> findByUserId(Long id) {
         try {
-            return this.orderRepository.findByUser_Id(id);
+            return this.orderRepository.findByUserId(id);
         } catch (NotFoundException nfe) {
             throw new NotFoundException(String.format("The orders could not be found"));
 

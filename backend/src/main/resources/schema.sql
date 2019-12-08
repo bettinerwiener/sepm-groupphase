@@ -94,11 +94,8 @@ CREATE TABLE IF NOT EXISTS customer_order (
 
 CREATE TABLE IF NOT EXISTS ticket (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      event       BIGINT REFERENCES is_performed_at(event),
-      location    BIGINT REFERENCES is_performed_at(location),
-      seat        BIGINT REFERENCES seat(id),
       status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
-      customer_order BIGINT REFERENCES customer_order(id),
+      customer_order_id BIGINT REFERENCES customer_order(id),
 );
 
 

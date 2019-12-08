@@ -16,5 +16,5 @@ public interface OrderRepository extends JpaRepository <Order, Long> {
      * for now there are no extra methods needed except those defined int JpaRepository
      */
 
-    List<Order> findByUser_Id(Long id);
+    List<Order> findByUserId(Long id);
 }
