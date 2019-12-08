@@ -21,6 +21,7 @@ public class Ticket {
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne

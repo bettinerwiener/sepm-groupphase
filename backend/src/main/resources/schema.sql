@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS ticket (
       event       BIGINT REFERENCES is_performed_at(event),
       room        BIGINT REFERENCES is_performed_at(room),
       seat        BIGINT REFERENCES seat(id),
-      status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
+      `status`      VARCHAR(50) CHECK (`status` IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
       price       DECIMAL NOT NULL CHECK (price >= 0)
 );
 

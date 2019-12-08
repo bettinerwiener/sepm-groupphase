@@ -50,9 +50,9 @@ insert into is_performed_at(event, room, date)
 values (1, 1, NOW()),
        (2, 2, NOW());
 
-insert into ticket (id, event, room, seat, status, price)
-    values (1, 1, 1, 1, 'AVAILABLE', 5),
-           (2, 1, 1, 2, 'AVAILABLE', 5),
+insert into ticket (id, event, room, seat, `status`, price)
+    values (1, 1, 1, 1, 'BOUGHT', 5),
+           (2, 1, 1, 2, 'BOUGHT', 5),
            (3, 1, 1, 3, 'AVAILABLE', 5),
            (4, 1, 1, 4, 'AVAILABLE', 5),
            (5, 1, 1, 5, 'AVAILABLE', 10),
@@ -64,5 +64,4 @@ insert into ticket (id, event, room, seat, status, price)
            (11, 2, 2, 11, 'AVAILABLE', 5),
            (12, 2, 2, 12, 'AVAILABLE', 5),
            (13, 2, 2, 13, 'AVAILABLE', 5);
-
 

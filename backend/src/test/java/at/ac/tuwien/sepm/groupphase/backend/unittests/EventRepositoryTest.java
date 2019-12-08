@@ -2,9 +2,11 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.EventTestData;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +32,9 @@ public class EventRepositoryTest implements EventTestData {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TicketRepository ticketRepository;
 
     @Test
     public void findEventByIdReturnsEvent() {
@@ -59,6 +65,15 @@ public class EventRepositoryTest implements EventTestData {
         Event createdEvent = eventRepository.save(event);
         assertAll(
             () -> assertEquals(event.getTitle(), createdEvent.getTitle())
+        );
+    }
+
+    @Test
+    public void findTopEventsReturnsEventWithId1AtTop() {
+        List<Ticket> tickets = this.ticketRepository.findAll();
+        List<Event> events = this.eventRepository.findTopEvents();
+        assertAll(
+            () -> assertEquals(1L, events.get(0).getId())
         );
     }
 
