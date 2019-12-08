@@ -17,10 +17,6 @@ public class Section {
         H
     }
 
-    private enum PriceCategory {
-        EXPENSIVE,
-        CHEAP
-    }
 
     @Id
     private Letter id;
@@ -28,8 +24,6 @@ public class Section {
     @Column(nullable = false, name = "seats_selectable")
     private Boolean seatsSelectable;
 
-    @Column(nullable = false, name = "price_category")
-    private PriceCategory priceCategory;
 
     @ManyToOne
     @JoinColumn(name = "room")
@@ -39,10 +33,9 @@ public class Section {
     Set<Seat> seats;
 
     public Section() {};
-    public Section(Letter id, Boolean seatsSelectable, PriceCategory priceCategory, Room room) {
+    public Section(Letter id, Boolean seatsSelectable, Room room) {
         this.id = id;
         this.seatsSelectable = seatsSelectable;
-        this.priceCategory = priceCategory;
         this.room = room;
     }
 
@@ -60,14 +53,6 @@ public class Section {
 
     public void setSeatsSelectable(Boolean seatsSelectable) {
         this.seatsSelectable = seatsSelectable;
-    }
-
-    public PriceCategory getPriceCategory() {
-        return priceCategory;
-    }
-
-    public void setPriceCategory(PriceCategory priceCategory) {
-        this.priceCategory = priceCategory;
     }
 
     public Room getRoom() {

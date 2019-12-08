@@ -22,11 +22,16 @@ public class Order {
     @Column(name = "user_id")
     private Long userId;
 
+
+    private String status;
+
+
     /**
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
      */
+
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer_order")

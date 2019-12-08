@@ -10,13 +10,13 @@ insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),
            (2, 'Kathryn', 'Bigelow');
 
-insert into customer_order (id, user_id)
-    values (1, 3),
-           (2, 4),
-           (3, 1),
-           (4, 1),
-           (5, 1),
-           (6, 3);
+insert into customer_order (id, user_id, status)
+    values (1, 3, 'RESERVATION'),
+           (2, 4, 'RESERVATION'),
+           (3, 1, 'RESERVATION'),
+           (4, 1, 'RESERVATION'),
+           (5, 1, 'RESERVATION'),
+           (6, 3, 'RESERVATION');
 
 
 insert into event (id, title, abstract, contents, category, duration, employee)
@@ -31,14 +31,14 @@ insert into room (id, name, location)
     values (1, 'Schubert', 1),
            (2, 'Zweig', 2);
 
-insert into section (id, letter, room, seats_selectable, price_category)
-    values (1, 'A', 1, 0, 'CHEAP'),
-           (2, 'B', 1, 0, 'CHEAP'),
-           (3, 'C', 1, 0, 'CHEAP'),
-           (4, 'A', 2, 0, 'CHEAP'),
-           (5, 'B', 2, 0, 'CHEAP'),
-           (6, 'C', 2, 0, 'CHEAP'),
-           (7, 'D', 2, 0, 'CHEAP');
+insert into section (id, letter, room, seats_selectable)
+    values (1, 'A', 1, 0),
+           (2, 'B', 1, 0),
+           (3, 'C', 1, 0),
+           (4, 'A', 2, 0),
+           (5, 'B', 2, 0),
+           (6, 'C', 2, 0),
+           (7, 'D', 2, 0);
 
 insert into seat (id, seat_number, row_letter, section)
     values (1, 1, 'A', 1),
@@ -55,14 +55,14 @@ insert into seat (id, seat_number, row_letter, section)
            (12, 1, 'C', 6),
            (13, 2, 'C', 7);
 
-insert into is_performed_at(event, location, date)
-values (1, 1, NOW()),
-       (2, 2, NOW());
+insert into is_performed_at(id, event, room, date)
+values (1, 1, 1, NOW()),
+       (2, 2, 2, NOW());
 
-insert into ticket (id, customer_order_id)
-    values (1,  3),
-           (2,  3),
-           (3,  3),
-           (4,  1);
+insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
+    values (1, 200,1,  3, 1, 'RESERVED'),
+           (2, 100,1, 3, 4, 'RESERVED'),
+           (3, 30,2, 3, 6, 'RESERVED'),
+           (4, 24,2, 1, 5, 'RESERVED');
 
 

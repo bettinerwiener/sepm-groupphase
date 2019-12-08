@@ -67,7 +67,6 @@ CREATE TABLE IF NOT EXISTS room (
 CREATE TABLE IF NOT EXISTS section (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     letter      VARCHAR(1) CHECK (letter IN ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')),
-    price_category  VARCHAR(10) CHECK (price_category IN ('EXPENSIVE', 'CHEAP')),
     room    BIGINT REFERENCES room(id),
     seats_selectable SMALLINT CHECK (seats_selectable IN (0, 1))
 );
@@ -80,22 +79,27 @@ CREATE TABLE IF NOT EXISTS seat (
 );
 
 CREATE TABLE IF NOT EXISTS is_performed_at (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     event   BIGINT REFERENCES event(id),
-    location BIGINT REFERENCES location(id),
-    `date`    DATE NOT NULL,
-    CONSTRAINT is_performed_at_pk PRIMARY KEY (event, location, `date`)
+    room BIGINT REFERENCES room(id),
+    `date`    DATETIME NOT NULL,
+    CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
+
 );
 
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      user_id BIGINT REFERENCES user(id)
+      user_id BIGINT REFERENCES user(id),
+      status      VARCHAR(50) CHECK (status IN ('RESERVATION', 'PURCHASE'))
 );
-
 
 CREATE TABLE IF NOT EXISTS ticket (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
       customer_order_id BIGINT REFERENCES customer_order(id),
+      is_performed_at_id BIGINT REFERENCES is_performed_at(id),
+      seat_id BIGINT REFERENCES seat(id),
+      status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
+      price DECIMAL NOT NULL
 );
 
 

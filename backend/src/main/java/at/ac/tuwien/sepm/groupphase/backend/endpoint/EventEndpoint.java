@@ -26,13 +26,4 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public EventDto create(@RequestBody EventDto eventDto) {
-        try {
-            return eventMapper.EntityToDto(eventService.create(eventMapper.DtoToEntity(eventDto)));
-        } catch (NotCreatedException nce) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, nce.getMessage(), nce);
-        }
-    }
 }
