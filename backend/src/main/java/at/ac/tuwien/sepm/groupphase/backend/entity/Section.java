@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 public class Section {
 
-    private enum Letter {
+    public enum Letter {
         A,
         B,
         C,
@@ -21,17 +21,20 @@ public class Section {
         H
     }
 
-    private enum PriceCategory {
+    public enum PriceCategory {
         EXPENSIVE,
         CHEAP
     }
 
     @Id
-    @Enumerated(EnumType.STRING)
-    private Letter id;
+    private Long id;
 
     @Column(nullable = false, name = "seats_selectable")
     private Boolean seatsSelectable;
+
+    @Column(nullable = false, name = "letter")
+    @Enumerated(EnumType.STRING)
+    private Letter letter;
 
     @Column(nullable = false, name = "price_category")
     @Enumerated(EnumType.STRING)

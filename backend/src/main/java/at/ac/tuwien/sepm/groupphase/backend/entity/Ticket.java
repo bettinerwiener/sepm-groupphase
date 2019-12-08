@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 public class Ticket {
 
-    private enum Status {
+    public enum Status {
         AVAILABLE,
         RESERVED,
         BOUGHT
@@ -38,4 +38,7 @@ public class Ticket {
         inverseJoinColumns = @JoinColumn(name = "ticket")
     )
     private User user;
+
+    @Column(nullable = false)
+    private Double price;
 }
