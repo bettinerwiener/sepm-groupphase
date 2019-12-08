@@ -11,6 +11,15 @@ insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),
            (2, 'Kathryn', 'Bigelow');
 
+insert into customer_order (id, user_id)
+    values (1, 3),
+           (2, 4),
+           (3, 1),
+           (4, 1),
+           (5, 1),
+           (6, 3);
+
+
 insert into event (id, title, abstract, contents, category, duration, employee)
     values (1, 'Star Wars', 'In a galaxy far far ...', 'The Star Wars universe ...', 'FILM', 2.5, 1),
            (2, 'Star Trek', 'May you live long ...', 'May you live long and prosper', 'FILM', 2.4, 2);

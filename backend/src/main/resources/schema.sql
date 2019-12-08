@@ -88,13 +88,21 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
     CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
 );
 
+CREATE TABLE IF NOT EXISTS customer_order (
+      id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+      user_id BIGINT REFERENCES user(id)
+);
+
+
 CREATE TABLE IF NOT EXISTS ticket (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
       event       BIGINT REFERENCES is_performed_at(event),
       room    BIGINT REFERENCES is_performed_at(room),
       seat        BIGINT REFERENCES seat(id),
-      status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT'))
+      status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
+      customer_order BIGINT REFERENCES customer_order(id),
 );
+
 
 
 CREATE TABLE IF NOT EXISTS user_buys_ticket (

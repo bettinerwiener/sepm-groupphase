@@ -12,7 +12,7 @@ import java.util.List;
 public class UserMapper {
 
     public UserDto entityToDto(User user) {
-        return new UserDto( user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getLocked(), user.getEmployee());
+        return new UserDto( user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getLocked(), user.getIsEmployee());
     }
 
     public User dtoToEntity(UserDto userDto) {

@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 public class Ticket {
 
-    private enum Status {
+    public enum Status {
         AVAILABLE,
         RESERVED,
         BOUGHT
@@ -24,12 +24,16 @@ public class Ticket {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "event")
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "room")
-    private Room room;
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
     @ManyToOne
     @JoinTable (
@@ -38,4 +42,6 @@ public class Ticket {
         inverseJoinColumns = @JoinColumn(name = "ticket")
     )
     private User user;
+
+
 }

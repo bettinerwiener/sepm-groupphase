@@ -30,7 +30,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
         user.setLastName(TEST_LAST_NAME);
         user.setEmail(TEST_EMAIL);
         user.setPassword(TEST_PASSWORD);
-        user.setEmployee(false);
+        user.setIsEmployee(false);
         user.setLocked(false);
 
 
