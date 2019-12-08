@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS location (
     street      VARCHAR(50) NOT NULL,
     city        VARCHAR(50) NOT NULL,
     postal_code BIGINT,
+    CONSTRAINT unique_location UNIQUE (name, street, city)
 );
 
 CREATE TABLE IF NOT EXISTS room (

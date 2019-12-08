@@ -1,11 +1,14 @@
 package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 
-import at.ac.tuwien.sepm.groupphase.backend.basetest.PerformanceTestData;
+import at.ac.tuwien.sepm.groupphase.backend.basetest.LocationTestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.PerformanceDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.PerformanceMapper;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.LocationDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.RoomDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.LocationMapper;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.RoomMapper;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class PerformanceEndpointTest implements PerformanceTestData {
+@Slf4j
+public class LocationEndpointTest implements LocationTestData {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +45,7 @@ public class PerformanceEndpointTest implements PerformanceTestData {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private PerformanceMapper performanceMapper;
+    private LocationMapper locationMapper;
 
     @Autowired
     private JwtTokenizer jwtTokenizer;
@@ -50,8 +54,11 @@ public class PerformanceEndpointTest implements PerformanceTestData {
     private SecurityProperties securityProperties;
 
     @Test
-    public void givenNothing_whenFindAll_thenListSizeEquals2() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(PERFORMANCE_BASE_URI)
+    public void gettingAllRoomsReturnsMoreThanOneRoom() throws Exception {
+        log.info(this.mockMvc.perform(get(LOCATION_BASE_URI)
+            .header(securityProperties.getAuthHeader(),
+                jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES))).toString());
+        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -60,19 +67,29 @@ public class PerformanceEndpointTest implements PerformanceTestData {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
 
-        List<PerformanceDto> performances = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
-            PerformanceDto[].class));
+        List<LocationDto> performances = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            LocationDto[].class));
 
         assert(performances.size() > 0);
     }
 
     @Test
-    public void whenCreatePerformance_returns201() throws Exception {
-        this.mockMvc.perform(post(PERFORMANCE_BASE_URI)
+    public void creatingNewLocationReturns201() throws Exception {
+        this.mockMvc.perform(post(LOCATION_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES))
             .contentType(MediaType.APPLICATION_JSON)
-            .content(POST_REQUEST)
+            .content(POST_REQUEST_NEW)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void creatingAlreadyCreatedLocationReturns422() throws Exception {
+        this.mockMvc.perform(post(LOCATION_BASE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(POST_REQUEST_ALREADY_THERE)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnprocessableEntity());
     }
 }

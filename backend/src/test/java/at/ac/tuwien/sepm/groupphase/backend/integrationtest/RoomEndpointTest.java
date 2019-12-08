@@ -1,9 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 
-import at.ac.tuwien.sepm.groupphase.backend.basetest.PerformanceTestData;
+import at.ac.tuwien.sepm.groupphase.backend.basetest.RoomTestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.PerformanceDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.RoomDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.PerformanceMapper;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.RoomMapper;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -32,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class PerformanceEndpointTest implements PerformanceTestData {
+public class RoomEndpointTest implements RoomTestData {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +43,7 @@ public class PerformanceEndpointTest implements PerformanceTestData {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private PerformanceMapper performanceMapper;
+    private RoomMapper roomMapper;
 
     @Autowired
     private JwtTokenizer jwtTokenizer;
@@ -50,8 +52,8 @@ public class PerformanceEndpointTest implements PerformanceTestData {
     private SecurityProperties securityProperties;
 
     @Test
-    public void givenNothing_whenFindAll_thenListSizeEquals2() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(PERFORMANCE_BASE_URI)
+    public void gettingAllRoomsReturnsMoreThanOneRoom() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(ROOM_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -60,15 +62,15 @@ public class PerformanceEndpointTest implements PerformanceTestData {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
 
-        List<PerformanceDto> performances = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
-            PerformanceDto[].class));
+        List<RoomDto> performances = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            RoomDto[].class));
 
         assert(performances.size() > 0);
     }
 
     @Test
-    public void whenCreatePerformance_returns201() throws Exception {
-        this.mockMvc.perform(post(PERFORMANCE_BASE_URI)
+    public void creatingRoomForLocationReturns201() throws Exception {
+        this.mockMvc.perform(post(ROOM_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES))
             .contentType(MediaType.APPLICATION_JSON)
             .content(POST_REQUEST)

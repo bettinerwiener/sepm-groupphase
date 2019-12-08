@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.LocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.LocationService;
@@ -17,7 +18,6 @@ public class SimpleLocationService implements LocationService {
 
     private LocationRepository locationRepository;
 
-    public SimpleLocationService() {};
     public SimpleLocationService(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
@@ -53,6 +53,17 @@ public class SimpleLocationService implements LocationService {
         } catch (DataAccessException dae) {
             log.error("No locations have been found: %s", dae.getMessage());
             throw new NotFoundException(String.format("No locations have been found: %s", dae.getMessage()));
+        }
+    }
+
+    @Override
+    public Location create(Location location) throws NotCreatedException {
+        try {
+            Location createdLocation = locationRepository.save(location);
+            return createdLocation;
+        } catch (DataAccessException dae) {
+            log.error("The location could not be created: %s",  dae.getMessage());
+            throw new NotCreatedException(String.format("The location could not be created: %s",  dae.getMessage()));
         }
     }
 }

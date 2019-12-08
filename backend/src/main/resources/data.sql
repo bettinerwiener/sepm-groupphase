@@ -15,7 +15,7 @@ insert into event (id, title, abstract, contents, category, duration, employee)
            (2, 'Star Trek', 'May you live long ...', 'May you live long and prosper', 'FILM', 2.4, 2);
 
 insert into location (id, name, street, city, postal_code)
-    values (1, 'Metropol', 'Hernalser Hauptstraße 12', 'Wien', 1170),
+    values (1, 'Metropol', 'Hernalser Hauptstrasse 12', 'Wien', 1170),
            (2, 'Metropol', 'Karl-Krause-Strasse 45', 'Graz', 8020);
 
 insert into room (id, name, location)

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface LocationService {
      * @throws NotFoundException in case no locations have been found
      */
     public List<Location> getAll() throws NotFoundException;
+
+    public Location create(Location location) throws NotCreatedException;
 }
