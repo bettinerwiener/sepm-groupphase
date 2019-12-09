@@ -72,7 +72,7 @@
               </div>
             </div>
 
-            <button type="button" (click)="createEvent()" class="btn btn-success float-right">Create Event</button>
+            <button type="button" (click)="addEvent()" class="btn btn-success float-right">Create Event</button>
 
           </form>
         </div>
@@ -87,4 +87,5 @@
 
 </div>
 
-<event-list-item *ngIf="event"></event-list-item>
+<event-list-item *ngIf="event" [title]="event.title" [description]="event.description" ></event-list-item>
+<create-event-performance *ngIf="event"></create-event-performance>
