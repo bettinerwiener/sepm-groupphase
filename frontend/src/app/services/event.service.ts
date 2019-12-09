@@ -10,6 +10,7 @@ import {Globals} from '../global/globals';
 export class EventService {
 
   private eventBaseUri: string = this.globals.backendUri + '/events';
+  private toptenBaseUri: string = this.eventBaseUri + '/topten';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
@@ -19,6 +20,11 @@ export class EventService {
   getEvent(): Observable<Event[]> {
     console.log('Get all events');
     return this.httpClient.get<Event[]>(this.eventBaseUri);
+  }
+
+  getTopTenEvents(): Observable<Event[]> {
+    console.log('Get top ten events');
+    return this.httpClient.get<Event[]>(this.toptenBaseUri);
   }
 
   /**
