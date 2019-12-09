@@ -21,7 +21,7 @@
 
             <div class="form-group">
               <input type="text" name="title" formControlName="title" class="form-control" id="inputTitle"
-                     aria-describedby="titleHelp" placeholder="Title">
+                aria-describedby="titleHelp" placeholder="Title">
               <div *ngIf="submitted && createEventForm.controls.title.errors" class="error">
                 <small class="form-text text-warning" *ngIf="createEventForm.controls.title.errors.required">Title is
                   required!
@@ -30,19 +30,21 @@
             </div>
 
             <div class="form-group">
-              <select name="duration" formControlName="duration" class="form-control" id= "category" placeholder="Category">
-                      <option value="" hidden >Category</option>
-                      <option value="Concert" >Concert</option>
-                      <option value="Film" >Film</option>
-                      <option value="Theater" >Theater</option>
+              <select name="duration" formControlName="duration" class="form-control" id="category"
+                placeholder="Category">
+                <option value="" hidden>Category</option>
+                <option value="Concert">Concert</option>
+                <option value="Film">Film</option>
+                <option value="Theater">Theater</option>
               </select>
             </div>
 
             <div class="form-group">
-              <input type="text" name="shortDescription" formControlName="shortDescription" class="form-control" id="shortDescription"
-                     placeholder="shortDescription">
+              <input type="text" name="shortDescription" formControlName="shortDescription" class="form-control"
+                id="shortDescription" placeholder="shortDescription">
               <div *ngIf="submitted && createEventForm.controls.shortDescription.errors" class="error">
-                <small class="form-text text-warning" *ngIf="createEventForm.controls.shortDescription.errors.required">Description is
+                <small class="form-text text-warning"
+                  *ngIf="createEventForm.controls.shortDescription.errors.required">Description is
                   required!
                 </small>
               </div>
@@ -50,21 +52,24 @@
 
             <div class="form-group">
               <input type="text" name="contents" formControlName="contents" class="form-control" id="contents"
-                     placeholder="contents">
+                placeholder="contents">
               <div *ngIf="submitted && createEventForm.controls.contents.errors" class="error">
-                <small class="form-text text-warning" *ngIf="createEventForm.controls.contents.errors.required">Description is
+                <small class="form-text text-warning"
+                  *ngIf="createEventForm.controls.contents.errors.required">Description is
                   required!
                 </small>
               </div>
             </div>
 
             <div class="form-group">
-                  <input type="number" name="duration" formControlName="duration" class="form-control" id= "duration" placeholder="Duration">
-                  <div *ngIf="submitted && createEventForm.controls.duration.errors" class="error">
-                    <small class="form-text text-warning" *ngIf="createEventForm.controls.duration.errors.required">Duration is
-                      required!
-                    </small>
-                  </div>
+              <input type="number" name="duration" formControlName="duration" class="form-control" id="duration"
+                placeholder="Duration">
+              <div *ngIf="submitted && createEventForm.controls.duration.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventForm.controls.duration.errors.required">Duration
+                  is
+                  required!
+                </small>
+              </div>
             </div>
 
             <button type="button" (click)="createEvent()" class="btn btn-success float-right">Create Event</button>
@@ -74,10 +79,12 @@
 
       </div>
 
-    </div>
+
   </div>
-  <event-list-item *ngFor="let event of getEvent()" title={{event.title}} description={{event.description}} date={{event.date}} location="" price=""></event-list-item>
-  </div>
-  
-  
+
+
+
+
 </div>
+
+<event-list-item *ngIf="event"></event-list-item>

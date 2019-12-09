@@ -1,55 +1,51 @@
 <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Problems while creating this performanceevent!</strong> {{ errorMessage }}
-    <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  
-  
-  <div class="pt-5">
-    <div class="row">
-      <div class="col-md-6 mx-auto">
-        <span class="anchor" id="formCreateEventPerformance"></span>
-  
-        <div class="card rounded-0">
-          <div class="card-header">
-            <h3 class="mb-0">Create a new Performance</h3>
-          </div>
-  
-          <div class="card-body">
-            <form class="form" [formGroup]="createEvenPerformancetForm" (ngSubmit)="createPerformanceEvent()">
-  
-              <div class="form-group">
-                <input type="text" name="room" formControlName="room" class="form-control" id="inputRoom"
-                       aria-describedby="roomHelp" placeholder="Room">
-                <div *ngIf="submitted && createEventPerformanceForm.controls.title.errors" class="error">
-                  <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.room.errors.required">Room is
-                    required!
-                  </small>
-                </div>
-              </div>
-  
-              <div class="form-group">
-                    <input type="date" name="date" formControlName="date" class="form-control" id= "date" placeholder="Date">
-                    <div *ngIf="submitted && createEventPerformanceForm.controls.date.errors" class="error">
-                      <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.duration.errors.required">Date is
-                        required!
-                      </small>
-                    </div>
-              </div>
-  
-              <button type="button" (click)="createEventPerformance()" class="btn btn-success float-right">Create Performanxe</button>
-  
-            </form>
-          </div>
-  
+  <strong>Problems while creating this performanceevent!</strong> {{ errorMessage }}
+  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+<div class="pt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formCreateEventPerformance"></span>
+
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">Create a new Performance</h3>
         </div>
-  
+
+        <div class="card-body">
+          <form class="form" [formGroup]="createEvenPerformancetForm" (ngSubmit)="createPerformanceEvent()">
+
+            <div class="form-group">
+              <input type="text" name="room" formControlName="room" class="form-control" id="inputRoom"
+                     aria-describedby="roomHelp" placeholder="Room">
+              <div *ngIf="submitted && createEventPerformanceForm.controls.title.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.room.errors.required">Room is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+                  <input type="date" name="date" formControlName="date" class="form-control" id= "date" placeholder="Date">
+                  <div *ngIf="submitted && createEventPerformanceForm.controls.date.errors" class="error">
+                    <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.duration.errors.required">Date is
+                      required!
+                    </small>
+                  </div>
+            </div>
+
+            <button type="button" (click)="createEventPerformance()" class="btn btn-success float-right">Create Performanxe</button>
+
+          </form>
+        </div>
+
       </div>
+
     </div>
-    <event-list-item *ngFor="let event of getEvent()" title={{event.title}} description={{event.description}} date={{event.date}} location="" price=""></event-list-item>
-    </div>
-    
-    
-  </div>
+     
   
+</div>

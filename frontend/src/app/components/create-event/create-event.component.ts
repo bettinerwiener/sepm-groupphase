@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EventService} from '../../services/event.service';
-import {Event} from '../../dtos/event';
+import { GlobalEvent } from '../../dtos/global-event';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 
@@ -11,9 +11,9 @@ import {AuthService} from '../../services/auth.service';
 })
 export class CreateEventComponent implements OnInit {
   createEventForm: FormGroup;
-  event: Event;
+  event: GlobalEvent;
   error: boolean = false;
-  private events: Event[];
+  private events: GlobalEvent[];
 
   // After first submission attempt, form validation will start
   submitted: boolean = false;
@@ -41,7 +41,7 @@ export class CreateEventComponent implements OnInit {
   addEvent() {
     this.submitted = true;
     if (this.createEventForm.valid) {
-      const event: Event = new Event(
+      const event: GlobalEvent = new GlobalEvent(
         this.createEventForm.controls.title.value,
         this.createEventForm.controls.category.value,
         this.createEventForm.controls.shortDescription.value,
@@ -55,9 +55,12 @@ export class CreateEventComponent implements OnInit {
     }
   }
 
-  public createEvent(event: Event) {
+  public createEvent(event: GlobalEvent) {
     this.eventService.createEvent(event).subscribe(
-      () => {
+      (retEvent: GlobalEvent) => {
+        console.log('i am here');
+
+        this.event = retEvent;
         this.loadEvent();
       },
       error => {
@@ -68,7 +71,7 @@ export class CreateEventComponent implements OnInit {
 
   private loadEvent() {
     this.eventService.getEvent().subscribe(
-      (event: Event[]) => {
+      (event: GlobalEvent[]) => {
         this.events = event;
       },
       error => {

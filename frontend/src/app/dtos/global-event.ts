@@ -1,4 +1,4 @@
-export class Event {
+export class GlobalEvent {
   // ***
   // constructor(
   //  public title: string,
