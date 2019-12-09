@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
 
 @Component({
-  selector: 'app-create-event-performance',
+  selector: 'create-event-performance',
   templateUrl: './create-event-performance.component.html',
   styleUrls: ['./create-event-performance.component.scss']
 })
