@@ -28,22 +28,45 @@ public class UserMappingTest implements RegistrationTestData {
     private UserMapper userMapper;
 
     @Test
-    public void givenNothing_whenMapUserDtoToEntity_thenEntityHasAllProperties() {
+    public void mapUserDtoToEntity_thenEntityHasAllProperties() {
 
         user.setId(ID);
         user.setFirstName(TEST_FIRST_NAME);
         user.setLastName(TEST_LAST_NAME);
         user.setEmail(TEST_EMAIL);
         user.setPassword(TEST_PASSWORD);
+        user.setIsEmployee(false);
+        user.setLocked(false);
 
-        UserDto userDto = userMapper.entityToDto(user);
+        UserDto userDto = userMapper.userToUserDto(user);
 
         assertAll(
             () -> assertEquals(ID, userDto.getId()),
             () -> assertEquals(TEST_FIRST_NAME, userDto.getFirstName()),
             () -> assertEquals(TEST_LAST_NAME, userDto.getLastName()),
             () -> assertEquals(TEST_EMAIL, userDto.getEmail()),
-            () -> assertEquals(TEST_PASSWORD, userDto.getPassword())
+            () -> assertEquals(TEST_PASSWORD, userDto.getPassword()),
+            () -> assertEquals(false, userDto.getIsEmployee()),
+            () -> assertEquals(false, userDto.getLocked())
+        );
+    }
+
+    @Test
+    public void mapUserToUserDto_thenDtoHasAllProperties() {
+
+
+        UserDto userDto = new UserDto( TEST_FIRST_NAME, TEST_LAST_NAME,TEST_EMAIL,TEST_PASSWORD);
+
+        User user = userMapper.userDtoToUser(userDto);
+
+        assertAll(
+            () -> assertEquals(null, user.getId()),
+            () -> assertEquals(TEST_FIRST_NAME, user.getFirstName()),
+            () -> assertEquals(TEST_LAST_NAME, user.getLastName()),
+            () -> assertEquals(TEST_EMAIL, user.getEmail()),
+            () -> assertEquals(TEST_PASSWORD, user.getPassword()),
+            () -> assertEquals(null, user.getIsEmployee()),
+            () -> assertEquals(null, user.getLocked())
         );
     }
 
