@@ -3,27 +3,26 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class UserMapper {
+@Mapper
+public interface UserMapper {
 
-    public UserDto entityToDto(User user) {
-        return new UserDto( user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getLocked(), user.getEmployee());
-    }
+    @Named("user")
+    UserDto userToUserDto(User user);
 
-    public User dtoToEntity(UserDto userDto) {
+    @IterableMapping(qualifiedByName = "user")
+    List<UserDto> userToUserDto(List<User> users);
 
-        return new User(userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), userDto.getPassword());
+    User userDtoToUser(UserDto userDto);
 
-    }
-    public List<UserDto> entityListToDtoList(List<User> userList) {
-        List<UserDto> userDtoList = new ArrayList<>();
-        userList.forEach(User -> userDtoList.add(entityToDto(User)));
-        return userDtoList;
-    }
+    List<User> userDtoToUser(List<UserDto> userDtos);
+
 }
 

@@ -11,10 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
+
 
 @RestController
 @RequestMapping(value = "/api/v1/user")
@@ -30,14 +33,15 @@ public class UserEndpoint {
         this.userMapper = userMapper;
     }
 
+
     @CrossOrigin
     @PostMapping(value= "/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto post(@RequestBody UserDto userDto) {
+    public UserDto post(@RequestBody @Validated UserDto userDto) {
         LOGGER.info("POST /api/v1/user/register");
 
-        User user= userMapper.dtoToEntity(userDto);
-        return userMapper.entityToDto(userService.createUser(user));
+        User user= userMapper.userDtoToUser(userDto);
+        return userMapper.userToUserDto(userService.createUser(user));
 
     }
 

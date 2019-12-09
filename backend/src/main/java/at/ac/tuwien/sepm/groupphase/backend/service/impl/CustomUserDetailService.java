@@ -40,7 +40,7 @@ public class CustomUserDetailService implements UserService {
             User user = findApplicationUserByEmail(email);
 
             List<GrantedAuthority> grantedAuthorities;
-            if (user.getEmployee())
+            if (user.getIsEmployee())
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
             else
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
@@ -67,6 +67,7 @@ public class CustomUserDetailService implements UserService {
     @Override
     public User createUser (User user) throws EmailExistsException, NotCreatedException {
         LOGGER.info("Creating user");
+
 
 
         if (userRepository.findFirstByEmail(user.getEmail()) != null) {
