@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
@@ -9,11 +10,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.geom.RoundRectangle2D;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,20 +27,34 @@ public class EventEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final EventService eventService;
     private final EventMapper eventMapper;
-    private final TicketService ticketService;
 
-    public EventEndpoint(EventService eventService, EventMapper eventMapper, TicketService ticketService) {
+    public EventEndpoint(EventService eventService, EventMapper eventMapper) {
         this.eventService = eventService;
         this.eventMapper = eventMapper;
-        this.ticketService = ticketService;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/v1/events")
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
-    public List<EventDto> getAll() {
-        List<EventDto> eventDtos = eventService.getAll().stream().
-            map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());
+    public List<EventDto> getAll(@RequestParam(required = false) String searchTerm,
+                                 @RequestParam(required = false) String category,
+                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+                                 @RequestParam(required = false) Double price,
+                                 @RequestParam(required = false) Double duration) {
+        List<EventDto> eventDtos;
+        if (searchTerm == null && category == null
+            && startDate == null && endDate == null
+            && price == null && duration == null) {
+            eventDtos = eventService.getAll().stream().
+                map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());
+
+        } else {
+            List<Event> events = eventService.getFiltered(searchTerm, category, startDate, endDate, price, duration);
+            LOGGER.info("number of events: {}", events == null ? 0 : events.size());
+            eventDtos = eventService.getFiltered(searchTerm, category, startDate, endDate, price, duration).stream()
+                .map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());
+        }
         return eventDtos;
     }
 

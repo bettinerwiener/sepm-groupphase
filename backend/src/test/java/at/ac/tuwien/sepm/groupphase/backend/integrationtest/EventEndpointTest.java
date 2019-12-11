@@ -82,4 +82,21 @@ public class EventEndpointTest implements EventTestData {
 
         assertEquals(1, events.size());
     }
+
+    @Test
+    public void givenNothing_whenFindByCriteria_thenListSizeEquals2() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_FILTER_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventDto[].class));
+
+        assertEquals(2, events.size());
+    }
 }

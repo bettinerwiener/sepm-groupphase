@@ -1,24 +1,22 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Employee;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
-import at.ac.tuwien.sepm.groupphase.backend.repository.EmployeeRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepositoryCustom;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
-import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SimpleEventService implements EventService {
@@ -83,5 +81,18 @@ public class SimpleEventService implements EventService {
             LOGGER.error("Could not fetch top ten events: {}", dae.getMessage());
             throw new NotFoundException(String.format("Could not fetch top ten events: %s", dae.getMessage()));
         }
+    }
+
+    @Override
+    public List<Event> getFiltered(String searchTerm, String category,
+                                   LocalDate startDate, LocalDate endDate,
+                                   Double price, Double duration) throws NotFoundException {
+        try {
+            List<Event> events = this.eventRepository.findAllByCriteria(searchTerm, category, startDate, endDate, price, duration);
+        } catch (DataAccessException dae) {
+            LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
+            throw new NotFoundException(String.format("No events found matching the criteria: %s", dae.getMessage()));
+        }
+        return null;
     }
 }
