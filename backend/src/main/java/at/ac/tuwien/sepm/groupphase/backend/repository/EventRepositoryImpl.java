@@ -18,10 +18,11 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     @Override
     public List<Event> findAllByCriteria(String searchTerm, String category, LocalDate startDate, LocalDate endDate, Double price, Double duration) {
         boolean first_condition = false;
-        String query = "select e.id, e.title, e.abstract, e.contents, e.category, e.employee, e.duration from event e join is_performed_at i on e.id = i.event join ticket t on i.event = t.event where";
+        String query = "select e from Event e join EventPerformance i on e.id = i.event join Ticket t on i.event = t.event where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            query = query + "title like '%" + searchTerm + "%' or abstract like'%" + searchTerm+
-                "%' or contents like'%" + searchTerm+ "%'";
+            searchTerm = searchTerm.toLowerCase();
+            query = query + " lower(title) like '%" + searchTerm + "%' or lower(abstract) like '%" + searchTerm+
+                "%' or lower(contents) like '%" + searchTerm+ "%'";
         } else {
             first_condition = true;
         }
@@ -36,42 +37,42 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         }
         if (startDate != null) {
             if (!first_condition) {
-                query += " and `date` > " + startDate;
+                query += " and perfDate > '" + startDate + "'";
             } else {
-                query += " `date` > " + startDate;
+                query += " perfDate > '" + startDate + "'";
                 first_condition = false;
             }
 
         }
         if (endDate != null) {
             if (!first_condition) {
-                query += " and `date` < " + endDate;
+                query += " and perfDate < '" + endDate + "'";
             } else {
-                query += " `date` < " + endDate;
+                query += " perfDate < '" + endDate + "'";
                 first_condition = false;
             }
 
         }
         if (duration != null) {
             if (!first_condition) {
-                query += " and duration < " + duration;
+                query += " and duration < " + (duration + 0.5) + " and duration > " + (duration - 0.5);
             } else {
-                query += " duration < " + duration;
+                query += " duration < " + (duration + 0.5) + " and duration > " + (duration - 0.5);
                 first_condition = false;
             }
 
         }
         if (price != null) {
             if (!first_condition) {
-                query += " and price < " + price;
+                query += " and price < " + (price + 5);
             } else {
-                query += " price < " + price;
+                query += " price < " + (price + 5);
             }
 
         }
-        query += " group by e.id;";
+        query += " group by e.id";
 
-        Query tp = entityManager.createNativeQuery(query,"Events");
+        Query tp = entityManager.createQuery(query, at.ac.tuwien.sepm.groupphase.backend.entity.Event.class);
         List<Event> events = tp.getResultList();
         log.info("Number of events: {}", events.size());
         if (events == null || events.isEmpty()) {

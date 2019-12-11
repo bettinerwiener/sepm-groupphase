@@ -52,7 +52,7 @@ public class EventEndpoint {
         } else {
             List<Event> events = eventService.getFiltered(searchTerm, category, startDate, endDate, price, duration);
             LOGGER.info("number of events: {}", events == null ? 0 : events.size());
-            eventDtos = eventService.getFiltered(searchTerm, category, startDate, endDate, price, duration).stream()
+            eventDtos = events.stream()
                 .map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());
         }
         return eventDtos;

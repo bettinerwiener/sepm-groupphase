@@ -88,11 +88,12 @@ public class SimpleEventService implements EventService {
                                    LocalDate startDate, LocalDate endDate,
                                    Double price, Double duration) throws NotFoundException {
         try {
-            List<Event> events = this.eventRepository.findAllByCriteria(searchTerm, category, startDate, endDate, price, duration);
+            List<Event> events = this.eventRepository.findAllByCriteria(searchTerm,
+                category, startDate, endDate, price, duration);
+            return events;
         } catch (DataAccessException dae) {
             LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
             throw new NotFoundException(String.format("No events found matching the criteria: %s", dae.getMessage()));
         }
-        return null;
     }
 }
