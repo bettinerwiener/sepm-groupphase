@@ -25,5 +25,5 @@ public class TicketDto {
 
     private Seat seat;
 
-    private User user;
+
 }

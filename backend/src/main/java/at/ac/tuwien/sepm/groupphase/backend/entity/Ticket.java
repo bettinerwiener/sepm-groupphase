@@ -35,13 +35,6 @@ public class Ticket {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    @ManyToOne
-    @JoinTable (
-        name = "user_buys_ticket",
-        joinColumns = @JoinColumn(name = "user"),
-        inverseJoinColumns = @JoinColumn(name = "ticket")
-    )
-    private User user;
 
 
 }
