@@ -69,6 +69,7 @@ public class CustomUserDetailService implements UserService {
         LOGGER.info("Creating user");
 
 
+
         if (userRepository.findFirstByEmail(user.getEmail()) != null) {
             throw new EmailExistsException("There already is an account with the email adress: " + user.getEmail());
         }
