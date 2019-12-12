@@ -22,7 +22,7 @@ public class EventPerformance {
     @JoinColumn(name = "room")
     private Room room;
 
-    @Column(nullable = false, name = "perfDate")
+    @Column(nullable = false, name = "perf_date")
     private LocalDateTime date;
 
 }

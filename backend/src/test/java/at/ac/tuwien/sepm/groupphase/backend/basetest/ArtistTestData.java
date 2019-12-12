@@ -1,17 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.basetest;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface EventTestData {
+public interface ArtistTestData {
 
     String BASE_URI = "/api/v1";
-    String EVENT_BASE_URI = BASE_URI + "/events";
-    String EVENT_BASE_URI_TOP_TEN = "/api/v1/events/topten";
-    String EVENT_FILTER_URI = "/api/v1/events?duration=2.5&searchTerm=trek&startDate=2019-12-10&location=2";
+    String ARTIST_BASE_URI = BASE_URI + "/artists";
 
     String ADMIN_USER = "hugo1@gmail.com";
     List<String> ADMIN_ROLES = new ArrayList<>() {

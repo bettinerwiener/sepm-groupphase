@@ -86,10 +86,11 @@ public class SimpleEventService implements EventService {
     @Override
     public List<Event> getFiltered(String searchTerm, String category,
                                    LocalDate startDate, LocalDate endDate,
-                                   Double price, Double duration) throws NotFoundException {
+                                   Double price, Double duration,
+                                   Long location, Long artist) throws NotFoundException {
         try {
             List<Event> events = this.eventRepository.findAllByCriteria(searchTerm,
-                category, startDate, endDate, price, duration);
+                category, startDate, endDate, price, duration, location, artist);
             return events;
         } catch (DataAccessException dae) {
             LOGGER.error("No events found matching the criteria: {}", dae.getMessage());

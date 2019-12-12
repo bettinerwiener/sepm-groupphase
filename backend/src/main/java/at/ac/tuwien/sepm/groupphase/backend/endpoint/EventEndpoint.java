@@ -41,16 +41,20 @@ public class EventEndpoint {
                                  @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
                                  @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
                                  @RequestParam(required = false) Double price,
-                                 @RequestParam(required = false) Double duration) {
+                                 @RequestParam(required = false) Double duration,
+                                 @RequestParam(required = false) Long location,
+                                 @RequestParam(required = false) Long artist) {
         List<EventDto> eventDtos;
         if (searchTerm == null && category == null
             && startDate == null && endDate == null
-            && price == null && duration == null) {
+            && price == null && duration == null
+            && location == null && artist == null) {
             eventDtos = eventService.getAll().stream().
                 map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());
 
         } else {
-            List<Event> events = eventService.getFiltered(searchTerm, category, startDate, endDate, price, duration);
+            List<Event> events = eventService.getFiltered(searchTerm, category,
+                startDate, endDate, price, duration, location, artist);
             LOGGER.info("number of events: {}", events == null ? 0 : events.size());
             eventDtos = events.stream()
                 .map(event -> eventMapper.eventToEventDto(event)).collect(Collectors.toList());

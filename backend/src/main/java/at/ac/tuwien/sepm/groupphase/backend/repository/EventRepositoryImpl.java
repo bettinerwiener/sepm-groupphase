@@ -16,9 +16,15 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<Event> findAllByCriteria(String searchTerm, String category, LocalDate startDate, LocalDate endDate, Double price, Double duration) {
+    public List<Event> findAllByCriteria(String searchTerm, String category,
+                                         LocalDate startDate, LocalDate endDate,
+                                         Double price, Double duration,
+                                         Long location, Long artist) {
         boolean first_condition = false;
-        String query = "select e from Event e join EventPerformance i on e.id = i.event join Ticket t on i.event = t.event where";
+        String query = "select e from Event e " +
+            "join EventPerformance i on e.id = i.event " +
+            "join Ticket t on i.event = t.event " +
+            "join Room r on r.id = i.room where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
             searchTerm = searchTerm.toLowerCase();
             query = query + " lower(title) like '%" + searchTerm + "%' or lower(abstract) like '%" + searchTerm+
@@ -37,18 +43,18 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         }
         if (startDate != null) {
             if (!first_condition) {
-                query += " and perfDate > '" + startDate + "'";
+                query += " and perf_date > '" + startDate + "'";
             } else {
-                query += " perfDate > '" + startDate + "'";
+                query += " perf_date > '" + startDate + "'";
                 first_condition = false;
             }
 
         }
         if (endDate != null) {
             if (!first_condition) {
-                query += " and perfDate < '" + endDate + "'";
+                query += " and perf_date < '" + endDate + "'";
             } else {
-                query += " perfDate < '" + endDate + "'";
+                query += " perf_date < '" + endDate + "'";
                 first_condition = false;
             }
 
@@ -67,6 +73,22 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
                 query += " and price < " + (price + 5);
             } else {
                 query += " price < " + (price + 5);
+            }
+
+        }
+        if (location != null) {
+            if (!first_condition) {
+                query += " and r.location = " + location;
+            } else {
+                query += " r.location = " + location;
+            }
+
+        }
+        if (artist != null) {
+            if (!first_condition) {
+                query += " and artist = " + artist;
+            } else {
+                query += " artist = " + artist;
             }
 
         }

@@ -11,6 +11,7 @@ public interface EventRepositoryCustom {
     List<Event> findAllByCriteria(@Param("searchTerm") String searchTerm, @Param("category") String category,
                                   @Param("startDate") LocalDate startDate,
                                   @Param("endDate") LocalDate endDate,
-                                  @Param("price") Double price, @Param("duration") Double duration);
+                                  @Param("price") Double price, @Param("duration") Double duration,
+                                  @Param("location") Long location, @Param("artist") Long artist);
 }
 
