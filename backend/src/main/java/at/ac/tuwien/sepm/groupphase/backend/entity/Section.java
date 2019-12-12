@@ -1,16 +1,18 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
 public class Section {
 
-    private enum Letter {
+    public enum Letter {
         A,
         B,
         C,
@@ -21,21 +23,16 @@ public class Section {
         H
     }
 
-    private enum PriceCategory {
-        EXPENSIVE,
-        CHEAP
-    }
 
     @Id
-    @Enumerated(EnumType.STRING)
-    private Letter id;
+    private Long id;
 
     @Column(nullable = false, name = "seats_selectable")
     private Boolean seatsSelectable;
 
-    @Column(nullable = false, name = "price_category")
+    @Column(nullable = false, name = "letter")
     @Enumerated(EnumType.STRING)
-    private PriceCategory priceCategory;
+    private Letter letter;
 
     @ManyToOne
     @JoinColumn(name = "room")

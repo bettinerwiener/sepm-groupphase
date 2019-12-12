@@ -3,7 +3,9 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 
+
 import javax.persistence.*;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,7 +58,9 @@ public class User {
         this.password = password;
         this.locked = false;
         this.isEmployee =false;
+
     }
+
 
 
 }

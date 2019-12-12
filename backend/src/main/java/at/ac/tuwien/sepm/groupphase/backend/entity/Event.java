@@ -1,5 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
+import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -40,9 +42,8 @@ public class Event {
     @Column(nullable = false)
     private  Double duration;
 
-    @ManyToOne
-    @JoinColumn(name = "employee", nullable = false)
-    private User employee;
+
+    private Long employee;
 
     @ManyToOne
     @JoinTable(

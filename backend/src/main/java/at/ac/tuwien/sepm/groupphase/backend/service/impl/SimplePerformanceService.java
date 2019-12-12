@@ -26,7 +26,7 @@ public class SimplePerformanceService implements PerformanceService {
     }
 
     @Override
-    public EventPerformance create(Event event, Room room, Date dateTime) throws NotCreatedException {
+    public EventPerformance create(Event event, Room room, LocalDateTime dateTime) throws NotCreatedException {
         log.info("Creating performance for event %s ...", event.getTitle());
         try {
             EventPerformance eventPerformance = new EventPerformance();

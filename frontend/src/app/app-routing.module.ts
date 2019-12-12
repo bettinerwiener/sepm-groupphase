@@ -19,7 +19,7 @@ import {CartComponent} from './components/cart/cart.component';
 import {AuthGuard} from './guards/auth.guard';
 import {MessageComponent} from './components/message/message.component';
 
-import {CreateEventComponent} from './components/create-event/create-event.component';
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -34,7 +34,6 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'orders', component: OrdersComponent},
   {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
-  {path: 'create-event', component: CreateEventComponent}
   // {path: 'create-event', canActivate: [AuthGuard], component: CreateEventComponent}
 ];
 

@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -22,6 +23,7 @@ public class UserDto extends BaseDto {
 
     @NotBlank
     @Size(max = 150)
+    @Email
     private String email;
 
     @NotBlank

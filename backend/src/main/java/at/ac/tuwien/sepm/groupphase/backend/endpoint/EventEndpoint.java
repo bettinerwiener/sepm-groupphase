@@ -29,6 +29,8 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
+    //wirft bei nico error
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
@@ -46,5 +48,6 @@ public class EventEndpoint {
         return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
 
     }
+
 
 }

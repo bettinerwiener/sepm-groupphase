@@ -14,6 +14,8 @@ public interface OrderService {
      * @return the created event
      * @throws NotCreatedException in case something went wrong when accessing the database
      */
-    public List<Order> getAll() throws NotFoundException;
-    public List<Order> findByUserId(Long id) throws NotFoundException;
+
+    List<Order> getAll() throws NotFoundException;
+    List<Order> findByUserId(Long id) throws NotFoundException;
+
 }

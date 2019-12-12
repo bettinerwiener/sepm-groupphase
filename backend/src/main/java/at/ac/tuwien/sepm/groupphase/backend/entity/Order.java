@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,12 +18,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
+
+    @Column(name = "user_id")
     private Long userId;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer_order")
-    private List<Ticket> tickets;
+
+
+    /**
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+     */
 
     public Order() {
     }
@@ -30,7 +36,10 @@ public class Order {
     public Order(Long userId, List<Ticket> tickets) {
         this.userId =userId;
         this.tickets = tickets;
-
     }
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer_order")
+    private List<Ticket> tickets;
 
 }

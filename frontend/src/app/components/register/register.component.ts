@@ -21,6 +21,9 @@ export class RegisterComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
 
+  success: boolean = false;
+  successMessage: string = '';
+
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
@@ -48,7 +51,7 @@ export class RegisterComponent implements OnInit {
       this.userService.newUser(newUser)
         .subscribe(user => {
             this.user = user;
-            this.router.navigate(['']);
+            this.success = true;
           },
           error => {
             this.defaultServiceErrorHandling(error);
@@ -68,6 +71,10 @@ export class RegisterComponent implements OnInit {
     this.error = false;
   }
 
+  vanishSuccess() {
+    this.success = false;
+  }
+
   private defaultServiceErrorHandling(error: any) {
     console.log(error);
     this.error = true;
@@ -77,6 +84,10 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = error.error;
     }
   }
+
+
+
+
 
   private clearForm() {
     this.registerForm.reset();

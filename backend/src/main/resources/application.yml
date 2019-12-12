@@ -28,11 +28,11 @@ security:
   auth:
     header: Authorization
     prefix: "Bearer "
-    login-uri: /api/v1/authentication
+    login-uri: /authentication
     white-list:
       # Browser requests
       - /
-      - /api/v1/user/register
+      - /user/register
       - /favicon.ico
       - /csrf
       # Swagger

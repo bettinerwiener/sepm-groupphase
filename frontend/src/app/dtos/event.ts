@@ -1,19 +1,14 @@
+
 export class Event {
-  // ***
-  // constructor(
-  //  public title: string,
-  //  public description: string,
-  //  public date: Date,
-  //  public duration: number,
-  //  public location: string,
-  //  public category: string,
-  // ) {}
-  //
-  constructor(
-    public title: string,
-    public category: string,
-    public shortDescription: string,
-    public contents: string,
-    public duration: number
-  ) {}
+    constructor(
+      public id: number,
+      public title: string,
+      public shortDescription: string,
+      public contents: string,
+      public category: string,
+      public duration: number,
+      public employee: number,
+      public artist: string,) {
+    }
   }
+

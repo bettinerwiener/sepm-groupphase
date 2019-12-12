@@ -32,10 +32,9 @@ CREATE TABLE IF NOT EXISTS event (
     title       VARCHAR(100) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     contents    VARCHAR(511),
-    category    VARCHAR(25),
+    category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES user(id),
-    CONSTRAINT event_unique UNIQUE (title, category)
+    employee    BIGINT REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (
@@ -68,7 +67,6 @@ CREATE TABLE IF NOT EXISTS room (
 CREATE TABLE IF NOT EXISTS section (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     letter      VARCHAR(1) CHECK (letter IN ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')),
-    price_category  VARCHAR(10) CHECK (price_category IN ('EXPENSIVE', 'CHEAP')),
     room    BIGINT REFERENCES room(id),
     seats_selectable SMALLINT CHECK (seats_selectable IN (0, 1))
 );
@@ -86,30 +84,23 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
     room BIGINT REFERENCES room(id),
     `date`    DATETIME NOT NULL,
     CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
+
 );
 
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      user_id BIGINT REFERENCES user(id)
+      user_id BIGINT REFERENCES user(id),
 );
-
 
 CREATE TABLE IF NOT EXISTS ticket (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      event       BIGINT REFERENCES is_performed_at(event),
-      room    BIGINT REFERENCES is_performed_at(room),
-      seat        BIGINT REFERENCES seat(id),
+      customer_order_id BIGINT REFERENCES customer_order(id),
+      is_performed_at_id BIGINT REFERENCES is_performed_at(id),
+      seat_id BIGINT REFERENCES seat(id),
       status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
-      customer_order BIGINT REFERENCES customer_order(id),
+      price DECIMAL NOT NULL
 );
 
-
-
-CREATE TABLE IF NOT EXISTS user_buys_ticket (
-    user BIGINT REFERENCES user(id),
-    ticket BIGINT REFERENCES ticket(id),
-    CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (user, ticket)
-);
 
 CREATE TABLE IF NOT EXISTS customer_news (
      user    BIGINT REFERENCES user(id),

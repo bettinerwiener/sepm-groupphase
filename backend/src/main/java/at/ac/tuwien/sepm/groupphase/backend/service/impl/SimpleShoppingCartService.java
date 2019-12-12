@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import static at.ac.tuwien.sepm.groupphase.backend.entity.Ticket.Status.BOUGHT;
+//import static at.ac.tuwien.sepm.groupphase.backend.entity.Ticket.Status.BOUGHT;
 
 
 @Service
@@ -47,11 +47,10 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                 Ticket ticketToBuy = this.ticketRepository.getOne(ticket.getId());
 
                 if (ticketToBuy != null) {
-                    if(ticketToBuy.getStatus()==BOUGHT){
-
+                    if(ticketToBuy.getStatus() == Ticket.Status.BOUGHT){
                         throw new TicketNotAvailableException("The ticket you want to buy is not available");
                     }else{
-                        ticketToBuy.setStatus(BOUGHT);
+                        ticketToBuy.setStatus(Ticket.Status.BOUGHT);
                         ticketRepository.save(ticketToBuy);
                     }
 

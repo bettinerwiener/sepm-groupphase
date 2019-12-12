@@ -20,7 +20,7 @@ public interface PerformanceService {
      * @return the created performance
      * @throws NotCreatedException in case something goes wrong while persisting the entity
      */
-    public EventPerformance create(Event event, Room room, Date dateTime) throws NotCreatedException;
+    public EventPerformance create(Event event, Room room, LocalDateTime dateTime) throws NotCreatedException;
 
     public List<EventPerformance> getAll() throws NotFoundException;
 
