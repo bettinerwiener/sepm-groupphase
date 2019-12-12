@@ -33,4 +33,6 @@ public interface EventService {
                             LocalDate startDate, LocalDate endDate,
                             Double price, Double duration,
                             Long location, Long artist) throws NotFoundException;
+
+    Event getById(Long id) throws NotFoundException;
 }

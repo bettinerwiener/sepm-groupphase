@@ -8,6 +8,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepositoryCustom;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
+import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -17,6 +18,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SimpleEventService implements EventService {
@@ -94,7 +96,23 @@ public class SimpleEventService implements EventService {
             return events;
         } catch (DataAccessException dae) {
             LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
-            throw new NotFoundException(String.format("No events found matching the criteria: %s", dae.getMessage()));
+            throw new NotFoundException(String.format("No events found matching the criteria: %s",
+                dae.getMessage()));
+        }
+    }
+
+    @Override
+    public Event getById(Long id) throws NotFoundException {
+        try {
+            Optional<Event> event = this.eventRepository.findById(id);
+            if (event.isPresent()) {
+                return event.get();
+            } else {
+                throw new NotFoundException(String.format("Event with id %d could not be found", id));
+            }
+        } catch (DataAccessException dae) {
+            throw new NotFoundException(String.format("Event with id %d could not be found:%s ", id,
+                dae.getMessage()));
         }
     }
 }

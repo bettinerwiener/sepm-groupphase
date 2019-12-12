@@ -80,4 +80,11 @@ public class EventEndpoint {
         return eventDtos;
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/v1/events/{id}")
+    @ApiOperation(value = "Get event by id", authorizations = {@Authorization(value = "apiKey")})
+    public EventDto getById(@PathVariable("id") Long id) {
+        return this.eventMapper.eventToEventDto(this.eventService.getById(id));
+    }
+
 }
