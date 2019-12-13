@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { SearchService } from 'src/app/services/search.service';
+import { EventLocation } from 'src/app/dtos/event-location';
+import { Artist } from 'src/app/dtos/artist';
 
 @Component({
   selector: 'search-area',
@@ -18,8 +20,15 @@ export class SearchAreaComponent implements OnInit {
   ngOnInit() {
   }
 
-  public getEvent(searchTerm: string, startDate: Date, endDate: Date, price: number, duration: number) {
-    this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration).subscribe(
+  public getEvent(
+    searchTerm: string,
+    startDate: Date,
+    endDate: Date,
+    price: number,
+    duration: number,
+    eventLocation: EventLocation,
+    artist: Artist) {
+    this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
       (events: Array<Event>) => {
         this.events = events;
       },

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import { Globals } from '../global/globals';
+import { Artist } from '../dtos/artist';
+import { EventLocation } from '../dtos/event-location';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class SearchService {
     endDate: Date,
     price: number,
     duration: number,
-    location: any,
+    eventLocation: EventLocation,
     artist: Artist
     ): Observable<Array<Event>> {
 
@@ -28,7 +30,7 @@ export class SearchService {
     if (endDate) { query += `endDate=${endDate}`; }
     if (price) { query += `price=${Number(price)}`; }
     if (duration) { query += `duration=${Number(duration)}`; }
-    if (location) { query += `location=${location}`; }
+    if (eventLocation) { query += `location=${eventLocation}`; }
     if (artist) { query += `Artist=${artist}`; }
 
     console.log('Get event');

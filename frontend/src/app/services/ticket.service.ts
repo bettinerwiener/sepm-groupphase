@@ -17,13 +17,13 @@ export class TicketService {
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
 
-  buyTicket(seatplan:SeatplanObject, location:string, hall:string, time:Time): Observable<Ticket> {
-    var ticket:Ticket = new Ticket(seatplan, location, hall, time);
+  buyTicket(seatplan: SeatplanObject, location: string, hall: string, time: Time): Observable<Ticket> {
+    let ticket: Ticket = new Ticket(null, null, null, null, status);
     return this.httpClient.put<Ticket>(this.messageBaseUri, ticket);
   }
 
-  getEvent(id:number): Observable<EventObject> {
-    console.log("Loading event with id " + id);
+  getEvent(id: number): Observable<EventObject> {
+    console.log('Loading event with id ' + id);
     return this.httpClient.get<EventObject>(this.messageBaseUri + '/event/' + id);
   }
 }
