@@ -23,10 +23,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "customer_order_id")
-    private Order customer_order;
+    private Order customerOrder;
 
 
     @ManyToOne

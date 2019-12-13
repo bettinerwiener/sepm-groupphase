@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/rooms")
+@RequestMapping(value = "/api/v1/rooms")
 @Slf4j
 public class RoomEndpoint {
 

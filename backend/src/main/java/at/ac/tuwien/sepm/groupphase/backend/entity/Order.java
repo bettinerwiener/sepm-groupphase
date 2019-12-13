@@ -35,11 +35,6 @@ public class Order {
 
     public Order(Long userId, List<Ticket> tickets) {
         this.userId =userId;
-        this.tickets = tickets;
     }
-
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer_order")
-    private List<Ticket> tickets;
 
 }

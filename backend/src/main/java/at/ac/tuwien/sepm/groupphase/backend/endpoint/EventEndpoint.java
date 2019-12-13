@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/events")
+@RequestMapping(value = "/api/v1/events")
 public class EventEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -28,8 +28,6 @@ public class EventEndpoint {
         this.eventService = eventService;
         this.eventMapper = eventMapper;
     }
-
-    //wirft bei nico error
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping

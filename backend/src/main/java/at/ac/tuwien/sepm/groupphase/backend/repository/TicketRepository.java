@@ -7,10 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
    /* @Modifying(clearAutomatically = true)
     @Query("UPDATE Company c SET c.address = :address WHERE c.id = :companyId")
     void updateTicketStatusToBought(@Param("companyId") int companyId, @Param("address") String address);*/
+    List<Ticket> findTicketsByCustomerOrderId(Long id);
+
+
 }

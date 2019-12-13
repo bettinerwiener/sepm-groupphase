@@ -21,6 +21,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.OrderService;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShoppingCartService;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.service.impl.CustomUserDetailService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/orders")
+@RequestMapping(value = "/api/v1/orders")
 
 public class OrderEndpoint {
 
@@ -46,25 +47,31 @@ public class OrderEndpoint {
     private final ShoppingCartService shoppingCartService;
     private final OrderMapper orderMapper;
     private final TicketMapper ticketMapper;
+    private final TicketService ticketService;
 
-
-    public OrderEndpoint(OrderService orderService, OrderMapper orderMapper, CustomUserDetailService userDetailService, TicketMapper ticketMapper, ShoppingCartService shoppingCartService) {
+    public OrderEndpoint(OrderService orderService, OrderMapper orderMapper, CustomUserDetailService userDetailService, TicketMapper ticketMapper, ShoppingCartService shoppingCartService, TicketService ticketService) {
         this.userDetailService = userDetailService;
         this.orderService = orderService;
         this.shoppingCartService =shoppingCartService;
         this.orderMapper = orderMapper;
         this.ticketMapper = ticketMapper;
+        this.ticketService = ticketService;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
+    @ApiOperation(value = "Get all orders", authorizations = {@Authorization(value = "apiKey")})
     public List<OrderDto> getAllByUser(Authentication authentication) {
         try {
             User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
             System.out.println(user.getId());
             List<OrderDto> orderDtos = orderService.findByUserId(user.getId()).stream().
-                map(order -> orderMapper.orderToOrderDto(order)).collect(Collectors.toList());
+                map(order -> {
+                    List<Ticket> tickets  = ticketService.findTicketsByOrderId(order.getId());
+                    OrderDto orderDto = orderMapper.orderToOrderDto(order);
+                    orderDto.setTickets(tickets);
+                    return orderDto;
+                }).collect(Collectors.toList());
             return orderDtos;
 
         } catch (NotFoundException e) {

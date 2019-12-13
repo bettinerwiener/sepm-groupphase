@@ -13,7 +13,7 @@ public interface RegistrationTestData {
     Boolean TEST_LOCKED= false;
     Boolean TEST_IS_EMPLOYEE = false;
 
-    String USER_REGISTRATION_URI ="/user/register";
+    String USER_REGISTRATION_URI ="/api/v1/user/register";
 
     String  POST_REQUEST_VALID = "{\"firstName\":\"Peter\",\"lastName\":\"Mueller\",\"email\":\"peter.mueller@gmail.com\",\"password\":\"0123456789\"}";
        //String  POST_REQUEST2 = "{\"id\": null,\"email\":\"johnn77@gmail.com\", \"firstName\":\"Michl\",\"is_employee\":\"false\",\"lastName\":\"john\",\"password\":\"1213231321\",\"locked\":\"false\" }";

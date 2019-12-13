@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/performances")
+@RequestMapping(value = "/api/v1/performances")
 @Slf4j
 public class PerformanceEndpoint {
 

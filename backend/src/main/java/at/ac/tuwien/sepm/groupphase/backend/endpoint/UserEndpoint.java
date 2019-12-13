@@ -20,7 +20,7 @@ import java.lang.invoke.MethodHandles;
 
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/v1/user")
 public class UserEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
