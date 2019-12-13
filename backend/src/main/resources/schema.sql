@@ -89,12 +89,8 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
 
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
       user_id BIGINT REFERENCES user(id),
       status      VARCHAR(50) CHECK (status IN ('RESERVATION', 'PURCHASE'))
-=======
-      user_id BIGINT REFERENCES user(id)
->>>>>>> d10c1f0394caca84ee000c12634176222b538045
 );
 
 CREATE TABLE IF NOT EXISTS ticket (
