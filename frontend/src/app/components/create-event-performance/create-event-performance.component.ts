@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
 import { RoomService } from 'src/app/services/room.service';
 import { Room } from 'src/app/dtos/room';
+import { GlobalEvent } from 'src/app/dtos/global-event';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -18,7 +20,8 @@ export class CreateEventPerformanceComponent implements OnInit {
   eventPerformance: EventPerformance;
   error: boolean = false;
   private eventPerformances: EventPerformance[];
-  private rooms: Room[];
+  public rooms: Room[];
+  public events: GlobalEvent[];
   submitted: boolean = false;
   errorMessage: string = 'This is another useless errormessage';
 
@@ -26,7 +29,8 @@ export class CreateEventPerformanceComponent implements OnInit {
     private formbuilder: FormBuilder,
     private eventPerformanceService: EventPerformanceService,
     private authService: AuthService,
-    private roomService: RoomService) {
+    private roomService: RoomService,
+    private eventService: EventService) {
     this.createEventPerformanceForm = this.formbuilder.group({
       event: [Validators.required],
       room: [Validators.required],
@@ -36,6 +40,8 @@ export class CreateEventPerformanceComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getAllRooms();
+    this.getAllEvents();
   }
 
   isAdmin(): boolean {
@@ -59,8 +65,7 @@ export class CreateEventPerformanceComponent implements OnInit {
 
   public createEventPerformance(eventPerformance: EventPerformance) {
     this.eventPerformanceService.createEventPerformance(eventPerformance).subscribe(
-      () => {
-      },
+      () => { },
       error => {
         this.defaultServiceErrorHandling(error);
       }
@@ -82,6 +87,17 @@ export class CreateEventPerformanceComponent implements OnInit {
     this.roomService.getRoom().subscribe(
       (rooms: Room[]) => {
         this.rooms = rooms;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAllEvents() {
+    this.eventService.getEvent().subscribe(
+      (events: GlobalEvent[]) => {
+        this.events = events;
       },
       error => {
         this.defaultServiceErrorHandling(error);

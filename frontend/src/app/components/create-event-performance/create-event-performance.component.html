@@ -17,14 +17,22 @@
         </div>
 
         <div class="card-body">
-          <form class="form" [formGroup]="createEvenPerformancetForm" (ngSubmit)="addPerformanceEvent()">
+          <form class="form" [formGroup]="createEventPerformanceForm" (ngSubmit)="addPerformanceEvent()">
 
             <div class="form-group">
-              <select name="room" formControlName="room" class="form-control" id="room"
-                placeholder="Room" *ngFor="let r of rooms">{{r.name}}
+              <select name="event" formControlName="event" class="form-control" id="event"
+                placeholder="Event">
+                <option *ngFor="let e of events" value="{{e}}">{{e.title}}</option>
               </select>
             </div>
 
+            <div class="form-group">
+              <select name="room" formControlName="room" class="form-control" id="room"
+                placeholder="Room">
+                <option *ngFor="let r of rooms" value="{{r}}">{{r.name}}</option>
+              </select>
+            </div>
+            
             <div class="form-group">
                   <input type="date" name="date" formControlName="date" class="form-control" id= "date" placeholder="Date">
                   <div *ngIf="submitted && createEventPerformanceForm.controls.date.errors" class="error">
