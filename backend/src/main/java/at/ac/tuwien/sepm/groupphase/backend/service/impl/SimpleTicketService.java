@@ -46,4 +46,13 @@ public class SimpleTicketService implements TicketService {
     public List<Ticket> getAll() {
         return this.ticketRepository.findAll();
     }
+
+    @Override
+    public List<Ticket> findByPerformanceId(Long performanceId) {
+        try {
+            return this.ticketRepository.findByPerformanceId(performanceId);
+        } catch (DataAccessException dae) {
+            throw new NotFoundException("No tickets found");
+        }
+    }
 }

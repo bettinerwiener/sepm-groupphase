@@ -50,4 +50,12 @@ public class PerformanceEndpoint {
         log.info("Got all performances; the first one is: {}", performanceDtos.get(0).toString());
         return performanceDtos;
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<PerformanceDto> getByEvent(@RequestParam() Long event) {
+        List<PerformanceDto> performanceDtos = this.performanceService.findByEvent(event).stream().
+            map(performance -> performanceMapper.performanceToPerformanceDto(performance)).collect(Collectors.toList());
+        return performanceDtos;
+    }
 }

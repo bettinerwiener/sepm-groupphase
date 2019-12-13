@@ -21,4 +21,6 @@ public interface TicketService {
     List<Ticket> createForPerformance(EventPerformance eventPerformance) throws NotCreatedException;
 
     List<Ticket> getAll();
+
+    List<Ticket> findByPerformanceId(Long performanceId);
 }
