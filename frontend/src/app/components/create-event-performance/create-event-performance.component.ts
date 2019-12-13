@@ -79,39 +79,15 @@ export class CreateEventPerformanceComponent implements OnInit {
   }
 
   private getAllRooms() {
-    const elm = document.getElementById('room');
-    const df = document.createDocumentFragment();
     this.roomService.getRoom().subscribe(
       (rooms: Room[]) => {
         this.rooms = rooms;
-        for (let i = 0; i < rooms.length; i++) {
-          const option = document.createElement('option');
-          // option.value = rooms[i];
-          option.appendChild(document.createTextNode('option #' + i));
-          df.appendChild(option);
-        }
-        elm.appendChild(df);
       },
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
   }
-
-  /**
-   *
-   * (function() { // don't leak
-    var elm = document.getElementById('foo'), // get the select
-        df = document.createDocumentFragment(); // create a document fragment to hold the options while we create them
-    for (var i = 1; i <= 42; i++) { // loop, i like 42.
-        var option = document.createElement('option'); // create the option element
-        option.value = i; // set the value property
-        option.appendChild(document.createTextNode("option #" + i)); // set the textContent in a safe way.
-        df.appendChild(option); // append the option to the document fragment
-    }
-    elm.appendChild(df); // append the document fragment to the DOM. this is the better way rather than setting innerHTML a bunch of times (or even once with a long string)
-}());
-   */
 
   private defaultServiceErrorHandling(error: any) {
     console.log(error);

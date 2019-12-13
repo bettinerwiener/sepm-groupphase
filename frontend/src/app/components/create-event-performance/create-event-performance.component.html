@@ -21,7 +21,7 @@
 
             <div class="form-group">
               <select name="room" formControlName="room" class="form-control" id="room"
-                placeholder="Room">
+                placeholder="Room" *ngFor="let r of rooms">{{r.name}}
               </select>
             </div>
 

@@ -56,6 +56,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   public createEvent(event: GlobalEvent) {
+    console.log('ajksdfl');
     this.eventService.createEvent(event).subscribe(
       (retEvent: GlobalEvent) => {
         console.log('i am here');
@@ -81,7 +82,6 @@ export class CreateEventComponent implements OnInit {
   }
 
   private defaultServiceErrorHandling(error: any) {
-    console.log(error);
     this.error = true;
     if (error.status === 0) {
       // If status is 0, the backend is probably down
