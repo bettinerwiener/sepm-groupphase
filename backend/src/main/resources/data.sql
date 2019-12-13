@@ -21,7 +21,7 @@ insert into event (id, title, abstract, contents, category, duration, employee)
            (2, 'Star Trek', 'May you live long ...', 'May you live long and prosper', 'FILM', 2.4, 2);
 
 insert into location (id, name, street, city, postal_code)
-    values (1, 'Metropol', 'Hernalser Hauptstraße 12', 'Wien', 1170),
+    values (1, 'Metropol', 'Hernalser Hauptstrasse 12', 'Wien', 1170),
            (2, 'Metropol', 'Karl-Krause-Strasse 45', 'Graz', 8020);
 
 insert into room (id, name, location)
@@ -52,7 +52,7 @@ insert into seat (id, seat_number, row_letter, section)
            (12, 1, 'C', 6),
            (13, 2, 'C', 7);
 
-insert into is_performed_at(id, event, room, date)
+insert into is_performed_at(id, event, room, perf_date)
 values (1, 1, 1, NOW()),
        (2, 2, 2, NOW());
 
@@ -63,5 +63,3 @@ insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, st
            (4, 24,2, 4, 5, 'AVAILABLE'),
           (5, 35,2, 5, 6, 'RESERVED'),
            (6, 22,2, 5, 5, 'RESERVED');
-
-

@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Room;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface RoomService {
      * @throws NotFoundException in case there no rooms in the requested location
      */
     public List<Room> findByLocation(Location location) throws NotFoundException;
+
+    public Room create(Room room) throws NotCreatedException;
 }

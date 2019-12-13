@@ -5,10 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.RoomMapper;
 import at.ac.tuwien.sepm.groupphase.backend.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +26,15 @@ public class RoomEndpoint {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<RoomDto> getAll() {
-        return this.roomService.getAll().stream().map(room -> this.roomMapper.roomToRoomDto(room)).collect(Collectors.toList());
+        return this.roomService.getAll().stream().map(room -> this.roomMapper.roomToRoomDto(room))
+            .collect(Collectors.toList());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public RoomDto create(@RequestBody RoomDto roomDto) {
+        RoomDto createdRoomDto = roomMapper.roomToRoomDto(roomService
+            .create(roomMapper.roomDtoToRoom(roomDto)));
+        return createdRoomDto;
     }
 }

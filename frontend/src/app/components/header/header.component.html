@@ -23,7 +23,7 @@
             <a class="nav-link" routerLink="/locations" routerLinkActive="active">Locations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-event" routerLinkActive="active">Create Event</a>
+          <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/create-event" routerLinkActive="active">Create Event</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/message" routerLinkActive="active">News</a>

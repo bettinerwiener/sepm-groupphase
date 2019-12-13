@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.util.BitSet;
 import java.util.List;
 
 public interface EventService {
@@ -24,4 +26,13 @@ public interface EventService {
      * @throws NotFoundException in case something went wrong when accessing the database
      */
     List<Event> getAll() throws NotFoundException;
+
+    List<Event> getTopEvents() throws NotFoundException;
+
+    List<Event> getFiltered(String searchTerm, String category,
+                            LocalDate startDate, LocalDate endDate,
+                            Double price, Double duration,
+                            Long location, Long artist) throws NotFoundException;
+
+    Event getById(Long id) throws NotFoundException;
 }

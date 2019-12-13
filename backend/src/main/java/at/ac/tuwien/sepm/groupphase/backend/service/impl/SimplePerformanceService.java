@@ -1,11 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventPerformance;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Room;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.PerformanceRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.SectionRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.PerformanceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,23 +22,39 @@ import java.util.List;
 public class SimplePerformanceService implements PerformanceService {
 
     private PerformanceRepository performanceRepository;
+    private TicketRepository ticketRepository;
+    private SeatRepository seatRepository;
+    private SectionRepository sectionRepository;
 
-    public SimplePerformanceService(PerformanceRepository performanceRepository) {
+    public SimplePerformanceService(PerformanceRepository performanceRepository,
+                                    TicketRepository ticketRepository, SeatRepository seatRepository,
+                                    SectionRepository sectionRepository) {
         this.performanceRepository = performanceRepository;
+        this.ticketRepository = ticketRepository;
+        this.seatRepository = seatRepository;
+        this.sectionRepository = sectionRepository;
     }
 
     @Override
-    public EventPerformance create(Event event, Room room, LocalDateTime dateTime) throws NotCreatedException {
-        log.info("Creating performance for event %s ...", event.getTitle());
+    public EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException {
+        log.info("Creating performance for event {} ...", eventPerformance.getEvent().getTitle());
         try {
-            EventPerformance eventPerformance = new EventPerformance();
-            eventPerformance.setEvent(event);
-            eventPerformance.setDate(dateTime);
-            eventPerformance.setRoom(room);
             this.performanceRepository.save(eventPerformance);
+            List<Ticket> tickets = new ArrayList<>();
+            for (Section section : this.sectionRepository.findByRoom(eventPerformance.getRoom())) {
+                log.info("Seats for section letter {}", section.getLetter());
+                for (Seat seat : this.seatRepository.findBySection(section)) {
+                    Ticket ticketToAdd = new Ticket();
+                    ticketToAdd.setPerformance(eventPerformance);
+                    ticketToAdd.setSeat(seat);
+                    ticketToAdd.setStatus(Ticket.Status.AVAILABLE);
+                    ticketToAdd.setPrice(19.70f);
+                }
+            }
+            this.ticketRepository.saveAll(tickets);
             return eventPerformance;
         } catch (DataAccessException dae) {
-            log.error("The performance could not be created: %s", dae.getMessage());
+            log.error("The performance could not be created: {}", dae.getMessage());
             throw new NotCreatedException(String.format("The performance could not be created: %s", dae.getMessage()));
         }
     }
@@ -46,6 +64,7 @@ public class SimplePerformanceService implements PerformanceService {
         log.info("Getting all performances ...");
         try {
             List<EventPerformance> eventPerformances = this.performanceRepository.findAll();
+            log.info("The number of performances is {}", eventPerformances.size());
             if (eventPerformances != null && !eventPerformances.isEmpty()) {
                 return eventPerformances;
             } else {
@@ -53,7 +72,7 @@ public class SimplePerformanceService implements PerformanceService {
                 throw new NotFoundException(String.format("No performances could be found"));
             }
         } catch (DataAccessException dae) {
-            log.error("No performances could be found: %s",
+            log.error("No performances could be found: {}",
                 dae.getMessage());
             throw new NotFoundException(String.format("No performances could be found: %s",
                 dae.getMessage()));
@@ -62,19 +81,19 @@ public class SimplePerformanceService implements PerformanceService {
 
     @Override
     public List<EventPerformance> findByEvent(Event event) throws NotFoundException {
-        log.info("Getting all performances for event %s ...", event.getTitle());
+        log.info("Getting all performances for event {} ...", event.getTitle());
         try {
             List<EventPerformance> eventPerformances = this.performanceRepository.findByEvent(event);
             if (eventPerformances != null && !eventPerformances.isEmpty()) {
                 return eventPerformances;
             } else {
-                log.error("No performances for the requested location %s could be found",
+                log.error("No performances for the requested location {} could be found",
                     event.getTitle());
                 throw new NotFoundException(String.format("No performances for the requested location %d could be found",
                     event.getTitle()));
             }
         } catch (DataAccessException dae) {
-            log.error("No performances for the requested location %s could be found: %s",
+            log.error("No performances for the requested location {} could be found: {}",
                 event.getTitle(), dae.getMessage());
             throw new NotFoundException(String.format("No performances for the requested location %d could be found: %s",
                 event.getTitle(), dae.getMessage()));

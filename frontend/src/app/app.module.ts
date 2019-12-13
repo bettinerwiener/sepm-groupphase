@@ -25,6 +25,10 @@ import { CartComponent } from './components/cart/cart.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 import { OrderComponent } from './components/order/order.component';
+import { CreateEventComponent } from './components/create-event/create-event.component';
+import { EventItemComponent } from './components/event-item/event-item.component';
+import { SeatplanComponent } from './components/seatplan/seatplan.component';
+import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,10 @@ import { OrderComponent } from './components/order/order.component';
     EventListItemComponent,
     SliderComponent,
     OrderComponent,
-
+    CreateEventComponent,
+    EventItemComponent,
+    SeatplanComponent,
+    CreateEventPerformanceComponent
   ],
   imports: [
     BrowserModule,

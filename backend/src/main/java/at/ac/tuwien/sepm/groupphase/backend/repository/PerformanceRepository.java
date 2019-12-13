@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PerformanceRepository extends JpaRepository<EventPerformance, EventPerformanceKey> {
 
-    public List<EventPerformance> findByEvent(Event event);
-    public List<EventPerformance> findAll();
+    List<EventPerformance> findByEvent(Event event);
+    List<EventPerformance> findAll();
 }

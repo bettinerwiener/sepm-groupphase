@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Room;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.RoomRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.RoomService;
@@ -72,6 +73,17 @@ public class SimpleRoomService implements RoomService {
                 location.getName(), dae.getMessage());
             throw new NotFoundException(String.format("No rooms for the requested location %d could be found: %s",
                 location.getName(), dae.getMessage()));
+        }
+    }
+
+    @Override
+    public Room create(Room room) throws NotCreatedException {
+        try {
+            Room createdRoom = roomRepository.save(room);
+            return createdRoom;
+        } catch (DataAccessException dae) {
+            log.error("Room could not be created: %s", dae.getMessage());
+            throw new NotCreatedException(String.format("Room could not be created: %s", dae.getMessage()));
         }
     }
 }

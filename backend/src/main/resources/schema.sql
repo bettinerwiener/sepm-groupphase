@@ -56,12 +56,13 @@ CREATE TABLE IF NOT EXISTS location (
     street      VARCHAR(50) NOT NULL,
     city        VARCHAR(50) NOT NULL,
     postal_code BIGINT,
+    CONSTRAINT unique_location UNIQUE (name, street, city)
 );
 
 CREATE TABLE IF NOT EXISTS room (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(50) NOT NULL,
-    location BIGINT REFERENCES location(id)
+    location BIGINT NOT NULL REFERENCES location(id)
 );
 
 CREATE TABLE IF NOT EXISTS section (
@@ -75,21 +76,20 @@ CREATE TABLE IF NOT EXISTS seat (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     seat_number     INTEGER NOT NULL,
     row_letter      VARCHAR(1) NOT NULL,
-    section     BIGINT REFERENCES section(id)
+    section     BIGINT NOT NULL REFERENCES section(id)
 );
 
 CREATE TABLE IF NOT EXISTS is_performed_at (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     event   BIGINT REFERENCES event(id),
     room BIGINT REFERENCES room(id),
-    `date`    DATETIME NOT NULL,
-    CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
-
+    perf_date   DATETIME NOT NULL,
+    CONSTRAINT is_performed_at_pk UNIQUE (event, room, perf_date)
 );
 
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      user_id BIGINT REFERENCES user(id),
+      user_id BIGINT REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS ticket (

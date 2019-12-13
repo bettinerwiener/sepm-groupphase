@@ -36,9 +36,9 @@ public class PerformanceEndpoint {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PerformanceDto create(@RequestBody EventDto eventDto, @RequestBody RoomDto roomDto, @RequestBody LocalDateTime date) {
-        return this.performanceMapper.performanceToPerformanceDto(this.performanceService.create(this.eventMapper.eventDtoToEvent(eventDto),
-            this.roomMapper.roomDtoToRoom(roomDto), date));
+    public PerformanceDto create(@RequestBody PerformanceDto performanceDto) {
+        return this.performanceMapper.performanceToPerformanceDto(
+            this.performanceService.create(this.performanceMapper.performanceDtoToPerformance(performanceDto)));
     }
 
     @GetMapping
@@ -47,7 +47,7 @@ public class PerformanceEndpoint {
         log.info("Getting all performances ...");
         List<PerformanceDto> performanceDtos = this.performanceService.getAll().stream()
             .map(performance -> this.performanceMapper.performanceToPerformanceDto(performance)).collect(Collectors.toList());
-        log.info("Got all performances; the first one is: %s", performanceDtos.get(0).toString());
+        log.info("Got all performances; the first one is: {}", performanceDtos.get(0).toString());
         return performanceDtos;
     }
 }

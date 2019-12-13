@@ -1,12 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "ticket")
@@ -40,4 +36,5 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
 }

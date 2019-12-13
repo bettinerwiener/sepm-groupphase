@@ -23,7 +23,6 @@ public class Section {
         H
     }
 
-
     @Id
     private Long id;
 

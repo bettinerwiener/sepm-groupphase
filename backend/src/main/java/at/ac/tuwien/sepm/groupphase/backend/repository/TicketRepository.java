@@ -17,5 +17,4 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     void updateTicketStatusToBought(@Param("companyId") int companyId, @Param("address") String address);*/
     List<Ticket> findTicketsByCustomerOrderId(Long id);
 
-
 }

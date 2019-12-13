@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Event } from '../dtos/event';
+import { GlobalEvent } from '../dtos/global-event';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Globals} from '../global/globals';
@@ -10,15 +10,21 @@ import {Globals} from '../global/globals';
 export class EventService {
 
   private eventBaseUri: string = this.globals.backendUri + '/events';
+  private toptenBaseUri: string = this.eventBaseUri + '/topten';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
   /**
    * Loads all events from the backend
    */
-  getEvent(): Observable<Event[]> {
+  getEvent(): Observable<GlobalEvent[]> {
     console.log('Get all events');
-    return this.httpClient.get<Event[]>(this.eventBaseUri);
+    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri);
+  }
+
+  getTopTenEvents(): Observable<GlobalEvent[]> {
+    console.log('Get top ten events');
+    return this.httpClient.get<GlobalEvent[]>(this.toptenBaseUri);
   }
 
   /**
@@ -29,8 +35,8 @@ export class EventService {
    * @param contents detailed description
    * @param duration how long the event lasts
    */
-  createEvent(event: Event): Observable<Event> {
-    console.log('Post Event with title ' + event.title);
-    return this.httpClient.post<Event>(this.eventBaseUri, event);
+  createEvent(event: GlobalEvent): Observable<GlobalEvent> {
+    console.log('Post Event with title' + event.title);
+    return this.httpClient.post<GlobalEvent>(this.eventBaseUri, event);
   }
 }
