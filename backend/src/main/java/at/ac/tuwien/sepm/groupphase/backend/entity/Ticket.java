@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "ticket")
 @Data
 public class Ticket {
-
     public enum Status {
         AVAILABLE,
         RESERVED,
@@ -23,7 +22,6 @@ public class Ticket {
     @JoinColumn(name = "customer_order_id")
     private Order customerOrder;
 
-
     @ManyToOne
     @JoinColumn(name = "is_performed_at_id")
     private EventPerformance performance;
@@ -36,5 +34,4 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
 }

@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
-
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.OrderDto;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.TicketDto;
@@ -73,11 +72,9 @@ public class OrderEndpoint {
                     return orderDto;
                 }).collect(Collectors.toList());
             return orderDtos;
-
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
-
     }
 
     @CrossOrigin
