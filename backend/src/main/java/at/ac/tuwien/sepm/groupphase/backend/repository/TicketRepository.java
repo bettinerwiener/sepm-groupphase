@@ -13,4 +13,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
    /* @Modifying(clearAutomatically = true)
     @Query("UPDATE Company c SET c.address = :address WHERE c.id = :companyId")
     void updateTicketStatusToBought(@Param("companyId") int companyId, @Param("address") String address);*/
+
+    Ticket findFirstById (Long id);
 }

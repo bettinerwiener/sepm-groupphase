@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 
 //import static at.ac.tuwien.sepm.groupphase.backend.entity.Ticket.Status.BOUGHT;
@@ -35,46 +36,52 @@ public class SimpleShoppingCartService implements ShoppingCartService {
     }
 
     @Override
-    public Order BuyTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException{
-        LOGGER.info("User " + user.getId()+ " buys " + tickets.size() +" Tickets" );
+    public Order BuyTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
+        LOGGER.info("User " + user.getId() + " buys " + tickets.size() + " Tickets");
 
-        Order order= new Order( user.getId(), tickets);
+        List<Ticket> ticketsToOrder = new ArrayList<Ticket>() ;
+        Order order =new Order(user.getId());
+        this.orderRepository.save(order);
+        try {
 
-        for (Ticket ticket : tickets) {
+            for (Ticket ticket : tickets) {
 
-            try {
+                if(this.ticketRepository.findFirstById(ticket.getId())!=null){
 
-                Ticket ticketToBuy = this.ticketRepository.getOne(ticket.getId());
+                    Ticket ticketToBuy = this.ticketRepository.getOne(ticket.getId());
 
-                if (ticketToBuy != null) {
-                    if(ticketToBuy.getStatus() == Ticket.Status.BOUGHT){
-                        throw new TicketNotAvailableException("The ticket you want to buy is not available");
-                    }else{
-                        ticketToBuy.setStatus(Ticket.Status.BOUGHT);
-                        ticketRepository.save(ticketToBuy);
+                    if (ticketToBuy.getStatus() == Ticket.Status.BOUGHT) {
+                        throw new TicketNotAvailableException("One of the tickets you want to buy is not available");
                     }
-
                 } else {
-                    throw new NotFoundException("The ticket you want to buy doesnt exist");
+                    throw new NotFoundException("One of the tickets you want to buy doesnt exist");
                 }
 
-            } catch (DataAccessException dae) {
-                LOGGER.error("ShoppingCartService: ticket could not be updated: " + dae.getMessage());
-                throw new NotCreatedException(String.format("The ticket %s could not be bought: %s",
-                    ticket.getId(), dae.getMessage()));
             }
 
+            for (Ticket ticket : tickets) {
+
+                Ticket ticketToBuy = this.ticketRepository.getOne(ticket.getId());
+                ticketToBuy.setStatus(Ticket.Status.BOUGHT);
+                ticketToBuy.setCustomer_order(order);
+
+                ticketsToOrder.add(ticketToBuy);
+                ticketRepository.save(ticketToBuy);
+            }
+
+        }catch (DataAccessException dae) {
+            LOGGER.error("ShoppingCartService: tickets could not be updated: " + dae.getMessage());
+            throw new NotCreatedException(String.format("The tickets could not be bought", dae.getMessage()));
         }
 
+        order.setTickets(ticketsToOrder);
         try {
 
             return this.orderRepository.save(order);
 
-
         } catch (DataAccessException dae) {
-            LOGGER.error("ShoppingCartService: order could not be created: " + dae.getMessage());
-            throw new NotCreatedException(String.format("The order %s could not be created: %s",
-                order.getId(), dae.getMessage()));
+            LOGGER.error("ShoppingCartService: order could not be created" + dae.getMessage());
+            throw new NotCreatedException(String.format("The order  could not be created", dae.getMessage()));
         }
 
     }

@@ -3,6 +3,8 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "ticket")
 @Data
+//@Proxy(lazy = false)
 public class Ticket {
 
     public enum Status {
