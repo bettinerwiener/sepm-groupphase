@@ -19,4 +19,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> findByPerformanceId(Long performanceId);
 
+    Ticket findFirstById (Long id);
+
+    @Query(value = "SELECT user_id FROM ticket JOIN customer_order ON (customer_order.id=customer_order_id) WHERE ticket.id = :ticketId", nativeQuery = true)
+    Long findUserIdWhoReserved (@Param("ticketId") Long id);
 }

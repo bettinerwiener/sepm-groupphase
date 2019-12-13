@@ -1,12 +1,13 @@
+import {Event} from './event';
 import {Room} from './room';
-import { GlobalEvent } from './global-event';
 
 
 export class Performance {
     constructor(
       public id: number,
-      public event: GlobalEvent,
+      public event: Event,
       public room: Room,
-      public date: Date) {
+      public date: Date,) {
     }
   }
+  

@@ -33,7 +33,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long userId, List<Ticket> tickets) {
+    public Order(Long userId) {
         this.userId =userId;
     }
 

@@ -1,12 +1,15 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ticket")
 @Data
+//@Proxy(lazy = false)
 public class Ticket {
     public enum Status {
         AVAILABLE,

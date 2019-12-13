@@ -20,9 +20,6 @@ import {AuthGuard} from './guards/auth.guard';
 import {MessageComponent} from './components/message/message.component';
 
 
-import {CreateEventComponent} from './components/create-event/create-event.component';
-import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
-
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -34,12 +31,10 @@ const routes: Routes = [
   {path: 'cabaret', component: CabaretComponent},
   {path: 'locations', component: LocationsComponent},
   {path: 'cart', component: CartComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'orders', component: OrdersComponent},
+  {path: 'profile',canActivate: [AuthGuard], component: ProfileComponent},
+  {path: 'orders', canActivate: [AuthGuard], component: OrdersComponent},
   {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
-  {path: 'create-event', component: CreateEventComponent},
   // {path: 'create-event', canActivate: [AuthGuard], component: CreateEventComponent}
-  {path: 'create-event-performance', component: CreateEventPerformanceComponent}
 ];
 
 @NgModule({

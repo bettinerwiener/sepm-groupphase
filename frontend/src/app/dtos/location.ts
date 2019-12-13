@@ -6,6 +6,7 @@ export class Location {
       public name: string,
       public street: string,
       public city: string,
-      public postalCode: number) {
+      public postalCode: number,) {
     }
   }
+  

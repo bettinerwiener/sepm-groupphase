@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthRequest} from '../dtos/auth-request';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import {Globals} from '../global/globals';
@@ -13,7 +14,7 @@ export class AuthService {
 
   private authBaseUri: string = this.globals.backendUri + '/authentication';
 
-  constructor(private httpClient: HttpClient, private globals: Globals) {
+  constructor(private httpClient: HttpClient, private globals: Globals, private router: Router) {
   }
 
   /**
@@ -42,6 +43,8 @@ export class AuthService {
   logoutUser() {
     console.log('Logout');
     localStorage.removeItem('authToken');
+    this.router.navigate(['/concerts']);
+
   }
 
   getToken() {

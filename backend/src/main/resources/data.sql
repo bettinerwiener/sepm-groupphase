@@ -12,7 +12,7 @@ insert into artist (id, first_name, last_name)
 
 insert into customer_order (id, user_id)
     values (3, 1),
-           (4, 1),
+           (4, 4),
            (5, 1);
 
 
@@ -57,9 +57,10 @@ values (1, 1, 1, NOW()),
        (2, 2, 2, NOW());
 
 insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
-    values (1, 200, 1, 3, 1, 'AVAILABLE'),
+    values (1, 200, 1, null , 1, 'AVAILABLE'),
            (2, 100, 1, 3, 4, 'BOUGHT'),
-           (3, 30,2, 4, 6, 'BOUGHT'),
-           (4, 24,2, 4, 5, 'AVAILABLE'),
+           (3, 30,2, 4, 6, 'RESERVED'),
+           (4, 24,2, null , 5, 'AVAILABLE'),
           (5, 35,2, 5, 6, 'RESERVED'),
-           (6, 22,2, 5, 5, 'RESERVED');
+           (6, 22,2, 4, 5, 'RESERVED'),
+          (7, 24,2, null , 5, 'AVAILABLE');

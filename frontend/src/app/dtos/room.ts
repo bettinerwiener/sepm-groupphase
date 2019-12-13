@@ -1,8 +1,11 @@
-import { EventLocation } from './event-location';
+import {Location} from './location';
+
 
 export class Room {
     constructor(
-        public name: string,
-        public eventLocation: EventLocation
-    ) {}
-}
+      public id: number,
+      public name: String,
+      public location: Location,) {
+    }
+  }
+  

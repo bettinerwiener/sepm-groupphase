@@ -22,4 +22,6 @@ public interface TicketMapper {
 
     List<Ticket> ticketDtoToTicket(List<TicketDto> ticketDtos);
 
+
+
 }

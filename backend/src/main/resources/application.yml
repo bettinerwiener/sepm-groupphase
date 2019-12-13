@@ -18,7 +18,7 @@ spring:
     # Allows to fetch lazy properties outside of the original transaction. Although this sounds helpful, the property
     # is disabled since it breaks the principle of least astonishment and leads to bad performance. The learn more,
     # follow this link: https://bit.ly/2LaX9ku
-    open-in-view: false
+    open-in-view: true
   h2:
     console:
       enabled: true
