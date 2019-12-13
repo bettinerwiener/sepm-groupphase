@@ -23,7 +23,7 @@ public interface PerformanceService {
 
     List<EventPerformance> getAll() throws NotFoundException;
 
-    List<EventPerformance> findByEvent(Event event) throws NotFoundException;
+    List<EventPerformance> findByEvent(Long eventId) throws NotFoundException;
 
     List<EventPerformance> findByRoom(Room room) throws NotFoundException;
 }
