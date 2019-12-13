@@ -1,12 +1,13 @@
-import { SeatplanObject } from './seatplan-object';
-import { Time } from '@angular/common';
-import { EventLocation } from './event-location';
+import {Seat} from './seat';
+import {Performance} from './performance';
+
 
 export class Ticket {
     constructor(
-        public seatplan: SeatplanObject,
-        public location: EventLocation,
-        public hall: string,
-        public time: Time) {
-        }
+      public id: number,
+      public performance: Performance,
+      public seat: Seat,
+      public price: number,
+      public status: string) {
+    }
 }

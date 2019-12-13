@@ -84,7 +84,7 @@ public class EventEndpointTest implements EventTestData {
 
 
     @Test
-    public void givenNothing_whenFindTopTen_thenListSizeEquals1() throws Exception {
+    public void givenNothing_whenFindTopTen_thenListSizeEquals2() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI_TOP_TEN)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
@@ -97,7 +97,7 @@ public class EventEndpointTest implements EventTestData {
         List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EventDto[].class));
 
-        assertEquals(1, events.size());
+        assertEquals(2, events.size());
     }
 
     @Test

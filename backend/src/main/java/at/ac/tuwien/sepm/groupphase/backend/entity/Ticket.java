@@ -3,10 +3,9 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
+@Table(name = "ticket")
 @Data
 public class Ticket {
 
@@ -20,26 +19,22 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_order_id")
+    private Order customerOrder;
+
+
+    @ManyToOne
+    @JoinColumn(name = "is_performed_at_id")
+    private EventPerformance performance;
+
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
+    private Float price;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne
-    @JoinColumn(name = "event")
-    private Event event;
-
-    @ManyToOne
-    @JoinColumn(name = "room")
-    private Room room;
-
-    @ManyToOne
-    @JoinTable (
-        name = "user_buys_ticket",
-        joinColumns = @JoinColumn(name = "user"),
-        inverseJoinColumns = @JoinColumn(name = "ticket")
-    )
-    private User user;
-
-    @Column(nullable = false)
-    private Double price;
 }

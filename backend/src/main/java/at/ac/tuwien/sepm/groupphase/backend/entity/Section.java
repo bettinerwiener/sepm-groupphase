@@ -1,9 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,11 +23,6 @@ public class Section {
         H
     }
 
-    public enum PriceCategory {
-        EXPENSIVE,
-        CHEAP
-    }
-
     @Id
     private Long id;
 
@@ -35,10 +32,6 @@ public class Section {
     @Column(nullable = false, name = "letter")
     @Enumerated(EnumType.STRING)
     private Letter letter;
-
-    @Column(nullable = false, name = "price_category")
-    @Enumerated(EnumType.STRING)
-    private PriceCategory priceCategory;
 
     @ManyToOne
     @JoinColumn(name = "room")

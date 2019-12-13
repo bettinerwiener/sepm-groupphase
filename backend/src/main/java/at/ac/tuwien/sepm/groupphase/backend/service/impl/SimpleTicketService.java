@@ -1,10 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventPerformance;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
-import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
+import org.springframework.dao.DataAccessException;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventPerformance;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,21 @@ public class SimpleTicketService implements TicketService {
 
     public SimpleTicketService(TicketRepository ticketrepository) {
         this.ticketRepository = ticketrepository;
+    }
+
+
+    @Override
+    public List<Ticket> findTicketsByOrderId(Long id) {
+        try {
+            List<Ticket> tickets = this.ticketRepository.findTicketsByCustomerOrderId(id);
+            if (tickets != null && !tickets.isEmpty()) {
+                return tickets;
+            } else {
+                throw new NotFoundException("No locations have been found.");
+            }
+        } catch (DataAccessException dae) {
+            throw new NotFoundException(String.format("No locations have been found: %s", dae.getMessage()));
+        }
     }
 
     @Override

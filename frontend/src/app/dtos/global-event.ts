@@ -15,5 +15,6 @@ export class GlobalEvent {
     public shortDescription: string,
     public contents: string,
     public duration: number
-  ) {}
+  ) {
   }
+}

@@ -32,10 +32,9 @@ CREATE TABLE IF NOT EXISTS event (
     title       VARCHAR(100) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     contents    VARCHAR(511),
-    category    VARCHAR(25),
+    category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES user(id),
-    CONSTRAINT event_unique UNIQUE (title, category)
+    employee    BIGINT REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (
@@ -69,8 +68,7 @@ CREATE TABLE IF NOT EXISTS room (
 CREATE TABLE IF NOT EXISTS section (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     letter      VARCHAR(1) CHECK (letter IN ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')),
-    price_category  VARCHAR(10) CHECK (price_category IN ('EXPENSIVE', 'CHEAP')),
-    room    BIGINT NOT NULL REFERENCES room(id),
+    room    BIGINT REFERENCES room(id),
     seats_selectable SMALLINT CHECK (seats_selectable IN (0, 1))
 );
 
@@ -91,8 +89,12 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
 
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< HEAD
       user_id BIGINT REFERENCES user(id),
       status      VARCHAR(50) CHECK (status IN ('RESERVATION', 'PURCHASE'))
+=======
+      user_id BIGINT REFERENCES user(id)
+>>>>>>> d10c1f0394caca84ee000c12634176222b538045
 );
 
 CREATE TABLE IF NOT EXISTS ticket (
@@ -103,6 +105,7 @@ CREATE TABLE IF NOT EXISTS ticket (
       status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
       price DECIMAL NOT NULL
 );
+
 
 CREATE TABLE IF NOT EXISTS customer_news (
      user    BIGINT REFERENCES user(id),

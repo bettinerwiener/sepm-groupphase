@@ -23,7 +23,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         boolean first_condition = false;
         String query = "select e from Event e " +
             "join EventPerformance i on e.id = i.event " +
-            "join Ticket t on i.event = t.event " +
+            "join Ticket t on i.event = t.performance " +
             "join Room r on r.id = i.room where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
             searchTerm = searchTerm.toLowerCase();

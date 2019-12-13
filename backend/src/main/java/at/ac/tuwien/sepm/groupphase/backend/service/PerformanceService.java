@@ -14,17 +14,16 @@ public interface PerformanceService {
 
     /**
      * Creates a performance for an event at a certain location and time
-     * @param event for which a performance shall be created
-     * @param room in which the performance will take place
-     * @param dateTime at which the event will be performed
+     * @param eventPerformance to be created
      * @return the created performance
      * @throws NotCreatedException in case something goes wrong while persisting the entity
      */
-    public EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException;
 
-    public List<EventPerformance> getAll() throws NotFoundException;
+    EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException;
 
-    public List<EventPerformance> findByEvent(Event event) throws NotFoundException;
+    List<EventPerformance> getAll() throws NotFoundException;
 
-    public List<EventPerformance> findByRoom(Room room) throws NotFoundException;
+    List<EventPerformance> findByEvent(Event event) throws NotFoundException;
+
+    List<EventPerformance> findByRoom(Room room) throws NotFoundException;
 }

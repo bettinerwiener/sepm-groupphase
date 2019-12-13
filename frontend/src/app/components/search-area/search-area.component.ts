@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+
 import { SearchService } from 'src/app/services/search.service';
-
-
 
 @Component({
   selector: 'search-area',

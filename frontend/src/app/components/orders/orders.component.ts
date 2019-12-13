@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {OrdersService} from '../../services/orders.service';
+import {AuthService} from '../../services/auth.service';
+import {Order} from '../../dtos/order';
 
 @Component({
   selector: 'app-orders',
@@ -7,9 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersComponent implements OnInit {
 
-  constructor() { }
+  error = false;
+  errorMessage = '';
+  orders: Order[];
+   
+  constructor(private orderService: OrdersService, private authService: AuthService) {}
 
   ngOnInit() {
+    this.loadOrders();
+  }
+
+
+  private loadOrders() {
+    this.orderService.getOrders().subscribe(
+      (orders: Order[]) => {
+        this.orders = orders;
+        console.log(this.orders[0]);
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private defaultServiceErrorHandling(error: any) {
+    console.log(error);
+    this.error = true;
+    if (typeof error.error === 'object') {
+      this.errorMessage = error.error.error;
+    } else {
+      this.errorMessage = error.error;
+    }
   }
 
 }

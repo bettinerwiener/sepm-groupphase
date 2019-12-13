@@ -45,10 +45,10 @@ public class SimplePerformanceService implements PerformanceService {
                 log.info("Seats for section letter {}", section.getLetter());
                 for (Seat seat : this.seatRepository.findBySection(section)) {
                     Ticket ticketToAdd = new Ticket();
-                    ticketToAdd.setEvent(eventPerformance.getEvent());
-                    ticketToAdd.setRoom(eventPerformance.getRoom());
+                    ticketToAdd.setPerformance(eventPerformance);
+                    ticketToAdd.setSeat(seat);
                     ticketToAdd.setStatus(Ticket.Status.AVAILABLE);
-                    ticketToAdd.setPrice(seat.getSection().getPriceCategory() == Section.PriceCategory.CHEAP ? 12.65 : 19.70);
+                    ticketToAdd.setPrice(19.70f);
                 }
             }
             this.ticketRepository.saveAll(tickets);
@@ -64,6 +64,7 @@ public class SimplePerformanceService implements PerformanceService {
         log.info("Getting all performances ...");
         try {
             List<EventPerformance> eventPerformances = this.performanceRepository.findAll();
+            log.info("The number of performances is {}", eventPerformances.size());
             if (eventPerformances != null && !eventPerformances.isEmpty()) {
                 return eventPerformances;
             } else {
@@ -82,7 +83,7 @@ public class SimplePerformanceService implements PerformanceService {
     public List<EventPerformance> findByEvent(Event event) throws NotFoundException {
         log.info("Getting all performances for event {} ...", event.getTitle());
         try {
-            List<EventPerformance> eventPerformances = this.performanceRepository.findByEvent(event);
+            List<EventPerformance> eventPerformances = this.performanceRepository.findByEventId(event.getId());
             if (eventPerformances != null && !eventPerformances.isEmpty()) {
                 return eventPerformances;
             } else {

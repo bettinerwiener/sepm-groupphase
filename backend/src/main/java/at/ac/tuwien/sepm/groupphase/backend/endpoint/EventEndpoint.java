@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(value = "/api/v1/events")
 public class EventEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -34,7 +35,7 @@ public class EventEndpoint {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/api/v1/events")
+    @GetMapping
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
     public List<EventDto> getAll(@RequestParam(required = false) String searchTerm,
                                  @RequestParam(required = false) String category,
@@ -64,7 +65,6 @@ public class EventEndpoint {
 
     //@Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/api/v1/events")
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
     public EventDto create(@RequestBody EventDto eventDto, @AuthenticationPrincipal String username) {
         return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
@@ -72,7 +72,7 @@ public class EventEndpoint {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/api/v1/events/topten")
+    @GetMapping("/topten")
     @ApiOperation(value = "Get top ten events", authorizations = {@Authorization(value = "apiKey")})
     public List<EventDto> getTopTenEvents() {
         List<EventDto> eventDtos = eventService.getTopEvents().stream().
@@ -81,10 +81,9 @@ public class EventEndpoint {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/api/v1/events/{id}")
+    @GetMapping("/{id}")
     @ApiOperation(value = "Get event by id", authorizations = {@Authorization(value = "apiKey")})
     public EventDto getById(@PathVariable("id") Long id) {
         return this.eventMapper.eventToEventDto(this.eventService.getById(id));
     }
-
 }

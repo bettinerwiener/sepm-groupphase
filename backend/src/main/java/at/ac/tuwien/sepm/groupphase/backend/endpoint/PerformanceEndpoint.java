@@ -47,7 +47,7 @@ public class PerformanceEndpoint {
         log.info("Getting all performances ...");
         List<PerformanceDto> performanceDtos = this.performanceService.getAll().stream()
             .map(performance -> this.performanceMapper.performanceToPerformanceDto(performance)).collect(Collectors.toList());
-        log.info("Got all performances; the first one is: %s", performanceDtos.get(0).toString());
+        log.info("Got all performances; the first one is: {}", performanceDtos.get(0).toString());
         return performanceDtos;
     }
 }

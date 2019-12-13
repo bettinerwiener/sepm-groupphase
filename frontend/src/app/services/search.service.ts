@@ -16,7 +16,10 @@ export class SearchService {
     startDate: Date,
     endDate: Date,
     price: number,
-    duration: number): Observable<Array<Event>> {
+    duration: number,
+    location: any,
+    artist: Artist
+    ): Observable<Array<Event>> {
 
     let query = '?';
     if (searchTerm) { query += `searchTerm=${searchTerm}&`; }
@@ -25,6 +28,8 @@ export class SearchService {
     if (endDate) { query += `endDate=${endDate}`; }
     if (price) { query += `price=${Number(price)}`; }
     if (duration) { query += `duration=${Number(duration)}`; }
+    if (location) { query += `location=${location}`; }
+    if (artist) { query += `Artist=${artist}`; }
 
     console.log('Get event');
     return this.httpClient.get<Array<Event>>(this.globals.backendUri + '/events' + query);

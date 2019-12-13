@@ -48,7 +48,9 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(authRequest).subscribe(
       () => {
         console.log('Successfully logged in user: ' + authRequest.email);
-        this.router.navigate(['/events']);
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        });
       },
       error => {
         console.log('Could not log in due to:');

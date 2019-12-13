@@ -7,6 +7,7 @@ import { RoomService } from 'src/app/services/room.service';
 import { Room } from 'src/app/dtos/room';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'create-event-performance',
   templateUrl: './create-event-performance.component.html',
   styleUrls: ['./create-event-performance.component.scss']
@@ -78,14 +79,14 @@ export class CreateEventPerformanceComponent implements OnInit {
   }
 
   private getAllRooms() {
-    let elm = document.getElementById('room');
-    let df = document.createDocumentFragment();
+    const elm = document.getElementById('room');
+    const df = document.createDocumentFragment();
     this.roomService.getRoom().subscribe(
       (rooms: Room[]) => {
         this.rooms = rooms;
-        for (let i = 0; i < rooms.length; i++){
-          let option = document.createElement('option');
-          option.value = rooms[i];
+        for (let i = 0; i < rooms.length; i++) {
+          const option = document.createElement('option');
+          // option.value = rooms[i];
           option.appendChild(document.createTextNode('option #' + i));
           df.appendChild(option);
         }
@@ -98,7 +99,7 @@ export class CreateEventPerformanceComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    * (function() { // don't leak
     var elm = document.getElementById('foo'), // get the select
         df = document.createDocumentFragment(); // create a document fragment to hold the options while we create them

@@ -10,6 +10,12 @@ insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),
            (2, 'Kathryn', 'Bigelow');
 
+insert into customer_order (id, user_id)
+    values (3, 1),
+           (4, 1),
+           (5, 1);
+
+
 insert into event (id, title, abstract, contents, category, duration, employee)
     values (1, 'Star Wars', 'In a galaxy far far ...', 'The Star Wars universe ...', 'FILM', 2.5, 1),
            (2, 'Star Trek', 'May you live long ...', 'May you live long and prosper', 'FILM', 2.4, 2);
@@ -22,14 +28,14 @@ insert into room (id, name, location)
     values (1, 'Schubert', 1),
            (2, 'Zweig', 2);
 
-insert into section (id, letter, room, seats_selectable, price_category)
-    values (1, 'A', 1, 0, 'CHEAP'),
-           (2, 'B', 1, 0, 'CHEAP'),
-           (3, 'C', 1, 0, 'CHEAP'),
-           (4, 'A', 2, 0, 'CHEAP'),
-           (5, 'B', 2, 0, 'CHEAP'),
-           (6, 'C', 2, 0, 'CHEAP'),
-           (7, 'D', 2, 0, 'CHEAP');
+insert into section (id, letter, room, seats_selectable)
+    values (1, 'A', 1, 0),
+           (2, 'B', 1, 0),
+           (3, 'C', 1, 0),
+           (4, 'A', 2, 0),
+           (5, 'B', 2, 0),
+           (6, 'C', 2, 0),
+           (7, 'D', 2, 0);
 
 insert into seat (id, seat_number, row_letter, section)
     values (1, 1, 'A', 1),
@@ -46,22 +52,14 @@ insert into seat (id, seat_number, row_letter, section)
            (12, 1, 'C', 6),
            (13, 2, 'C', 7);
 
-insert into is_performed_at(event, room, perf_date)
-values (1, 1, NOW()),
-       (2, 2, NOW());
+insert into is_performed_at(id, event, room, perf_date)
+values (1, 1, 1, NOW()),
+       (2, 2, 2, NOW());
 
-insert into ticket (id, event, room, seat, `status`, price)
-    values (1, 1, 1, 1, 'BOUGHT', 5),
-           (2, 1, 1, 2, 'BOUGHT', 5),
-           (3, 1, 1, 3, 'AVAILABLE', 5),
-           (4, 1, 1, 4, 'AVAILABLE', 5),
-           (5, 1, 1, 5, 'AVAILABLE', 10),
-           (6, 1, 1, 6, 'AVAILABLE', 10),
-           (7, 1, 1, 7, 'AVAILABLE', 10),
-           (8, 1, 1, 8, 'AVAILABLE', 10),
-           (9, 1, 1, 9, 'AVAILABLE', 5),
-           (10, 2, 2, 10, 'AVAILABLE', 5),
-           (11, 2, 2, 11, 'AVAILABLE', 5),
-           (12, 2, 2, 12, 'AVAILABLE', 5),
-           (13, 2, 2, 13, 'AVAILABLE', 5);
-
+insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
+    values (1, 200, 1, 3, 1, 'AVAILABLE'),
+           (2, 100, 1, 3, 4, 'BOUGHT'),
+           (3, 30,2, 4, 6, 'BOUGHT'),
+           (4, 24,2, 4, 5, 'AVAILABLE'),
+          (5, 35,2, 5, 6, 'RESERVED'),
+           (6, 22,2, 5, 5, 'RESERVED');
