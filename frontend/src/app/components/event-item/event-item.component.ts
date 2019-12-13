@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { faCalendarDay, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { SeatplanComponent } from '../seatplan/seatplan.component';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { EventObject } from 'src/app/dtos/event-object';
+import { TicketService } from 'src/app/services/ticket.service';
+import { EventPerformance } from 'src/app/dtos/event-performance';
+import { Ticket } from 'src/app/dtos/ticket';
 
 @Component({
   selector: 'app-event-item',
@@ -13,17 +17,52 @@ export class EventItemComponent implements OnInit {
   faCalendarDay = faCalendarDay;
   faMapMarkerAlt = faMapMarkerAlt;
   selectSeatBool: boolean = false;
-  // imageHeight: number = +document.getElementById('image').style.height;
+  eventObject: EventObject;
+  performances: Array<EventPerformance>;
+  id: number = 0;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: TicketService
+  ) { }
 
-  selectSeats(): void {
-    this.selectSeatBool = !this.selectSeatBool;
+  selectSeats(performance:EventPerformance): void {
+    performance.seatSelection = !performance.seatSelection;
+    console.log(performance);
+    
   }
 
   ngOnInit() {
+    var id: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.service.getEvent(id).subscribe(
+      (eventObj: EventObject) => {
+        this.eventObject = eventObj;
 
+      } 
+    )
+
+    this.service.getPerformancesByEventId(id).subscribe(
+      (performances: Array<EventPerformance>) => {
+        this.performances = performances;
+        console.log("performances");
+        
+        console.log(performances);
+        
+
+        for(let perf of performances){
+
+        this.service.getTicketsByPerformanceId(perf.id).subscribe(
+          (tickets: Array<Ticket>) => {
+            perf.tickets = tickets;
+            console.log(tickets);
+            console.log("tickets");
+            
+          }
+        )
+
+        }
+      }
+    )
   }
-
-
 }

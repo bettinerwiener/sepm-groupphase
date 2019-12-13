@@ -18,11 +18,12 @@ import {CartComponent} from './components/cart/cart.component';
 
 import {AuthGuard} from './guards/auth.guard';
 import {MessageComponent} from './components/message/message.component';
-
+import { SeatplanComponent } from './components/seatplan/seatplan.component';
+import { EventItemComponent } from './components/event-item/event-item.component';
+import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 
 import {CreateEventComponent} from './components/create-event/create-event.component';
 import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
-
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -37,8 +38,10 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'orders', component: OrdersComponent},
   {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
+  {path: 'test', component: SeatplanComponent},
+  {path: 'event/:id', component: EventItemComponent},
+  {path: 'event-list-item', component: EventListItemComponent},
   {path: 'create-event', component: CreateEventComponent},
-  // {path: 'create-event', canActivate: [AuthGuard], component: CreateEventComponent}
   {path: 'create-event-performance', component: CreateEventPerformanceComponent}
 ];
 
