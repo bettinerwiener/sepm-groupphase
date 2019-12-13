@@ -57,38 +57,61 @@ public class UserEndpointTest implements RegistrationTestData {
     @Autowired
     private SecurityProperties securityProperties;
 
+
     @Test
-    public void givenNothing_whenFindAll_thenListSizeEquals2() throws Exception {
-
-        /*User user = new User();
-        user.setId(ID);
-        user.setFirstName(TEST_FIRST_NAME);
-        user.setLastName(TEST_LAST_NAME);
-        user.setEmail(TEST_EMAIL);
-        user.setPassword(TEST_PASSWORD);
-        user.setIsEmployee(false);
-        user.setLocked(false);
-
-        UserDto userDto = userMapper.userToUserDto(user);
-        String body = objectMapper.writeValueAsString(userDto);
-
-        MvcResult mvcResult = this.mockMvc.perform(post("/api/v1/user/register")
+    public void creatingNewUserReturns201() throws Exception {
+        this.mockMvc.perform(post(USER_REGISTRATION_URI)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertAll(
-            () -> assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus()),
-            () -> {
-                //Reads the errors from the body
-                String content = response.getContentAsString();
-                content = content.substring(content.indexOf('[') + 1, content.indexOf(']'));
-                String[] errors = content.split(",");
-                assertEquals(3, errors.length);
-            }
-        );*/
+            .content(POST_REQUEST_VALID)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
     }
+
+    @Test
+    public void creatingNewUserWithExistingEmailFormatReturns422() throws Exception {
+        this.mockMvc.perform(post(USER_REGISTRATION_URI)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(POST_REQUEST_EXISTING_EMAIL)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void creatingNewUserWithWrongEmailFormatReturns400() throws Exception {
+        this.mockMvc.perform(post(USER_REGISTRATION_URI)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(POST_REQUEST_WRONG_EMAIL)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void creatingNewUserWithBlankFirstNameReturns400() throws Exception {
+        this.mockMvc.perform(post(USER_REGISTRATION_URI)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(POST_REQUEST_BLANK_FIRST_NAME)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void creatingNewUserWithBlankLastNameReturns400() throws Exception {
+        this.mockMvc.perform(post(USER_REGISTRATION_URI)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(POST_REQUEST_BLANK_LAST_NAME)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void creatingNewUserWithShortPasswordReturns400() throws Exception {
+        this.mockMvc.perform(post(USER_REGISTRATION_URI)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(POST_REQUEST_SHORT_PASSWORD)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+
+
 }

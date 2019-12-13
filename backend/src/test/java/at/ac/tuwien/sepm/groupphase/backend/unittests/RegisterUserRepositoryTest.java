@@ -61,7 +61,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
         userRepository.save(user);
 
         assertAll(
-            () -> assertEquals(1, userRepository.findAll().size()),
+            () -> assertEquals(5, userRepository.findAll().size()),
             () -> assertNotNull(userRepository.findById(user.getId()))
         );
     }
@@ -81,7 +81,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
         userRepository.save(user);
 
         assertAll(
-            () -> assertEquals(1, userRepository.findAll().size()),
+            () -> assertEquals(5, userRepository.findAll().size()),
             () -> assertNotEquals(user, userRepository.findById(100L))
         );
     }

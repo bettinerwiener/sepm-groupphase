@@ -13,14 +13,13 @@ public interface RegistrationTestData {
     Boolean TEST_LOCKED= false;
     Boolean TEST_IS_EMPLOYEE = false;
 
-    String BASE_URI = "/api/v1";
-    String USER_BASE_URI = BASE_URI + "/user";
+    String USER_REGISTRATION_URI ="/user/register";
 
-    String ADMIN_USER = "admin@email.com";
-    String DEFAULT_USER = "user@email.com";
-
-    String  POST_REQUEST = "{\"firstName\":\"Peter\",\"lastName\":\"Mueller\",\"email\":\"peter.mueller@gmail.com\",\"password\":\"0123456789\"}";
-    String  POST_REQUEST2 = "{\"id\": null,\"email\":\"johnn77@gmail.com\", \"firstName\":\"Michl\",\"is_employee\":\"false\",\"lastName\":\"john\",\"password\":\"1213231321\",\"locked\":\"false\" }";
-
-
+    String  POST_REQUEST_VALID = "{\"firstName\":\"Peter\",\"lastName\":\"Mueller\",\"email\":\"peter.mueller@gmail.com\",\"password\":\"0123456789\"}";
+       //String  POST_REQUEST2 = "{\"id\": null,\"email\":\"johnn77@gmail.com\", \"firstName\":\"Michl\",\"is_employee\":\"false\",\"lastName\":\"john\",\"password\":\"1213231321\",\"locked\":\"false\" }";
+     String  POST_REQUEST_EXISTING_EMAIL = "{\"firstName\":\"hugo\",\"lastName\":\"hugoson\",\"email\":\"hugo@gmail.com\",\"password\":\"0123456789\"}";
+    String  POST_REQUEST_WRONG_EMAIL = "{\"firstName\":\"hans\",\"lastName\":\"papa\",\"email\":\"hansi.papa\",\"password\":\"0123456789\"}";
+    String  POST_REQUEST_BLANK_FIRST_NAME = "{\"firstName\":\"\",\"lastName\":\"Mueller\",\"email\":\"peter.mueller@gmail.com\",\"password\":\"0123456789\"}";
+    String  POST_REQUEST_BLANK_LAST_NAME = "{\"firstName\":\"Peter\",\"lastName\":\"\",\"email\":\"peter.mueller@gmail.com\",\"password\":\"0123456789\"}";
+    String  POST_REQUEST_SHORT_PASSWORD = "{\"firstName\":\"Peter\",\"lastName\":\"Mueller\",\"email\":\"peter.mueller@gmail.com\",\"password\":\"abc\"}";
 }

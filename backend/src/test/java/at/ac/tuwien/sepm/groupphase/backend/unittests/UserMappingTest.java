@@ -65,8 +65,8 @@ public class UserMappingTest implements RegistrationTestData {
             () -> assertEquals(TEST_LAST_NAME, user.getLastName()),
             () -> assertEquals(TEST_EMAIL, user.getEmail()),
             () -> assertEquals(TEST_PASSWORD, user.getPassword()),
-            () -> assertEquals(null, user.getIsEmployee()),
-            () -> assertEquals(null, user.getLocked())
+            () -> assertEquals(false, user.getIsEmployee()),
+            () -> assertEquals(false, user.getLocked())
         );
     }
 
