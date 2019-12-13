@@ -9,5 +9,5 @@ import java.util.List;
 public interface ShoppingCartService {
 
     Order BuyTickets(User user, List<Ticket> tickets);
-
+    Order ReserveTickets(User user, List<Ticket> tickets);
 }

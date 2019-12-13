@@ -74,7 +74,7 @@ public class OrderEndpoint {
     }
 
     @CrossOrigin
-    @PostMapping(value= "/new")
+    @PostMapping(value= "/buy")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "make new order", authorizations = {@Authorization(value = "apiKey")})
     public OrderDto newOrder(Authentication authentication,@RequestBody List<TicketDto> ticketDtos) {
@@ -83,7 +83,15 @@ public class OrderEndpoint {
         return orderMapper.orderToOrderDto(shoppingCartService.BuyTickets(user,tickets));
     }
 
-
+    @CrossOrigin
+    @PostMapping(value= "/reserve")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "make new reservation", authorizations = {@Authorization(value = "apiKey")})
+    public OrderDto newReservation(Authentication authentication, @RequestBody List<TicketDto> ticketDtos) {
+        User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
+        List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
+        return orderMapper.orderToOrderDto(shoppingCartService.ReserveTickets(user,tickets));
+    }
 
 
 }
