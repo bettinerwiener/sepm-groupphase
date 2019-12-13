@@ -62,6 +62,7 @@ public class EventRepositoryTest implements EventTestData {
         event.setDuration(4.7);
 
         User user = userRepository.findByEmail(ADMIN_USER);
+        event.setEmployee(user);
         Event createdEvent = eventRepository.save(event);
         assertAll(
             () -> assertEquals(event.getTitle(), createdEvent.getTitle())
@@ -70,7 +71,6 @@ public class EventRepositoryTest implements EventTestData {
 
     @Test
     public void findTopEventsReturnsEventWithId1AtTop() {
-        List<Ticket> tickets = this.ticketRepository.findAll();
         List<Event> events = this.eventRepository.findTopEvents();
         assertAll(
             () -> assertEquals(1L, events.get(0).getId())

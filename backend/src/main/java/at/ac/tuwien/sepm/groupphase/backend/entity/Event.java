@@ -5,24 +5,11 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@SqlResultSetMapping(name="Events",
-    entities={
-        @EntityResult(entityClass=at.ac.tuwien.sepm.groupphase.backend.entity.Event.class, fields={
-            @FieldResult(name="id", column="id"),
-            @FieldResult(name="title", column="title"),
-            @FieldResult(name="shortDescription", column="abstract"),
-            @FieldResult(name="contents", column="contents"),
-            @FieldResult(name="category", column ="category"),
-            @FieldResult(name="duration", column="duration"),
-            @FieldResult(name="employee", column="employee")
-        })
-    },
-    columns={}
-)
 @Table(
     uniqueConstraints = @UniqueConstraint(columnNames={"title", "category"})
 )
@@ -57,13 +44,9 @@ public class Event {
     private  Double duration;
 
 
-    private Long employee;
-
     @ManyToOne
-    @JoinTable(
-        name = "artist_creates_event",
-        joinColumns = @JoinColumn(nullable = false, name = "artist"),
-        inverseJoinColumns = @JoinColumn(nullable = false, name = "event"))
-    Artist artist;
+    @JoinColumn(name = "employee")
+    User employee;
 
+    //TODO: find solution for artist not working with join table
 }

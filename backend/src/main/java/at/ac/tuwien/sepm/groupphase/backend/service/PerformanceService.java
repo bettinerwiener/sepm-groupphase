@@ -19,11 +19,11 @@ public interface PerformanceService {
      * @throws NotCreatedException in case something goes wrong while persisting the entity
      */
 
-    public EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException;
+    EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException;
 
-    public List<EventPerformance> getAll() throws NotFoundException;
+    List<EventPerformance> getAll() throws NotFoundException;
 
-    public List<EventPerformance> findByEvent(Event event) throws NotFoundException;
+    List<EventPerformance> findByEvent(Event event) throws NotFoundException;
 
-    public List<EventPerformance> findByRoom(Room room) throws NotFoundException;
+    List<EventPerformance> findByRoom(Room room) throws NotFoundException;
 }

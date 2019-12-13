@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,11 +17,11 @@ public class Artist {
     @Column(nullable = false, name = "last_name", length = 50)
     private String lastName;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(name = "artist_creates_event",
         joinColumns = @JoinColumn(name = "artist"),
         inverseJoinColumns = @JoinColumn(name = "event"))
-    Set<Event> events;
+    List<Event> events;
 
     public Artist() {}
 

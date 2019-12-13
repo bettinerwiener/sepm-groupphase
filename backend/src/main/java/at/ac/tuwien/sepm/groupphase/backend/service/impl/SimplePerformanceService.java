@@ -83,7 +83,7 @@ public class SimplePerformanceService implements PerformanceService {
     public List<EventPerformance> findByEvent(Event event) throws NotFoundException {
         log.info("Getting all performances for event {} ...", event.getTitle());
         try {
-            List<EventPerformance> eventPerformances = this.performanceRepository.findByEvent(event);
+            List<EventPerformance> eventPerformances = this.performanceRepository.findByEventId(event.getId());
             if (eventPerformances != null && !eventPerformances.isEmpty()) {
                 return eventPerformances;
             } else {
