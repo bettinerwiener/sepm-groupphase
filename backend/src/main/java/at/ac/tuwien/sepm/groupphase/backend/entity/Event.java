@@ -7,6 +7,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@SqlResultSetMapping(name="Events",
+    entities={
+        @EntityResult(entityClass=at.ac.tuwien.sepm.groupphase.backend.entity.Event.class, fields={
+            @FieldResult(name="id", column="id"),
+            @FieldResult(name="title", column="title"),
+            @FieldResult(name="shortDescription", column="abstract"),
+            @FieldResult(name="contents", column="contents"),
+            @FieldResult(name="category", column ="category"),
+            @FieldResult(name="duration", column="duration"),
+            @FieldResult(name="employee", column="employee")
+        })
+    },
+    columns={}
+)
 @Table(
     uniqueConstraints = @UniqueConstraint(columnNames={"title", "category"})
 )

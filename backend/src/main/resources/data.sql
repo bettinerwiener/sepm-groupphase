@@ -46,7 +46,7 @@ insert into seat (id, seat_number, row_letter, section)
            (12, 1, 'C', 6),
            (13, 2, 'C', 7);
 
-insert into is_performed_at(event, room, date)
+insert into is_performed_at(event, room, perf_date)
 values (1, 1, NOW()),
        (2, 2, NOW());
 

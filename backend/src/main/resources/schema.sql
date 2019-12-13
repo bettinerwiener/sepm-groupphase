@@ -85,8 +85,8 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     event   BIGINT REFERENCES event(id),
     room BIGINT REFERENCES room(id),
-    `date`    DATETIME NOT NULL,
-    CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
+    perf_date   DATETIME NOT NULL,
+    CONSTRAINT is_performed_at_pk UNIQUE (event, room, perf_date)
 );
 
 CREATE TABLE IF NOT EXISTS customer_order (

@@ -67,8 +67,42 @@ public class EventEndpointTest implements EventTestData {
     }
 
     @Test
+    public void givenNothing_findEventById1_returnsEventWithId1() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_ID_BASE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        EventDto eventDto = objectMapper.readValue(response.getContentAsString(), EventDto.class);
+
+        assertEquals(1, eventDto.getId());
+    }
+
+
+    @Test
     public void givenNothing_whenFindTopTen_thenListSizeEquals1() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI_TOP_TEN)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventDto[].class));
+
+        assertEquals(1, events.size());
+    }
+
+    @Test
+    public void givenNothing_whenFindByCriteria_thenListSizeEquals1() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_FILTER_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
