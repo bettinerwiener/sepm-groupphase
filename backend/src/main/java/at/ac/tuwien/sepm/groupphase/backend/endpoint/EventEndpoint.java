@@ -65,7 +65,7 @@ public class EventEndpoint {
 
     //@Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
     public EventDto create(@RequestBody EventDto eventDto, @AuthenticationPrincipal String username) {
         return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));

@@ -3,6 +3,7 @@ import {EventService} from '../../services/event.service';
 import { GlobalEvent } from '../../dtos/global-event';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
+import { Room } from 'src/app/dtos/room';
 
 @Component({
   selector: 'app-create-event',
@@ -14,11 +15,14 @@ export class CreateEventComponent implements OnInit {
   event: GlobalEvent;
   error: boolean = false;
   private events: GlobalEvent[];
+  private rooms: Room[];
 
   // After first submission attempt, form validation will start
   submitted: boolean = false;
   errorMessage: string = 'This is a useless errormessage';
-  constructor(private formbuilder: FormBuilder, private eventService: EventService, private authService: AuthService) {
+  constructor(private formbuilder: FormBuilder,
+    private eventService: EventService,
+    private authService: AuthService) {
     this.createEventForm = this.formbuilder.group({
       title:        ['', Validators.required],
       category:     [Validators.required],
@@ -58,10 +62,20 @@ export class CreateEventComponent implements OnInit {
   public createEvent(event: GlobalEvent) {
     this.eventService.createEvent(event).subscribe(
       (retEvent: GlobalEvent) => {
-        console.log('i am here');
-
         this.event = retEvent;
-        this.loadEvent();
+
+        // this.loadCreatedEvent();
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private loadCreatedEvent() {
+    this.eventService.getCreatedEvent().subscribe(
+      (event: GlobalEvent) => {
+        this.event = event;
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -81,7 +95,6 @@ export class CreateEventComponent implements OnInit {
   }
 
   private defaultServiceErrorHandling(error: any) {
-    console.log(error);
     this.error = true;
     if (error.status === 0) {
       // If status is 0, the backend is probably down

@@ -4,6 +4,7 @@ import {Ticket} from '../../dtos/ticket';
 import { EventLocation } from 'src/app/dtos/event-location';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
