@@ -10,5 +10,4 @@ public interface PerformanceMapper {
     @Named("event_performance")
     PerformanceDto performanceToPerformanceDto(EventPerformance performance);
     EventPerformance performanceDtoToPerformance(PerformanceDto performanceDto);
-
 }

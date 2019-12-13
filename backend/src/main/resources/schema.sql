@@ -89,20 +89,19 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
     CONSTRAINT is_performed_at_pk UNIQUE (event, room, `date`)
 );
 
-CREATE TABLE IF NOT EXISTS ticket (
+CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      event       BIGINT REFERENCES is_performed_at(event),
-      room        BIGINT REFERENCES is_performed_at(room),
-      seat        BIGINT REFERENCES seat(id),
-      `status`      VARCHAR(50) CHECK (`status` IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
-      price       DECIMAL NOT NULL CHECK (price >= 0)
+      user_id BIGINT REFERENCES user(id),
+      status      VARCHAR(50) CHECK (status IN ('RESERVATION', 'PURCHASE'))
 );
 
-
-CREATE TABLE IF NOT EXISTS user_buys_ticket (
-    user BIGINT REFERENCES user(id),
-    ticket BIGINT REFERENCES ticket(id),
-    CONSTRAINT customer_buys_ticket_pk PRIMARY KEY (user, ticket)
+CREATE TABLE IF NOT EXISTS ticket (
+      id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+      customer_order_id BIGINT REFERENCES customer_order(id),
+      is_performed_at_id BIGINT REFERENCES is_performed_at(id),
+      seat_id BIGINT REFERENCES seat(id),
+      status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),
+      price DECIMAL NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS customer_news (
