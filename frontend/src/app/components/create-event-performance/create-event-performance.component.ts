@@ -7,6 +7,7 @@ import { RoomService } from 'src/app/services/room.service';
 import { Room } from 'src/app/dtos/room';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { EventService } from 'src/app/services/event.service';
+import { stringify } from 'querystring';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -35,6 +36,7 @@ export class CreateEventPerformanceComponent implements OnInit {
       event: [Validators.required],
       room: [Validators.required],
       date: [Validators.required],
+      time: [Validators.required]
     });
   }
 
@@ -51,11 +53,24 @@ export class CreateEventPerformanceComponent implements OnInit {
   addEventPerformance() {
     this.submitted = true;
     if (this.createEventPerformanceForm.valid) {
+      console.log(this.createEventPerformanceForm.controls.time.value);
+      console.log(this.createEventPerformanceForm.controls.date.value);
+
+      const formattedDate = new Date(
+        this.createEventPerformanceForm.controls.date.value + ' ' +
+        this.createEventPerformanceForm.controls.time.value
+      );
+
+      console.log(formattedDate);
+
       const eventPerformance: EventPerformance = new EventPerformance(
         this.createEventPerformanceForm.controls.event.value,
         this.createEventPerformanceForm.controls.room.value,
-        this.createEventPerformanceForm.controls.date.value
+        formattedDate
       );
+
+
+
       this.createEventPerformance(eventPerformance);
       this.clearForm();
     } else {
@@ -65,12 +80,16 @@ export class CreateEventPerformanceComponent implements OnInit {
 
   public createEventPerformance(eventPerformance: EventPerformance) {
     this.eventPerformanceService.createEventPerformance(eventPerformance).subscribe(
-      () => { },
+      (retPerformance: EventPerformance) => {
+        this.eventPerformance = retPerformance;
+       },
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
   }
+
+
 
   private loadEventPerformance() {
     this.eventPerformanceService.getEventPerformance().subscribe(

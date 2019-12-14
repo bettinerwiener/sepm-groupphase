@@ -22,25 +22,34 @@
             <div class="form-group">
               <select name="event" formControlName="event" class="form-control" id="event"
                 placeholder="Event">
-                <option *ngFor="let e of events" value="{{e}}">{{e.title}}</option>
+                <option *ngFor="let e of events" [ngValue]="e">{{e.title}}</option>
               </select>
             </div>
 
             <div class="form-group">
               <select name="room" formControlName="room" class="form-control" id="room"
                 placeholder="Room">
-                <option *ngFor="let r of rooms" value="{{r}}">{{r.name}}</option>
+                <option *ngFor="let r of rooms" [ngValue]="r">{{r.name}}</option>
               </select>
             </div>
             
             <div class="form-group">
                   <input type="date" name="date" formControlName="date" class="form-control" id= "date" placeholder="Date">
                   <div *ngIf="submitted && createEventPerformanceForm.controls.date.errors" class="error">
-                    <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.duration.errors.required">Date is
+                    <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.date.errors.required">Date is
                       required!
                     </small>
                   </div>
             </div>
+
+            <div class="form-group">
+              <input type="time" name="time" formControlName="time" class="form-control" id= "time" placeholder="Time">
+              <div *ngIf="submitted && createEventPerformanceForm.controls.time.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.time.errors.required">Time is
+                  required!
+                </small>
+              </div>
+        </div>
 
             <button type="button" (click)="addEventPerformance()" class="btn btn-success float-right">Create Performance</button>
 
