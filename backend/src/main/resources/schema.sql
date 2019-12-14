@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS  user
     last_name  VARCHAR(50) NOT NULL,
     email      VARCHAR(150) UNIQUE NOT NULL,
     password   VARCHAR(255) NOT NULL,
-    locked     SMALLINT DEFAULT 0 CHECK (locked IN (0, 1)),
-    is_employee SMALLINT DEFAULT 0 CHECK (is_employee IN (0,1)),
+    locked      BOOLEAN,
+    is_employee BOOLEAN,
     login_count INTEGER DEFAULT 0 CHECK (login_count >= 0)
 );
 

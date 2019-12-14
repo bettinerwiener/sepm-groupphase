@@ -38,7 +38,6 @@ public class CustomUserDetailService implements UserService {
         LOGGER.debug("Load all user by email");
         try {
             User user = findApplicationUserByEmail(email);
-
             List<GrantedAuthority> grantedAuthorities;
             if (user.getIsEmployee())
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
@@ -54,12 +53,12 @@ public class CustomUserDetailService implements UserService {
     @Override
     public User findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
-       User user = userRepository.findByEmail(email);
-        if (user != null) {
-            return user;
-        }
+        User user = userRepository.findByEmail(email);
+        if (!(user==null)) return user;
+        // TODO: GLEICHE EMAILS SOLLTE NICHT ERLAUBT SEIN
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
     }
+
 
     @Override
     public User createUser (User user) throws EmailExistsException, NotCreatedException {
@@ -80,4 +79,47 @@ public class CustomUserDetailService implements UserService {
     }
 
 
+    public boolean addLogincount(String email) {
+        User user = userRepository.findByEmail(email);
+        if (!(user==null)) {
+            user.setLoginCount(user.getLoginCount() + 1);
+            if (user.getLoginCount() > 3) {
+                user.setLocked(true);
+            }
+            userRepository.saveAndFlush(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean resetLogincount(String email) {
+        User user = userRepository.findByEmail(email);
+        if (!(user==null)) {
+            user.setLoginCount(0);
+            userRepository.saveAndFlush(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean unlockUser(String email) {
+        User user = userRepository.findByEmail(email);
+        if (!(user==null)) {
+            user.setLocked(false);
+            userRepository.saveAndFlush(user);
+            return true;
+        }
+        throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+    }
+
+    @Override
+    public boolean isLocked(String email) {
+        User user = userRepository.findByEmail(email);
+        if (!(user==null)) {
+            return user.getLocked();
+        }
+        return false;
+    }
 }

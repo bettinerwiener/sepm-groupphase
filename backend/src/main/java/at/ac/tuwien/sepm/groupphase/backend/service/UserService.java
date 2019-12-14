@@ -40,4 +40,12 @@ public interface UserService extends UserDetailsService {
      */
 
     User createUser(User user);
+
+    boolean addLogincount(String email);
+
+    boolean resetLogincount(String email);
+
+    boolean unlockUser(String email);
+
+    boolean isLocked(String email);
 }
