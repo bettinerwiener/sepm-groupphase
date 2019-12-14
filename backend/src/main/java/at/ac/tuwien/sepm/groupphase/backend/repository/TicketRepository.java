@@ -17,4 +17,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     void updateTicketStatusToBought(@Param("companyId") int companyId, @Param("address") String address);*/
     List<Ticket> findTicketsByCustomerOrderId(Long id);
 
+    @Query(value="select * from ticket t where t.is_performed_at_id = ?1",
+    nativeQuery = true)
+    List<Ticket> findByPerformanceId(Long id);
+
 }

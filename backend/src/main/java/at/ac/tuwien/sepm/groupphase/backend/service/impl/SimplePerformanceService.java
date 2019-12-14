@@ -80,23 +80,23 @@ public class SimplePerformanceService implements PerformanceService {
     }
 
     @Override
-    public List<EventPerformance> findByEvent(Event event) throws NotFoundException {
-        log.info("Getting all performances for event {} ...", event.getTitle());
+    public List<EventPerformance> findByEvent(Long event) throws NotFoundException {
+        log.info("Getting all performances for event {} ...", event);
         try {
-            List<EventPerformance> eventPerformances = this.performanceRepository.findByEventId(event.getId());
+            List<EventPerformance> eventPerformances = this.performanceRepository.findByEventId(event);
             if (eventPerformances != null && !eventPerformances.isEmpty()) {
                 return eventPerformances;
             } else {
                 log.error("No performances for the requested location {} could be found",
-                    event.getTitle());
+                    event);
                 throw new NotFoundException(String.format("No performances for the requested location %d could be found",
-                    event.getTitle()));
+                    event));
             }
         } catch (DataAccessException dae) {
             log.error("No performances for the requested location {} could be found: {}",
-                event.getTitle(), dae.getMessage());
+                event, dae.getMessage());
             throw new NotFoundException(String.format("No performances for the requested location %d could be found: %s",
-                event.getTitle(), dae.getMessage()));
+                event, dae.getMessage()));
         }
     }
 

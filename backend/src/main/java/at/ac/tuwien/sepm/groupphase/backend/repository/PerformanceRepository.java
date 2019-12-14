@@ -12,7 +12,8 @@ import java.util.List;
 @Repository
 public interface PerformanceRepository extends JpaRepository<EventPerformance, EventPerformanceKey> {
 
-    @Query(value="select p from EventPerformance p where p.event = ?1")
+    @Query(value="select * from is_performed_at p where p.event = ?1",
+    nativeQuery = true)
     List<EventPerformance> findByEventId(Long eventId);
 
     List<EventPerformance> findAll();

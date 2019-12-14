@@ -44,6 +44,29 @@ public class SimpleTicketService implements TicketService {
 
     @Override
     public List<Ticket> getAll() {
-        return this.ticketRepository.findAll();
+        try {
+            List<Ticket> tickets = this.ticketRepository.findAll();
+            if (tickets != null && !tickets.isEmpty()) {
+                return tickets;
+            } else {
+                throw new NotFoundException("No locations have been found.");
+            }
+        } catch (DataAccessException dae) {
+            throw new NotFoundException(String.format("No locations have been found: %s", dae.getMessage()));
+        }
+    }
+
+    @Override
+    public List<Ticket> findByPerformance(Long id) {
+        try {
+            List<Ticket> tickets = this.ticketRepository.findByPerformanceId(id);
+            if (tickets != null && !tickets.isEmpty()) {
+                return tickets;
+            } else {
+                throw new NotFoundException("No tickets have been found.");
+            }
+        } catch (DataAccessException dae) {
+            throw new NotFoundException(String.format("No tickets have been found: %s", dae.getMessage()));
+        }
     }
 }
