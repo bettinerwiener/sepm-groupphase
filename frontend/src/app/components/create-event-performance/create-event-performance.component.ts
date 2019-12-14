@@ -3,14 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EventPerformanceService } from 'src/app/services/event-performance.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
-<<<<<<< HEAD
-=======
 import { RoomService } from 'src/app/services/room.service';
 import { Room } from 'src/app/dtos/room';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { EventService } from 'src/app/services/event.service';
 import { stringify } from 'querystring';
->>>>>>> tmp
+import { throwIfEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'create-event-performance',
@@ -23,13 +21,17 @@ export class CreateEventPerformanceComponent implements OnInit {
   eventPerformance: EventPerformance;
   error: boolean = false;
   private eventPerformances: EventPerformance[];
+  rooms: Room[];
+  events: GlobalEvent[];
   submitted: boolean = false;
   errorMessage: string = 'This is another useless errormessage';
 
   constructor(
     private formbuilder: FormBuilder,
     private eventPerformanceService: EventPerformanceService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private roomService: RoomService,
+    private eventService: EventService) {
     this.createEventPerformanceForm = this.formbuilder.group({
       event: [Validators.required],
       room: [Validators.required],
@@ -40,6 +42,8 @@ export class CreateEventPerformanceComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getAllEvents();
+    this.getAllRooms();
   }
 
   isAdmin(): boolean {
@@ -60,9 +64,8 @@ export class CreateEventPerformanceComponent implements OnInit {
       console.log(formattedDate);
 
       const eventPerformance: EventPerformance = new EventPerformance(
-        0,
-        this.createEventPerformanceForm.controls.event.value,
         null,
+        this.createEventPerformanceForm.controls.event.value,
         this.createEventPerformanceForm.controls.room.value,
         formattedDate
       );
@@ -78,14 +81,30 @@ export class CreateEventPerformanceComponent implements OnInit {
 
   public createEventPerformance(eventPerformance: EventPerformance) {
     this.eventPerformanceService.createEventPerformance(eventPerformance).subscribe(
-<<<<<<< HEAD
       () => {
       },
-=======
-      (retPerformance: EventPerformance) => {
-        this.eventPerformance = retPerformance;
-       },
->>>>>>> tmp
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAllRooms() {
+    this.roomService.getRoom().subscribe(
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAllEvents() {
+    this.eventService.getEvent().subscribe(
+      (events: GlobalEvent[]) => {
+        this.events = events;
+      },
       error => {
         this.defaultServiceErrorHandling(error);
       }
