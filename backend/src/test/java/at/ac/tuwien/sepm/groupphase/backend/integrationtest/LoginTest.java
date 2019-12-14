@@ -46,7 +46,7 @@ public class LoginTest implements TestData {
         user.setEmail("huge@gmail.com");
         user.setPassword("hugoboss");
         String body = objectMapper.writeValueAsString(user);
-        MvcResult mvcResult = this.mockMvc.perform(post(LOGIN_BASE_URI)
+        MvcResult mvcResult = this.mockMvc.perform(post("/api/v1/authenticate")
             .contentType(MediaType.APPLICATION_JSON).content(body))
             .andDo(print())
             .andReturn();
