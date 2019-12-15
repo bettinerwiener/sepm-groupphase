@@ -17,10 +17,6 @@ export class EventListItemComponent implements OnInit {
   @Input() location: string;
   @Input() price: number;
 
-
-
-
-
   constructor() { }
 
   ngOnInit() {

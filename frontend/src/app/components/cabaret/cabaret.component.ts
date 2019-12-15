@@ -8,7 +8,11 @@ import { GlobalEvent } from 'src/app/dtos/global-event';
 })
 export class CabaretComponent implements OnInit {
 
-  @Input() cabarets: GlobalEvent[];
+  cabarets: GlobalEvent[];
+
+  getCabarets(cabarets: GlobalEvent[]): void {
+    this.cabarets = cabarets;
+  }
 
   constructor() { }
 

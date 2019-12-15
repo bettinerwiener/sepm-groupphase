@@ -9,9 +9,13 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class ConcertComponent implements OnInit {
 
-  @Input() concerts: GlobalEvent[];
+  concerts: GlobalEvent[];
 
-  constructor(searchService: SearchService) { }
+  getConcerts(concerts: GlobalEvent[]): void {
+    this.concerts = concerts;
+  }
+
+  constructor() { }
 
   ngOnInit() {
   }

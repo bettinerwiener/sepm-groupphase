@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { SearchService } from 'src/app/services/search.service';
 import { EventLocation } from 'src/app/dtos/event-location';
@@ -17,11 +17,11 @@ export class SearchAreaComponent implements OnInit {
 
   @Input() category: string;
   error = false;
-  events: GlobalEvent[];
-  concerts: GlobalEvent[];
-  theatres: GlobalEvent[];
-  movies: GlobalEvent[];
-  cabarets: GlobalEvent[];
+  @Output() searchedEvents = new EventEmitter<GlobalEvent[]>();
+  @Output() searchedMovies = new EventEmitter<GlobalEvent[]>();
+  @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
+  @Output() searchedCabarets = new EventEmitter<GlobalEvent[]>();
+  @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
   errorMessage = 'This is a useless Errormessage';
   constructor(
     private searchService: SearchService) { }
@@ -41,18 +41,18 @@ export class SearchAreaComponent implements OnInit {
 
     this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
       (events: GlobalEvent[]) => {
-        this.events = events;
+        this.searchedMovies.emit(events);
         if ( this.category === 'theatres') {
-          this.theatres = events;
+          this.searchedTheatres.emit(events);
         }
         if ( this.category === 'movies') {
-          this.movies = events;
+          this.searchedMovies.emit(events);
         }
         if (this.category === 'cabarets') {
-          this.cabarets = events;
+          this.searchedCabarets.emit(events);
         }
         if (this.category === 'concerts') {
-          this.concerts = events;
+          this.searchedConcerts.emit(events);
         }
       },
       error => {

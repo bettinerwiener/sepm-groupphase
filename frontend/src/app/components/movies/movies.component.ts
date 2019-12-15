@@ -8,8 +8,11 @@ import { GlobalEvent } from 'src/app/dtos/global-event';
 })
 export class MoviesComponent implements OnInit {
 
-  @Input() movies: GlobalEvent[];
+  movies: GlobalEvent[];
 
+  getMovies(movies: GlobalEvent[]): void {
+    this.movies = movies;
+  }
 
   constructor() { }
 
