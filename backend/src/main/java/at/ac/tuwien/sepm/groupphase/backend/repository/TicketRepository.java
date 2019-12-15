@@ -13,24 +13,47 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-    /* @Modifying(clearAutomatically = true)
-     @Query("UPDATE Company c SET c.address = :address WHERE c.id = :companyId")
-     void updateTicketStatusToBought(@Param("companyId") int companyId, @Param("address") String address);*/
+
+    /**
+     * Find tickets with the given customerOrderId.
+     * @param id the customerOrderId
+     * @return all tickets with given customerOrderId.
+     */
     List<Ticket> findTicketsByCustomerOrderId(Long id);
 
+    /**
+     * Find tickets with the given performanceId.
+     * @param performanceId the performanceId
+     * @return all tickets with given performanceId.
+     */
     List<Ticket> findByPerformanceId(Long performanceId);
 
+    /**
+     * Find first ticket with given id.
+     * @param id
+     * @return first ticket with given id.
+     */
     Ticket findFirstById (Long id);
 
+    /**
+     * Find the User who reserved the Ticket .
+     * @param id Id of the ticket
+     * @return userId of the User who reserved the Ticket
+     */
     @Query(value = "SELECT user_id FROM ticket JOIN customer_order ON (customer_order.id=customer_order_id) WHERE ticket.id = :ticketId", nativeQuery = true)
     Long findUserIdWhoReserved (@Param("ticketId") Long id);
 
+    /**
+     * Get all reserved Tickets where Event starts in less than 30min.
+     * @param currentTime the current time +30min
+     * @return List of all reserved Tickets from Events that start in less than 30min.
+     */
     @Query(value = "SELECT ticket.id, price,is_performed_at_id,customer_order_id, seat_id, status  FROM event " +
         "JOIN is_performed_at ON(event.id = is_performed_at.event) JOIN ticket ON(is_performed_at.id = ticket.is_performed_at_id) " +
         "WHERE status = 'RESERVED' AND perf_date <= :currentTime", nativeQuery = true)
     List<Ticket> getAllTicketsWhereReservationRunsOut (@Param("currentTime") LocalDateTime currentTime);
 
-
+    /*
     @Query(value = "SELECT ticket.customer_order_id FROM ticket JOIN customer_order ON( ticket.customer_order_id = customer_order.id) WHERE ticket.id = :ticketId", nativeQuery = true)
-    Long findOrderIdforTicket (@Param("ticketId") Long id);
+    Long findOrderIdforTicket (@Param("ticketId") Long id);*/
 }

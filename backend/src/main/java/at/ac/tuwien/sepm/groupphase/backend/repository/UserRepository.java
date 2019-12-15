@@ -14,12 +14,17 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
-     * Find all users with the given email.
-     *
-     * @return all users with given email
+     * Find first user with the given email.
+     * @param email
+     * @return first user with given email
      */
     User findFirstByEmail (String email);
 
+    /**
+     * Find user with the given email.
+     * @param email
+     * @return user with given email
+     */
     User findByEmail (String email);
 
 }

@@ -24,6 +24,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.service.impl.CustomUserDetailService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/orders")
-
+@Slf4j
 public class OrderEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -63,7 +64,6 @@ public class OrderEndpoint {
     public List<OrderDto> getAllByUser(Authentication authentication) {
         try {
             User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
-            System.out.println(user.getId());
             List<OrderDto> orderDtos = orderService.findByUserId(user.getId()).stream().
                 map(order -> {
                     List<Ticket> tickets  = ticketService.findTicketsByOrderId(order.getId());

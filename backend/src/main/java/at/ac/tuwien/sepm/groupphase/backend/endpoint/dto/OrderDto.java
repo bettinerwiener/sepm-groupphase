@@ -29,6 +29,4 @@ public class OrderDto {
 
     private List<Ticket> tickets;
 
-
-
 }

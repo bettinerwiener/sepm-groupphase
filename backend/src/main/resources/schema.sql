@@ -90,7 +90,6 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
       user_id BIGINT REFERENCES user(id),
-      status      VARCHAR(50) CHECK (status IN ('RESERVATION', 'PURCHASE'))
 );
 
 CREATE TABLE IF NOT EXISTS ticket (

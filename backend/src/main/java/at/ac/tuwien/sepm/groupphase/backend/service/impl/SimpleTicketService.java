@@ -77,13 +77,13 @@ public class SimpleTicketService implements TicketService {
         log.info("Remove Reservation from expired tickets");
         LocalDateTime currentTime = LocalDateTime.now().plus(30, ChronoUnit.MINUTES);
         List<Ticket> tickets = ticketRepository.getAllTicketsWhereReservationRunsOut(currentTime);
-        System.out.println(tickets.size());
 
         List<Long> ordersToDelete = new ArrayList<>();
         try {
             for (Ticket ticket : tickets) {
 
-                Long orderId = this.ticketRepository.findOrderIdforTicket(ticket.getId());
+               // Long orderId = this.ticketRepository.findOrderIdforTicket(ticket.getId());
+                Long orderId = ticket.getCustomerOrder().getId();
                 ordersToDelete.add(orderId);
 
                 ticket.setStatus(Ticket.Status.AVAILABLE);
@@ -96,22 +96,17 @@ public class SimpleTicketService implements TicketService {
                 .distinct()
                 .collect(Collectors.toList());
 
-            String listString = distinctOrders.stream().map(Object::toString)
-                .collect(Collectors.joining(", "));
-            System.out.println(listString);
-
 
             for(Long id : distinctOrders){
                 this.orderRepository.deleteById(id);
             }
 
         }catch (DataAccessException dae) {
-            LOGGER.error("SimpleTicketService: ticket reservation could not be removed: " + dae.getMessage());
+            log.error("SimpleTicketService: ticket reservation could not be removed: " + dae.getMessage());
             throw new NotCreatedException(String.format("The ticket reservation could not be removed: ", dae.getMessage()));
         }
 
-        //delete orders
-    }
 
+    }
 
 }
