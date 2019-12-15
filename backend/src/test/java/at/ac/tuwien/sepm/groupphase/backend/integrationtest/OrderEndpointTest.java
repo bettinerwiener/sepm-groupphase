@@ -10,6 +10,8 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +35,7 @@ import java.util.List;
 import static at.ac.tuwien.sepm.groupphase.backend.basetest.TestData.ADMIN_ROLES;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -50,6 +57,25 @@ public class OrderEndpointTest implements OrderTestData {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    PlatformTransactionManager txm;
+
+
+    TransactionStatus txstatus;
+
+    @BeforeEach
+    public void setupDBTransaction() {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        txstatus = txm.getTransaction(def);
+        assumeTrue(txstatus.isNewTransaction());
+        txstatus.setRollbackOnly();
+    }
+
+    @AfterEach
+    public void tearDownDBData() {
+        txm.rollback(txstatus);
+    }
     /**
      * Test Reservation
      */
@@ -61,6 +87,7 @@ public class OrderEndpointTest implements OrderTestData {
             .content(RESERVE_TWO_AVAILABLE_TICKETS)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
+
     }
 
    @Test
