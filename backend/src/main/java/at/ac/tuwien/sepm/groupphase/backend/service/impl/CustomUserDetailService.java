@@ -118,6 +118,9 @@ public class CustomUserDetailService implements UserService {
     public boolean isLocked(String email) {
         User user = userRepository.findByEmail(email);
         if (!(user==null)) {
+            if (user.getLocked() == null) {
+                return false;
+            }
             return user.getLocked();
         }
         return false;
