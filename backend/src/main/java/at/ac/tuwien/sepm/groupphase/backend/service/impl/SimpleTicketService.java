@@ -109,4 +109,14 @@ public class SimpleTicketService implements TicketService {
 
     }
 
+
+    @Override
+    public Ticket findById(Long id) {
+        try {
+            return this.ticketRepository.findFirstById(id);
+        } catch (DataAccessException dae) {
+            throw new NotFoundException("No tickets found");
+        }
+    }
+
 }

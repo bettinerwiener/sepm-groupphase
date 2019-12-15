@@ -23,4 +23,6 @@ public interface TicketService {
     List<Ticket> getAll();
 
     List<Ticket> findByPerformanceId(Long performanceId);
+
+    Ticket findById(Long id);
 }

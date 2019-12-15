@@ -1,5 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { faCalendarDay, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import {PdfService} from '../../services/pdf.service';
 import {Ticket} from '../../dtos/ticket';
 @Component({
   selector: 'order',
@@ -20,7 +21,12 @@ export class OrderComponent implements OnInit {
   @Input() price: number;
   @Input() tickets: Ticket[];
 
-  constructor() { }
+  constructor(private pdfService: PdfService) { }
+
+  error = false;
+  errorMessage = '';
+  showTickets = false;
+
 
   ngOnInit() {
     console.log(this.tickets)
@@ -39,6 +45,45 @@ export class OrderComponent implements OnInit {
       price += ticket.price;     
     });
     return price;
+  }
+
+  getTicket(id: number) {
+    this.pdfService.getTicket(id).subscribe(x => {
+
+      var newBlob = new Blob([x], { type: "application/pdf" });
+
+      // IE
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+      }
+
+      const data = window.URL.createObjectURL(newBlob);
+      var link = document.createElement('a');
+      link.href = data;
+      link.download = "ticket" + id + ".pdf";
+     
+      //delay for firefox
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+      setTimeout(function () {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+      }, 100);
+  });
+  }
+
+  toggleShowTickets() {
+    this.showTickets = !this.showTickets;
+  }
+
+  private defaultServiceErrorHandling(error: any) {
+    console.log(error);
+    this.error = true;
+    if (typeof error.error === 'object') {
+      this.errorMessage = error.error.error;
+    } else {
+      this.errorMessage = error.error;
+    }
   }
 
 }
