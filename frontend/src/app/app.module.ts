@@ -25,6 +25,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 import { CreateEventComponent } from './components/create-event/create-event.component';
+import { SearchUserComponent } from './components/search-user/search-user.component';
+import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-user-by-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,8 @@ import { CreateEventComponent } from './components/create-event/create-event.com
     EventListItemComponent,
     SliderComponent,
     CreateEventComponent,
+    SearchUserComponent,
+    EditUserByAdminComponent,
   ],
   imports: [
     BrowserModule,

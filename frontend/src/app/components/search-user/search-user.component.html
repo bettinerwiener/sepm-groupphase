@@ -1,0 +1,46 @@
+<div class="jumbotron jumbotron-fluid" style="background: rgb(232, 232, 232)">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 mx-auto">
+        <form>
+          <div class="row text-centered">
+            <div class="col-md-12 text-center mx-auto">
+              <h1>Search for Username</h1>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-md-6">
+              <input #searchBox type="text" class="form-control" placeholder="Search term...">
+            </div>
+          </div>
+          <ul class="search.result">
+            <h2>results:</h2>
+            <li *ngFor="let user of users | async">
+              <a routerLink="/admin/edit/{{user.email}}">
+                {{user.email}}
+              </a>
+            </li>
+          </ul>
+          <br>
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-primary" (click)="search(searchBox.value)">Search</button>
+            </div>
+          </div>
+        </form>
+
+
+        <!--
+        <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary btn-lg" routerLink="/login" role="button">Login</a>
+        <div *ngIf="authService.isLoggedIn()">
+          <p>Check out the latest message from the SEPM group phase.</p>
+          <p class="lead">
+            <a class="btn btn-primary btn-lg" routerLink="/message" role="button">Message</a>
+          </p>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+</div>
