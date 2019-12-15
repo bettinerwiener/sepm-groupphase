@@ -19,6 +19,9 @@ import {CartComponent} from './components/cart/cart.component';
 import {AuthGuard} from './guards/auth.guard';
 import {MessageComponent} from './components/message/message.component';
 
+import {CreateEventComponent} from './components/create-event/create-event.component';
+import {SearchUserComponent} from "./components/search-user/search-user.component";
+import {EditUserByAdminComponent} from "./components/edit-user-by-admin/edit-user-by-admin.component";
 
 
 const routes: Routes = [
@@ -34,6 +37,9 @@ const routes: Routes = [
   {path: 'profile',canActivate: [AuthGuard], component: ProfileComponent},
   {path: 'orders', canActivate: [AuthGuard], component: OrdersComponent},
   {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
+  {path: 'create-event', component: CreateEventComponent},
+  {path: 'admin', component: SearchUserComponent},
+  {path: 'admin/edit/:username', component: EditUserByAdminComponent}
   // {path: 'create-event', canActivate: [AuthGuard], component: CreateEventComponent}
 ];
 
