@@ -3,6 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EventPerformanceService } from 'src/app/services/event-performance.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
+import { RoomService } from 'src/app/services/room.service';
+import { Room } from 'src/app/dtos/room';
+import { GlobalEvent } from 'src/app/dtos/global-event';
+import { EventService } from 'src/app/services/event.service';
+import { stringify } from 'querystring';
+import { throwIfEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'create-event-performance',
@@ -15,22 +21,29 @@ export class CreateEventPerformanceComponent implements OnInit {
   eventPerformance: EventPerformance;
   error: boolean = false;
   private eventPerformances: EventPerformance[];
+  rooms: Room[];
+  events: GlobalEvent[];
   submitted: boolean = false;
   errorMessage: string = 'This is another useless errormessage';
 
   constructor(
     private formbuilder: FormBuilder,
     private eventPerformanceService: EventPerformanceService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private roomService: RoomService,
+    private eventService: EventService) {
     this.createEventPerformanceForm = this.formbuilder.group({
       event: [Validators.required],
       room: [Validators.required],
       date: [Validators.required],
+      time: [Validators.required]
     });
   }
 
 
   ngOnInit() {
+    this.getAllEvents();
+    this.getAllRooms();
   }
 
   isAdmin(): boolean {
@@ -40,13 +53,25 @@ export class CreateEventPerformanceComponent implements OnInit {
   addEventPerformance() {
     this.submitted = true;
     if (this.createEventPerformanceForm.valid) {
-      const eventPerformance: EventPerformance = new EventPerformance(
-        0,
-        this.createEventPerformanceForm.controls.event.value,
-        null,
-        this.createEventPerformanceForm.controls.room.value,
-        this.createEventPerformanceForm.controls.date.value
+      console.log(this.createEventPerformanceForm.controls.time.value);
+      console.log(this.createEventPerformanceForm.controls.date.value);
+
+      const formattedDate = new Date(
+        this.createEventPerformanceForm.controls.date.value + ' ' +
+        this.createEventPerformanceForm.controls.time.value
       );
+
+      console.log(formattedDate);
+
+      const eventPerformance: EventPerformance = new EventPerformance(
+        null,
+        this.createEventPerformanceForm.controls.event.value,
+        this.createEventPerformanceForm.controls.room.value,
+        formattedDate
+      );
+
+
+
       this.createEventPerformance(eventPerformance);
       this.clearForm();
     } else {
@@ -63,6 +88,30 @@ export class CreateEventPerformanceComponent implements OnInit {
       }
     );
   }
+
+  private getAllRooms() {
+    this.roomService.getRoom().subscribe(
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAllEvents() {
+    this.eventService.getEvent().subscribe(
+      (events: GlobalEvent[]) => {
+        this.events = events;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+
 
   private loadEventPerformance() {
     this.eventPerformanceService.getEventPerformance().subscribe(

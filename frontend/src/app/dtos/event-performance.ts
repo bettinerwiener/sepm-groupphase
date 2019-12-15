@@ -12,7 +12,6 @@ export class EventPerformance {
     constructor(
         public id: number,
         public event: GlobalEvent,
-        public location: EventLocation,
         public room: Room,
         public date: Date,
     ) { }

@@ -9,7 +9,7 @@ import { EventPerformance } from '../dtos/event-performance';
 })
 export class EventPerformanceService {
 
-  private eventPerformanceBaseUri: string = this.globals.backendUri + '/performance';
+  private eventPerformanceBaseUri: string = this.globals.backendUri + '/performances';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
@@ -18,8 +18,10 @@ export class EventPerformanceService {
     return this.httpClient.get<EventPerformance[]>(this.eventPerformanceBaseUri);
   }
 
-  createEventPerformance(eventPerformance: EventPerformance): Observable<EventPerformance> {
+  createEventPerformance(performance: EventPerformance): Observable<EventPerformance> {
     console.log('Post eventPerformance');
-    return this.httpClient.post<EventPerformance>(this.eventPerformanceBaseUri, eventPerformance);
+    console.log(performance);
+    console.log(this.eventPerformanceBaseUri);
+    return this.httpClient.post<EventPerformance>(this.eventPerformanceBaseUri, performance);
   }
 }

@@ -94,5 +94,9 @@ export class EventItemComponent implements OnInit {
     console.log(this.selectedTickets);
   }
 
+  reserveTickets(eventPerformance: EventPerformance):void {
+    console.log(this.selectedTickets);
+  }
+
 }
 

@@ -38,6 +38,7 @@ import { CreateEventPerformanceComponent } from './components/create-event-perfo
     HomeComponent,
     LoginComponent,
     MessageComponent,
+    MoviesComponent,
     ConcertComponent,
     TheatreComponent,
     CabaretComponent,
