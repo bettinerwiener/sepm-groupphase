@@ -26,7 +26,6 @@ import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 import { OrderComponent } from './components/order/order.component';
 
-import { CreateEventComponent } from './components/create-event/create-event.component';
 import { SearchUserComponent } from './components/search-user/search-user.component';
 import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-user-by-admin.component';
 @NgModule({
@@ -51,7 +50,6 @@ import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-u
     SliderComponent,
     OrderComponent,
 
-    CreateEventComponent,
     SearchUserComponent,
     EditUserByAdminComponent,
   ],
