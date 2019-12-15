@@ -56,7 +56,7 @@ public class CustomUserDetailService implements UserService {
     @Override
     public User findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findFirstByEmail(email);
         if (!(user==null)) return user;
         // TODO: GLEICHE EMAILS SOLLTE NICHT ERLAUBT SEIN
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
@@ -83,7 +83,7 @@ public class CustomUserDetailService implements UserService {
 
 
     public boolean addLogincount(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findFirstByEmail(email);
         if (!(user==null)) {
             user.setLoginCount(user.getLoginCount() + 1);
             if (user.getLoginCount() > 3) {
@@ -97,7 +97,7 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public boolean resetLogincount(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findFirstByEmail(email);
         if (!(user==null)) {
             user.setLoginCount(0);
             userRepository.saveAndFlush(user);
@@ -108,7 +108,7 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public boolean unlockUser(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findFirstByEmail(email);
         if (!(user==null)) {
             user.setLocked(false);
             userRepository.saveAndFlush(user);
@@ -119,7 +119,7 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public boolean isLocked(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findFirstByEmail(email);
         if (!(user==null)) {
             if (user.getLocked() == null) {
                 return false;

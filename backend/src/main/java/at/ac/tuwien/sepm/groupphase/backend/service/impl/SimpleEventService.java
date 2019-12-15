@@ -36,7 +36,7 @@ public class SimpleEventService implements EventService {
         LOGGER.info("EventService: creating event");
         try {
 
-            User employee = this.userRepository.findByEmail(email);
+            User employee = this.userRepository.findFirstByEmail(email);
             if (employee != null) {
                 event.setEmployee(employee);
                 return this.eventRepository.save(event);

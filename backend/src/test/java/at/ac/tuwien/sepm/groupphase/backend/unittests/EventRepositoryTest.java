@@ -61,7 +61,7 @@ public class EventRepositoryTest implements EventTestData {
         event.setCategory(Event.Category.FILM);
         event.setDuration(4.7);
 
-        User user = userRepository.findByEmail(ADMIN_USER);
+        User user = userRepository.findFirstByEmail(ADMIN_USER);
         event.setEmployee(user);
         Event createdEvent = eventRepository.save(event);
         assertAll(
