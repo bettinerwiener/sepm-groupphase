@@ -5,6 +5,7 @@ import { EventObject } from 'src/app/dtos/event-object';
 import { TicketService } from 'src/app/services/ticket.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
 import { Ticket } from 'src/app/dtos/ticket';
+import { Seat } from 'src/app/dtos/seat';
 
 @Component({
   selector: 'app-event-item',
@@ -20,6 +21,8 @@ export class EventItemComponent implements OnInit {
   eventObject: EventObject;
   performances: Array<EventPerformance>;
   id: number = 0;
+  selectedTickets: Array<Ticket> = new Array<Ticket>();
+  load: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +32,6 @@ export class EventItemComponent implements OnInit {
 
   selectSeats(performance:EventPerformance): void {
     performance.seatSelection = !performance.seatSelection;
-    console.log(performance);
-    
   }
 
   ngOnInit() {
@@ -38,31 +39,60 @@ export class EventItemComponent implements OnInit {
     this.service.getEvent(id).subscribe(
       (eventObj: EventObject) => {
         this.eventObject = eventObj;
-
       } 
     )
 
     this.service.getPerformancesByEventId(id).subscribe(
       (performances: Array<EventPerformance>) => {
         this.performances = performances;
-        console.log("performances");
-        
         console.log(performances);
         
 
         for(let perf of performances){
-
-        this.service.getTicketsByPerformanceId(perf.id).subscribe(
-          (tickets: Array<Ticket>) => {
-            perf.tickets = tickets;
-            console.log(tickets);
-            console.log("tickets");
-            
-          }
-        )
-
+          this.service.getTicketsByPerformanceId(perf.id).subscribe(
+            (tickets: Array<Ticket>) => {
+              this.ticketsToArray(tickets, perf);
+              this.load = true;
+            }
+          )
         }
       }
     )
   }
+
+  ticketsToArray(tickets:Array<Ticket>, eventPerformance: EventPerformance){
+    console.log(tickets);
+    eventPerformance.tickets = new Array<Array<Ticket>>();
+    tickets.sort((a, b) => (a.seat.row > b.seat.row ? 1 : -1));
+    var j:number = 0;
+    eventPerformance.tickets.push(new Array<Ticket>());
+    for(let i = 0; i < tickets.length; i++){
+      if(i > 0 && tickets[i].seat.row !== tickets[i-1].seat.row){
+        eventPerformance.tickets.push(new Array<Ticket>());
+        j++;
+      }
+      eventPerformance.tickets[j].push(tickets[i]);
+    }
+
+    for(let row of eventPerformance.tickets){
+      row.sort((a,b) => a.seat.number - b.seat.number);
+    }
+  }
+
+  addSeat(ticket:Ticket):void {
+    if(!this.selectedTickets.includes(ticket)){
+      this.selectedTickets.push(ticket);
+    } else {
+      var index: number = this.selectedTickets.indexOf(ticket);
+      if(index > -1){
+        this.selectedTickets.splice(index, 1);
+      }
+    }
+  }
+
+  buyTickets(eventPerformance: EventPerformance):void {
+    console.log(this.selectedTickets);
+  }
+
 }
+

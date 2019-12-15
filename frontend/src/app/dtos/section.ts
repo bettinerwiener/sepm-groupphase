@@ -1,10 +1,10 @@
-import {Room} from './room';
+import { Room } from './room';
 
 export class Section {
-    constructor(
-      public id: number,
-      public seatsSelectable: false,
-      public room: Room,) {
-    }
+  constructor(
+    public id: number,
+    public letter: string,
+    public seatsSelectable: false,
+    public room: Room, ) {
   }
-  
+}

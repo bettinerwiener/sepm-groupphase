@@ -58,8 +58,14 @@ values (1, 1, 1, NOW()),
 
 insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
     values (1, 200, 1, 3, 1, 'AVAILABLE'),
-           (2, 100, 1, 3, 4, 'BOUGHT'),
-           (3, 30,2, 4, 6, 'BOUGHT'),
-           (4, 24,2, 4, 5, 'AVAILABLE'),
-          (5, 35,2, 5, 6, 'RESERVED'),
-           (6, 22,2, 5, 5, 'RESERVED');
+           (2, 100, 1, 3, 2, 'BOUGHT'),
+           (3, 100, 1, 3, 3, 'AVAILABLE'),
+           (4, 100, 1, 3, 4, 'BOUGHT'),
+           (5, 100, 1, 3, 5, 'AVAILABLE'),
+           (6, 100, 1, 3, 6, 'AVAILABLE'),
+           (7, 100, 1, 3, 7, 'AVAILABLE'),
+           (8, 100, 1, 3, 8, 'AVAILABLE'),
+           (9, 30,2, 4, 6, 'BOUGHT'),
+           (10, 24,2, 4, 5, 'AVAILABLE'),
+           (11, 35,2, 5, 6, 'RESERVED'),
+           (12, 22,2, 5, 5, 'RESERVED');

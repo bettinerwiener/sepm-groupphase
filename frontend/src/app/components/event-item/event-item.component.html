@@ -19,17 +19,17 @@
 </div>
 
 
-<div *ngIf="performances">
+<div *ngIf="performances && eventObject">
     <div class="container">
         <div *ngFor="let performance of performances" style="margin-bottom: 5px;">
             <div class="col-md-8 mx-auto event-list-item">
                 <div class="row event-list-item-content">
                     <div class="col-md-9">
-                        <h5>Location {{performance.date}} - Date {{performance.location.name}}</h5>
+                        <h5> {{performance.room.location.name}} - {{performance.date.substring(0,10)}} {{performance.date.substring(11,16)}}  </h5>
                         <div id="dateandlocation">
                             <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-bottom: 10px;"></fa-icon>
-                            <span>Exampleaddress{{performance.location.street}}, {{performance.location.postalCode}}
-                                {{performance.location.city}}</span>
+                            <span>{{performance.room.location.street}}, {{performance.room.location.postalCode}}
+                                {{performance.room.location.city}}</span>
                         </div>
                     </div>
                     <div class="col-md-3 text-center event-list-item-content-right"
@@ -45,14 +45,14 @@
                         <div class="row justify-content-end"></div>
                         <button type="button" (click)="selectSeats(performance)" class="btn btn-primary btn-sm"
                             style="margin-bottom: 5px;">Go back</button>
-                        <app-seatplan></app-seatplan>
+                        <app-seatplan *ngIf="load" (selectedSeat)="addSeat($event)" [eventPerformance]="performance"></app-seatplan>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
 
                         <button type="button" (click)="selectSeats()" class="btn btn-primary btn-sm">Reserve</button>
-                        <button type="button" (click)="selectSeats()" class="btn btn-primary btn-sm"
+                        <button type="button" (click)="buyTickets($event)" class="btn btn-primary btn-sm"
                             style="margin-left: 5px; background-color: #00960c;">Buy</button>
                     </div>
                 </div>
