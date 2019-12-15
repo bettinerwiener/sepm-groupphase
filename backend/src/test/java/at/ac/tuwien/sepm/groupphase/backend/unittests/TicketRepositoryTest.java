@@ -39,7 +39,7 @@ public class TicketRepositoryTest implements TicketTestData {
         ticket.setStatus(Ticket.Status.BOUGHT);
         ticketRepository.save(ticket);
         assertAll(
-            () -> assertEquals(7, ticketRepository.findAll().size()),
+            () -> assertEquals(9, ticketRepository.findAll().size()),
             () -> assertNotNull(ticketRepository.findById(ticket.getId())),
             () -> assertEquals(Ticket.Status.BOUGHT, ticketRepository.findFirstById(1L).getStatus())
         );

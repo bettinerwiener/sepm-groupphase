@@ -30,7 +30,7 @@ public interface OrderTestData {
     String BUY_ONE_BOUGHT_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"2\" }, { \"id\":\"1\" }]";
     String BUY_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"5\" }, { \"id\":\"7\" }]";
 
-    String RESERVE_TWO_AVAILABLE_TICKETS = "[ { \"id\":\"1\" }, { \"id\":\"4\" }]";
+    String RESERVE_TWO_AVAILABLE_TICKETS = "[ { \"id\":\"8\" }, { \"id\":\"9\" }]";
     String RESERVE_ONE_RESERVED_BY_OTHER_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"3\" }, { \"id\":\"7\" }]";
     String RESERVE_ONE_BOUGHT_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"2\" }, { \"id\":\"1\" }]";
     String RESERVE_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"5\" }, { \"id\":\"7\" }]";

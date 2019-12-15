@@ -53,8 +53,8 @@ insert into seat (id, seat_number, row_letter, section)
            (13, 2, 'C', 7);
 
 insert into is_performed_at(id, event, room, perf_date)
-values (1, 1, 1, '2019-12-15T15:59:00.0'),
-       (2, 2, 2, '2019-12-15T15:59:30.0');
+values (1, 1, 1, '2019-12-17T15:59:00.0'),
+       (2, 2, 2, '2019-12-17T15:59:30.0');
 
 insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
     values (1, 200, 1, null , 1, 'AVAILABLE'),
@@ -63,4 +63,6 @@ insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, st
            (4, 24,2, null , 5, 'AVAILABLE'),
           (5, 35,2, 5, 6, 'RESERVED'),
            (6, 22,2, 5, 5, 'RESERVED'),
-          (7, 24,2, null , 5, 'AVAILABLE');
+           (7, 24,2, null , 5, 'AVAILABLE'),
+           (8, 24,2, null , 5, 'AVAILABLE'),
+           (9, 24,2, null , 5, 'AVAILABLE');
