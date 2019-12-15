@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { GlobalEvent } from 'src/app/dtos/global-event';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -8,14 +9,11 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class ConcertComponent implements OnInit {
 
-  constructor(private searchService: SearchService) { }
+  @Input() concerts: GlobalEvent[];
+
+  constructor(searchService: SearchService) { }
 
   ngOnInit() {
   }
-
-  searchConcerts() {
-    // this.searchService.loadEvent().subscribe;
-  }
-
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { GlobalEvent } from 'src/app/dtos/global-event';
 
 @Component({
   selector: 'app-theatre',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./theatre.component.scss']
 })
 export class TheatreComponent implements OnInit {
+
+  @Input() theatres: GlobalEvent[];
 
   constructor() { }
 

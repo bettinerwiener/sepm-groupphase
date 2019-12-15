@@ -11,25 +11,25 @@
           <br />
           <div class="row">
             <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="Search term...">
+              <input type="text" class="form-control" placeholder="Search term..." name="searchTerm" [(ngModel)]="searchTerm">
             </div>
             <div class="col-md-3">
-              <input type="date" class="form-control" placeholder="">
+              <input type="date" class="form-control" placeholder="" name="startDate" [(ngModel)]="startDate">
             </div>
             <div class="col-md-3">
-              <input type="date" class="form-control" placeholder="">
+              <input type="date" class="form-control" placeholder="" name="endDate" [(ngModel)]="endDate">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col-md-3">
-              <input type="text" class="form-control" placeholder="Price">
+              <input type="text" class="form-control" placeholder="Price" name="price" [(ngModel)]="price">
             </div>
             <div class="col-md-3">
-              <input type="text" class="form-control" placeholder="Duration">
+              <input type="text" class="form-control" placeholder="Duration" name="duration" [(ngModel)]="duration">
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary">Search</button>
+              <button type="button" (click)="getEvent(searchTerm, startDate, endDate, price, duration)" class="btn btn-primary">Search</button>
             </div>
           </div>
 
