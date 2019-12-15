@@ -45,20 +45,93 @@ public class OrderEndpointTest implements OrderTestData {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private JwtTokenizer jwtTokenizer;
 
     @Autowired
     private SecurityProperties securityProperties;
 
+    /**
+     * Test Reservation
+     */
+    @Test
+    public void creatingNewReserveOrderReturn201() throws Exception {
+        this.mockMvc.perform(post(ORDER_RESERVE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(RESERVE_TWO_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
+    }
+
+   @Test
+    public void creatingNewReserveOrderWithReservedByUserAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_RESERVE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(RESERVE_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+
+    @Test
+    public void creatingNewReserveOrderWithReservedAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_RESERVE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(RESERVE_ONE_RESERVED_BY_OTHER_USER_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+    @Test
+    public void creatingNewReserveOrderWithBoughtAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_RESERVE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(RESERVE_ONE_BOUGHT_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+    /**
+     * Test Buying
+     */
+    @Test
+    public void creatingNewBuyOrderReturn201() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUY_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_TWO_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void creatingNewBuyOrderWithReservedByUserAndAvailableReturn201() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUY_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void creatingNewBuyOrderWithReservedAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUY_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_ONE_RESERVED_BY_OTHER_USER_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+    @Test
+    public void creatingNewBuyOrderWithBoughtAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUY_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_ONE_BOUGHT_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
 
 
-
-
-
+    }
 }

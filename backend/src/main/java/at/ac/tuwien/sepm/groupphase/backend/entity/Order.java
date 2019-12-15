@@ -24,17 +24,12 @@ public class Order {
 
 
 
-    /**
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-     */
-
+    /*
     public Order() {
     }
 
     public Order(Long userId) {
         this.userId =userId;
-    }
+    }*/
 
 }

@@ -38,7 +38,6 @@ public interface UserService extends UserDetailsService {
      * @throws EmailExistsException in case a user with given email already exists
      * @throws NotCreatedException in case something went wrong when accessing the database
      */
-
     User createUser(User user);
 
     boolean addLogincount(String email);

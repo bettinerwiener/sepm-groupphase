@@ -6,9 +6,11 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CustomUserDetailService implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -62,17 +65,17 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public User createUser (User user) throws EmailExistsException, NotCreatedException {
-        LOGGER.info("Creating user");
-
-
+        log.info("Creating user",user);
 
         if (userRepository.findFirstByEmail(user.getEmail()) != null) {
+            log.error("email adress already in use", user.getEmail());
             throw new EmailExistsException("There already is an account with the email adress: " + user.getEmail());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             return this.userRepository.save(user);
-        } catch (NotCreatedException notCreated) {
+        } catch (DataAccessException notCreated) {
+            log.error("user could not be created", user);
             throw new NotCreatedException(String.format("The user with emailadress: %s could not be created: %s",
                 user.getEmail(), notCreated.getMessage()));
         }

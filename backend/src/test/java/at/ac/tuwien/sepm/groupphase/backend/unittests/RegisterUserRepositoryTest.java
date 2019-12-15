@@ -32,19 +32,6 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
     @Autowired
     private UserRepository userRepository;
 
-    /*private static ValidatorFactory validatorFactory;
-    private static Validator validator;
-
-    @BeforeClass
-    public static void createValidator() {
-        validatorFactory = Validation.buildDefaultValidatorFactory();
-        validator = validatorFactory.getValidator();
-    }
-
-    @AfterClass
-    public static void close() {
-        validatorFactory.close();
-    }*/
 
     @Test
     public void saveUserThenCheckSizeWhenFindAllThenFindUserById() {

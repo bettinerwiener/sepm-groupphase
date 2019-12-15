@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +19,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
 
-
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/v1/user")
 public class UserEndpoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     private final UserService userService;
     private final UserMapper userMapper;
 
@@ -38,7 +39,7 @@ public class UserEndpoint {
     @PostMapping(value= "/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto post(@RequestBody @Validated UserDto userDto) {
-        LOGGER.info("POST /user/register");
+        log.info("POST /api/v1/user/register: creating new user");
 
         User user= userMapper.userDtoToUser(userDto);
         return userMapper.userToUserDto(userService.createUser(user));

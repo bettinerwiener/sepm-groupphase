@@ -9,16 +9,12 @@ import javax.persistence.Enumerated;
 @Data
 public class TicketDto {
 
-    public enum Status {
-        AVAILABLE,
-        RESERVED,
-        BOUGHT
-    }
+
 
     private Long id;
 
 
-    private Order customer_order;
+    private Order customerOrder;
 
 
     private EventPerformance performance;
@@ -29,6 +25,6 @@ public class TicketDto {
     private Float price;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Ticket.Status status;
 
 }
