@@ -39,7 +39,6 @@ public class SimpleShoppingCartService implements ShoppingCartService {
     public Order BuyTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
         LOGGER.info("User " + user.getId() + " buys " + tickets.size() + " Tickets");
 
-        List<Ticket> ticketsToOrder = new ArrayList<Ticket>() ;
         Order order =new Order(user.getId());
 
         try {
@@ -58,7 +57,6 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                 } else {
                     throw new NotFoundException("One of the tickets you want to buy doesnt exist");
                 }
-
             }
 
             this.orderRepository.save(order);
@@ -69,7 +67,6 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                 ticketToBuy.setStatus(Ticket.Status.BOUGHT);
                 ticketToBuy.setCustomerOrder(order);
 
-                ticketsToOrder.add(ticketToBuy);
                 ticketRepository.save(ticketToBuy);
             }
 

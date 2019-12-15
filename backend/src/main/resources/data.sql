@@ -1,10 +1,10 @@
-insert into user (id, first_name, last_name, email, password, is_employee, locked, login_count)
-    values (1, 'Hugo', 'Deval', 'hugo@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', FALSE, FALSE, 0),
-           (2, 'Susan', 'Bigfoot', 'susan@gmx.at', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', FALSE, FALSE, 0);
+insert into user (id, first_name, last_name, email, password)
+    values (1, 'Hugo', 'Deval', 'hugo@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq'),
+           (2, 'Susan', 'Bigfoot', 'susan@gmx.at', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq');
 
-insert into user (id, first_name, last_name, email, password, is_employee, locked, login_count)
-    values (3, 'Hugo', 'Deval', 'hugo1@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', TRUE, FALSE, 0),
-(           4, 'Susan', 'Bigfoot', 'susan1@gmx.at', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', TRUE, FALSE, 0);
+insert into user (id, first_name, last_name, email, password, is_employee)
+    values (3, 'Hugo', 'Deval', 'hugo1@gmail.com', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', 1),
+(           4, 'Susan', 'Bigfoot', 'susan1@gmx.at', '$2a$10$wk46a9s3N.R8a4DfWbDcQe03KQZ73hkXbMu62oqxozVeCLZkKb.Wq', 1);
 
 insert into artist (id, first_name, last_name)
     values (1, 'Steven', 'Spielberg'),
@@ -53,13 +53,14 @@ insert into seat (id, seat_number, row_letter, section)
            (13, 2, 'C', 7);
 
 insert into is_performed_at(id, event, room, perf_date)
-values (1, 1, 1, NOW()),
-       (2, 2, 2, NOW());
+values (1, 1, 1, '2019-12-15T1:43:30.0'),
+       (2, 2, 2, '2019-12-15T1:43:00.0');
 
 insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, status)
     values (1, 200, 1, null , 1, 'AVAILABLE'),
            (2, 100, 1, 3, 4, 'BOUGHT'),
-           (3, 30,2, 4, 6, 'RESERVED'),
+           (3, 30,1, 4, 6, 'RESERVED'),
            (4, 24,2, null , 5, 'AVAILABLE'),
           (5, 35,2, 5, 6, 'RESERVED'),
-           (6, 22,2, 4, 5, 'RESERVED');
+           (6, 22,2, 5, 5, 'RESERVED'),
+          (7, 24,2, null , 5, 'AVAILABLE');
