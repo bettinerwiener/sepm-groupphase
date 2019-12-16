@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotSavedException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.OrderRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
@@ -142,4 +143,12 @@ public class SimpleTicketService implements TicketService {
         }
     }
 
+    @Override
+    public Ticket update(Ticket ticket) {
+        try {
+            return this.ticketRepository.saveAndFlush(ticket);
+        } catch (DataAccessException dae) {
+            throw new NotSavedException(String.format("update failed: %s", dae.getMessage()));
+        }
+    }
 }

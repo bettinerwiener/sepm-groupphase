@@ -1,10 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler;
 
-import at.ac.tuwien.sepm.groupphase.backend.exception.EmailExistsException;
-import at.ac.tuwien.sepm.groupphase.backend.exception.LockedException;
-import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
-import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
-import at.ac.tuwien.sepm.groupphase.backend.exception.TicketNotAvailableException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -48,6 +44,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(value = {EmailExistsException.class})
     protected ResponseEntity<Object> emailExists(RuntimeException ex, WebRequest request) {
+        LOGGER.warn(ex.getMessage());
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+
+    }
+    @ExceptionHandler(value = {NotSavedException.class})
+    protected ResponseEntity<Object> notSaved(RuntimeException ex, WebRequest request) {
         LOGGER.warn(ex.getMessage());
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
 
