@@ -19,8 +19,11 @@ export class TicketService {
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
 
-  buyTicket(id: number, event: EventObject, room: number, seat: Seat, status: string, price: number, location: string, hall: string, time: Time): Observable<Ticket> {
-    var ticket: Ticket = new Ticket(id, event, room, seat, status, price, location, time);
+  buyTicket(ticket: Ticket): Observable<Ticket> {
+    return this.httpClient.put<Ticket>(this.messageBaseUri, ticket);
+  }
+
+  reserveTicket(ticket: Ticket): Observable<Ticket> {
     return this.httpClient.put<Ticket>(this.messageBaseUri, ticket);
   }
 

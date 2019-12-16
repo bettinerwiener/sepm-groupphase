@@ -30,7 +30,7 @@ export class EventItemComponent implements OnInit {
     private service: TicketService
   ) { }
 
-  selectSeats(performance:EventPerformance): void {
+  selectSeats(performance: EventPerformance): void {
     performance.seatSelection = !performance.seatSelection;
   }
 
@@ -39,16 +39,16 @@ export class EventItemComponent implements OnInit {
     this.service.getEvent(id).subscribe(
       (eventObj: EventObject) => {
         this.eventObject = eventObj;
-      } 
+      }
     )
 
     this.service.getPerformancesByEventId(id).subscribe(
       (performances: Array<EventPerformance>) => {
         this.performances = performances;
         console.log(performances);
-        
 
-        for(let perf of performances){
+
+        for (let perf of performances) {
           this.service.getTicketsByPerformanceId(perf.id).subscribe(
             (tickets: Array<Ticket>) => {
               this.ticketsToArray(tickets, perf);
@@ -60,43 +60,50 @@ export class EventItemComponent implements OnInit {
     )
   }
 
-  ticketsToArray(tickets:Array<Ticket>, eventPerformance: EventPerformance){
+  ticketsToArray(tickets: Array<Ticket>, eventPerformance: EventPerformance) {
     console.log(tickets);
     eventPerformance.tickets = new Array<Array<Ticket>>();
     tickets.sort((a, b) => (a.seat.row > b.seat.row ? 1 : -1));
-    var j:number = 0;
+    var j: number = 0;
     eventPerformance.tickets.push(new Array<Ticket>());
-    for(let i = 0; i < tickets.length; i++){
-      if(i > 0 && tickets[i].seat.row !== tickets[i-1].seat.row){
+    for (let i = 0; i < tickets.length; i++) {
+      if (i > 0 && tickets[i].seat.row !== tickets[i - 1].seat.row) {
         eventPerformance.tickets.push(new Array<Ticket>());
         j++;
       }
       eventPerformance.tickets[j].push(tickets[i]);
     }
 
-    for(let row of eventPerformance.tickets){
-      row.sort((a,b) => a.seat.number - b.seat.number);
+    for (let row of eventPerformance.tickets) {
+      row.sort((a, b) => a.seat.number - b.seat.number);
     }
   }
 
-  addSeat(ticket:Ticket):void {
-    if(!this.selectedTickets.includes(ticket)){
+  addSeat(ticket: Ticket): void {
+    if (!this.selectedTickets.includes(ticket)) {
       this.selectedTickets.push(ticket);
     } else {
       var index: number = this.selectedTickets.indexOf(ticket);
-      if(index > -1){
+      if (index > -1) {
         this.selectedTickets.splice(index, 1);
       }
     }
   }
 
-  buyTickets(eventPerformance: EventPerformance):void {
-    console.log(this.selectedTickets);
+  buyTickets(eventPerformance: EventPerformance): void {
+    for (let ticket of this.selectedTickets) {
+      ticket.status = 'BOUGHT';
+      this.service.buyTicket(ticket);
+    }
+    this.selectedTickets = new Array<Ticket>();
   }
 
-  reserveTickets(eventPerformance: EventPerformance):void {
-    console.log(this.selectedTickets);
+  reserveTickets(eventPerformance: EventPerformance): void {
+    for (let ticket of this.selectedTickets) {
+      ticket.status = 'RESERVED';
+      this.service.reserveTicket(ticket);
+    }
+    this.selectedTickets = new Array<Ticket>();
   }
-
 }
 
