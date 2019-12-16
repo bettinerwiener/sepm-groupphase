@@ -21,18 +21,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      */
     List<Ticket> findTicketsByCustomerOrderId(Long id);
 
-    /**
-     * Find tickets with the given performanceId.
-     * @param performanceId the performanceId
-     * @return all tickets with given performanceId.
-     */
-    List<Ticket> findByPerformanceId(Long performanceId);
-
-    /**
-     * Find first ticket with given id.
-     * @param id
-     * @return first ticket with given id.
-     */
     Ticket findFirstById (Long id);
 
     /**
@@ -56,4 +44,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     /*
     @Query(value = "SELECT ticket.customer_order_id FROM ticket JOIN customer_order ON( ticket.customer_order_id = customer_order.id) WHERE ticket.id = :ticketId", nativeQuery = true)
     Long findOrderIdforTicket (@Param("ticketId") Long id);*/
+    @Query(value="select * from ticket t where t.is_performed_at_id = ?1",
+    nativeQuery = true)
+    List<Ticket> findByPerformanceId(Long id);
+
+
 }

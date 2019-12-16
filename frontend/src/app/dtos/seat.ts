@@ -1,10 +1,14 @@
-import {Section} from './section';
+import { Section } from './section';
 
 export class Seat {
-    constructor(
-      public row: string,
-      public number: number,
-      public section: Section,) {
-    }
-  }
-  
+    
+    selected: boolean = false;
+    sector:string;
+    
+        constructor(
+            public id:number,
+            public number:number,
+            public row:string,
+            public section:Section,
+        ) { }
+}

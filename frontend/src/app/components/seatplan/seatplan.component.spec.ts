@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchAreaComponent } from './search-area.component';
+import { SeatplanComponent } from './seatplan.component';
 
-describe('SearchAreaComponent', () => {
-  let component: SearchAreaComponent;
-  let fixture: ComponentFixture<SearchAreaComponent>;
+describe('SeatplanComponent', () => {
+  let component: SeatplanComponent;
+  let fixture: ComponentFixture<SeatplanComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchAreaComponent ]
+      declarations: [ SeatplanComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchAreaComponent);
+    fixture = TestBed.createComponent(SeatplanComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

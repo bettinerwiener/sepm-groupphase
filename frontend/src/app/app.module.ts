@@ -25,9 +25,14 @@ import { CartComponent } from './components/cart/cart.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
 import { OrderComponent } from './components/order/order.component';
-
 import { SearchUserComponent } from './components/search-user/search-user.component';
 import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-user-by-admin.component';
+
+import { CreateEventComponent } from './components/create-event/create-event.component';
+import { EventItemComponent } from './components/event-item/event-item.component';
+import { SeatplanComponent } from './components/seatplan/seatplan.component';
+import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +41,7 @@ import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-u
     HomeComponent,
     LoginComponent,
     MessageComponent,
+    MoviesComponent,
     ConcertComponent,
     TheatreComponent,
     CabaretComponent,
@@ -52,6 +58,10 @@ import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-u
 
     SearchUserComponent,
     EditUserByAdminComponent,
+    CreateEventComponent,
+    EventItemComponent,
+    SeatplanComponent,
+    CreateEventPerformanceComponent
   ],
   imports: [
     BrowserModule,

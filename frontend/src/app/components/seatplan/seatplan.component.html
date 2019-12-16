@@ -1,0 +1,9 @@
+<div class="stage" [style.width]="stagewidth">Stage</div>
+<div class="seatplan">
+    <div *ngFor="let ticketrow of eventPerformance.tickets" class="singleRow">
+        <button (click)="select(ticketseat)" *ngFor="let ticketseat of ticketrow" [ngClass]="{'selected': ticketseat.selected, 'btn': true,  'seat': true, 'grey': (ticketseat.status === 'BOUGHT'),
+            'blue': (ticketseat.seat.section.letter === 'A'), 'red': (ticketseat.seat.section.letter === 'B'), 'orange': (ticketseat.seat.section.letter === 'C'), 'yellow': (ticketseat.seat.section.letter === 'D'), 'aqua': (ticketseat.seat.section.letter === 'E')}"
+            data-toggle="button" aria-pressed="false" autocomplete="off" [disabled]="ticketseat.status === 'BOUGHT'">
+        </button>
+    </div>
+</div>

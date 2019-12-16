@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-md-3 event-list-item-content-right">
-                <span>Status: <span class="badge badge-secondary" style="color: white" *ngIf="status!='BOUGHT'"> {{status}}</span>  <span class="badge badge-success" style="color:white" *ngIf="status=='BOUGHT'"> {{status}}</span></span><br>
+                <span>Status: <span class="badge badge-secondary" style="color: white" *ngIf="status!='AVAILABLE'"> {{status}}</span>  <span class="badge badge-success" style="color:white" *ngIf="status=='AVAILABLE'"> {{status}}</span></span><br>
                 <span>Anzahl Tickets: {{number}}</span><br>
                 <span>Preis: {{price}}€
                 </span><br>
@@ -36,7 +36,7 @@
         </div>
 
             
-        <table class="table table-borderless table-sm" style="margin-top: 30px; margin-left: 0%;" *ngIf="status=='BOUGHT'&&showTickets">
+        <table class="table table-borderless table-sm" style="margin-top: 30px; margin-left: 0%;" *ngIf="status=='AVAILABLE'&&showTickets">
             <thead>
               <tr>
                 <th scope="col">#Id</th>

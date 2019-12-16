@@ -7,6 +7,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.PerformanceMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.RoomMapper;
 import at.ac.tuwien.sepm.groupphase.backend.service.PerformanceService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,7 @@ public class PerformanceEndpoint {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
     public PerformanceDto create(@RequestBody PerformanceDto performanceDto) {
         return this.performanceMapper.performanceToPerformanceDto(
             this.performanceService.create(this.performanceMapper.performanceDtoToPerformance(performanceDto)));
