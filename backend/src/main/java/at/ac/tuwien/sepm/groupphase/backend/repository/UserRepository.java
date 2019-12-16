@@ -31,26 +31,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findFirstById(Long id);
 
-
-
-
-
-
- /*
-    private final Customer user;
-    private final Customer admin;
-
-    @Autowired
-    public UserRepository(PasswordEncoder passwordEncoder) {
-        user = new Customer("user@email.com", passwordEncoder.encode("password"), false);
-        admin = new Customer("admin@email.com", passwordEncoder.encode("password"), true);
-    }
-
-    public Customer findUserByEmail(String email) {
-        if (email.equals(user.getEmail())) return user;
-        if (email.equals(admin.getEmail())) return admin;
-        return null; // In this case null is returned to fake Repository behavior
-    }
-*/
-
 }

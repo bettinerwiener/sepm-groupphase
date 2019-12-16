@@ -3,6 +3,8 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.RoomDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.RoomMapper;
 import at.ac.tuwien.sepm.groupphase.backend.service.RoomService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ public class RoomEndpoint {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get all rooms", authorizations = {@Authorization(value = "apiKey")})
     public List<RoomDto> getAll() {
         return this.roomService.getAll().stream().map(room -> this.roomMapper.roomToRoomDto(room))
             .collect(Collectors.toList());
@@ -32,6 +35,7 @@ public class RoomEndpoint {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create a room", authorizations = {@Authorization(value = "apiKey")})
     public RoomDto create(@RequestBody RoomDto roomDto) {
         RoomDto createdRoomDto = roomMapper.roomToRoomDto(roomService
             .create(roomMapper.roomDtoToRoom(roomDto)));

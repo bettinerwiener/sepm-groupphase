@@ -69,7 +69,6 @@ public class EventEndpoint {
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
     public EventDto create(@RequestBody EventDto eventDto, @AuthenticationPrincipal String username) {
         return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
-
     }
 
     @ResponseStatus(HttpStatus.OK)

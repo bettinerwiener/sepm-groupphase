@@ -5,6 +5,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,7 @@ public class UserEndpoint {
     @CrossOrigin
     @PostMapping(value= "/register")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create a user", authorizations = {@Authorization(value = "apiKey")})
     public UserDto post(@RequestBody @Validated UserDto userDto) {
         log.info("POST /api/v1/user/register: creating new user");
 

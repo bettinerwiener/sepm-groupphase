@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.service.AdminService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ public class AdminEndpoint {
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/search")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get all users", authorizations = {@Authorization(value = "apiKey")})
     public List<UserDto> getUsers(@RequestParam("name") String username) {
         LOGGER.info("GET /api/v1/admin/seach?name=" + username);
 
@@ -43,6 +46,7 @@ public class AdminEndpoint {
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/user")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get user with a certain username", authorizations = {@Authorization(value = "apiKey")})
     public UserDto getUser(@RequestParam("name") String username) {
         LOGGER.info("GET /api/v1/admin/user?name=" + username);
 
@@ -53,6 +57,7 @@ public class AdminEndpoint {
     @CrossOrigin(origins = "*")
     @PutMapping(value = "/edit")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Update user", authorizations = {@Authorization(value = "apiKey")})
     public UserDto updateUser(@RequestBody UserDto userDto) {
         LOGGER.info("PUT /api/v1/admin/edit username: " + userDto.getEmail());
 

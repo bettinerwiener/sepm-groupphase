@@ -46,6 +46,7 @@ public class PerformanceEndpoint {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get all performances", authorizations = {@Authorization(value = "apiKey")})
     public List<PerformanceDto> getAll(@RequestParam(required = false) Long event) {
         log.info("Getting all performances ...");
         if (event != null) {
