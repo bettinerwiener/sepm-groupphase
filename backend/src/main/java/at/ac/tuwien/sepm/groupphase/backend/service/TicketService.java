@@ -12,6 +12,11 @@ import java.util.List;
 
 public interface TicketService {
 
+    /**
+     * Gets all tickets belonging to an order
+     * @param id of the order the tickets belong to
+     * @return a list of tickets belonging to the order specified
+     */
     List<Ticket> findTicketsByOrderId(Long id);
     /**
      * Creates tickets for a performance
@@ -21,8 +26,17 @@ public interface TicketService {
      */
     List<Ticket> createForPerformance(EventPerformance eventPerformance) throws NotCreatedException;
 
+    /**
+     * Gets all tickets
+     * @return a list of all tickets currently in the database
+     */
     List<Ticket> getAll();
 
+    /**
+     * Gets all tickets for a performance
+     * @param performanceId for which all tickets shall be retrieved
+     * @return a list of tickets retrieved for the performance specified
+     */
     List<Ticket> findByPerformanceId(Long performanceId);
 
     Ticket findById(Long id);

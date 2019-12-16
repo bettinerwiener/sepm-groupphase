@@ -32,5 +32,11 @@ public interface RoomService {
      */
     public List<Room> findByLocation(Location location) throws NotFoundException;
 
+    /**
+     * Creates a room
+     * @param room to be created
+     * @return the room created
+     * @throws NotCreatedException in case someting went wrong while trying to persist the entity
+     */
     public Room create(Room room) throws NotCreatedException;
 }

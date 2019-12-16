@@ -27,12 +27,38 @@ public interface EventService {
      */
     List<Event> getAll() throws NotFoundException;
 
+    /**
+     * Gets top ten events
+     * @return a list with at most ten events, where the most tickets have been bought.
+     * @throws NotFoundException in case something goes wrong while accessing the data.
+     */
     List<Event> getTopEvents() throws NotFoundException;
 
+    /**
+     * Filters all events according to the search parameters
+     * @param searchTerm a string free text element just one word is allowed
+     * @param category s string representing the category of the event
+     * @param startDate the date which must lie before today
+     * @param endDate the date which must llie after today
+     * @param price the maximum price the customer wants to pay
+     * @param duration the maximum duration of the event
+     * @param location where the performance should take place
+     * @param artist who is responsible for the event or created the event
+     * @return a list of events meeting all the search criteria
+     * @throws NotFoundException in case no events matching the criteria could be found or
+     *                           something went wrong while accessing the database
+     */
     List<Event> getFiltered(String searchTerm, String category,
                             LocalDate startDate, LocalDate endDate,
                             Double price, Double duration,
                             Long location, Long artist) throws NotFoundException;
 
+    /**
+     * Gets an event with the specified id
+     * @param id of the event looked for
+     * @return the event with the @param id
+     * @throws NotFoundException in case no event with the id could be found or
+     *                           something wnet wrong while accessing the database
+     */
     Event getById(Long id) throws NotFoundException;
 }
