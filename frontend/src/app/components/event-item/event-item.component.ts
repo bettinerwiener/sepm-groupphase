@@ -45,8 +45,6 @@ export class EventItemComponent implements OnInit {
     this.service.getPerformancesByEventId(id).subscribe(
       (performances: Array<EventPerformance>) => {
         this.performances = performances;
-        console.log(performances);
-
 
         for (let perf of performances) {
           this.service.getTicketsByPerformanceId(perf.id).subscribe(
@@ -61,7 +59,6 @@ export class EventItemComponent implements OnInit {
   }
 
   ticketsToArray(tickets: Array<Ticket>, eventPerformance: EventPerformance) {
-    console.log(tickets);
     eventPerformance.tickets = new Array<Array<Ticket>>();
     tickets.sort((a, b) => (a.seat.row > b.seat.row ? 1 : -1));
     var j: number = 0;
@@ -91,9 +88,11 @@ export class EventItemComponent implements OnInit {
   }
 
   buyTickets(eventPerformance: EventPerformance): void {
+    
+    this.service.buyTicket(this.selectedTickets);
+
     for (let ticket of this.selectedTickets) {
       ticket.status = 'BOUGHT';
-      this.service.buyTicket(ticket);
     }
     this.selectedTickets = new Array<Ticket>();
   }

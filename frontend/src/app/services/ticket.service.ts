@@ -16,11 +16,13 @@ export class TicketService {
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
 
-  buyTicket(ticket: Ticket): Observable<Ticket> {
-    return this.httpClient.put<Ticket>(this.messageBaseUri, ticket);
+  buyTicket(tickets: Array<Ticket>): Observable<Ticket> {
+    console.log("Buy ticket ", tickets);
+    return this.httpClient.post<Ticket>(this.messageBaseUri + '/orders/buy', tickets);
   }
 
   reserveTicket(ticket: Ticket): Observable<Ticket> {
+    console.log("Reserve ticket ", ticket);
     return this.httpClient.put<Ticket>(this.messageBaseUri, ticket);
   }
 
