@@ -12,8 +12,12 @@ import java.util.List;
 public interface PdfService {
 
 
+    /**
+     * Produces a ticket in pdf for ticket id and a user
+     * @param id of ticket the pdf is produced for
+     * @param email of the user the ticket is created for
+     * @return a ByteArrayInpuStream holding the binary pdf ticket
+     * @throws NotFoundException
+     */
     ByteArrayInputStream getTicketPdf(Long id, String email) throws NotFoundException;
-
-
-
 }

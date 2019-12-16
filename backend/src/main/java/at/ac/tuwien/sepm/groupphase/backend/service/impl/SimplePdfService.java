@@ -18,6 +18,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -39,9 +40,9 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SimplePdfService implements PdfService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private TicketService ticketService;
     private CustomUserDetailService userDetailsService;
 
@@ -136,13 +137,13 @@ public class SimplePdfService implements PdfService {
             contentStream.close();
 
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("Ticket pdf creation failed: {}", e.getMessage());
         }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try{
             doc.save(out);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("Ticket pdf could not be saved: {}", e.getMessage());
         }
 
         return new ByteArrayInputStream(out.toByteArray());

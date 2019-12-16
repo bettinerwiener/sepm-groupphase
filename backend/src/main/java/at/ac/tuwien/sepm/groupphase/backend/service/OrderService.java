@@ -10,12 +10,18 @@ import java.util.List;
 public interface OrderService {
 
     /**
-     * Create a single event
-     * @return the created event
-     * @throws NotCreatedException in case something went wrong when accessing the database
+     * Gets all orders
+     * @return a list of all orders currently in the database
+     * @throws NotFoundException in case no orders are found
      */
-
     List<Order> getAll() throws NotFoundException;
+
+    /**
+     * Get a user's orders
+     * @param id of the user whose orders shall be retrieved
+     * @return a list of the user's orders
+     * @throws NotFoundException in case no orders have been found
+     */
     List<Order> findByUserId(Long id) throws NotFoundException;
 
 
