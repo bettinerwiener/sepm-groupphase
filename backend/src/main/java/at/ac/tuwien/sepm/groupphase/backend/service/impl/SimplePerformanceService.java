@@ -53,6 +53,7 @@ public class SimplePerformanceService implements PerformanceService {
                 }
             }
             this.ticketRepository.saveAll(tickets);
+            this.ticketRepository.flush();
             return eventPerformance;
         } catch (DataAccessException dae) {
             log.error("The performance could not be created: {}", dae.getMessage());
