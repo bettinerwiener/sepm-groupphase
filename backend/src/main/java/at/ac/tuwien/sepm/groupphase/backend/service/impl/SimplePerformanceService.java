@@ -49,6 +49,7 @@ public class SimplePerformanceService implements PerformanceService {
                     ticketToAdd.setSeat(seat);
                     ticketToAdd.setStatus(Ticket.Status.AVAILABLE);
                     ticketToAdd.setPrice(19.70f);
+                    tickets.add(ticketToAdd);
                 }
             }
             this.ticketRepository.saveAll(tickets);
