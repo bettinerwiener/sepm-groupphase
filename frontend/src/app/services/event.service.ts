@@ -41,7 +41,7 @@ export class EventService {
    * @param duration how long the event lasts
    */
   createEvent(event: GlobalEvent): Observable<GlobalEvent> {
-    console.log('Post Event with title' + event.title);
+    console.log('Post Event with title' + event.title + ', category: ' + event.category);
     return this.httpClient.post<GlobalEvent>(this.eventBaseUri, event);
   }
 }
