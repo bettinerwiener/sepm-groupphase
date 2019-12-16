@@ -4,7 +4,12 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
+<div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Successfully created event!</strong> {{ event.title }}
+  <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
 <div class="pt-5">
   <div class="row">
