@@ -7,6 +7,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.EventPerformance;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotSavedException;
 
 import java.util.List;
 
@@ -53,4 +54,6 @@ public interface TicketService {
      * @throws NotFoundException
      */
     List<Ticket> findByPerformance(Long id) throws NotFoundException;
+
+    Ticket update(Ticket ticket) throws NotSavedException;
 }

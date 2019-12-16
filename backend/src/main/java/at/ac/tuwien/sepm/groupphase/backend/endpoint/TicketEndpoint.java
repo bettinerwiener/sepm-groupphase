@@ -47,4 +47,12 @@ public class TicketEndpoint {
             return ticketDtos;
         }
     }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Update a ticket", authorizations = {@Authorization(value = "apiKey")})
+    public TicketDto update(@RequestBody TicketDto ticketDto) {
+        return this.ticketMapper.ticketToTicketDto(
+            this.ticketService.update(this.ticketMapper.ticketDtoToTicket(ticketDto)));
+    }
 }
