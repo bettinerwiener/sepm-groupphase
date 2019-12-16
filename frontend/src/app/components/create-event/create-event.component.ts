@@ -47,7 +47,6 @@ export class CreateEventComponent implements OnInit {
     this.submitted = true;
     if (this.createEventForm.valid) {
       const event: GlobalEvent = new GlobalEvent(
-        null,
         this.createEventForm.controls.title.value,
         this.createEventForm.controls.category.value,
         this.createEventForm.controls.shortDescription.value,

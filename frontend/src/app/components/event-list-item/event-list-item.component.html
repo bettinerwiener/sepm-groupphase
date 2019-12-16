@@ -11,15 +11,15 @@
             <div id="dateandlocation">
                 <fa-icon [icon]="faCalendarDay" size="xs" style="vertical-align: middle;"></fa-icon>
                 <span>{{date}}</span>
-                <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-bottom: 10px;" ></fa-icon>
+                <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-bottom: 10px;" ></fa-icon> 
                 <span>{{location}}</span>
-            </div>
+            </div>  
             </div>
 
             <div class="col-md-3 text-center event-list-item-content-right">
                 <span>Tickets from</span>
                 <h6 style="margin-top: 5px">{{price}}€</h6>
-                <button type="button" (click)="eventId(id)" routerLink="/" class="btn btn-primary">Tickets</button>
+                <button type="button" routerLink="/" class="btn btn-primary">Tickets</button>
             <div>
         </div>
     </div>
