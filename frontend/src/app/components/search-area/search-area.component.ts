@@ -7,6 +7,7 @@ import { ConcertComponent } from '../concert/concert.component';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { MoviesComponent } from '../movies/movies.component';
 import { Subject } from 'rxjs';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'search-area',
@@ -22,11 +23,14 @@ export class SearchAreaComponent implements OnInit {
   @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
   @Output() searchedCabarets = new EventEmitter<GlobalEvent[]>();
   @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
+  locations: EventLocation[];
   errorMessage = 'This is a useless Errormessage';
   constructor(
-    private searchService: SearchService) { }
+    private searchService: SearchService,
+    private locationService: LocationService) { }
 
   ngOnInit() {
+    this.getAlllLocations();
   }
 
   public getEvent(
@@ -35,11 +39,11 @@ export class SearchAreaComponent implements OnInit {
     endDate: Date,
     price: number,
     duration: number,
-    eventLocation: EventLocation,
+    location: EventLocation,
     artist: Artist) {
       console.log(searchTerm);
 
-    this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
+    this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
         if ( this.category === 'theatres') {
@@ -54,6 +58,17 @@ export class SearchAreaComponent implements OnInit {
         if (this.category === 'concerts') {
           this.searchedConcerts.emit(events);
         }
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAlllLocations() {
+    this.locationService.getLocation().subscribe(
+      (locations: EventLocation[]) => {
+        this.locations = locations;
       },
       error => {
         this.defaultServiceErrorHandling(error);
