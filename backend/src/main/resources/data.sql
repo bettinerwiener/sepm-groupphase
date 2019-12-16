@@ -69,7 +69,6 @@ insert into ticket (id, price,is_performed_at_id, customer_order_id, seat_id, st
            (10, 24,2, 4, 5, 'AVAILABLE'),
            (11, 35,2, 5, 6, 'RESERVED'),
            (12, 22,2, 5, 5, 'RESERVED'),
-
            (13, 200, 1, null , 1, 'AVAILABLE'),
            (14, 100, 1, 3, 4, 'BOUGHT'),
            (15, 30,1, 4, 6, 'RESERVED'),
