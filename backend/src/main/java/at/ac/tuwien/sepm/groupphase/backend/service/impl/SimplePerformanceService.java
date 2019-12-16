@@ -71,7 +71,8 @@ public class SimplePerformanceService implements PerformanceService {
                 return eventPerformances;
             } else {
                 log.error("No performances could be found");
-                throw new NotFoundException(String.format("No performances could be found"));
+                eventPerformances = new ArrayList<>();
+                return eventPerformances;
             }
         } catch (DataAccessException dae) {
             log.error("No performances could be found: {}",
@@ -91,8 +92,8 @@ public class SimplePerformanceService implements PerformanceService {
             } else {
                 log.error("No performances for the requested location {} could be found",
                     event);
-                throw new NotFoundException(String.format("No performances for the requested location %d could be found",
-                    event));
+                eventPerformances = new ArrayList<>();
+                return eventPerformances;
             }
         } catch (DataAccessException dae) {
             log.error("No performances for the requested location {} could be found: {}",

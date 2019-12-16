@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,7 +64,7 @@ public class EventEndpoint {
         return eventDtos;
     }
 
-    //@Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})

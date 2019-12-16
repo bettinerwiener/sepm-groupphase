@@ -58,7 +58,8 @@ public class SimpleEventService implements EventService {
             if (events != null || !events.isEmpty()) {
                 return events;
             } else {
-                throw new NotFoundException("No events have been found.");
+                events = new ArrayList<>();
+                return events;
             }
         } catch (DataAccessException dae) {
             LOGGER.error("EventService: no event found: " + dae.getMessage());
@@ -94,7 +95,13 @@ public class SimpleEventService implements EventService {
         try {
             List<Event> events = this.eventRepository.findAllByCriteria(searchTerm,
                 category, startDate, endDate, price, duration, location, artist);
-            return events;
+            if (events != null && !events.isEmpty()) {
+                return events;
+            }
+            else {
+                events = new ArrayList<>();
+                return events;
+            }
         } catch (DataAccessException dae) {
             LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
             throw new NotFoundException(String.format("No events found matching the criteria: %s",

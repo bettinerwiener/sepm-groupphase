@@ -24,7 +24,6 @@ public interface PerformanceService {
     /**
      * Gets all performances
      * @return a list with all performances found in the database
-     * @throws NotFoundException in case something went wrong while accessing the database
      */
     List<EventPerformance> getAll() throws NotFoundException;
 
