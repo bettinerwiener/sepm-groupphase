@@ -14,6 +14,7 @@ export class CreateEventComponent implements OnInit {
   createEventForm: FormGroup;
   event: GlobalEvent;
   error: boolean = false;
+  success: boolean = false;
   private events: GlobalEvent[];
   private rooms: Room[];
 
@@ -52,7 +53,7 @@ export class CreateEventComponent implements OnInit {
         this.createEventForm.controls.contents.value,
         this.createEventForm.controls.duration.value
       );
-      console.log("Event: " + event.category);
+      console.log('Event: ' + event.category);
       this.createEvent(event);
       this.clearForm();
     } else {
@@ -64,6 +65,8 @@ export class CreateEventComponent implements OnInit {
     this.eventService.createEvent(event).subscribe(
       (retEvent: GlobalEvent) => {
         this.event = retEvent;
+        this.success = true;
+        console.log(this.success);
 
         // this.loadCreatedEvent();
       },
@@ -110,6 +113,10 @@ export class CreateEventComponent implements OnInit {
 
   vanishError() {
     this.error = false;
+  }
+
+  vanishSuccess() {
+    this.success = false;
   }
 
   private clearForm() {

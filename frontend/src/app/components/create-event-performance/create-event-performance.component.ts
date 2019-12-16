@@ -20,6 +20,7 @@ export class CreateEventPerformanceComponent implements OnInit {
   createEventPerformanceForm: FormGroup;
   eventPerformance: EventPerformance;
   error: boolean = false;
+  success: boolean = false;
   private eventPerformances: EventPerformance[];
   rooms: Room[];
   events: GlobalEvent[];
@@ -81,7 +82,9 @@ export class CreateEventPerformanceComponent implements OnInit {
 
   public createEventPerformance(eventPerformance: EventPerformance) {
     this.eventPerformanceService.createEventPerformance(eventPerformance).subscribe(
-      () => {
+      (retEventPerformance: EventPerformance) => {
+        this.eventPerformance = retEventPerformance;
+        this.success = true;
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -140,6 +143,10 @@ export class CreateEventPerformanceComponent implements OnInit {
 
   vanishError() {
     this.error = false;
+  }
+
+  vanishSuccess() {
+    this.success = false;
   }
 
   private clearForm() {

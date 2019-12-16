@@ -4,7 +4,12 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
+<div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Successfully created event-performance!</strong>
+  <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
 <div class="pt-5">
   <div class="row">
@@ -17,7 +22,7 @@
         </div>
 
         <div class="card-body">
-          <form class="form" [formGroup]="createEventPerformanceForm" (ngSubmit)="addPerformanceEvent()">
+          <form class="form" [formGroup]="createEventPerformanceForm" (ngSubmit)="addEventPerformance()">
 
             <div class="form-group">
               <select name="event" formControlName="event" class="form-control" id="event"
@@ -32,7 +37,7 @@
                 <option *ngFor="let r of rooms" [ngValue]="r">{{r.name}}</option>
               </select>
             </div>
-            
+
             <div class="form-group">
                   <input type="date" name="date" formControlName="date" class="form-control" id= "date" placeholder="Date">
                   <div *ngIf="submitted && createEventPerformanceForm.controls.date.errors" class="error">
@@ -59,6 +64,6 @@
       </div>
 
     </div>
-     
-  
+
+
 </div>

@@ -4,7 +4,12 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
+<div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Successfully created event!</strong> {{ event.title }}
+  <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
 <div class="pt-5">
   <div class="row">
@@ -30,12 +35,12 @@
             </div>
 
             <div class="form-group">
-              <select name="duration" formControlName="duration" class="form-control" id="category"
+              <select name="category" formControlName="category" class="form-control" id="category"
                 placeholder="Category">
                 <option value="" hidden>Category</option>
-                <option value="Concert">CONCERT</option>
-                <option value="Film">FILM</option>
-                <option value="Theater">THEATER</option>
+                <option value="CONCERT">CONCERT</option>
+                <option value="FILM">FILM</option>
+                <option value="THEATER">THEATER</option>
               </select>
             </div>
 
