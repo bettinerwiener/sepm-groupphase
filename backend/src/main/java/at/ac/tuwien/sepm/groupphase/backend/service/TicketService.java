@@ -39,7 +39,18 @@ public interface TicketService {
      */
     List<Ticket> findByPerformanceId(Long performanceId);
 
+    /**
+     * Gets a ticket by its id
+     * @param id of the ticket to be returned
+     * @return the ticket with the specified id
+     */
     Ticket findById(Long id);
 
+    /**
+     * Gets all tickets for a performance
+     * @param id for which all tickets shall be retrieved
+     * @return a list of tickets retrieved for the performance specified
+     * @throws NotFoundException
+     */
     List<Ticket> findByPerformance(Long id) throws NotFoundException;
 }

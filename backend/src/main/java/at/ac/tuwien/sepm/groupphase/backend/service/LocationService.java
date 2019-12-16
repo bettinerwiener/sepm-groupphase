@@ -22,5 +22,11 @@ public interface LocationService {
      */
     public List<Location> getAll() throws NotFoundException;
 
+    /**
+     * Creates a location entry
+     * @param location for which a location entry shall be created
+     * @return the location for which an entry has been created
+     * @throws NotCreatedException in case the location could not be persisted
+     */
     public Location create(Location location) throws NotCreatedException;
 }
