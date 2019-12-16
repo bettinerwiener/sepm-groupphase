@@ -28,32 +28,39 @@
 
 .blue {
     background-color: blue;
+    z-index: 10;
 }
 
 .red {
     background-color: red;
+    z-index: 10;
 }
 
 .orange {
     background-color: orange;
+    z-index: 10;
 }
 
 .yellow {
     background-color: #ffee00;
+    z-index: 10;
 }
 
 .aqua {
     background-color: aqua;
+    z-index: 10;
+}
+
+
+.selected {
+    background-color: greenyellow;
+    z-index: 10;
 }
 
 .grey {
     background-color: grey;
+    z-index: 50;
 }
-
-.selected {
-    background-color: greenyellow;
-}
-
 
 
 

@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
-import { SeatplanObject } from '../dtos/seatplan-object';
-import { Time } from '@angular/common';
 import { Ticket } from '../dtos/ticket';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Globals } from '../global/globals';
 import { EventObject } from '../dtos/event-object';
 import { EventPerformance } from '../dtos/event-performance';
-import { Seat } from '../dtos/seat';
 
 @Injectable({
   providedIn: 'root'
