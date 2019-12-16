@@ -41,7 +41,7 @@ export class SearchAreaComponent implements OnInit {
 
     this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
       (events: GlobalEvent[]) => {
-        this.searchedMovies.emit(events);
+        this.searchedEvents.emit(events);
         if ( this.category === 'theatres') {
           this.searchedTheatres.emit(events);
         }
