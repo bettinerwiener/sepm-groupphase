@@ -64,7 +64,6 @@ public class EventEndpoint {
         return eventDtos;
     }
 
-    @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})

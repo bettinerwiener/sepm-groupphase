@@ -37,7 +37,6 @@ public class PerformanceEndpoint {
         this.roomMapper = roomMapper;
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
