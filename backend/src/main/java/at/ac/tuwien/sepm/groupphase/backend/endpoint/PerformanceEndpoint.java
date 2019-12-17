@@ -37,6 +37,7 @@ public class PerformanceEndpoint {
         this.roomMapper = roomMapper;
     }
 
+    @CrossOrigin(origins="*")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
