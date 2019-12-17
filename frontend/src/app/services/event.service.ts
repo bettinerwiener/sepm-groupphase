@@ -9,7 +9,7 @@ import {Globals} from '../global/globals';
 })
 export class EventService {
 
-  private eventBaseUri: string = this.globals.backendUri + '/events';
+  eventBaseUri: string = this.globals.backendUri + '/events';
   private toptenBaseUri: string = this.eventBaseUri + '/topten';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
