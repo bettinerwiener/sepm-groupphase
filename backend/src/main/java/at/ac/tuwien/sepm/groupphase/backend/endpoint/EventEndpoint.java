@@ -35,6 +35,7 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
@@ -72,6 +73,7 @@ public class EventEndpoint {
         return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
     }
 
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/topten")
     @ApiOperation(value = "Get top ten events", authorizations = {@Authorization(value = "apiKey")})
@@ -81,6 +83,7 @@ public class EventEndpoint {
         return eventDtos;
     }
 
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     @ApiOperation(value = "Get event by id", authorizations = {@Authorization(value = "apiKey")})
