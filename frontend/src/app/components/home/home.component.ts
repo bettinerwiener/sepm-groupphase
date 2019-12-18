@@ -27,40 +27,6 @@ export class HomeComponent implements OnInit {
     this.events = events;
   }
 
-  getFirstPerformance(event: GlobalEvent): Date {
-    const firstPerformanceDate: Date = null;
-    this.ticketService.getPerformancesByEventId(event.id).subscribe(
-      (retPerformances: EventPerformance[]) => {
-        retPerformances.sort(
-          (a: EventPerformance, b: EventPerformance) => {
-            return a.date.getDate() - b.date.getDate();
-          }
-        );
-        this.firstPerformanceDate = retPerformances[0].date;
-      },
-      (error) => {
-        this.defaultServiceErrorHandling(error);
-      }
-    );
-    return firstPerformanceDate;
-  }
-
-  setLastPerformance(event: GlobalEvent): void {
-    this.ticketService.getPerformancesByEventId(event.id).subscribe(
-      (retPerformances: EventPerformance[]) => {
-        retPerformances.sort(
-          (a: EventPerformance, b: EventPerformance) => {
-            return a.date.getDate() - b.date.getDate();
-          }
-        );
-        this.lastPerformanceDate = retPerformances[retPerformances.length - 1].date;
-      },
-      (error) => {
-        this.defaultServiceErrorHandling(error);
-      }
-    );
-  }
-
   private defaultServiceErrorHandling(error: any) {
     console.log(error);
     this.error = true;

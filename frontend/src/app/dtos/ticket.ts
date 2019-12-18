@@ -6,8 +6,8 @@ import { EventObject } from './event-object';
 import { EventPerformance } from './event-performance';
 
 export class Ticket {
-    public performance:EventPerformance;
-    public selected:boolean = false;
+    public performance: EventPerformance;
+    public selected: boolean = false;
 
     constructor(
         public id: number,
@@ -17,8 +17,6 @@ export class Ticket {
         public status: string,
         public price: number,
         public location: string,
-        public time: Time,) {
-            
-            
+        public time: Time) {
     }
 }
