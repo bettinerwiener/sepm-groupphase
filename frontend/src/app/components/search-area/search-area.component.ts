@@ -23,6 +23,35 @@ export class SearchAreaComponent implements OnInit {
     private searchService: SearchService) { }
 
   ngOnInit() {
+    this.initGetEventForCategory();
+  }
+
+  initGetEventForCategory() {
+    let category: string = this.category;
+    if (this.category === 'films') {
+        category = 'FILM';
+      } else if (this.category === 'concerts') {
+        category = 'CONCERT';
+      } else if (this.category === 'theatres') {
+        category = 'THEATER';
+      }
+    this.searchService.loadEvent(null, category, null, null, null, null, null, null).subscribe(
+      (events: GlobalEvent[]) => {
+        this.searchedEvents.emit(events);
+        if ( category === 'THEATER') {
+          this.searchedTheatres.emit(events);
+        }
+        if ( category === 'FILM') {
+          this.searchedFilms.emit(events);
+        }
+        if (category === 'CONCERT') {
+          this.searchedConcerts.emit(events);
+        }
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
   public getEvent(
@@ -34,23 +63,24 @@ export class SearchAreaComponent implements OnInit {
     eventLocation: EventLocation,
     artist: Artist) {
       console.log(searchTerm);
-      if (this.category === 'films') {
-        this.category = 'FILM';
-      } else if (this.category === 'concerts') {
-        this.category = 'CONCERT';
-      } else if (this.category === 'theatres') {
-        this.category = 'THEATER';
+      let category: string = this.category;
+      if (category === 'films') {
+        category = 'FILM';
+      } else if (category === 'concerts') {
+        category = 'CONCERT';
+      } else if (category === 'theatres') {
+        category = 'THEATER';
       }
-    this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
+    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
-        if ( this.category === 'THEATER') {
+        if ( category === 'THEATER') {
           this.searchedTheatres.emit(events);
         }
-        if ( this.category === 'FILM') {
+        if ( category === 'FILM') {
           this.searchedFilms.emit(events);
         }
-        if (this.category === 'CONCERT') {
+        if (category === 'CONCERT') {
           this.searchedConcerts.emit(events);
         }
       },
