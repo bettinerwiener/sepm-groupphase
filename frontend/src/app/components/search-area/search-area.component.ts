@@ -61,7 +61,6 @@ export class SearchAreaComponent implements OnInit {
     duration: number,
     eventLocation: EventLocation,
     artist: Artist) {
-      console.log(searchTerm);
       let category: string = this.category;
       if (category === 'films') {
         category = 'FILM';

@@ -27,6 +27,7 @@ export class EventListItemComponent implements OnInit {
   private sortedPerformanceDates: EventPerformance[];
   firstPerformanceDate: string;
   lastPerformanceDate: string;
+  lowestPrice: number;
   error: boolean = false;
   errorMessage: string = 'There went something wrong while displaying these events';
 
@@ -34,6 +35,7 @@ export class EventListItemComponent implements OnInit {
 
   ngOnInit() {
     this.getFirstAndLastPerformance(this.id);
+    this.getLowestPrice(this.id);
   }
 
   getId(id: number) {
@@ -63,19 +65,39 @@ export class EventListItemComponent implements OnInit {
   }
 
   getLowestPrice(id: number) {
+    let ticketPrices: number[];
     this.ticketService.getPerformancesByEventId(id).subscribe(
       (retPerformances: EventPerformance[]) => {
-        retPerformances.sort(
-          (a: EventPerformance, b: EventPerformance) => {
-            return null;
-          }
+        retPerformances.forEach( function (retPerformance) {
+          this.ticketService.getTicketsByPerformanceId(retPerformance.id).subscribe(
+            (retTickets: Ticket[]) => {
+              console.log(retTickets);
+              retTickets.forEach( function (retTicketPrice) {
+                ticketPrices.push(retTicketPrice[0]);
+              }
+              );
+            }
+          );
+        }
         );
       }
     );
+    console.log(ticketPrices);
+    ticketPrices.sort(
+      (a: number, b: number) => {
+        return a - b;
+      }
+    );
+    this.lowestPrice = ticketPrices[0];
   }
 
-  private getLowestPricePerPerformance(performance: EventPerformance){
-    const tickets = performance.tickets;
+
+  private sortTickets(a, b) {
+    if ( a[6] === b[6] ) {
+      return 0;
+    } else {
+      return (a[6] < b[6]) ? -1 : 1;
+    }
   }
 
   private defaultServiceErrorHandling(error: any) {
