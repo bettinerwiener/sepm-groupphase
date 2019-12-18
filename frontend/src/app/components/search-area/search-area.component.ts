@@ -1,11 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
 import { SearchService } from 'src/app/services/search.service';
 import { EventLocation } from 'src/app/dtos/event-location';
 import { Artist } from 'src/app/dtos/artist';
-import { ConcertComponent } from '../concert/concert.component';
 import { GlobalEvent } from 'src/app/dtos/global-event';
-import { MoviesComponent } from '../movies/movies.component';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -18,9 +15,8 @@ export class SearchAreaComponent implements OnInit {
   @Input() category: string;
   error = false;
   @Output() searchedEvents = new EventEmitter<GlobalEvent[]>();
-  @Output() searchedMovies = new EventEmitter<GlobalEvent[]>();
+  @Output() searchedFilms = new EventEmitter<GlobalEvent[]>();
   @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
-  @Output() searchedCabarets = new EventEmitter<GlobalEvent[]>();
   @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
   errorMessage = 'This is a useless Errormessage';
   constructor(
@@ -38,20 +34,23 @@ export class SearchAreaComponent implements OnInit {
     eventLocation: EventLocation,
     artist: Artist) {
       console.log(searchTerm);
-
+      if (this.category === 'films') {
+        this.category = 'FILM';
+      } else if (this.category === 'concerts') {
+        this.category = 'CONCERT';
+      } else if (this.category === 'theatres') {
+        this.category = 'THEATER';
+      }
     this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
-        if ( this.category === 'theatres') {
+        if ( this.category === 'THEATER') {
           this.searchedTheatres.emit(events);
         }
-        if ( this.category === 'movies') {
-          this.searchedMovies.emit(events);
+        if ( this.category === 'FILM') {
+          this.searchedFilms.emit(events);
         }
-        if (this.category === 'cabarets') {
-          this.searchedCabarets.emit(events);
-        }
-        if (this.category === 'concerts') {
+        if (this.category === 'CONCERT') {
           this.searchedConcerts.emit(events);
         }
       },
