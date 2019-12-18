@@ -51,24 +51,22 @@ public class SimpleEventService implements EventService {
         }
     }
 
-    public List<Event> getAll() throws NotFoundException {
+    public List<Event> getAll() {
         LOGGER.info("EventService: getting all events ...");
         try {
             List<Event> events = this.eventRepository.findAll();
             if (events != null || !events.isEmpty()) {
                 return events;
             } else {
-                events = new ArrayList<>();
-                return events;
+                return new ArrayList<>();
             }
         } catch (DataAccessException dae) {
             LOGGER.error("EventService: no event found: " + dae.getMessage());
-            throw new NotFoundException(String.format("No event found: %s",
-                dae.getMessage()));
+            return new ArrayList<>();
         }
     }
 
-    public List<Event> getTopEvents() throws NotFoundException {
+    public List<Event> getTopEvents() {
         LOGGER.info("EventService: getting top events ...");
         try {
             List<Event> top10Events = new ArrayList<>(10);
@@ -83,7 +81,7 @@ public class SimpleEventService implements EventService {
             return top10Events;
         } catch (DataAccessException dae) {
             LOGGER.error("Could not fetch top ten events: {}", dae.getMessage());
-            throw new NotFoundException(String.format("Could not fetch top ten events: %s", dae.getMessage()));
+            return new ArrayList<>();
         }
     }
 
@@ -91,7 +89,7 @@ public class SimpleEventService implements EventService {
     public List<Event> getFiltered(String searchTerm, String category,
                                    LocalDate startDate, LocalDate endDate,
                                    Double price, Double duration,
-                                   Long location, Long artist) throws NotFoundException {
+                                   Long location, Long artist) {
         try {
             List<Event> events = this.eventRepository.findAllByCriteria(searchTerm,
                 category, startDate, endDate, price, duration, location, artist);
@@ -99,13 +97,11 @@ public class SimpleEventService implements EventService {
                 return events;
             }
             else {
-                events = new ArrayList<>();
-                return events;
+                return new ArrayList<>();
             }
         } catch (DataAccessException dae) {
             LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
-            throw new NotFoundException(String.format("No events found matching the criteria: %s",
-                dae.getMessage()));
+            return new ArrayList<>();
         }
     }
 

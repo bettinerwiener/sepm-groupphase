@@ -23,16 +23,14 @@ public interface EventService {
      * Get all events in the database
      *
      * @return all events found in the database
-     * @throws NotFoundException in case something went wrong when accessing the database
      */
-    List<Event> getAll() throws NotFoundException;
+    List<Event> getAll();
 
     /**
      * Gets top ten events
      * @return a list with at most ten events, where the most tickets have been bought.
-     * @throws NotFoundException in case something goes wrong while accessing the data.
      */
-    List<Event> getTopEvents() throws NotFoundException;
+    List<Event> getTopEvents();
 
     /**
      * Filters all events according to the search parameters
@@ -45,13 +43,11 @@ public interface EventService {
      * @param location where the performance should take place
      * @param artist who is responsible for the event or created the event
      * @return a list of events meeting all the search criteria
-     * @throws NotFoundException in case no events matching the criteria could be found or
-     *                           something went wrong while accessing the database
      */
     List<Event> getFiltered(String searchTerm, String category,
                             LocalDate startDate, LocalDate endDate,
                             Double price, Double duration,
-                            Long location, Long artist) throws NotFoundException;
+                            Long location, Long artist);
 
     /**
      * Gets an event with the specified id
