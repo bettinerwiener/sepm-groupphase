@@ -31,6 +31,7 @@ export class EventListItemComponent implements OnInit {
       () => window.location.reload());
   }
 
+  
 
 
 }
