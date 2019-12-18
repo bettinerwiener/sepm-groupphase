@@ -22,7 +22,6 @@ export class EventListItemComponent implements OnInit {
   @Input() id: number;
   @Input() title: string;
   @Input() description: string;
-  // @Input() date: Date;
   @Input() location: string;
   @Input() price: number;
   private sortedPerformanceDates: EventPerformance[];
@@ -65,14 +64,14 @@ export class EventListItemComponent implements OnInit {
 
   getLowestPrice(id: number) {
     this.ticketService.getPerformancesByEventId(id).subscribe(
-      (retPerformances:EventPerformance[]) => {
+      (retPerformances: EventPerformance[]) => {
         retPerformances.sort(
           (a: EventPerformance, b: EventPerformance) => {
             return null;
           }
-        )
+        );
       }
-    )
+    );
   }
 
   private getLowestPricePerPerformance(performance: EventPerformance){

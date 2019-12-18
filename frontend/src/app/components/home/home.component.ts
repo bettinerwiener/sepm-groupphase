@@ -15,8 +15,6 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private ticketService: TicketService) { }
 
   events: GlobalEvent[];
-  @Input() firstPerformanceDate: Date;
-  @Input() lastPerformanceDate: Date;
   error: boolean = false;
   errorMessage = 'This is a useless Errormessage';
 
