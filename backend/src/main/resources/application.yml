@@ -33,6 +33,7 @@ security:
     # Browser requests
     - /
     - /api/v1/events
+    - /api/v1/events/topten
     - /api/v1/performances
     - /api/v1/user/register
     - /favicon.ico
