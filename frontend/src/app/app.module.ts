@@ -14,8 +14,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import { ConcertComponent } from './components/concert/concert.component';
 import { TheatreComponent } from './components/theatre/theatre.component';
-import { CabaretComponent } from './components/cabaret/cabaret.component';
-import { MoviesComponent } from './components/movies/movies.component';
+import { FilmComponent } from './components/film/film.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SearchAreaComponent } from './components/search-area/search-area.component';
 import { LocationsComponent } from './components/locations/locations.component';
@@ -43,13 +42,11 @@ import { CreateRoomComponent } from './components/create-room/create-room.compon
     HomeComponent,
     LoginComponent,
     MessageComponent,
-    MoviesComponent,
+    FilmComponent,
     ConcertComponent,
     TheatreComponent,
-    CabaretComponent,
     RegisterComponent,
     SearchAreaComponent,
-    MoviesComponent,
     LocationsComponent,
     ProfileComponent,
     OrdersComponent,

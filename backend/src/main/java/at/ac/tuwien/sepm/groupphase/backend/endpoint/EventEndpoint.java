@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
@@ -63,7 +65,7 @@ public class EventEndpoint {
         return eventDtos;
     }
 
-    //@Secured("ROLE_ADMIN")
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
@@ -71,6 +73,7 @@ public class EventEndpoint {
         return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
     }
 
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/topten")
     @ApiOperation(value = "Get top ten events", authorizations = {@Authorization(value = "apiKey")})
@@ -80,6 +83,7 @@ public class EventEndpoint {
         return eventDtos;
     }
 
+    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     @ApiOperation(value = "Get event by id", authorizations = {@Authorization(value = "apiKey")})

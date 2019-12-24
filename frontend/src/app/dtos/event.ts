@@ -8,7 +8,7 @@ export class Event {
       public category: string,
       public duration: number,
       public employee: number,
-      public artist: string,) {
+      public artist: string) {
     }
-  }
+}
 
