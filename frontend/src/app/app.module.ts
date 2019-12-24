@@ -30,8 +30,10 @@ import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-u
 
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { EventItemComponent } from './components/event-item/event-item.component';
+import { CreateLocationComponent} from './components/create-location/create-location.component';
 import { SeatplanComponent } from './components/seatplan/seatplan.component';
 import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
+import { CreateRoomComponent } from './components/create-room/create-room.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { CreateEventPerformanceComponent } from './components/create-event-perfo
     CreateEventComponent,
     EventItemComponent,
     SeatplanComponent,
-    CreateEventPerformanceComponent
+    CreateEventPerformanceComponent,
+    CreateLocationComponent,
+    CreateRoomComponent
   ],
   imports: [
     BrowserModule,
