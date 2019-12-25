@@ -26,12 +26,9 @@ export class EventListItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  getId(id: number){
+  getId(id: number) {
     this.router.navigate(['/event/', id]).then(
       () => window.location.reload());
   }
-
-  
-
 
 }
