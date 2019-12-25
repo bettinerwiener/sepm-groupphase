@@ -20,7 +20,7 @@ export class SearchAreaComponent implements OnInit {
   @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
   @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
   locations: EventLocation[];
-  errorMessage = 'This is a useless Errormessage';
+  errorMessage = 'There went something wrong while searching for events...';
   constructor(
     private searchService: SearchService,
     private locationService: LocationService) { }
@@ -66,10 +66,6 @@ export class SearchAreaComponent implements OnInit {
     location: EventLocation,
     artist: Artist) {
       console.log(searchTerm);
-<<<<<<< HEAD
-
-    this.searchService.loadEvent(searchTerm, this.category, startDate, endDate, price, duration, location, artist).subscribe(
-=======
       let category: string = this.category;
       if (category === 'films') {
         category = 'FILM';
@@ -78,8 +74,7 @@ export class SearchAreaComponent implements OnInit {
       } else if (category === 'theatres') {
         category = 'THEATER';
       }
-    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
->>>>>>> bc8296149f5821c11e783115612eb2879d910b81
+    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {
