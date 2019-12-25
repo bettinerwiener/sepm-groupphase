@@ -43,7 +43,7 @@ const routes: Routes = [
   {path: 'create-event', component: CreateEventComponent},
   {path: 'create-event-performance', component: CreateEventPerformanceComponent},
   {path: 'create-location', component: CreateLocationComponent},
-  {path: 'create-room', component: CreateRoomComponent}
+  {path: 'create-room', component: CreateRoomComponent},
 ];
 
 @NgModule({

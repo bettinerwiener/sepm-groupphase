@@ -1,0 +1,23 @@
+
+<div class="form-group">
+    <select [(ngModel)]="selectedSection" name="section" class="form-control" id="section" placeholder="Choose section" [ngModelOptions]="{standalone: true}">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+        <option>D</option>
+        <option>E</option>
+    </select>
+</div>
+<div class="stage" [style.width]="stagewidth">Stage</div>
+<div class="seatplan">
+    <div *ngFor="let row of seatplan" class="singleRow">
+        <button (click)="select(seat)" *ngFor="let seat of row"
+            [ngClass]="{'btn': true, 'grey': (seat.section.letter == null), 'seat': true,
+            'blue': (seat.section.letter === 'A'), 'red': (seat.section.letter === 'B'), 'orange': (seat.section.letter === 'C'), 'yellow': (seat.section.letter === 'D'), 'aqua': (seat.section.letter === 'E')}"
+            data-toggle="button" aria-pressed="false" autocomplete="off">
+        </button>
+    </div>
+</div>
+
+<button type="button" (click)="submit()" class="btn btn-primary btn-sm float-right"
+style="margin-left: 1%;">Submit</button>

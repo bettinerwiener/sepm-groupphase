@@ -40,15 +40,42 @@
                 <option *ngFor="let l of locations" [ngValue]="l">{{l.name}}</option>
               </select>
             </div>
-
-            <button type="button" (click)="addRoom()" class="btn btn-success float-right">Create Room</button>
-
           </form>
-        </div>
 
+          <form class="form" [formGroup]="createSeatplanForm">
+
+            <div class="form-group" style="display: inline-flex;">
+              <input type="number" name="rowNumber" formControlName="rowNumber" class="form-control" id="rowNumber"
+                aria-describedby="titleHelp" placeholder="number of rows" style="max-width: 35%;">
+              <!--<div *ngIf="submitted && createRoomForm.controls.name.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createRoomForm.controls.name.errors.required">Name is
+                  required!
+                </small>
+              </div>-->
+
+              <input type="number" name="seatsPerRow" formControlName="seatsPerRow" class="form-control"
+                id="seatsPerRow" aria-describedby="titleHelp" placeholder="number of seats per rows"
+                style="max-width: 55%; margin-left: 1%;">
+              <!--<div *ngIf="submitted && createRoomForm.controls.name.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createRoomForm.controls.name.errors.required">Name is
+                  required!
+                </small>
+              </div>-->
+
+              <button type="button" (click)="configure()" class="btn btn-success float-right"
+                style="margin-left: 1%;">Configure</button>
+            </div>
+          </form>
+
+          
+          <app-create-seatplan *ngIf="seatSelection" [seatplan]="seatplan" class="justify-content-center;"></app-create-seatplan>
+
+        </div>
+        
       </div>
+      <button type="button" (click)="addRoom()" class="btn btn-success float-right" style="margin-top: 5px">Create Room</button>
 
     </div>
 
 
-</div>
+  </div>

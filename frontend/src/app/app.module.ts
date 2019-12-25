@@ -33,6 +33,7 @@ import { CreateLocationComponent} from './components/create-location/create-loca
 import { SeatplanComponent } from './components/seatplan/seatplan.component';
 import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
 import { CreateRoomComponent } from './components/create-room/create-room.component';
+import { CreateSeatplanComponent } from './components/create-seatplan/create-seatplan.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { CreateRoomComponent } from './components/create-room/create-room.compon
     SeatplanComponent,
     CreateEventPerformanceComponent,
     CreateLocationComponent,
-    CreateRoomComponent
+    CreateRoomComponent,
+    CreateSeatplanComponent,
   ],
   imports: [
     BrowserModule,
