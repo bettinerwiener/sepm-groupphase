@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SimpleOrderService implements OrderService {
@@ -40,6 +41,14 @@ public class SimpleOrderService implements OrderService {
         } catch (NotFoundException nfe) {
             throw new NotFoundException(String.format("The orders could not be found"));
 
+        }
+    }
+
+    public Order findById(Long id) {
+        try {
+            return this.orderRepository.findById(id).get();
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(String.format("The orders could not be found"));
         }
     }
 

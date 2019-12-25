@@ -90,6 +90,7 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
       user_id BIGINT REFERENCES user(id),
+      order_date DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS ticket (

@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Order;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
-import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotSavedException;
@@ -36,6 +33,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.security.AccessControlException;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -45,58 +43,13 @@ public class SimplePdfService implements PdfService {
 
     private TicketService ticketService;
     private CustomUserDetailService userDetailsService;
+    private OrderService orderService;
 
-    public SimplePdfService(TicketService ticketService, CustomUserDetailService userDetailsService) {
+    public SimplePdfService(TicketService ticketService, CustomUserDetailService userDetailsService, OrderService orderService) {
         this.ticketService = ticketService;
         this.userDetailsService = userDetailsService;
+        this.orderService = orderService;
     }
-
-/**
-    @Override
-    public ByteArrayInputStream getTicketPdf(Long id, String email) throws NotFoundException {
-
-        Ticket ticket = ticketService.findById(id);
-        User user = userDetailsService.findApplicationUserByEmail(email);
-        if(ticket.getCustomerOrder().getUserId() != user.getId()) {
-            throw new NotFoundException("No Ticket with that id found that is owned by this user");
-        }
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-
-            PdfReader reader = new PdfReader("ticket_template.pdf");
-
-            reader.removeUsageRights();
-            PdfStamper stamper = new PdfStamper(reader, out);
-            stamper.setFormFlattening(true);
-            AcroFields form = stamper.getAcroFields();
-            form.setField("title", ticket.getPerformance().getEvent().getTitle());
-            form.setField("name", user.getFirstName() + " " + user.getLastName());
-
-            form.setField("date", ticket.getPerformance().getDate().toLocalDate().toString());
-            form.setField("location", ticket.getPerformance().getRoom().getName() + ", " + ticket.getPerformance().getRoom().getLocation().getName());
-            form.setField("seat", ticket.getSeat().getNumber() + ticket.getSeat().getRow());
-            form.setField("price", ticket.getPrice().toString());
-
-            BarcodeQRCode qrCode = new BarcodeQRCode(ticket.getId().toString(), 110, 110, null);
-            Image qrCodeImage = qrCode.getImage();
-            qrCodeImage.setAbsolutePosition(445,640);
-
-
-            stamper.getOverContent(1).addImage(qrCodeImage);
-
-
-            stamper.close();
-
-
-            reader.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return new ByteArrayInputStream(out.toByteArray());
-
-    }
-*/
 
     @Override
     public ByteArrayInputStream getTicketPdf(Long id, String email) throws NotFoundException {
@@ -120,10 +73,8 @@ public class SimplePdfService implements PdfService {
             placeText(contentStream, user.getFirstName() + " " + user.getLastName(), 73, 193, 15);
             placeText(contentStream,  Date.from( ticket.getPerformance().getDate().atZone(ZoneId.systemDefault()).toInstant()).toString(), 73, 121, 15);
             placeText(contentStream, ticket.getPerformance().getRoom().getLocation().getName()+ ", " + ticket.getPerformance().getRoom().getName(), 73, 55, 15);
-
             placeText(contentStream, ticket.getSeat().getNumber() + ticket.getSeat().getRow(), 440, 121, 15);
             placeText(contentStream, ticket.getPrice().toString() + "€", 440, 55, 15);
-
 
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(ticket.getId().toString(),BarcodeFormat.QR_CODE, 140, 140, null);
@@ -150,6 +101,83 @@ public class SimplePdfService implements PdfService {
 
     }
 
+
+    @Override
+    public ByteArrayInputStream getOrderInvoicePdf(Long id, String email) throws NotFoundException {
+
+        Order order = orderService.findById(id);
+        List<Ticket> tickets = ticketService.findTicketsByOrderId(order.getId());
+        User user = userDetailsService.findApplicationUserByEmail(email);
+
+        String companyName = "Ticketline GmbH";
+        String companyCity = "Wien 1230";
+        String companyStreet = "Breitenfurterstraße 380C/5/8";
+        String customerString = user.getFirstName() + " " + user.getLastName();
+        //Temporary
+        String date = "22.01.2019";
+        Float totalPrice = 0f;
+
+        System.out.println(order.getId());
+        if(order.getUserId() != user.getId()) {
+            throw new NotFoundException("No Ticket with that id found that is owned by this user");
+        }
+
+        PDDocument doc = new PDDocument();
+        PDPage page = new PDPage(PDRectangle.A4);
+        doc.addPage(page);
+
+        //ADD CHECK IF TICKET STATUS IS BOUGHT!
+        //ZEILENUMBRUCH BEI ZU BREITEM TITEL USW.?
+        try {
+
+            int counter = 0;
+            PDPageContentStream contentStream = new PDPageContentStream(doc, page);
+
+            placeText(contentStream, "Rechnung",  75, 725, 32);
+
+
+            placeText(contentStream, companyName, 410, 710 + 15*2, 11);
+            placeText(contentStream, companyStreet, 410, 710 + 15*1, 11);
+            placeText(contentStream, companyCity, 410, 710, 11);
+
+            for(Ticket ticket: tickets) {
+
+                EventPerformance performance = ticket.getPerformance();
+                Event event = performance.getEvent();
+                Seat seat = ticket.getSeat();
+                Float price = ticket.getPrice();
+                totalPrice += price;
+
+                placeText(contentStream, event.getTitle(), 75, 300 + counter*20, 11);
+
+                placeText(contentStream, performance.getRoom().getLocation().getName() + ", " + performance.getRoom().getName(), 195, 300 + counter*20, 11);
+
+                placeText(contentStream,"Section: " + seat.getSection().getLetter() + " Sitz: " + seat.getRow() + seat.getNumber(), 340, 300 + counter*20, 11);
+
+                placeText(contentStream, ticket.getPrice().toString()+"€", 495 ,300 + counter*20, 11);
+
+                counter++;
+            }
+
+
+
+            contentStream.close();
+
+        } catch (Exception e) {
+            log.error("Ticket pdf creation failed: {}", e.getMessage());
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try{
+            doc.save(out);
+        } catch (Exception e) {
+            log.error("Ticket pdf could not be saved: {}", e.getMessage());
+        }
+
+        return new ByteArrayInputStream(out.toByteArray());
+
+    }
+
     public void placeText(PDPageContentStream contentStream, String text, int x, int y, int size) {
         try {
             contentStream.beginText();
@@ -160,8 +188,6 @@ public class SimplePdfService implements PdfService {
         } catch (IOException e) {
             System.out.println(e);
         }
-
-
-
     }
+
 }
