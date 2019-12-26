@@ -1,12 +1,16 @@
-
 <div class="form-group">
-    <select [(ngModel)]="selectedSection" name="section" class="form-control" id="section" placeholder="Choose section" [ngModelOptions]="{standalone: true}">
+    <select [(ngModel)]="selectedSection" name="section" class="form-control" id="section" placeholder="Choose section"
+        [ngModelOptions]="{standalone: true}">
+        <option disabled selected>Please chose section</option>
         <option>A</option>
         <option>B</option>
         <option>C</option>
         <option>D</option>
         <option>E</option>
     </select>
+    <div *ngIf="selecting && selectedSection == undefined" class="error">
+        <small class="text-warning">Please choose section.</small>
+    </div>
 </div>
 <div class="stage" [style.width]="stagewidth">Stage</div>
 <div class="seatplan">
@@ -20,4 +24,4 @@
 </div>
 
 <button type="button" (click)="submit()" class="btn btn-primary btn-sm float-right"
-style="margin-left: 1%;">Submit</button>
+    style="margin-left: 1%;">Submit</button>

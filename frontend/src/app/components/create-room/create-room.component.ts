@@ -5,9 +5,7 @@ import { EventLocation } from 'src/app/dtos/event-location';
 import { RoomService } from 'src/app/services/room.service';
 import { LocationService } from 'src/app/services/location.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Ticket } from 'src/app/dtos/ticket';
 import { Seat } from 'src/app/dtos/seat';
-import { EventPerformance } from 'src/app/dtos/event-performance';
 import { Section } from 'src/app/dtos/section';
 
 @Component({
@@ -27,6 +25,9 @@ export class CreateRoomComponent implements OnInit {
   errorMessage: string = 'There was a problem creating this room.';
   seatSelection: boolean = false;
   seatplan: Array<Array<Seat>>;
+  seatplanUpdated: Array<Seat>;
+  configuring: boolean = false;
+  toFewSeats: boolean = false;
 
 
   constructor(
@@ -53,7 +54,12 @@ export class CreateRoomComponent implements OnInit {
   }
 
   addRoom() {
+    console.log(this.seatplanUpdated);    
     this.submitted = true;
+    if(!this.seatplanUpdated){
+      return;
+    }
+    
     if (this.createRoomForm.valid) {
       const room: Room = new Room(
         null,
@@ -77,6 +83,11 @@ export class CreateRoomComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
+
+    this.roomService.createSeats(this.seatplanUpdated).subscribe(
+      //()
+    );
+    
   }
 
   private getAllLocations() {
@@ -113,6 +124,7 @@ export class CreateRoomComponent implements OnInit {
   }
 
   configure() {
+    this.configuring = true;
     var rows:number;
     var seats:number;
     if (this.createSeatplanForm.valid) {
@@ -122,15 +134,11 @@ export class CreateRoomComponent implements OnInit {
       console.log('Invalid input');
     }
 
-    if(typeof rows != 'number' || typeof seats != 'number'){
-      console.log('Error: Unset parameters.');
-      return
-    }
-
-    if(rows < 1 || seats < 1){
-      console.log('To few rows / seats.');
+    if(rows < 1 || seats < 1 || typeof rows != 'number' || typeof seats != 'number'){
+      this.toFewSeats = true;
       return;
     }
+    this.toFewSeats = false;
 
     var seatplan:Array<Array<Seat>> = new Array<Array<Seat>>();
 
@@ -145,8 +153,19 @@ export class CreateRoomComponent implements OnInit {
     this.seatSelection = true;
   }
 
+  setSeats(seatplan: Array<Array<Seat>>){
+    this.seatplanUpdated = new Array<Seat>();
+    for (let row of seatplan){
+      for(let seat of row){
+        this.seatplanUpdated.push(seat)
+      }
+    }
+  }
+
   private clearForm() {
     this.createRoomForm.reset();
+    this.createSeatplanForm.reset();
+    this.configuring = false;
     this.submitted = false;
   }
 

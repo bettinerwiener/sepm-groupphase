@@ -4,6 +4,7 @@ import { Globals } from '../global/globals';
 import { Observable } from 'rxjs';
 import { GlobalEvent } from '../dtos/global-event';
 import { Room } from '../dtos/room';
+import { Seat } from '../dtos/seat';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,10 @@ export class RoomService {
   createRoom(room: Room): Observable<Room> {
     console.log('Create Room with name: ' + room.name);
     return this.httpClient.post<Room>(this.roomBaseUri, room);
+  }
+
+  createSeats(seats: Array<Seat>): Observable<Array<Seat>> {
+    console.log('Create seats for room.');
+    return this.httpClient.post<Array<Seat>>(this.roomBaseUri, seats);
   }
 }

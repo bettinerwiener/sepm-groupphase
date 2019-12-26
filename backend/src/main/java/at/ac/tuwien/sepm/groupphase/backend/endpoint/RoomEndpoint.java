@@ -41,4 +41,5 @@ public class RoomEndpoint {
             .create(roomMapper.roomDtoToRoom(roomDto)));
         return createdRoomDto;
     }
+
 }
