@@ -81,7 +81,7 @@ public class SimpleSeatService implements SeatService {
     @Override
     public Seat create(Seat seat) throws NotCreatedException {
         try {
-            Seat createdSeat = seatRepository.save(seat);
+            Seat createdSeat = seatRepository.saveAndFlush(seat);
             return createdSeat;
         } catch (DataAccessException dae) {
             log.error("Seat could not be created: %s", dae.getMessage());

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,10 +45,15 @@ public class SeatEndpoint {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create seats for a seat", authorizations = {@Authorization(value = "apiKey")})
-    public SeatDto createSeats(@RequestBody SeatDto seatDto) {
-        SeatDto createdSeatDto = seatMapper.seatToSeatDto(seatService
-            .create(seatMapper.seatDtoToSeat(seatDto)));
-        return createdSeatDto;
+    @ApiOperation(value = "Create various seats", authorizations = {@Authorization(value = "apiKey")})
+    public List<SeatDto> createSeats(@RequestBody List<SeatDto> seatDtoArray) {
+        SeatDto createdSeatDto;
+        List<SeatDto> seatDtos = new ArrayList<>();
+        for (SeatDto seatDto : seatDtoArray) {
+            createdSeatDto = seatMapper.seatToSeatDto(seatService
+                .create(seatMapper.seatDtoToSeat(seatDto)));
+            seatDtos.add(createdSeatDto);
+        }
+        return seatDtos;
     }
 }

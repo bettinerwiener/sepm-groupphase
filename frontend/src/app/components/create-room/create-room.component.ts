@@ -7,6 +7,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Seat } from 'src/app/dtos/seat';
 import { Section } from 'src/app/dtos/section';
+import { SeatService } from 'src/app/services/seat.service';
 
 @Component({
   selector: 'app-create-room',
@@ -33,6 +34,7 @@ export class CreateRoomComponent implements OnInit {
   constructor(
     private formbuilder: FormBuilder,
     private roomService: RoomService,
+    private seatService: SeatService,
     private authService: AuthService,
     private locationService: LocationService) {
     this.createRoomForm = this.formbuilder.group({
@@ -84,8 +86,13 @@ export class CreateRoomComponent implements OnInit {
       }
     );
 
-    this.roomService.createSeats(this.seatplanUpdated).subscribe(
-      //()
+    this.seatService.createSeats(this.seatplanUpdated).subscribe(
+      (seats: Array<Seat>) => {
+        this.seatplanUpdated = seats;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
     );
     
   }
