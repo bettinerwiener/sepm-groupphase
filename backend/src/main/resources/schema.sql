@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS news (
     entry       VARCHAR(255) NOT NULL,
     title       VARCHAR(50) NOT NULL,
     abstract    VARCHAR(100) NOT NULL,
-    image       VARCHAR(1024) NULL
+    image       VARCHAR(1024) NULL,
+    published_at DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS event (
