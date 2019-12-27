@@ -68,7 +68,7 @@
         </div>
       </div>
       <div *ngIf="submitted && !seatplanUpdated" class="error">
-        <small class="form-text text-warning">Please configure seatplan before submitting.</small>
+        <small class="form-text text-warning">Please configure seatplan before submitting. (Make sure that all seats are assigned to a sector)</small>
       </div>
       <button type="button" (click)="addRoom()" class="btn btn-success float-right" style="margin-top: 5px">Create
         Room

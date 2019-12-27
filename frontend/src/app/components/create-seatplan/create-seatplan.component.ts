@@ -11,6 +11,7 @@ export class CreateSeatplanComponent implements OnInit {
   seatForm: FormGroup;
   selectedSection: string;
   selecting: boolean = false;
+  notAssigned: boolean = false;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -39,25 +40,24 @@ export class CreateSeatplanComponent implements OnInit {
     this.selecting = true;
     if (this.selectedSection == "") {
       return;
-    }
-    
+    }    
 
     seat.section.letter = this.selectedSection;
-  }
 
-  submit():void {
     for (let rowUnit of this.seatplan) {
       for (let seatUnit of rowUnit) {
         if (seatUnit.section.letter == null) {
-          console.error("All seats must have to be assigned to a sector.");
+          this.notAssigned = true;
           return;
         }
       }
     }
+    this.notAssigned = false;
 
     this.seatEmitter.emit(this.seatplan);
-
   }
+
+e
 
 
 }

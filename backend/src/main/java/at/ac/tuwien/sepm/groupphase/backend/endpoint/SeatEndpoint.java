@@ -34,19 +34,20 @@ public class SeatEndpoint {
             .collect(Collectors.toList());
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create a seat", authorizations = {@Authorization(value = "apiKey")})
-    public SeatDto create(@RequestBody SeatDto seatDto) {
-        SeatDto createdSeatDto = seatMapper.seatToSeatDto(seatService
-            .create(seatMapper.seatDtoToSeat(seatDto)));
-        return createdSeatDto;
-    }
+    //@PostMapping
+    //@ResponseStatus(HttpStatus.CREATED)
+    //@ApiOperation(value = "Create a seat", authorizations = {@Authorization(value = "apiKey")})
+    //public SeatDto create(@RequestBody SeatDto seatDto) {
+    //    SeatDto createdSeatDto = seatMapper.seatToSeatDto(seatService
+    //        .create(seatMapper.seatDtoToSeat(seatDto)));
+    //    return createdSeatDto;
+    //}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create various seats", authorizations = {@Authorization(value = "apiKey")})
     public List<SeatDto> createSeats(@RequestBody List<SeatDto> seatDtoArray) {
+        System.out.println("seats are here");
         SeatDto createdSeatDto;
         List<SeatDto> seatDtos = new ArrayList<>();
         for (SeatDto seatDto : seatDtoArray) {

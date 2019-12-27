@@ -30,7 +30,7 @@ public interface SeatService {
      * @return a list of seats for the requested location
      * @throws NotFoundException in case there no seats in the requested location
      */
-    public List<Seat> findByRoom(Room room) throws NotFoundException;
+    //public List<Seat> findByRoom(Room room) throws NotFoundException;
 
     /**
      * Creates a seat

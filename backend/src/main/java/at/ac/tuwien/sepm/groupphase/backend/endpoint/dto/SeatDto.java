@@ -64,4 +64,14 @@ public class SeatDto extends BaseDto {
             return seatDto;
         }
     }
+
+    @Override
+    public String toString() {
+        return "SeatDto{" +
+            "id=" + id +
+            ", seatNumber=" + seatNumber +
+            ", rowLetter=" + rowLetter +
+            ", section=" + section +
+            '}';
+    }
 }

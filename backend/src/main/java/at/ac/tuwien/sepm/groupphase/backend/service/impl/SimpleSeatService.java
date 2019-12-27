@@ -57,7 +57,7 @@ public class SimpleSeatService implements SeatService {
     }
 
 
-
+/*
     @Override
     public List<Seat> findByRoom(Room room) throws NotFoundException {
         try {
@@ -76,7 +76,7 @@ public class SimpleSeatService implements SeatService {
             throw new NotFoundException(String.format("No seats for the requested room %d could be found: %s",
                 room.getName(), dae.getMessage()));
         }
-    }
+    }*/
 
     @Override
     public Seat create(Seat seat) throws NotCreatedException {
