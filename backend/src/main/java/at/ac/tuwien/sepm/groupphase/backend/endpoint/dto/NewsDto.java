@@ -19,25 +19,19 @@ public class NewsDto {
     private Long id;
 
     @NotNull
-    @Size(min=1, max=255)
     private String entry;
 
     @NotNull
-    @Size(min=1, max=50)
     private String title;
 
     @NotNull
-    @Size(min=1, max=100)
     private String shortDescription;
 
-    @NotNull
     private LocalDateTime publishedAt;
 
-    @Null
-    @Size(max=1024)
     private String image;
 
-    private static final class NewsDtoBuilder {
+    public static final class NewsDtoBuilder {
 
         private Long id;
         private String entry;
@@ -47,6 +41,10 @@ public class NewsDto {
         private LocalDateTime publishedAt;
 
         public NewsDtoBuilder() {};
+
+        public static NewsDto.NewsDtoBuilder aNewsDto() {
+            return new NewsDto.NewsDtoBuilder();
+        }
 
         public NewsDto.NewsDtoBuilder withId(Long id) {
             this.id = id;

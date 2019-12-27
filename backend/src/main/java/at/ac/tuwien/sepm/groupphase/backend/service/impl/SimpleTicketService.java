@@ -125,7 +125,7 @@ public class SimpleTicketService implements TicketService {
                 this.orderRepository.deleteById(id);
             }
 
-        }catch (DataAccessException dae) {
+        } catch (DataAccessException dae) {
             log.error("SimpleTicketService: ticket reservation could not be removed: " + dae.getMessage());
             throw new NotCreatedException(String.format("The ticket reservation could not be removed: ", dae.getMessage()));
         }

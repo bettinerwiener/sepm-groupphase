@@ -24,10 +24,10 @@ public class News {
     @Column(nullable = false, length = 100, name = "abstract")
     private String shortDescription;
 
-    @Column(nullable = false, name = "published_at")
+    @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
-    @Column(length = 1024)
+    @Column(nullable = true, length = 1024)
     private String image;
 
     @OneToMany(mappedBy = "news")

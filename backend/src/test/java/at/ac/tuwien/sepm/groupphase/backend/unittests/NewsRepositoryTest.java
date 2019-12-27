@@ -1,7 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
-import at.ac.tuwien.sepm.groupphase.backend.repository.LocationRepository;
+import at.ac.tuwien.sepm.groupphase.backend.basetest.NewsTestData;
+import at.ac.tuwien.sepm.groupphase.backend.entity.News;
+import at.ac.tuwien.sepm.groupphase.backend.repository.CustomerNewsRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,9 +17,10 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @ExtendWith(SpringExtension.class)
@@ -25,10 +28,13 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 // the entire application context
 @DataJpaTest
 @ActiveProfiles("test")
-public class LocationRepositoryTest {
+public class NewsRepositoryTest implements NewsTestData {
 
     @Autowired
-    LocationRepository locationRepository;
+    NewsRepository newsRepository;
+
+    @Autowired
+    CustomerNewsRepository customerNewsRepository;
 
     @Autowired
     PlatformTransactionManager txm;
@@ -51,33 +57,17 @@ public class LocationRepositoryTest {
     }
 
     @Test
-    public void findingLocationByIdReturnsLocation() {
-        Optional<Location> locationOptional = locationRepository.findById(1L);
-        assertAll(
-            () -> assertEquals(1, locationOptional.get().getId())
-        );
-    }
-
-    @Test
-    public void findingLocationByNonExistingIdReturnsNull() {
-        Optional<Location> locationOptional = locationRepository.findById(50L);
-        assertAll(
-            () -> assertFalse(locationOptional.isPresent())
-        );
-    }
-
-    @Test
-    public void creatingLocationReturnsLocation() {
-        Location location = new Location();
-        location.setName("Erwin Schrödinger");
-        location.setCity("Linz");
-        location.setStreet("Landstrasse 13");
-        location.setPostalCode(4020L);
-
-        Location createdLocation = locationRepository.save(location);
-        assertAll(
-            () -> assertEquals(location.getName(), createdLocation.getName()),
-            () -> assertEquals(location.getCity(), createdLocation.getCity())
+    public void creatingNewsReturnsNews() {
+        News news = new News();
+        news.setEntry("Luke is a wiser Jedi knight than his father.");
+        news.setTitle("Star Wars");
+        news.setShortDescription("A long time ago in a galaxy far, far away ...");
+        news.setPublishedAt(LocalDateTime.now());
+        News result = newsRepository.saveAndFlush(news);
+        assertAll (
+            () -> assertEquals(news.getTitle(), result.getTitle()),
+            () -> assertEquals(news.getShortDescription(), result.getShortDescription()),
+            () -> assertEquals(news.getEntry(), result.getEntry())
         );
     }
 }
