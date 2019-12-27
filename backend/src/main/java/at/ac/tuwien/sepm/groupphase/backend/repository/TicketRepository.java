@@ -24,12 +24,13 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     Ticket findFirstById (Long id);
 
     /**
-     * Find the User who reserved the Ticket .
+     * Find the User who reserved or bought the Ticket .
      * @param id Id of the ticket
-     * @return userId of the User who reserved the Ticket
+     * @return userId of the User who reserved or bought the Ticket
      */
     @Query(value = "SELECT user_id FROM ticket JOIN customer_order ON (customer_order.id=customer_order_id) WHERE ticket.id = :ticketId", nativeQuery = true)
-    Long findUserIdWhoReserved (@Param("ticketId") Long id);
+    Long findUserIdToTicket (@Param("ticketId") Long id);
+    
 
     /**
      * Get all reserved Tickets where Event starts in less than 30min.

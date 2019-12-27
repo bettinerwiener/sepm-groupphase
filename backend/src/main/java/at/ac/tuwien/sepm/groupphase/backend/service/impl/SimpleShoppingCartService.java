@@ -53,7 +53,7 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     if (ticketToBuy.getStatus() == Ticket.Status.BOUGHT) {
                         log.error("ticket bought already",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to buy is not available");
-                    }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdWhoReserved(ticketToBuy.getId())!= user.getId()){
+                    }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToBuy.getId())!= user.getId()){
                         log.error("ticket reserved by other user",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to reserve is reserved by another user");
                     }
@@ -98,10 +98,10 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     if (ticketToReserve.getStatus() == Ticket.Status.BOUGHT) {
                         log.error("ticket bought already",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to reserve is not available");
-                    }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdWhoReserved(ticketToReserve.getId())!= user.getId()){
+                    }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToReserve.getId())!= user.getId()){
                         log.error("ticket reserved by other user",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to reserve is reserved by another user");
-                    }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdWhoReserved(ticketToReserve.getId())== user.getId()){
+                    }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToReserve.getId())== user.getId()){
                         log.error("ticket reserved by same user already",ticket);
                         throw new TicketNotAvailableException("You already reserved one or more of the tickets");
                     }
@@ -129,5 +129,42 @@ public class SimpleShoppingCartService implements ShoppingCartService {
             throw new NotCreatedException(String.format("The tickets could not be reserved: ", dae.getMessage()));
         }
         return order;
+    }
+
+    @Override
+    public Ticket CancelTicket(User user, Ticket ticket)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
+        log.info("User " + user.getId() + " cancels Ticket " + ticket);
+
+
+        try{
+            if(this.ticketRepository.findFirstById(ticket.getId())!=null){
+
+                Ticket ticketToCancel = this.ticketRepository.getOne(ticket.getId());
+
+                if (ticketToCancel.getStatus() == Ticket.Status.BOUGHT && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
+                    log.error("ticket to cancel bought by another user",ticket);
+                    throw new TicketNotAvailableException("Can only cancel tickets you ordered");
+                }else if(ticketToCancel.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId())!= user.getId()){
+                    log.error("ticket to cancel reserved by other user",ticket);
+                    throw new TicketNotAvailableException("Can only cancel tickets you ordered");
+                }
+
+                ticketToCancel.setStatus(Ticket.Status.AVAILABLE);
+
+
+                ticketToCancel.setCustomerOrder(null);
+
+                ticketRepository.save(ticketToCancel);
+
+            } else {
+                log.error("ticket does not exist", ticket);
+                throw new NotFoundException("One of the tickets you want to cancel doesnt exist");
+            }
+
+        }catch (DataAccessException dae) {
+            LOGGER.error("ShoppingCartService: tickets could not be reserved: " + dae.getMessage());
+            throw new NotCreatedException(String.format("The tickets could not be reserved: ", dae.getMessage()));
+        }
+        return ticket;
     }
 }
