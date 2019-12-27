@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import io.swagger.models.auth.In;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,14 +26,14 @@ public class SeatDto extends BaseDto {
     private Character rowLetter;
 
     @NotNull
-    private Integer section;
+    private Section section;
 
     private static final class SeatDtoBuilder {
 
         private Long id;
         private Integer seatNumber;
         private Character rowLetter;
-        private Integer section;
+        private Section section;
 
         public SeatDtoBuilder() {};
 
@@ -49,7 +50,7 @@ public class SeatDto extends BaseDto {
             this.rowLetter = rowLetter;
             return this;
         }
-        public SeatDto.SeatDtoBuilder withSection(Integer section) {
+        public SeatDto.SeatDtoBuilder withSection(Section section) {
             this.section = section;
             return this;
         }
