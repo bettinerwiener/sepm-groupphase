@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Room;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
@@ -26,11 +27,11 @@ public interface SeatService {
 
     /**
      * Finds all seats in a certain location
-     * @param room for which seats shall be found
-     * @return a list of seats for the requested location
+     * @param section for which seats shall be found
+     * @return a list of seats for the requested section
      * @throws NotFoundException in case there no seats in the requested location
      */
-    //public List<Seat> findByRoom(Room room) throws NotFoundException;
+    public List<Seat> findBySection(Section section) throws NotFoundException;
 
     /**
      * Creates a seat

@@ -34,14 +34,7 @@ public class SeatEndpoint {
             .collect(Collectors.toList());
     }
 
-    //@PostMapping
-    //@ResponseStatus(HttpStatus.CREATED)
-    //@ApiOperation(value = "Create a seat", authorizations = {@Authorization(value = "apiKey")})
-    //public SeatDto create(@RequestBody SeatDto seatDto) {
-    //    SeatDto createdSeatDto = seatMapper.seatToSeatDto(seatService
-    //        .create(seatMapper.seatDtoToSeat(seatDto)));
-    //    return createdSeatDto;
-    //}
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

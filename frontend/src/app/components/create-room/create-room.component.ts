@@ -72,6 +72,7 @@ export class CreateRoomComponent implements OnInit {
         this.createRoomForm.controls.name.value,
         this.createRoomForm.controls.location.value
       );
+      this.seatSelection = false;
       this.createRoom(room);
       this.clearForm();
     } else {
@@ -84,24 +85,28 @@ export class CreateRoomComponent implements OnInit {
       (retRoom: Room) => {
         this.room = room;
         this.success = true;
+
+        this.assignSectionsToSeats(room);
+
+        this.sectionService.createSections(this.newSections).subscribe(newSections => {
+          this.newSections = newSections;
+          console.log(newSections);
+
+
+          this.seatService.createSeats(this.seatplanUpdated).subscribe((seats: Array<Seat>) => {
+            this.seatplanUpdated = seats;
+          },
+            error => {
+              this.defaultServiceErrorHandling(error);
+            });
+        });
       },
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
 
-    this.assignSectionsToSeats(room);
 
-    this.sectionService.createSections(this.newSections).subscribe(newSections => {
-      this.newSections = newSections;
-      
-      this.seatService.createSeats(this.seatplanUpdated).subscribe((seats: Array<Seat>) => {
-        this.seatplanUpdated = seats;
-      },
-      error => {
-      this.defaultServiceErrorHandling(error);
-      });
-    });
 
   }
 
@@ -188,22 +193,22 @@ export class CreateRoomComponent implements OnInit {
     this.submitted = false;
   }
 
-  private assignSectionsToSeats(room: Room):void {
+  private assignSectionsToSeats(room: Room): void {
     this.newSections = new Array<Section>();
 
     for (let letter of this.newSectionLetters) {
       this.newSections.push(new Section(null, letter, false, room));
     }
-    for(let seat of this.seatplanUpdated){
-      for(let section of this.newSections){
-        if(section.letter == seat.section.letter){
+    for (let seat of this.seatplanUpdated) {
+      for (let section of this.newSections) {
+        if (section.letter == seat.section.letter) {
           seat.section = section;
         }
       }
     }
 
     console.log(this.seatplanUpdated);
-    
+
   }
 
 }

@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Room;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
@@ -57,26 +58,23 @@ public class SimpleSeatService implements SeatService {
     }
 
 
-/*
+
     @Override
-    public List<Seat> findByRoom(Room room) throws NotFoundException {
+    public List<Seat> findBySection(Section section) throws NotFoundException {
         try {
-            List<Seat> seats = this.seatRepository.findByRoom(room);
+            List<Seat> seats = this.seatRepository.findBySection(section);
             if (seats != null && !seats.isEmpty()) {
                 return seats;
-            } else {
-                log.error("No seats for the requested room %d could be found",
-                    room.getName());
-                throw new NotFoundException(String.format("No seats for the requested room %d could be found",
-                    room.getName()));
+            }
+            else {
+                log.error(String.format("There are no seats for section %d in the database.", section.getId()));
+                throw new NotFoundException(String.format("No seats have been found for section %d", section.getId()));
             }
         } catch (DataAccessException dae) {
-            log.error("No seats for the requested room %d could be found: %s",
-                room.getName(), dae.getMessage());
-            throw new NotFoundException(String.format("No seats for the requested room %d could be found: %s",
-                room.getName(), dae.getMessage()));
+            log.error(String.format("No seats have been found for section %d: %s", section.getId(), dae.getMessage()));
+            throw new NotFoundException(String.format("No seats have been found for section %d: %s", section.getId(), dae.getMessage()));
         }
-    }*/
+    }
 
     @Override
     public Seat create(Seat seat) throws NotCreatedException {

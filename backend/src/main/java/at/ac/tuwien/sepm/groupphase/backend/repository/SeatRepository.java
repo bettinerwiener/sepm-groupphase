@@ -10,6 +10,4 @@ import java.util.List;
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
     List<Seat> findBySection(Section section);
-
-    //List<Seat> findByRoom(Room room);
 }
