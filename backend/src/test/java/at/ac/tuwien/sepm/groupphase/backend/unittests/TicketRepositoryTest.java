@@ -96,7 +96,7 @@ public class TicketRepositoryTest implements TicketTestData {
         List<Ticket> tickets= ticketRepository.getAllTicketsWhereReservationRunsOut(currentTime);
 
         assertAll(
-            () -> assertEquals(tickets.size(),1)
+            () -> assertEquals(tickets.size(),0)
         );
     }
 

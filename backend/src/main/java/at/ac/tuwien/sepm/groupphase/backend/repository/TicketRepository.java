@@ -42,6 +42,17 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
         "WHERE status = 'RESERVED' AND perf_date <= :currentTime", nativeQuery = true)
     List<Ticket> getAllTicketsWhereReservationRunsOut (@Param("currentTime") LocalDateTime currentTime);
 
+
+    /**
+     * Get the number of tickets in the Order with orderId
+     * @param orderId to get the ticketcount
+     * @return Number of Tickets in Order with orderId
+     */
+    @Query(value = "SELECT COUNT(*) FROM ticket JOIN customer_order ON (customer_order.id=ticket.customer_order_id) WHERE customer_order.id= :orderId", nativeQuery = true)
+    int getNumberOfTicketsInOrder (@Param("orderId") Long orderId);
+
+
+
     /*
     @Query(value = "SELECT ticket.customer_order_id FROM ticket JOIN customer_order ON( ticket.customer_order_id = customer_order.id) WHERE ticket.id = :ticketId", nativeQuery = true)
     Long findOrderIdforTicket (@Param("ticketId") Long id);*/

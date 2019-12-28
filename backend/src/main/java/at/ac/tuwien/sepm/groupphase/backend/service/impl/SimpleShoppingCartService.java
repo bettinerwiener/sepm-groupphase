@@ -147,14 +147,19 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                 }else if(ticketToCancel.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId())!= user.getId()){
                     log.error("ticket to cancel reserved by other user",ticket);
                     throw new TicketNotAvailableException("Can only cancel tickets you ordered");
+                }else if(ticketToCancel.getStatus()== Ticket.Status.AVAILABLE ){
+                    log.error("ticket to cancel not reserved or bought by anyone",ticket);
+                    throw new TicketNotAvailableException("Can only cancel tickets you ordered");
                 }
 
+                Long orderId = ticketToCancel.getCustomerOrder().getId();
+
                 ticketToCancel.setStatus(Ticket.Status.AVAILABLE);
-
-
                 ticketToCancel.setCustomerOrder(null);
-
-                ticketRepository.save(ticketToCancel);
+                this.ticketRepository.save(ticketToCancel);
+                if(this.ticketRepository.getNumberOfTicketsInOrder(orderId) == 0){
+                    this.orderRepository.deleteById(orderId);
+                }
 
             } else {
                 log.error("ticket does not exist", ticket);
@@ -162,9 +167,9 @@ public class SimpleShoppingCartService implements ShoppingCartService {
             }
 
         }catch (DataAccessException dae) {
-            LOGGER.error("ShoppingCartService: tickets could not be reserved: " + dae.getMessage());
-            throw new NotCreatedException(String.format("The tickets could not be reserved: ", dae.getMessage()));
+            LOGGER.error("ShoppingCartService: ticket could not be cancelled: " + dae.getMessage());
+            throw new NotCreatedException(String.format("Ticket could not be cancelled: ", dae.getMessage()));
         }
-        return ticket;
+        return this.ticketRepository.findFirstById(ticket.getId());
     }
 }
