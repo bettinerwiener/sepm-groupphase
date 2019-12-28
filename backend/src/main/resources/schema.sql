@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS employee_adds_news (
     employee    BIGINT REFERENCES user(id),
     news     BIGINT REFERENCES news(id),
     event    BIGINT REFERENCES event(id),
-    CONSTRAINT admin_adds_news PRIMARY KEY (employee, news, event)
+    CONSTRAINT employee_adds_news PRIMARY KEY (employee, news, event)
 );
 
 CREATE TABLE IF NOT EXISTS location (
