@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { GlobalEvent } from 'src/app/dtos/global-event';
+import { Router, ɵROUTER_PROVIDERS } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,7 +11,9 @@ import { Observable } from 'rxjs';
 })
 export class SliderComponent implements OnInit {
 
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService,
+    private router: Router) { }
   topTenEvents: GlobalEvent[];
   error: boolean = false;
   errorMessage: string = 'There was a problem loading the topTenEvents';
@@ -28,6 +31,11 @@ export class SliderComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
+  }
+
+  routeToEvent(id: number): void {
+    this.router.navigate(['/event/', id]).then(
+      () => window.location.reload());
   }
 
 

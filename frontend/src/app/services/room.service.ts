@@ -18,4 +18,9 @@ export class RoomService {
     console.log('Get all rooms');
     return this.httpClient.get<Room[]>(this.roomBaseUri);
   }
+
+  createRoom(room: Room): Observable<Room> {
+    console.log('Create Room with name: ' + room.name);
+    return this.httpClient.post<Room>(this.roomBaseUri, room);
+  }
 }

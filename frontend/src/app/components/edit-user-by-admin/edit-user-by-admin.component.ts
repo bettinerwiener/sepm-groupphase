@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {User} from "../../dtos/user";
+import {User} from '../../dtos/user';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {AdminService} from "../../services/admin.service";
+import {AdminService} from '../../services/admin.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
@@ -12,13 +11,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./edit-user-by-admin.component.scss']
 })
 export class EditUserByAdminComponent implements OnInit {
-  user: User = new User(0,'','','','',false,false);
+  user: User = new User(0, '', '', '', '', false, false);
   registerForm: FormGroup;
 
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private service: AdminService,
     private formBuilder: FormBuilder,
   ) {
@@ -34,7 +32,7 @@ export class EditUserByAdminComponent implements OnInit {
   ngOnInit() {
     this.getUser();
 
-    this.registerForm.controls['firstName'].setValue(this.user.firstName)
+    this.registerForm.controls['firstName'].setValue(this.user.firstName);
   }
 
   getUser(): void {
@@ -49,7 +47,7 @@ export class EditUserByAdminComponent implements OnInit {
   }
 
   updateUser(): void {
-    console.log("Update some User");
+    console.log('Update some User');
 
     this.user.firstName = this.registerForm.controls.firstName.value;
     this.user.lastName = this.registerForm.controls.lastName.value;

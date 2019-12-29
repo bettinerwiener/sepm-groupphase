@@ -26,8 +26,14 @@
           <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-event-performance" routerLinkActive="active">Create Event Performance</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/message" routerLinkActive="active">News</a>
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-location" routerLinkActive="active">Create Location</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-room" routerLinkActive="active">Create Room</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/message" routerLinkActive="active">News</a>
+        </li>-->
         <li class="nav-item">
           <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active">User-Service</a>
         </li>

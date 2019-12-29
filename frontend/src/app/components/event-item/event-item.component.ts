@@ -5,7 +5,6 @@ import { EventObject } from 'src/app/dtos/event-object';
 import { TicketService } from 'src/app/services/ticket.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
 import { Ticket } from 'src/app/dtos/ticket';
-import { Seat } from 'src/app/dtos/seat';
 
 @Component({
   selector: 'app-event-item',

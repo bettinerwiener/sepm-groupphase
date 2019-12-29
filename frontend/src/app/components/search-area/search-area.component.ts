@@ -4,6 +4,7 @@ import { EventLocation } from 'src/app/dtos/event-location';
 import { Artist } from 'src/app/dtos/artist';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { Subject } from 'rxjs';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'search-area',
@@ -18,11 +19,14 @@ export class SearchAreaComponent implements OnInit {
   @Output() searchedFilms = new EventEmitter<GlobalEvent[]>();
   @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
   @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
-  errorMessage = 'This is a useless Errormessage';
+  locations: EventLocation[];
+  errorMessage = 'There went something wrong while searching for events...';
   constructor(
-    private searchService: SearchService) { }
+    private searchService: SearchService,
+    private locationService: LocationService) { }
 
   ngOnInit() {
+    this.getAlllLocations();
     this.initGetEventForCategory();
   }
 
@@ -59,7 +63,7 @@ export class SearchAreaComponent implements OnInit {
     endDate: Date,
     price: number,
     duration: number,
-    eventLocation: EventLocation,
+    location: EventLocation,
     artist: Artist) {
       let category: string = this.category;
       if (category === 'films') {
@@ -69,7 +73,7 @@ export class SearchAreaComponent implements OnInit {
       } else if (category === 'theatres') {
         category = 'THEATER';
       }
-    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
+    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {
@@ -81,6 +85,17 @@ export class SearchAreaComponent implements OnInit {
         if (category === 'CONCERT') {
           this.searchedConcerts.emit(events);
         }
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAlllLocations() {
+    this.locationService.getLocation().subscribe(
+      (locations: EventLocation[]) => {
+        this.locations = locations;
       },
       error => {
         this.defaultServiceErrorHandling(error);
