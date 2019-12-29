@@ -50,6 +50,7 @@ public class RoomEndpoint {
     public RoomDto create(@RequestBody RoomDto roomDto) {
         RoomDto createdRoomDto = roomMapper.roomToRoomDto(roomService
             .create(roomMapper.roomDtoToRoom(roomDto)));
+        System.out.println(createdRoomDto);
         return createdRoomDto;
     }
 
@@ -60,9 +61,7 @@ public class RoomEndpoint {
         List<Section> sections = this.sectionService.findByRoom(this.roomService.findById(id));
         List<Seat> seats = new ArrayList<>();
         for(Section section : sections){
-            for(Seat seat : this.sectionService.findSeats(section)){
-                seats.add(seat);
-            }
+            seats.addAll(this.sectionService.findSeats(section));
         }
         return seats.stream().map(seat -> this.seatMapper.seatToSeatDto(seat))
             .collect(Collectors.toList());

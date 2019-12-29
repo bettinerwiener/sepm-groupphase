@@ -41,6 +41,7 @@ public class SeatEndpoint {
     @ApiOperation(value = "Create various seats", authorizations = {@Authorization(value = "apiKey")})
     public List<SeatDto> createSeats(@RequestBody List<SeatDto> seatDtoArray) {
         System.out.println("seats are here");
+        System.out.println(seatDtoArray);
         SeatDto createdSeatDto;
         List<SeatDto> seatDtos = new ArrayList<>();
         for (SeatDto seatDto : seatDtoArray) {

@@ -82,6 +82,8 @@ public class OrderEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "make new order", authorizations = {@Authorization(value = "apiKey")})
     public OrderDto newOrder(Authentication authentication,@RequestBody List<TicketDto> ticketDtos) {
+        System.out.println("Got here");
+        System.out.println(ticketDtos);
         User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
         return orderMapper.orderToOrderDto(shoppingCartService.BuyTickets(user,tickets));

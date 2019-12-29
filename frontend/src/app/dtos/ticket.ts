@@ -4,6 +4,8 @@ import { EventLocation } from './event-location';
 import { Seat } from './seat';
 import { EventObject } from './event-object';
 import { EventPerformance } from './event-performance';
+import { TicketDto } from './ticket-dto';
+import { Order } from './order';
 
 export class Ticket {
     public performance:EventPerformance;
@@ -17,8 +19,9 @@ export class Ticket {
         public status: string,
         public price: number,
         public location: string,
-        public time: Time,) {
-            
-            
+        public time: Time,) { }
+
+    toDto():TicketDto {
+        return new TicketDto(this.id, null, this.performance, this.seat, this.status, this.price);
     }
 }

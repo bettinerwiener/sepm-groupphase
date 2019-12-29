@@ -14,6 +14,8 @@ export class SeatService {
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
   createSeats(seats: Array<Seat>): Observable<Array<Seat>> {
+    console.log(seats);
+    
     console.log('Create seats for room.');
     return this.httpClient.post<Array<Seat>>(this.seatBaseUri, seats);
   }

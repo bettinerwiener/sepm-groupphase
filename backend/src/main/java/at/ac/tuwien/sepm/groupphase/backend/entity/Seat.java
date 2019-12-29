@@ -16,10 +16,10 @@ public class Seat {
     private Long id;
 
     @Column (name = "row_letter", nullable = false)
-    private String row;
+    private String rowLetter;
 
     @Column (name = "seat_number", nullable = false)
-    private int number;
+    private int seatNumber;
 
     @ManyToOne
     @JoinColumn(name = "section")

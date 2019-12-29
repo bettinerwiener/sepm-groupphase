@@ -20,7 +20,6 @@ export class RoomService {
 
   createRoom(room: Room): Observable<Room> {
     console.log('Create Room with name: ' + room.name);
-    console.log(room);
     return this.httpClient.post<Room>(this.roomBaseUri, room);
   }
 }

@@ -60,7 +60,6 @@ export class CreateRoomComponent implements OnInit {
   }
 
   addRoom() {
-    console.log(this.seatplanUpdated);
     this.submitted = true;
     if (!this.seatplanUpdated) {
       return;
@@ -83,18 +82,20 @@ export class CreateRoomComponent implements OnInit {
   public createRoom(room: Room) {
     this.roomService.createRoom(room).subscribe(
       (retRoom: Room) => {
-        this.room = room;
-        this.success = true;
+        this.room = retRoom;
 
-        this.assignSectionsToSeats(room);
-
+        this.createSections(retRoom)
+        
         this.sectionService.createSections(this.newSections).subscribe(newSections => {
           this.newSections = newSections;
-          console.log(newSections);
-
+          this.assignSectionsToSeats();
+          console.log("Section ", this.newSections);
+          console.log("Seats ", this.seatplanUpdated);
+          
 
           this.seatService.createSeats(this.seatplanUpdated).subscribe((seats: Array<Seat>) => {
             this.seatplanUpdated = seats;
+            this.success = true;
           },
             error => {
               this.defaultServiceErrorHandling(error);
@@ -193,12 +194,15 @@ export class CreateRoomComponent implements OnInit {
     this.submitted = false;
   }
 
-  private assignSectionsToSeats(room: Room): void {
+  private createSections(room:Room):void{
     this.newSections = new Array<Section>();
 
     for (let letter of this.newSectionLetters) {
       this.newSections.push(new Section(null, letter, false, room));
     }
+  }
+
+  private assignSectionsToSeats(): void {
     for (let seat of this.seatplanUpdated) {
       for (let section of this.newSections) {
         if (section.letter == seat.section.letter) {
@@ -206,9 +210,6 @@ export class CreateRoomComponent implements OnInit {
         }
       }
     }
-
-    console.log(this.seatplanUpdated);
-
   }
 
 }

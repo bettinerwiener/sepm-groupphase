@@ -105,9 +105,12 @@ public class SimpleSectionService implements SectionService {
     @Override
     public Section create(Section section) throws NotCreatedException {
         try {
+            System.out.println(section);
             Section createdSection = sectionRepository.saveAndFlush(section);
+            System.out.println("Success");
             return createdSection;
         } catch (DataAccessException dae) {
+            System.out.println("No Success");
             log.error("Section could not be created: %s", dae.getMessage());
             throw new NotCreatedException(String.format("Section could not be created: %s", dae.getMessage()));
         }
