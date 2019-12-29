@@ -106,7 +106,7 @@ export class EventItemComponent implements OnInit {
     this.submittedTickets = new Array<TicketDto>();
 
     for (let ticket of this.selectedTickets) {
-      this.submittedTickets.push(ticket.toDto());
+      this.submittedTickets.push(new TicketDto(ticket.id, null, ticket.performance, ticket.seat, ticket.status, ticket.price));
       ticket.status = 'RESERVED';
     }
 

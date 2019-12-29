@@ -20,8 +20,4 @@ export class Ticket {
         public price: number,
         public location: string,
         public time: Time,) { }
-
-    toDto():TicketDto {
-        return new TicketDto(this.id, null, this.performance, this.seat, this.status, this.price);
-    }
 }
