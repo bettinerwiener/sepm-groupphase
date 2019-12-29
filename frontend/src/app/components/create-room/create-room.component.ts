@@ -96,6 +96,8 @@ export class CreateRoomComponent implements OnInit {
           this.seatService.createSeats(this.seatplanUpdated).subscribe((seats: Array<Seat>) => {
             this.seatplanUpdated = seats;
             this.success = true;
+            console.log("Seatsback: ", seats);
+            
           },
             error => {
               this.defaultServiceErrorHandling(error);
