@@ -3,12 +3,16 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EmployeeNewsEvent;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EmployeeNewsEventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EmployeeNewsEventService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -38,6 +42,19 @@ public class SimpleEmployeeNewsEventService implements EmployeeNewsEventService 
                 dae.getMessage());
             throw new NotCreatedException(String.format("The news entry %s for event %s could not be created: %s",
                 employeeNewsEvent.getEvent().getTitle(), employeeNewsEvent.getEvent().getTitle(),
+                dae.getMessage()));
+        }
+    }
+
+    @Override
+    public List<EmployeeNewsEvent> findAll() throws NotFoundException {
+        try {
+            List<EmployeeNewsEvent> employeeNewsEvents;
+            employeeNewsEvents = this.employeeNewsEventRepository.findAll();
+            return employeeNewsEvents;
+        } catch (DataAccessException dae) {
+            log.error("Finding all news entries failed: {}", dae.getMessage());
+            throw new NotFoundException(String.format("Finding all news entries failed: %s",
                 dae.getMessage()));
         }
     }

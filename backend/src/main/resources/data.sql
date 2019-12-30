@@ -15,6 +15,8 @@ insert into customer_order (id, user_id)
            (4, 4),
            (5, 1);
 
+insert into news (id, title, abstract, entry, published_at)
+    values (1, 'Star Trek', 'It all depends', 'That is not fair', '2019-12-17T15:59:00.0');
 
 insert into event (id, title, abstract, contents, category, duration, employee)
     values (1, 'Star Wars', 'In a galaxy far far ...', 'The Star Wars universe ...', 'FILM', 2.5, 1),

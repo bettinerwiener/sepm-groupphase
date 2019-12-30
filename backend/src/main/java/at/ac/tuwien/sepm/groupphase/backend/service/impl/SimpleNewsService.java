@@ -34,7 +34,7 @@ public class SimpleNewsService implements NewsService {
     }
 
     @Override
-    public News save(News news) {
+    public News save(News news) throws NotCreatedException {
         log.info("Saving news entry {} to database ...", news.getTitle());
         try {
             news.setPublishedAt(LocalDateTime.now());
@@ -58,11 +58,11 @@ public class SimpleNewsService implements NewsService {
     }
 
     @Override
-    public News findById(Long id) {
+    public News findById(Long id) throws NotFoundException {
         log.info("Finding news entry with id {} ...", id);
         try {
             Optional<News> result = this.newsRepository.findById(id);
-            if (!result.isPresent() || result.isEmpty()) {
+            if (!result.isPresent()) {
                 log.info("The news entry with id {} could not be found.", id);
                 throw new NotFoundException(String.format("The news entry with id %d could not be found.", id));
             }
