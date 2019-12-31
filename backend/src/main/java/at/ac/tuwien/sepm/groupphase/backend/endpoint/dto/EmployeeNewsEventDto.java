@@ -21,13 +21,13 @@ public class EmployeeNewsEventDto {
     private News news;
 
     @NotNull
-    private User user;
+    private User employee;
 
     public static final class EmployeeNewsEventDtoBuilder {
 
         private Event event;
         private News news;
-        private User user;
+        private User employee;
 
         public EmployeeNewsEventDtoBuilder() {};
 
@@ -45,8 +45,8 @@ public class EmployeeNewsEventDto {
             return this;
         }
 
-        public EmployeeNewsEventDto.EmployeeNewsEventDtoBuilder withUser(User user) {
-            this.user = user;
+        public EmployeeNewsEventDto.EmployeeNewsEventDtoBuilder withEmployee(User employee) {
+            this.employee = employee;
             return this;
         }
 
@@ -54,7 +54,7 @@ public class EmployeeNewsEventDto {
             EmployeeNewsEventDto employeeNewsEventDto = new EmployeeNewsEventDto();
             employeeNewsEventDto.setEvent(event);
             employeeNewsEventDto.setNews(news);
-            employeeNewsEventDto.setUser(user);
+            employeeNewsEventDto.setEmployee(employee);
             return employeeNewsEventDto;
         }
     }

@@ -96,7 +96,7 @@ public class SimpleTicketService implements TicketService {
         }
     }
 
-    @Scheduled(fixedDelay = 10000, initialDelay = 10000)
+    //@Scheduled(fixedDelay = 10000, initialDelay = 10000) TODO: remove before push
     protected void removeReservations() throws NotCreatedException {
         log.info("Remove Reservation from expired tickets");
         LocalDateTime currentTime = LocalDateTime.now().plus(30, ChronoUnit.MINUTES);

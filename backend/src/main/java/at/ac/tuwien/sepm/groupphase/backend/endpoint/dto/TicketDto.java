@@ -2,11 +2,13 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class TicketDto {
 
 
