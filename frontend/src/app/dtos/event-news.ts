@@ -1,5 +1,5 @@
 import { Event } from "./event"
-import { }
+import { News } from "./news"
 import { User } from './user'
 
 export class EventNews {
