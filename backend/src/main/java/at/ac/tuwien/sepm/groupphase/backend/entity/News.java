@@ -30,9 +30,6 @@ public class News {
     @Column(nullable = true, length = 1024)
     private String image;
 
-    @OneToMany(mappedBy = "news")
-    private Set<EmployeeNewsEvent> employeeNewsEvents;
-
     @OneToMany(mappedBy = "news", cascade = CascadeType.PERSIST)
     private Set<CustomerNews> customerNews;
 

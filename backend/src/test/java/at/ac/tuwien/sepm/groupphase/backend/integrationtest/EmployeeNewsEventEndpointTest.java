@@ -61,7 +61,7 @@ public class EmployeeNewsEventEndpointTest implements EmployeeNewsEventTestData 
     }
 
     @Test
-    public void findAllEventNewsReturns4() throws Exception {
+    public void findAllEventNewsReturns2() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_NEWS_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())

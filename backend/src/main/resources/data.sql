@@ -22,6 +22,10 @@ insert into event (id, title, abstract, contents, category, duration, employee)
     values (1, 'Star Wars', 'In a galaxy far far ...', 'The Star Wars universe ...', 'FILM', 2.5, 1),
            (2, 'Star Trek', 'May you live long ...', 'May you live long and prosper', 'FILM', 2.4, 2);
 
+insert into employee_adds_news (employee, news, event)
+    values (3, 1, 1),
+           (3, 1, 2);
+
 insert into location (id, name, street, city, postal_code)
     values (1, 'Metropol', 'Hernalser Hauptstrasse 12', 'Wien', 1170),
            (2, 'Metropol', 'Karl-Krause-Strasse 45', 'Graz', 8020);

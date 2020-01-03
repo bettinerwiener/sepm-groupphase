@@ -61,9 +61,9 @@ public class EmployeeNewsEventRepositoryTest {
     }
 
     @Test
-    public void findAllReturns4() {
+    public void findAllReturns2() {
         List<EmployeeNewsEvent> employeeNewsEventList = employeeNewsEventRepository.findAll();
-        assertEquals(4, employeeNewsEventList.size());
+        assertEquals(2, employeeNewsEventList.size());
     }
 
     @Test

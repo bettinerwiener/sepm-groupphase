@@ -78,6 +78,7 @@ public class SimpleEmployeeNewsEventService implements EmployeeNewsEventService 
         try {
             List<EmployeeNewsEvent> employeeNewsEvents;
             employeeNewsEvents = this.employeeNewsEventRepository.findAll();
+            log.debug("The size of employeeNewsEvents: {}", employeeNewsEvents.size());
             return employeeNewsEvents;
         } catch (DataAccessException dae) {
             log.error("Finding all news entries failed: {}", dae.getMessage());

@@ -7,6 +7,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.EmployeeNewsEventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/eventnews")
+@Slf4j
 public class EmployeeNewsEventEndpoint {
 
     private EmployeeNewsEventMapper employeeNewsEventMapper;
@@ -29,7 +31,9 @@ public class EmployeeNewsEventEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find all news entries for all events", authorizations = {@Authorization(value = "apiKey")})
     public List<EmployeeNewsEventDto> getAll() {
-        return this.employeeNewsEventMapper.eNEListToENEDtoList(this.employeeNewsEventService.findAll());
+        List<EmployeeNewsEvent> resultList = this.employeeNewsEventService.findAll();
+        log.info("The resultList has {} elements.", resultList.size());
+        return this.employeeNewsEventMapper.eNEListToENEDtoList(resultList);
     }
 
     @PostMapping

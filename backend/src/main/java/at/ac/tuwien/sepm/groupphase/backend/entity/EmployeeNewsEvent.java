@@ -1,13 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-/**
- * This class represents a triple relation
- * TODO: How should I represent it here?
- */
 @Entity
 @Table(name = "employee_adds_news")
 @IdClass(EmployeeNewsEventKey.class)
