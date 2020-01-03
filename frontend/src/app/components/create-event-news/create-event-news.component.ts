@@ -11,6 +11,7 @@ import { EventService } from 'src/app/services/event.service';
 import { stringify } from 'querystring';
 import { throwIfEmpty } from 'rxjs/operators';
 import { User } from 'src/app/dtos/user';
+import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 @Component({
   selector: 'app-create-event-news',
@@ -39,7 +40,7 @@ export class CreateEventNewsComponent implements OnInit {
       title: [Validators.required],
       shortDescription: [Validators.required],
       entry: [Validators.required],
-      image: Image,
+      image: [Validators.nullValidator],
     });
   }
 
@@ -55,12 +56,14 @@ export class CreateEventNewsComponent implements OnInit {
     this.submitted = true;
     if (this.createEventNewsForm.valid) {
 
+      const image_str = toBase64String(this.createEventNewsForm.controls.image.value);
+
       const news = new News(
         null,
         this.createEventNewsForm.controls.title.value,
         this.createEventNewsForm.controls.shortDescription.value,
         this.createEventNewsForm.controls.entry.value,
-        this.createEventNewsForm.controls.image.value,
+        image_str,
         null
       )
 

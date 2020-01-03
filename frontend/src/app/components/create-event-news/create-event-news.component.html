@@ -1,1 +1,82 @@
-<p>create-event-news works!</p>
+<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Problems while creating this news for the chosen event!</strong> {{ errorMessage }}
+    <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Successfully created news entry for the chosen event!</strong>
+    <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="pt-5">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <span class="anchor" id="formCreateEventNews"></span>
+  
+        <div class="card rounded-0">
+          <div class="card-header">
+            <h3 class="mb-0">Create a news entry for an event</h3>
+          </div>
+  
+          <div class="card-body">
+            <form class="form" [formGroup]="createEventNewsForm" (ngSubmit)="addEventNews()">
+  
+              <div class="form-group">
+                <select name="event" formControlName="event" class="form-control" id="event"
+                  placeholder="Event">
+                  <option *ngFor="let e of events" [ngValue]="e">{{e.title}}</option>
+                </select>
+              </div>
+  
+              <div class="form-group">
+                    <input type="text" size="127" name="title" formControlName="title" class="form-control" id= "title" placeholder="Title">
+                    <div *ngIf="submitted && createEventNewsForm.controls.title.errors" class="error">
+                      <small class="form-text text-warning" *ngIf="createEventNewsForm.controls.title.errors.required">A title is
+                        required!
+                      </small>
+                    </div>
+              </div>
+
+                <div class="form-group">
+                    <input type="text" size="255" name="shortDescription" formControlName="shortDescription" class="form-control" id= "shortDescription" placeholder="Short Description">
+                    <div *ngIf="submitted && createEventNewsForm.controls.shortDescription.errors" class="error">
+                    <small class="form-text text-warning" *ngIf="createEventNewsForm.controls.shortDescription.errors.required">A short description is
+                        required!
+                    </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" size="511" name="entry" formControlName="entry" class="form-control" id= "entry" placeholder="entry">
+                    <div *ngIf="submitted && createEventNewsForm.controls.entry.errors" class="error">
+                    <small class="form-text text-warning" *ngIf="createEventNewsForm.controls.entry.errors.required">An entry is
+                        required!
+                    </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="image" name="image" formControlName="image" class="form-control" id= "image" placeholder="Image">
+                    <div *ngIf="submitted && createEventNewsForm.controls.image.errors" class="error">
+                    <small class="form-text text-warning" *ngIf="createEventNewsForm.controls.image.errors.required">An image is not
+                        required!
+                    </small>
+                    </div>
+                </div>
+          </div>
+  
+              <button type="button" (click)="addEventNews()" class="btn btn-success float-right">Create News Entry</button>
+  
+            </form>
+          </div>
+  
+        </div>
+  
+      </div>
+  
+  
+  </div>
+  

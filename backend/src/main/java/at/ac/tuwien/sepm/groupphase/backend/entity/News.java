@@ -15,13 +15,13 @@ public class News {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 511)
     private String entry;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 127)
     private String title;
 
-    @Column(nullable = false, length = 100, name = "abstract")
+    @Column(nullable = false, length = 255, name = "abstract")
     private String shortDescription;
 
     @Column(name = "published_at")
