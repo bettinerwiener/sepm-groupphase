@@ -96,7 +96,7 @@ public class SimpleTicketService implements TicketService {
         }
     }
 
-    @Scheduled(fixedDelay = 10000, initialDelay = 10000)
+    //@Scheduled(fixedDelay = 10000, initialDelay = 10000) TODO: remove before push
     protected void removeReservations() throws NotCreatedException {
         log.info("Remove Reservation from expired tickets");
         LocalDateTime currentTime = LocalDateTime.now().plus(30, ChronoUnit.MINUTES);
@@ -125,7 +125,7 @@ public class SimpleTicketService implements TicketService {
                 this.orderRepository.deleteById(id);
             }
 
-        }catch (DataAccessException dae) {
+        } catch (DataAccessException dae) {
             log.error("SimpleTicketService: ticket reservation could not be removed: " + dae.getMessage());
             throw new NotCreatedException(String.format("The ticket reservation could not be removed: ", dae.getMessage()));
         }

@@ -21,10 +21,11 @@ CREATE TABLE IF NOT EXISTS artist (
 
 CREATE TABLE IF NOT EXISTS news (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    entry       VARCHAR(255) NOT NULL,
-    title       VARCHAR(50) NOT NULL,
-    abstract    VARCHAR(100) NOT NULL,
-    image       VARCHAR(1024) NULL
+    entry       VARCHAR(511) NOT NULL,
+    title       VARCHAR(127) NOT NULL,
+    abstract    VARCHAR(255) NOT NULL,
+    image       VARCHAR(1024) NULL,
+    published_at DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS event (
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS employee_adds_news (
     employee    BIGINT REFERENCES user(id),
     news     BIGINT REFERENCES news(id),
     event    BIGINT REFERENCES event(id),
-    CONSTRAINT admin_adds_news PRIMARY KEY (employee, news, event)
+    CONSTRAINT employee_adds_news PRIMARY KEY (employee, news, event)
 );
 
 CREATE TABLE IF NOT EXISTS location (

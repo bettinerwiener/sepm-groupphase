@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Validated
+@EqualsAndHashCode(callSuper=false)
 public class UserDto extends BaseDto {
     private Long id;
 
