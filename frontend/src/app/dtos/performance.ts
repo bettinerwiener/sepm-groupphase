@@ -7,7 +7,7 @@ export class Performance {
       public id: number,
       public event: Event,
       public room: Room,
-      public date: Date,) {
+      public date: Date) {
     }
   }
   
