@@ -18,9 +18,10 @@ export class NewsListItemComponent implements OnInit {
   @Input() shortDescription: string;
   @Input() publishedAt: Date;
   @Input() image: string;
+  image64: any;
 
   ngOnInit() {
-    console.log(this.image);
+    this.image64 = window.atob(this.image);
   }
 
   constructor(private router: Router) { }

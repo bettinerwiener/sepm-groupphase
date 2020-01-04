@@ -25,7 +25,14 @@ export class NewsComponent implements OnInit {
         this.latestNews = news;
       }
     );
+  }
 
+  private getOldNews() {
+    this.boolOldNews = true;
+  }
+
+  private getLatestNews() {
+    this.boolOldNews = false;
   }
 
 }
