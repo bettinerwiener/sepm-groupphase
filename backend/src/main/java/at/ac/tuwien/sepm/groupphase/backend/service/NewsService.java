@@ -5,6 +5,8 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
+import java.util.List;
+
 public interface NewsService {
 
     /**
@@ -22,4 +24,11 @@ public interface NewsService {
      * @throws NotFoundException in case no news with @param id is found or the database access fails
      */
     News findById(Long id) throws NotFoundException;
+
+    /**
+     * Gets all news in the database
+     * @return a list of news currently in the database
+     * @throws NotFoundException in case no news have been found
+     */
+    List<News> getAll() throws NotFoundException;
 }

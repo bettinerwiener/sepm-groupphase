@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @Slf4j
 @RequestMapping(value = "/api/v1/news")
@@ -29,6 +32,15 @@ public class NewsEndpoint {
     public NewsDto create(@RequestBody NewsDto newsDto) {
         News toSave = this.newsMapper.newsDtoToNews(newsDto);
         return this.newsMapper.newsToNewsDto(this.newsService.save(toSave));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @ApiOperation(value = "Get all news", authorizations = {@Authorization(value = "apiKey")})
+    public List<NewsDto> getAll() {
+        List<NewsDto> newsDtos = newsService.getAll()
+            .stream().map(news -> newsMapper.newsToNewsDto(news)).collect(Collectors.toList());
+        return newsDtos;
     }
 
 

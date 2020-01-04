@@ -73,4 +73,21 @@ public class SimpleNewsService implements NewsService {
                 id, dae.getMessage()));
         }
     }
+
+    @Override
+    public List<News> getAll() throws NotFoundException {
+        try {
+            List<News> news = this.newsRepository.findAll();
+            if (news != null && !news.isEmpty()) {
+                return news;
+            }
+            else {
+                log.error("There are no news in the database.");
+                throw new NotFoundException("No news have been found.");
+            }
+        } catch (DataAccessException dae) {
+            log.error("No news have been found: %s", dae.getMessage());
+            throw new NotFoundException(String.format("No news have been found: %s", dae.getMessage()));
+        }
+    }
 }

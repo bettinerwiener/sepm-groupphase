@@ -1,0 +1,5 @@
+<br>
+<div *ngIf="!boolOldNews">
+  <news-list-item  *ngFor="let n of latestNews" id={{n.id}} title={{n.title}} shortDescription={{n.shortDescription}} publishedAt={{n.publishedAt}} image={{n.image}}></news-list-item>
+</div>
+
