@@ -11,11 +11,11 @@ import java.util.List;
 public interface CustomerNewsMapper {
 
     @Named("customerNews")
-    CustomerNews customerNewsDtoToCustomerNews(CustomerNewsDto customerNewsDto);
+    CustomerNews custNewsDtoToCustomerNews(CustomerNewsDto customerNewsDto);
 
-    CustomerNewsDto customerNewsToCustomerNewsDto(CustomerNews employeeNewsEvent);
+    CustomerNewsDto custNewsToCustomerNewsDto(CustomerNews customerNews);
 
-    List<CustomerNewsDto> cNEListToCNEDtoList(List<CustomerNews> employeeNewsEvents);
+    List<CustomerNewsDto> cNEListToCNEDtoList(List<CustomerNews> customerNews);
 
     List<CustomerNews> cNEDtoListToCNEList(List<CustomerNewsDto> customerNewsDtos);
 }
