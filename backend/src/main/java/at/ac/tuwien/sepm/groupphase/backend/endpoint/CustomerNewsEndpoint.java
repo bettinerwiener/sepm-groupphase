@@ -39,9 +39,9 @@ public class CustomerNewsEndpoint {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create a news entry for an event", authorizations = {@Authorization(value = "apiKey")})
-    public CustomerNewsDto create(@RequestBody CustomerNewsDto employeeNewsEventDto) {
-        return this.employeeNewsEventMapper.empNewsEventToEmpNewsEventDto(
-            this.employeeNewsEventService.create(this.employeeNewsEventMapper.
-                empNewsEventDtoToEmpNewsEvent(employeeNewsEventDto)));
+    public CustomerNewsDto create(@RequestBody CustomerNewsDto customerNewsDto) {
+        return this.customerNewsMapper.customerNewsToCustomerNewsDto(
+            this.customerNewsService.create(this.customerNewsMapper.
+                customerNewsDtoToCustomerNews(customerNewsDto)));
     }
 }
