@@ -10,7 +10,7 @@ import { CustomerNews } from '../dtos/customer-news';
 })
 export class CustomerNewsService {
 
-  customerNewsBaseUri: string = this.globals.backendUri + 'customernews';
+  customerNewsBaseUri: string = this.globals.backendUri + '/customernews';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
