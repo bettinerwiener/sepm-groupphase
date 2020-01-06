@@ -1,13 +1,15 @@
 <div class="container">
         <div class="col-md-8 mx-auto">
+                <br>
+                <br>
             <h1>Bestellübersicht</h1>
-
+            <br>
          
         </div>
 
         <div *ngIf="orders">
                         <div *ngFor="let o of orders" >
-                                <order [tickets]="o.tickets" number="3" price="130"></order>
+                                <order [tickets]="o.tickets" [id]="o.id" number="3" price="130"></order>
                         </div>                        
         </div>
 

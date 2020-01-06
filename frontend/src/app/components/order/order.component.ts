@@ -14,6 +14,7 @@ export class OrderComponent implements OnInit {
 
   title: string;
   @Input() description: string;
+  @Input() id: number;
   @Input() date: Date;
   @Input() location: string;
   @Input() number: number;
@@ -48,6 +49,7 @@ export class OrderComponent implements OnInit {
   }
 
   getTicket(id: number) {
+    console.log("getTicket " + id)
     this.pdfService.getTicket(id).subscribe(x => {
 
       var newBlob = new Blob([x], { type: "application/pdf" });
@@ -72,8 +74,34 @@ export class OrderComponent implements OnInit {
   });
   }
 
+  getInvoice() {
+    this.pdfService.getInvoice(this.id).subscribe(x => {
+
+      var newBlob = new Blob([x], { type: "application/pdf" });
+
+      // IE
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+      }
+
+      const data = window.URL.createObjectURL(newBlob);
+      var link = document.createElement('a');
+      link.href = data;
+      link.download = "invoice" + this.id + ".pdf";
+     
+      //delay for firefox
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+      setTimeout(function () {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+      }, 100);
+  });
+  }
+
   toggleShowTickets() {
     this.showTickets = !this.showTickets;
+    console.log(this.showTickets);
   }
 
   private defaultServiceErrorHandling(error: any) {

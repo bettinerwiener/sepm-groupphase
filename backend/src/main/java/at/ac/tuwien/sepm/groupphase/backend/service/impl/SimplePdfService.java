@@ -69,12 +69,12 @@ public class SimplePdfService implements PdfService {
             PDImageXObject bg = PDImageXObject.createFromFile("src/main/resources/bg_ticket.png", doc);
             contentStream.drawImage(bg, 0, 0);
 
-            placeText(contentStream, ticket.getPerformance().getEvent().getTitle(), 73, 280, 24);
-            placeText(contentStream, user.getFirstName() + " " + user.getLastName(), 73, 193, 15);
-            placeText(contentStream,  Date.from( ticket.getPerformance().getDate().atZone(ZoneId.systemDefault()).toInstant()).toString(), 73, 121, 15);
-            placeText(contentStream, ticket.getPerformance().getRoom().getLocation().getName()+ ", " + ticket.getPerformance().getRoom().getName(), 73, 55, 15);
-            placeText(contentStream, ticket.getSeat().getNumber() + ticket.getSeat().getRow(), 440, 121, 15);
-            placeText(contentStream, ticket.getPrice().toString() + "€", 440, 55, 15);
+            placeText2(contentStream,ticket.getPerformance().getEvent().getTitle(), 73, 280, 24);
+            placeText2(contentStream, user.getFirstName() + " " + user.getLastName(), 73, 193, 15);
+            placeText2(contentStream,  Date.from( ticket.getPerformance().getDate().atZone(ZoneId.systemDefault()).toInstant()).toString(), 73, 121, 15);
+            placeText2(contentStream, ticket.getPerformance().getRoom().getLocation().getName()+ ", " + ticket.getPerformance().getRoom().getName(), 73, 55, 15);
+            placeText2(contentStream, ticket.getSeat().getNumber() + ticket.getSeat().getRow(), 440, 121, 15);
+            placeText2(contentStream, ticket.getPrice().toString() + "€", 440, 55, 15);
 
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(ticket.getId().toString(),BarcodeFormat.QR_CODE, 140, 140, null);
@@ -133,12 +133,12 @@ public class SimplePdfService implements PdfService {
             int counter = 0;
             PDPageContentStream contentStream = new PDPageContentStream(doc, page);
 
-            placeText(contentStream, "Rechnung",  75, 725, 32);
+            placeText(contentStream,page, "Rechnung #" + order.getId(),  75, 80, 17);
+            placeText(contentStream,page, user.getFirstName() + " " + user.getLastName(),  75, 100, 14);
 
-
-            placeText(contentStream, companyName, 410, 710 + 15*2, 11);
-            placeText(contentStream, companyStreet, 410, 710 + 15*1, 11);
-            placeText(contentStream, companyCity, 410, 710, 11);
+            placeText(contentStream,page, companyName, 410, 80 + 15*2, 11);
+            placeText(contentStream,page, companyStreet, 410, 80 + 15*1, 11);
+            placeText(contentStream,page, companyCity, 410, 80, 11);
 
             for(Ticket ticket: tickets) {
 
@@ -148,16 +148,22 @@ public class SimplePdfService implements PdfService {
                 Float price = ticket.getPrice();
                 totalPrice += price;
 
-                placeText(contentStream, event.getTitle(), 75, 300 + counter*20, 11);
+                placeText(contentStream,page, "Menge", 75, 180, 11);
+                placeText(contentStream,page, "Bezeichnung", 135, 180, 11);
+                placeText(contentStream,page, "Preis", 470, 180, 11);
 
-                placeText(contentStream, performance.getRoom().getLocation().getName() + ", " + performance.getRoom().getName(), 195, 300 + counter*20, 11);
 
-                placeText(contentStream,"Section: " + seat.getSection().getLetter() + " Sitz: " + seat.getRow() + seat.getNumber(), 340, 300 + counter*20, 11);
+                placeText(contentStream,page, "1", 75, 210 + counter*20, 11);
 
-                placeText(contentStream, ticket.getPrice().toString()+"€", 495 ,300 + counter*20, 11);
+                placeText(contentStream,page, event.getTitle() + " - " + performance.getRoom().getLocation().getName() + ", " + performance.getRoom().getName() + "(" + seat.getSection().getLetter() + "," + seat.getRow() + seat.getNumber() + ")", 135, 210 + counter*20, 11);
+
+                placeText(contentStream,page, ticket.getPrice().toString()+"€", 470 ,210 + counter*20, 11);
 
                 counter++;
             }
+
+            placeText(contentStream,page, "Summe: " + totalPrice + "€", 400, 220 + counter*20, 13);
+
 
 
 
@@ -178,11 +184,29 @@ public class SimplePdfService implements PdfService {
 
     }
 
-    public void placeText(PDPageContentStream contentStream, String text, int x, int y, int size) {
+    public void placeText2(PDPageContentStream contentStream, String text, int x, int y, int size) {
         try {
+            System.out.println();
+
+
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA, size);
             contentStream.newLineAtOffset(x, y);
+            contentStream.showText(text);
+            contentStream.endText();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void placeText(PDPageContentStream contentStream, PDPage page, String text, int x, int y, int size) {
+        try {
+            System.out.println();
+
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, size);
+            contentStream.newLineAtOffset(x, page.getTrimBox().getHeight() - y);
             contentStream.showText(text);
             contentStream.endText();
         } catch (IOException e) {
