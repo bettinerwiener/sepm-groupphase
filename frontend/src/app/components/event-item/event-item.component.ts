@@ -97,7 +97,11 @@ export class EventItemComponent implements OnInit {
       ticket.status = 'BOUGHT';
     }
 
-    this.service.buyTickets(this.submittedTickets);
+    this.service.buyTickets(this.submittedTickets).subscribe(
+      (order:Order) => {
+        console.log(order);
+      }
+    );
 
     this.selectedTickets = new Array<Ticket>();
   }
@@ -110,7 +114,11 @@ export class EventItemComponent implements OnInit {
       ticket.status = 'RESERVED';
     }
 
-    this.service.reserveTickets(this.submittedTickets);
+    this.service.reserveTickets(this.submittedTickets).subscribe(
+      (order:Order) => {
+        console.log(order);
+      }
+    );
 
     this.selectedTickets = new Array<Ticket>();
   }

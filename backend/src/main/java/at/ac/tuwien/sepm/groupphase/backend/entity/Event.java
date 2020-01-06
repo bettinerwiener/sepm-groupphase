@@ -48,5 +48,4 @@ public class Event {
     @JoinColumn(name = "employee")
     User employee;
 
-    //TODO: find solution for artist not working with join table
 }

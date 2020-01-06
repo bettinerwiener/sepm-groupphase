@@ -8,8 +8,8 @@ import { TicketDto } from './ticket-dto';
 import { Order } from './order';
 
 export class Ticket {
-    public performance:EventPerformance;
-    public selected:boolean = false;
+    public performance: EventPerformance;
+    public selected: boolean = false;
 
     constructor(
         public id: number,

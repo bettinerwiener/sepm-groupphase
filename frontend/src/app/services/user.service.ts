@@ -20,5 +20,4 @@ export class UserService {
     return this.httpClient.post<User>(this.messageBaseUri + '/register', user);
   }
 
-
 }

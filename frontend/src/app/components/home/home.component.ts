@@ -15,8 +15,6 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private ticketService: TicketService) { }
 
   events: GlobalEvent[];
-  @Input() firstPerformanceDate: Date;
-  @Input() lastPerformanceDate: Date;
   error: boolean = false;
   errorMessage = 'This is a useless Errormessage';
 
@@ -25,40 +23,6 @@ export class HomeComponent implements OnInit {
 
   getEvents(events: GlobalEvent[]): void {
     this.events = events;
-  }
-
-  getFirstPerformance(event: GlobalEvent): Date {
-    const firstPerformanceDate: Date = null;
-    this.ticketService.getPerformancesByEventId(event.id).subscribe(
-      (retPerformances: EventPerformance[]) => {
-        retPerformances.sort(
-          (a: EventPerformance, b: EventPerformance) => {
-            return a.date.getDate() - b.date.getDate();
-          }
-        );
-        this.firstPerformanceDate = retPerformances[0].date;
-      },
-      (error) => {
-        this.defaultServiceErrorHandling(error);
-      }
-    );
-    return firstPerformanceDate;
-  }
-
-  setLastPerformance(event: GlobalEvent): void {
-    this.ticketService.getPerformancesByEventId(event.id).subscribe(
-      (retPerformances: EventPerformance[]) => {
-        retPerformances.sort(
-          (a: EventPerformance, b: EventPerformance) => {
-            return a.date.getDate() - b.date.getDate();
-          }
-        );
-        this.lastPerformanceDate = retPerformances[retPerformances.length - 1].date;
-      },
-      (error) => {
-        this.defaultServiceErrorHandling(error);
-      }
-    );
   }
 
   private defaultServiceErrorHandling(error: any) {

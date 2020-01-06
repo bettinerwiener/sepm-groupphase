@@ -48,5 +48,4 @@ public class UserEndpoint {
         return userMapper.userToUserDto(userService.createUser(user));
 
     }
-
 }

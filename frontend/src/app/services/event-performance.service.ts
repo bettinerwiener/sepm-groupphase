@@ -20,8 +20,6 @@ export class EventPerformanceService {
 
   createEventPerformance(performance: EventPerformance): Observable<EventPerformance> {
     console.log('Post eventPerformance');
-    console.log(performance);
-    console.log(this.eventPerformanceBaseUri);
     return this.httpClient.post<EventPerformance>(this.eventPerformanceBaseUri, performance);
   }
 }

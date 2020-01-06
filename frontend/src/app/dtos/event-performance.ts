@@ -5,8 +5,8 @@ import { EventLocation } from './event-location';
 import { SeatplanComponent } from '../components/seatplan/seatplan.component';
 
 export class EventPerformance {
-    public seatSelection:boolean = false;
-    public seatPlan:SeatplanComponent;
+    public seatSelection: boolean = false;
+    public seatPlan: SeatplanComponent;
     public tickets: Array<Array<Ticket>>;
 
     constructor(
