@@ -35,6 +35,7 @@ import { CreateEventPerformanceComponent } from './components/create-event-perfo
 import { CreateRoomComponent } from './components/create-room/create-room.component';
 import { CreateSeatplanComponent } from './components/create-seatplan/create-seatplan.component';
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
+import { NewsItemComponent } from './components/news-item/news-item.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { CreateEventNewsComponent } from './components/create-event-news/create-
     CreateRoomComponent,
     CreateSeatplanComponent,
     CreateEventNewsComponent,
+    NewsItemComponent,
   ],
   imports: [
     BrowserModule,

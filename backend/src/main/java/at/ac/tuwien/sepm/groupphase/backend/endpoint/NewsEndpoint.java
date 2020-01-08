@@ -23,12 +23,21 @@ public class NewsEndpoint {
         this.newsService = newsService;
     }
 
+    @CrossOrigin(origins="*")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create a news entry", authorizations = {@Authorization(value = "apiKey")})
     public NewsDto create(@RequestBody NewsDto newsDto) {
         News toSave = this.newsMapper.newsDtoToNews(newsDto);
         return this.newsMapper.newsToNewsDto(this.newsService.save(toSave));
+    }
+
+    @CrossOrigin(origins="*")
+    @GetMapping
+    @ResponseStatus
+    @ApiOperation(value = "Get news by id")
+    public NewsDto getById(@PathVariable("id") Long id){
+        return this.newsMapper.newsToNewsDto(this.newsService.findById(id));
     }
 
 
