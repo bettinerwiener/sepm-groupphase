@@ -10,27 +10,27 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  
+
   <div class="pt-5">
     <div class="row">
       <div class="col-md-6 mx-auto">
         <span class="anchor" id="formCreateEventNews"></span>
-  
+
         <div class="card rounded-0">
           <div class="card-header">
             <h3 class="mb-0">Create a news entry for an event</h3>
           </div>
-  
+
           <div class="card-body">
             <form class="form" [formGroup]="createEventNewsForm" (ngSubmit)="addEventNews()">
-  
+
               <div class="form-group">
                 <select name="event" formControlName="event" class="form-control" id="event"
                   placeholder="Event">
                   <option *ngFor="let e of events" [ngValue]="e">{{e.title}}</option>
                 </select>
               </div>
-  
+
               <div class="form-group">
                     <input type="text" size="127" name="title" formControlName="title" class="form-control" id= "title" placeholder="Title">
                     <div *ngIf="submitted && createEventNewsForm.controls.title.errors" class="error">
@@ -66,17 +66,15 @@
                     </small>
                     </div>
                 </div>
-          </div>
-  
+
               <button type="button" (click)="addEventNews()" class="btn btn-success float-right">Create News Entry</button>
-  
+
             </form>
           </div>
-  
+
         </div>
-  
+
       </div>
-  
-  
+
+
   </div>
-  

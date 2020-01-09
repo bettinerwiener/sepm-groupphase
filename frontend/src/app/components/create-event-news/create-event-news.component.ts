@@ -11,7 +11,7 @@ import { EventService } from 'src/app/services/event.service';
 import { stringify } from 'querystring';
 import { throwIfEmpty } from 'rxjs/operators';
 import { User } from 'src/app/dtos/user';
-import { toBase64String } from '@angular/compiler/src/output/source_map';
+
 
 @Component({
   selector: 'app-create-event-news',
@@ -56,7 +56,7 @@ export class CreateEventNewsComponent implements OnInit {
     this.submitted = true;
     if (this.createEventNewsForm.valid) {
 
-      const image_str = toBase64String(this.createEventNewsForm.controls.image.value);
+      const image_str = btoa(this.createEventNewsForm.controls.image.value);
 
       const news = new News(
         null,
@@ -65,17 +65,17 @@ export class CreateEventNewsComponent implements OnInit {
         this.createEventNewsForm.controls.entry.value,
         image_str,
         null
-      )
+      );
 
       const user = new User(
         null,
-        "dummy",
-        "dummy",
+        'dummy',
+        'dummy',
         this.authService.getUserName(),
-        "dummy",
+        'dummy',
         false,
         true
-      )
+      );
 
       const eventNews: EventNews = new EventNews(
         this.createEventNewsForm.controls.event.value,
