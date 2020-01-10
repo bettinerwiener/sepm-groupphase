@@ -22,7 +22,7 @@
           </div>
 
           <div class="card-body">
-            <form class="form" [formGroup]="createEventNewsForm" (ngSubmit)="addEventNews()">
+            <form class="form" [formGroup]="createEventNewsForm" (ngSubmit)="addEventNews()" enctype="multipart/form-data">
 
               <div class="form-group">
                 <select name="event" formControlName="event" class="form-control" id="event"
@@ -59,7 +59,9 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="image" name="image" formControlName="image" class="form-control" id= "image" placeholder="Image">
+                    <input type="file" name="image" formControlName="image" 
+                      class="form-control" id= "image" placeholder="Image"
+                      (change)="onFileSelect($event)">
                     <div *ngIf="submitted && createEventNewsForm.controls.image.errors" class="error">
                     <small class="form-text text-warning" *ngIf="createEventNewsForm.controls.image.errors.required">An image is not
                         required!
