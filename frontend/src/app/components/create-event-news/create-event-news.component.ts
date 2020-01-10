@@ -95,7 +95,6 @@ export class CreateEventNewsComponent implements OnInit {
   public sendImage(formData: FormData, id: Number) {
     this.eventNewsService.sendImage(formData, id).subscribe(
       success => {
-        console.log('added image');
         this.success = true;
       },
       error => {
