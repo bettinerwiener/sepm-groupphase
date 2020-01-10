@@ -27,8 +27,9 @@ public class News {
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
-    @Column(nullable = true, length = 1024)
-    private String image;
+    @Lob
+    @Column(nullable = true, columnDefinition = "BLOB")
+    private byte[] image;
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.PERSIST)
     private Set<CustomerNews> customerNews;

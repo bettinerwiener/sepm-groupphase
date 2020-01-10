@@ -10,6 +10,7 @@ import {Globals} from '../global/globals';
 export class EventNewsService {
 
     eventNewsBaseUri: string = this.globals.backendUri + '/eventnews';
+    newsBaseUri: string = this.globals.backendUri + '/news';
 
     constructor(private httpClient: HttpClient, private globals: Globals) { }
 
@@ -27,5 +28,10 @@ export class EventNewsService {
     createEventNews(eventNews: EventNews): Observable<EventNews> {
         console.log("Creating news entry for an event");
         return this.httpClient.post<EventNews>(this.eventNewsBaseUri, eventNews);
+    }
+
+    sendImage(formData: FormData, id: Number): Observable<Boolean> {
+        console.log("Sending image separately");
+        return this.httpClient.post<Boolean>(this.newsBaseUri + '/' + id, formData);
     }
 }
