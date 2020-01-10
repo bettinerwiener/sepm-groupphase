@@ -49,7 +49,6 @@ export class CreateEventNewsComponent implements OnInit {
     this.formData = new FormData();
     this.clearForm();
     this.getAllEvents();
-    this.clearForm();
   }
 
   isAdmin(): boolean {
