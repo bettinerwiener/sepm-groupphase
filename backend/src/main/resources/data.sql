@@ -26,6 +26,12 @@ insert into employee_adds_news (employee, news, event)
     values (3, 1, 1),
            (3, 1, 2);
 
+insert into customer_news (user, news, read)
+    values (1, 1, 0),
+            (2, 1, 0),
+            (3, 1, 1),
+            (4, 1, 0);
+
 insert into location (id, name, street, city, postal_code)
     values (1, 'Metropol', 'Hernalser Hauptstrasse 12', 'Wien', 1170),
            (2, 'Metropol', 'Karl-Krause-Strasse 45', 'Graz', 8020);
