@@ -21,13 +21,13 @@ public class CustomerNewsDto {
     private User user;
 
     @NotNull
-    private boolean read;
+    private Boolean read;
 
     public static final class CustomerNewsDtoBuilder {
 
         private News news;
         private User user;
-        private boolean read;
+        private Boolean read;
 
         public CustomerNewsDtoBuilder(){};
 

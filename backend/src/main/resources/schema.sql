@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS ticket (
 CREATE TABLE IF NOT EXISTS customer_news (
      user    BIGINT REFERENCES user(id),
      news        BIGINT REFERENCES news(id),
-     read        SMALLINT CHECK (read IN (0, 1)),
+     read        BOOLEAN NOT NULL,
      CONSTRAINT  customer_news_pk PRIMARY KEY (user, news)
 );
 

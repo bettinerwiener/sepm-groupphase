@@ -11,8 +11,6 @@ import { CustomerNewsService } from 'src/app/services/customer-news.service';
 })
 export class NewsComponent implements OnInit {
 
-  latestNews: News[];
-  oldNews: News[];
   boolOldNews: boolean = false;
   customerNews: CustomerNews[];
   oldCustomerNews: News[];
@@ -22,13 +20,13 @@ export class NewsComponent implements OnInit {
 
   ngOnInit() {
     this.getAllCustomerNews();
-    this.getOldAndLatestCustomerNews();
   }
 
   private getAllCustomerNews() {
     this.customerNewsService.getCustomerNews().subscribe(
       (customerNews: CustomerNews[]) => {
         this.customerNews = customerNews;
+        this.getOldAndLatestCustomerNews();
       }
     );
   }
@@ -46,14 +44,6 @@ export class NewsComponent implements OnInit {
     );
     this.oldCustomerNews = oldNews;
     this.latestCustomerNews = latestNews;
-  }
-
-  private getAllNews() {
-    this.newsService.getAllNews().subscribe(
-      (news: News[]) => {
-        this.latestNews = news;
-      }
-    );
   }
 
   private getOldNews() {

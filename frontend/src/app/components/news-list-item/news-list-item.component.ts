@@ -33,7 +33,7 @@ export class NewsListItemComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authServicec: AuthService,
+    private authService: AuthService,
     private customerNewsService: CustomerNewsService) { }
 
   readNews(id: number) {
@@ -47,7 +47,7 @@ export class NewsListItemComponent implements OnInit {
       null,
       'dummy',
       'dummy',
-      this.authServicec.getUserName(),
+      this.authService.getUserName(),
       'dummy',
       false,
       true
