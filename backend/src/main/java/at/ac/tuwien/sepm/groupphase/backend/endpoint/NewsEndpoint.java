@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,9 +35,19 @@ public class NewsEndpoint {
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create a news entry", authorizations = {@Authorization(value = "apiKey")})
+    @ApiOperation(value = "Add an image to a news entry", authorizations = {@Authorization(value = "apiKey")})
     public NewsDto update(@RequestParam("image") MultipartFile image, @PathVariable("id") Long id)  {
         return this.newsMapper.newsToNewsDto(this.newsService.updateWithImage(id, image));
+    }
+
+    @GetMapping(
+        value = "/{id}/image",
+        produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value= "Get the image for a news entry", authorizations = {@Authorization(value = "apiKey")})
+    public @ResponseBody byte[] getImageForNews(@RequestParam("id") Long id) {
+        News news = this.newsService.findById(id);
+        return news.getImage();
     }
 
 

@@ -22,4 +22,12 @@ public interface EmployeeNewsEventService {
      * @throws NotFoundException in case something goes wrong while accessing the database
      */
     List<EmployeeNewsEvent> findAll() throws NotFoundException;
+
+    /**
+     * Finds an event news entry with a certain id
+     * @param id the event news entry is to be found for
+     * @return a link with @param id as found in the database
+     * @throws NotFoundException in case something goes wrong while accessing the database or no link is found
+     */
+    EmployeeNewsEvent findById(Long id) throws NotFoundException;
 }

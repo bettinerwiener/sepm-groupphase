@@ -3,12 +3,14 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EmployeeNewsEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EmployeeNewsEventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EmployeeNewsEvent;
+import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.service.EmployeeNewsEventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
