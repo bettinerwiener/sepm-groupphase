@@ -79,7 +79,8 @@ public class SimpleRoomService implements RoomService {
     @Override
     public Room create(Room room) throws NotCreatedException {
         try {
-            Room createdRoom = roomRepository.save(room);
+            Room createdRoom = roomRepository.saveAndFlush(room);
+            System.out.println(room);
             return createdRoom;
         } catch (DataAccessException dae) {
             log.error("Room could not be created: %s", dae.getMessage());

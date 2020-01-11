@@ -5,6 +5,8 @@ import { EventObject } from 'src/app/dtos/event-object';
 import { TicketService } from 'src/app/services/ticket.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
 import { Ticket } from 'src/app/dtos/ticket';
+import { Order } from 'src/app/dtos/order';
+import { TicketDto } from 'src/app/dtos/ticket-dto';
 
 @Component({
   selector: 'app-event-item',
@@ -21,7 +23,9 @@ export class EventItemComponent implements OnInit {
   performances: Array<EventPerformance>;
   id: number = 0;
   selectedTickets: Array<Ticket> = new Array<Ticket>();
+  submittedTickets: Array<TicketDto> = new Array<TicketDto>();
   load: boolean = false;
+  order: Order;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,11 +63,11 @@ export class EventItemComponent implements OnInit {
 
   ticketsToArray(tickets: Array<Ticket>, eventPerformance: EventPerformance) {
     eventPerformance.tickets = new Array<Array<Ticket>>();
-    tickets.sort((a, b) => (a.seat.row > b.seat.row ? 1 : -1));
+    tickets.sort((a, b) => (a.seat.rowLetter > b.seat.rowLetter ? 1 : -1));
     var j: number = 0;
     eventPerformance.tickets.push(new Array<Ticket>());
     for (let i = 0; i < tickets.length; i++) {
-      if (i > 0 && tickets[i].seat.row !== tickets[i - 1].seat.row) {
+      if (i > 0 && tickets[i].seat.rowLetter !== tickets[i - 1].seat.rowLetter) {
         eventPerformance.tickets.push(new Array<Ticket>());
         j++;
       }
@@ -71,7 +75,7 @@ export class EventItemComponent implements OnInit {
     }
 
     for (let row of eventPerformance.tickets) {
-      row.sort((a, b) => a.seat.number - b.seat.number);
+      row.sort((a, b) => a.seat.seatNumber - b.seat.seatNumber);
     }
   }
 
@@ -87,20 +91,35 @@ export class EventItemComponent implements OnInit {
   }
 
   buyTickets(eventPerformance: EventPerformance): void {
-    
-    this.service.buyTicket(this.selectedTickets);
-
+    this.submittedTickets = new Array<TicketDto>();
     for (let ticket of this.selectedTickets) {
+      this.submittedTickets.push(new TicketDto(ticket.id, null, ticket.performance, ticket.seat, ticket.status, ticket.price));
       ticket.status = 'BOUGHT';
     }
+
+    this.service.buyTickets(this.submittedTickets).subscribe(
+      (order:Order) => {
+        console.log(order);
+      }
+    );
+
     this.selectedTickets = new Array<Ticket>();
   }
 
   reserveTickets(eventPerformance: EventPerformance): void {
+    this.submittedTickets = new Array<TicketDto>();
+
     for (let ticket of this.selectedTickets) {
+      this.submittedTickets.push(new TicketDto(ticket.id, null, ticket.performance, ticket.seat, ticket.status, ticket.price));
       ticket.status = 'RESERVED';
-      this.service.reserveTicket(ticket);
     }
+
+    this.service.reserveTickets(this.submittedTickets).subscribe(
+      (order:Order) => {
+        console.log(order);
+      }
+    );
+
     this.selectedTickets = new Array<Ticket>();
   }
 }

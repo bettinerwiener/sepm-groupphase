@@ -63,11 +63,16 @@ export class CreateEventComponent implements OnInit {
   }
 
   public createEvent(event: GlobalEvent) {
+    console.log('here');
     this.eventService.createEvent(event).subscribe(
       (retEvent: GlobalEvent) => {
+        console.log('here');
+        
         this.event = retEvent;
         this.success = true;
         console.log(this.success);
+        console.log(retEvent);
+        
 
         // this.loadCreatedEvent();
       },

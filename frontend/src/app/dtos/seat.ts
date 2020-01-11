@@ -7,8 +7,8 @@ export class Seat {
     
         constructor(
             public id:number,
-            public number:number,
-            public row:string,
+            public seatNumber:number,
+            public rowLetter:string,
             public section:Section,
         ) { }
 }

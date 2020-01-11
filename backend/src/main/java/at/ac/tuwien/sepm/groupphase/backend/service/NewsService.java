@@ -4,6 +4,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,10 +26,5 @@ public interface NewsService {
      */
     News findById(Long id) throws NotFoundException;
 
-    /**
-     * Gets all news in the database
-     * @return a list of news currently in the database
-     * @throws NotFoundException in case no news have been found
-     */
-    List<News> getAll() throws NotFoundException;
+    News updateWithImage(Long id, MultipartFile image) throws NotFoundException;
 }

@@ -121,7 +121,7 @@ public class SimplePdfService implements PdfService {
             placeText(contentStream,  Date.from( ticket.getPerformance().getDate().atZone(ZoneId.systemDefault()).toInstant()).toString(), 73, 121, 15);
             placeText(contentStream, ticket.getPerformance().getRoom().getLocation().getName()+ ", " + ticket.getPerformance().getRoom().getName(), 73, 55, 15);
 
-            placeText(contentStream, ticket.getSeat().getNumber() + ticket.getSeat().getRow(), 440, 121, 15);
+            placeText(contentStream, ticket.getSeat().getSeatNumber() + ticket.getSeat().getRowLetter(), 440, 121, 15);
             placeText(contentStream, ticket.getPrice().toString() + "€", 440, 55, 15);
 
 

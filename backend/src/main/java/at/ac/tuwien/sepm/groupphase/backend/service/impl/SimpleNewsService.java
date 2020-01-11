@@ -10,9 +10,12 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.io.IOUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,19 +78,22 @@ public class SimpleNewsService implements NewsService {
     }
 
     @Override
-    public List<News> getAll() throws NotFoundException {
+    public News updateWithImage(Long id, MultipartFile image) throws NotFoundException {
+        log.info("Updating news entry {} with image ...", id);
         try {
-            List<News> news = this.newsRepository.findAll();
-            if (news != null && !news.isEmpty()) {
-                return news;
+            Optional<News> result = this.newsRepository.findById(id);
+            if (!result.isPresent()) {
+                log.info("The news entry with id {} could not be found.", id);
+                throw new NotFoundException(String.format("The news entry with id %d could not be found.", id));
             }
-            else {
-                log.error("There are no news in the database.");
-                throw new NotFoundException("No news have been found.");
-            }
-        } catch (DataAccessException dae) {
-            log.error("No news have been found: %s", dae.getMessage());
-            throw new NotFoundException(String.format("No news have been found: %s", dae.getMessage()));
+            News toUpdate = result.get();
+            toUpdate.setImage(IOUtils.toByteArray(image.getInputStream()));
+            this.newsRepository.saveAndFlush(toUpdate);
+        } catch (IOException | DataAccessException dae) {
+            log.error("The news with id {} could not be updated: {}", id, dae.getMessage());
+            throw new NotFoundException(String.format("The news with id %d could not be updated: %s",
+                id, dae.getMessage()));
         }
+        return null;
     }
 }

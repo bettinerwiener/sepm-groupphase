@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Globals } from '../global/globals';
 import { Observable } from 'rxjs';
-import { GlobalEvent } from '../dtos/global-event';
 import { Room } from '../dtos/room';
 
 @Injectable({

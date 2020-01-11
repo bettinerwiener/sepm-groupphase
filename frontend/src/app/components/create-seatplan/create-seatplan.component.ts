@@ -10,6 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class CreateSeatplanComponent implements OnInit {
   seatForm: FormGroup;
   selectedSection: string;
+  selecting: boolean = false;
+  notAssigned: boolean = false;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -20,7 +22,7 @@ export class CreateSeatplanComponent implements OnInit {
   }
 
   @Input() seatplan: Array<Array<Seat>>;
-  @Output() seats: EventEmitter<Array<Array<Seat>>> = new EventEmitter();
+  @Output() seatEmitter: EventEmitter<Array<Array<Seat>>> = new EventEmitter();
 
   stagewidth: string;
 
@@ -35,28 +37,27 @@ export class CreateSeatplanComponent implements OnInit {
   }
 
   select(seat: Seat): void {
-    if (this.seatForm.controls.section.value == undefined) {
+    this.selecting = true;
+    if (this.selectedSection == "") {
       return;
-    }
-    console.log("Section: " + this.selectedSection);
-    console.log(seat);
+    }    
 
     seat.section.letter = this.selectedSection;
-  }
 
-  submit():void {
     for (let rowUnit of this.seatplan) {
       for (let seatUnit of rowUnit) {
-        if (seatUnit.section == null) {
-          console.error("All seats must have to be assigned to a sector.");
+        if (seatUnit.section.letter == null) {
+          this.notAssigned = true;
           return;
         }
       }
     }
+    this.notAssigned = false;
 
-    this.seats.emit(this.seatplan);
-
+    this.seatEmitter.emit(this.seatplan);
   }
+
+e
 
 
 }

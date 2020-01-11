@@ -9,6 +9,7 @@ import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,13 +35,11 @@ public class NewsEndpoint {
         return this.newsMapper.newsToNewsDto(this.newsService.save(toSave));
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    @ApiOperation(value = "Get all news", authorizations = {@Authorization(value = "apiKey")})
-    public List<NewsDto> getAll() {
-        List<NewsDto> newsDtos = newsService.getAll()
-            .stream().map(news -> newsMapper.newsToNewsDto(news)).collect(Collectors.toList());
-        return newsDtos;
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create a news entry", authorizations = {@Authorization(value = "apiKey")})
+    public NewsDto update(@RequestParam("image") MultipartFile image, @PathVariable("id") Long id)  {
+        return this.newsMapper.newsToNewsDto(this.newsService.updateWithImage(id, image));
     }
 
 

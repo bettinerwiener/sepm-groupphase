@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { Globals } from '../global/globals';
 import { EventObject } from '../dtos/event-object';
 import { EventPerformance } from '../dtos/event-performance';
+import { Order } from '../dtos/order';
+import { TicketDto } from '../dtos/ticket-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +18,14 @@ export class TicketService {
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
 
-  buyTicket(tickets: Array<Ticket>): Observable<Ticket> {
-    console.log("Buy ticket ", tickets);
-    return this.httpClient.post<Ticket>(this.messageBaseUri + '/orders/buy', tickets);
+  buyTickets(tickets: Array<TicketDto>): Observable<Order> {
+    console.log("Buy tickets ", tickets);
+    return this.httpClient.post<Order>(this.messageBaseUri + '/orders/buy', tickets);
   }
 
-  reserveTicket(ticket: Ticket): Observable<Ticket> {
-    console.log("Reserve ticket ", ticket);
-    return this.httpClient.put<Ticket>(this.messageBaseUri, ticket);
+  reserveTickets(tickets: Array<TicketDto>): Observable<Order> {
+    console.log("Reserve tickets ", tickets);
+    return this.httpClient.post<Order>(this.messageBaseUri + '/orders/reserve', tickets);
   }
 
   getEvent(id: number): Observable<EventObject> {
