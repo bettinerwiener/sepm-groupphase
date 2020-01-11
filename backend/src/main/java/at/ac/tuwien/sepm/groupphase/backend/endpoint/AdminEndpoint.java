@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.service.AdminService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
@@ -62,5 +63,17 @@ public class AdminEndpoint {
         LOGGER.info("PUT /api/v1/admin/edit username: " + userDto.getEmail());
 
         return userMapper.userToUserDto(adminService.updateUser(userMapper.userDtoToUser(userDto)));
+    }
+
+    @Secured("ROLE_ADMIN")
+    @CrossOrigin(origins = "*")
+    @DeleteMapping(value = "/delete")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Delete User", authorizations = {@Authorization(value = "apiKey")})
+    public boolean deleteUser(@RequestBody UserDto userDto) {
+        LOGGER.info("DELETE /api/vi/admin/delete username: " + userDto.getEmail());
+
+        //todo: implement delete
+        return true;
     }
 }

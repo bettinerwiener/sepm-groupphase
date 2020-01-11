@@ -31,4 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findFirstById(Long id);
 
+    void deleteById(Long id);
+
+    boolean existsById(Long id);
 }

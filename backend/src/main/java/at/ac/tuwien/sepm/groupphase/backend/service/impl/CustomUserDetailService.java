@@ -58,7 +58,6 @@ public class CustomUserDetailService implements UserService {
         LOGGER.debug("Find application user by email");
         User user = userRepository.findFirstByEmail(email);
         if (!(user==null)) return user;
-        // TODO: GLEICHE EMAILS SOLLTE NICHT ERLAUBT SEIN
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
     }
 

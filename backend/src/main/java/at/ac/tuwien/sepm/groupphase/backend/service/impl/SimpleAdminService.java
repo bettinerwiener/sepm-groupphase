@@ -57,4 +57,16 @@ public class SimpleAdminService implements AdminService {
         }
         return user;
     }
+
+    @Override
+    public boolean deleteUser(User user) {
+        LOGGER.debug("Deleting User with ID: " + user.getId());
+        userRepository.deleteById(user.getId());
+        userRepository.flush();
+        if (userRepository.existsById(user.getId())) {
+            return false;
+        }
+        return true;
+    }
+
 }

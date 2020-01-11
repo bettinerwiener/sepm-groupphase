@@ -26,4 +26,11 @@ public interface AdminService {
      * @return the updated user
      */
     User updateUser(User user);
+
+
+    /**
+     * @param user to delete
+     * @return If delete was successful
+     */
+    boolean deleteUser(User user);
 }
