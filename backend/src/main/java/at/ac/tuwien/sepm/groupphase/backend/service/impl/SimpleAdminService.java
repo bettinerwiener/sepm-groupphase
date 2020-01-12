@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.AdminService;
@@ -67,6 +68,13 @@ public class SimpleAdminService implements AdminService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean validate(UserLoginDto user) {
+        LOGGER.debug("validate Admin " + user.getEmail());
+        User help = userRepository.findFirstByEmail(user.getEmail());
+        return passwordEncoder.matches(user.getPassword(), help.getPassword());
     }
 
 }

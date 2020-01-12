@@ -53,6 +53,19 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="password">Password bestätigen</label>
+              <input type="password" name="passwordConf" formControlName="passwordConf" class="form-control" id="passwordConf">
+              <div *ngIf="submitted && registerForm.controls.passwordConf.errors" class="errors">
+                <div *ngIf="registerForm.controls.passwordConf.errors.required">
+                  Confirm your Password!
+                </div>
+                <div *ngIf="registerForm.controls.passwordConf.errors.mustMatch">
+                  password doesn't match
+                </div>
+              </div>
+            </div>
+
             <div>
               <label>Admin</label>
               <input type="checkbox" name="isEmployee" [checked]="user.isEmployee" (change)="changeAdmin()">
@@ -61,8 +74,14 @@
               <label>locked</label>
               <input type="checkbox" name="isLocked" [checked]="user.locked" (change)="changeLocked()">
             </div>
+            <div>
+              <button type="button" (click)="updateUser()" class="btn btn-success float-right">Update</button>
+            </div>
 
-            <button type="button" (click)="updateUser()" class="btn btn-success float-right">Update</button>
+            <div>
+              <button type="button" class="btn btn-success float-right">Delete</button>
+            </div>
+
           </form>
         </div>
       </div>

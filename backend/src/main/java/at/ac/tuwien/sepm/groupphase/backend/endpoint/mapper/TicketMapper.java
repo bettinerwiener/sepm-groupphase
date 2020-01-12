@@ -18,7 +18,6 @@ public interface TicketMapper {
      * @return the TicketDto with same values as ticket
      */
     TicketDto ticketToTicketDto(Ticket ticket);
-
     /**
      * Maps a List of Tickets to a List of TicketDtos
      * @param tickets the List of Tickets to be mapped

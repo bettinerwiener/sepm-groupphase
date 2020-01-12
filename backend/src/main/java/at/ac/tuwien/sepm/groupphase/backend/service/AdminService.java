@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 
 import java.util.List;
@@ -33,4 +34,6 @@ public interface AdminService {
      * @return If delete was successful
      */
     boolean deleteUser(User user);
+
+    boolean validate(UserLoginDto user);
 }

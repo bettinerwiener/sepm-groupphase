@@ -3,6 +3,7 @@ import {User} from '../../dtos/user';
 import {ActivatedRoute} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MustMatch} from '../../services/matcher';
 
 
 @Component({
@@ -14,6 +15,11 @@ export class EditUserByAdminComponent implements OnInit {
   user: User = new User(0, '', '', '', '', false, false);
   registerForm: FormGroup;
 
+  submitted: boolean = false;
+
+  error: boolean = false;
+  errorMessage: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -21,11 +27,15 @@ export class EditUserByAdminComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
+        firstName: ['', [Validators.required]],
+        lastName: ['', [Validators.required]],
+        email: ['', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        passwordConf: ['', [Validators.required]]
+      },
+      {
+        validator: MustMatch('password', 'passwordConf')
+      });
   }
 
 
@@ -42,18 +52,28 @@ export class EditUserByAdminComponent implements OnInit {
           this.registerForm.controls['lastName'].setValue(this.user.lastName);
           this.registerForm.controls['email'].setValue(this.user.email);
           this.registerForm.controls['password'].setValue(this.user.password);
+          this.registerForm.controls['passwordConf'].setValue(this.user.password);
         }
       );
   }
 
   updateUser(): void {
     console.log('Update some User');
+    this.submitted = true;
+
 
     this.user.firstName = this.registerForm.controls.firstName.value;
     this.user.lastName = this.registerForm.controls.lastName.value;
     this.user.password = this.registerForm.controls.password.value;
     this.user.email = this.registerForm.controls.email.value;
-    this.service.updateUser(this.user).subscribe(user => this.user = user);
+
+    if (this.registerForm.controls.passwordConf.value === this.registerForm.controls.password.value) {
+      this.service.updateUser(this.user).subscribe(user => this.user = user);
+    } else {
+      this.error = true;
+      this.errorMessage = 'password doesn\'t match!';
+    }
+
   }
 
   changeAdmin(): void {

@@ -1,10 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.service.AdminService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.invoke.MethodHandles;
@@ -72,8 +70,16 @@ public class AdminEndpoint {
     @ApiOperation(value = "Delete User", authorizations = {@Authorization(value = "apiKey")})
     public boolean deleteUser(@RequestBody UserDto userDto) {
         LOGGER.info("DELETE /api/vi/admin/delete username: " + userDto.getEmail());
+        return adminService.deleteUser(userMapper.userDtoToUser(userDto));
+    }
 
-        //todo: implement delete
-        return true;
+    @Secured("ROLE_ADMIN")
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/validate")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Validate Admin", authorizations = {@Authorization(value = "apiKey")})
+    public boolean validate(@RequestBody UserLoginDto userLoginDto) {
+        LOGGER.info("GET /api/vi/admin/valdate");
+        return adminService.validate(userLoginDto);
     }
 }
