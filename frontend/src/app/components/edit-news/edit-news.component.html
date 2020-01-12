@@ -1,0 +1,89 @@
+<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Problems while editing this news for the chosen event!</strong> {{ errorMessage }}
+    <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Successfully edited news entry for the chosen event!</strong>
+    <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="pt-5">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <span class="anchor" id="formCreateEventNews"></span>
+
+        <div class="card rounded-0">
+          <div class="card-header">
+            <h3 class="mb-0">Edit news entry for an event</h3>
+          </div>
+
+          <div class="card-body">
+            <form enctype="multipart/form-data">
+
+              <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" minlenght="2" maxlength="127" name="title" 
+                        class="form-control" 
+                        id= "title" [(ngModel)]="news.title" #t="ngModel" required>
+                    <div *ngIf="t.invalid" class="alert alert-warning">
+                      <small class="form-text">A title is
+                        required!
+                      </small>
+                    </div>
+              </div>
+
+                <div class="form-group">
+                    <label for="shortDescription">Short Description</label>
+                    <input type="text" minlength="2" maxlength="255" name="shortDescription" class="form-control" 
+                    id= "shortDescription" [ngModel]="news.shortDescription" 
+                    #shortDesc="ngModel" required>
+                    <div *ngIf="shortDesc.invalid" class="error">
+                    <small class="form-text text-warning">A short description is
+                        required!
+                    </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="entry">Entry</label>
+                    <textarea type="text" minlength="2" maxlength="511" name="entry"
+                    class="form-control" id= "entry" [(ngModel)]="news.entry" 
+                    #ent="ngModel" required>
+                    </textarea>
+                    <div *ngIf="ent.invalid" class="error">
+                    <small class="form-text text-warning">An entry is
+                        required!
+                    </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="media">
+                        <img *ngIf="!isChangeImage" [src]="imageURL"
+                        [alt]="" class="align-self-center mr-3"/>
+                    
+                    </div>
+                    
+                    <input *ngIf="isChangeImage" type="file" name="image" 
+                    class="form-control" id= "image" placeholder="Image"
+                    (change)="onFileSelect($event)">
+                    
+                </div>
+                <div class="btn-group-vertical float-right" role="group">
+                    <button type="button" (click)="changeImage()" class="btn btn-info float-right">Change image</button>
+                <button type="button" (click)="onSubmit()" [disabled]="t.invalid || ent.invalid || shortDesc.invalid" class="btn btn-success float-right">Update News Entry</button>
+                </div>
+                
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+      </div>
+  </div>
+
