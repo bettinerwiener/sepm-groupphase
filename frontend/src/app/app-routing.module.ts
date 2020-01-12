@@ -24,6 +24,8 @@ import { CreateRoomComponent } from './components/create-room/create-room.compon
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
 import { NewsComponent } from './components/news/news.component';
 import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
+import { EditNewsComponent } from './components/edit-news/edit-news.component';
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -48,7 +50,8 @@ const routes: Routes = [
   {path: 'create-location', component: CreateLocationComponent},
   {path: 'create-room', component: CreateRoomComponent},
   {path: 'create-event-news', component: CreateEventNewsComponent},
-  {path: 'news-list-item', component: NewsListItemComponent}
+  {path: 'news-list-item', component: NewsListItemComponent},
+  {path: 'news/:id', component: EditNewsComponent}
 ];
 
 @NgModule({

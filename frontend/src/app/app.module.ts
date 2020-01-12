@@ -37,6 +37,7 @@ import { CreateSeatplanComponent } from './components/create-seatplan/create-sea
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
 import { NewsComponent } from './components/news/news.component';
 import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
+import { EditNewsComponent } from './components/edit-news/edit-news.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { NewsListItemComponent } from './components/news-list-item/news-list-ite
     CreateEventNewsComponent,
     NewsListItemComponent,
     NewsComponent,
+    EditNewsComponent,
   ],
   imports: [
     BrowserModule,
