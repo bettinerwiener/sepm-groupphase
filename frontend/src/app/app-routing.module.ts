@@ -22,6 +22,7 @@ import { CreateEventPerformanceComponent } from './components/create-event-perfo
 import { CreateLocationComponent } from './components/create-location/create-location.component';
 import { CreateRoomComponent } from './components/create-room/create-room.component';
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component'
+import { EditNewsComponent } from './components/edit-news/edit-news.component';
 
 
 const routes: Routes = [
@@ -45,7 +46,8 @@ const routes: Routes = [
   {path: 'create-event-performance', component: CreateEventPerformanceComponent},
   {path: 'create-location', component: CreateLocationComponent},
   {path: 'create-room', component: CreateRoomComponent},
-  {path: 'create-event-news', component: CreateEventNewsComponent}
+  {path: 'create-event-news', component: CreateEventNewsComponent},
+  {path: 'news/:id', component: EditNewsComponent}
 ];
 
 @NgModule({
