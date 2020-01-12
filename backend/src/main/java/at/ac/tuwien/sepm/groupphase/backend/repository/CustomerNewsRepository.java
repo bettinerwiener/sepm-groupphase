@@ -22,5 +22,7 @@ public interface CustomerNewsRepository extends JpaRepository<CustomerNews, Cust
      * Finds all entries for a news
      * @return all entries with an attribute @param news
      */
+    List<CustomerNews> findByNews(News news);
+
     List<CustomerNews> findAll();
 }

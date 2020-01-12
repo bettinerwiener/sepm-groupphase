@@ -29,9 +29,9 @@ public class SimpleCustomerNewsService implements CustomerNewsService {
     private CustomerNewsRepository customerNewsRepository;
 
     public SimpleCustomerNewsService(EmployeeNewsEventRepository employeeNewsEventRepository,
-                                          NewsRepository newsRepository,
-                                          UserRepository userRepository,
-                                          CustomerNewsRepository customerNewsRepository) {
+                                     NewsRepository newsRepository,
+                                     UserRepository userRepository,
+                                     CustomerNewsRepository customerNewsRepository) {
         this.employeeNewsEventRepository = employeeNewsEventRepository;
         this.newsRepository = newsRepository;
         this.userRepository = userRepository;

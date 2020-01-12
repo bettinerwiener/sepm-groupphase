@@ -22,7 +22,7 @@ public class CustomerNewsEndpoint {
     private CustomerNewsService customerNewsService;
 
     public CustomerNewsEndpoint(CustomerNewsMapper customerNewsMapper,
-                                     CustomerNewsService customerNewsService) {
+                                CustomerNewsService customerNewsService) {
         this.customerNewsMapper = customerNewsMapper;
         this.customerNewsService = customerNewsService;
     }
