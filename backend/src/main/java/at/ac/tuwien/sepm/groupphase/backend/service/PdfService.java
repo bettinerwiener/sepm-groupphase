@@ -20,4 +20,7 @@ public interface PdfService {
      * @throws NotFoundException
      */
     ByteArrayInputStream getTicketPdf(Long id, String email) throws NotFoundException;
+
+    ByteArrayInputStream getOrderInvoicePdf(Long id, String email) throws NotFoundException;
+
 }
