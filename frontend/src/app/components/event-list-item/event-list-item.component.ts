@@ -35,7 +35,7 @@ export class EventListItemComponent implements OnInit {
 
   ngOnInit() {
     this.getFirstAndLastPerformance(this.id);
-    this.getLowestPrice(this.id);
+    // this.getLowestPrice(this.id);
   }
 
   getId(id: number) {
@@ -51,7 +51,6 @@ export class EventListItemComponent implements OnInit {
             return a.date.getDate() - b.date.getDate();
           }
         );
-        console.log(retPerformances[0].date);
         const firstPerformance = new Date(retPerformances[0].date);
         this.firstPerformanceDate = firstPerformance.getDate() + '-' + firstPerformance.getMonth() + '-' + firstPerformance.getFullYear();
         const lastPerformance = new Date(retPerformances[retPerformances.length - 1].date);
@@ -64,32 +63,32 @@ export class EventListItemComponent implements OnInit {
     );
   }
 
-  getLowestPrice(id: number) {
-    let ticketPrices: number[];
-    this.ticketService.getPerformancesByEventId(id).subscribe(
-      (retPerformances: EventPerformance[]) => {
-        retPerformances.forEach( function (retPerformance) {
-          this.ticketService.getTicketsByPerformanceId(retPerformance.id).subscribe(
-            (retTickets: Ticket[]) => {
-              console.log(retTickets);
-              retTickets.forEach( function (retTicketPrice) {
-                ticketPrices.push(retTicketPrice[0]);
-              }
-              );
-            }
-          );
-        }
-        );
-      }
-    );
-    console.log(ticketPrices);
-    ticketPrices.sort(
-      (a: number, b: number) => {
-        return a - b;
-      }
-    );
-    this.lowestPrice = ticketPrices[0];
-  }
+  // getLowestPrice(id: number) {
+  //   let ticketPrices: number[];
+  //   this.ticketService.getPerformancesByEventId(id).subscribe(
+  //     (retPerformances: EventPerformance[]) => {
+  //       retPerformances.forEach( function (retPerformance) {
+  //         this.ticketService.getTicketsByPerformanceId(retPerformance.id).subscribe(
+  //           (retTickets: Ticket[]) => {
+  //             console.log(retTickets);
+  //             retTickets.forEach( function (retTicketPrice) {
+  //               ticketPrices.push(retTicketPrice[0]);
+  //             }
+  //             );
+  //           }
+  //         );
+  //       }
+  //       );
+  //     }
+  //   );
+  //   console.log(ticketPrices);
+  //   ticketPrices.sort(
+  //     (a: number, b: number) => {
+  //       return a - b;
+  //     }
+  //   );
+  //   this.lowestPrice = ticketPrices[0];
+  // }
 
 
   private sortTickets(a, b) {

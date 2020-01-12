@@ -52,7 +52,11 @@ export class SearchAreaComponent implements OnInit {
         }
       },
       error => {
-        this.defaultServiceErrorHandling(error);
+        console.log('No events found with this filter');
+        this.searchedConcerts.emit(null);
+        this.searchedEvents.emit(null);
+        this.searchedTheatres.emit(null);
+        this.searchedFilms.emit(null);
       }
     );
   }
@@ -87,7 +91,11 @@ export class SearchAreaComponent implements OnInit {
         }
       },
       error => {
-        this.defaultServiceErrorHandling(error);
+        console.log('No events found with this filter');
+        this.searchedConcerts.emit(null);
+        this.searchedEvents.emit(null);
+        this.searchedTheatres.emit(null);
+        this.searchedFilms.emit(null);
       }
     );
   }
