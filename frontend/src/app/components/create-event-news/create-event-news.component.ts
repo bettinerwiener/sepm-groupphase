@@ -99,13 +99,12 @@ export class CreateEventNewsComponent implements OnInit {
       error => {
         this.defaultServiceErrorHandling(error);
       }
-    )
+    );
   }
+
   public createEventNews(eventNews: EventNews) {
     this.eventNewsService.createEventNews(eventNews).subscribe(
       (retEventNews: EventNews) => {
-        console.log(retEventNews);
-        
         this.eventNews = retEventNews;
         this.success = true;
         this.sendImage(this.formData, this.eventNews.news.id);
@@ -132,7 +131,7 @@ export class CreateEventNewsComponent implements OnInit {
     {
       this.formData.append('image', event.target.files[0]);
     }
-    
+
   }
 
   private defaultServiceErrorHandling(error: any) {

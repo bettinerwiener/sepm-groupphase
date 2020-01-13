@@ -15,6 +15,7 @@ export class CreateEventComponent implements OnInit {
   event: GlobalEvent;
   error: boolean = false;
   success: boolean = false;
+  formData: FormData;
   private events: GlobalEvent[];
   private rooms: Room[];
 
@@ -30,10 +31,12 @@ export class CreateEventComponent implements OnInit {
       shortDescription:  ['', Validators.required],
       contents:         ['', Validators.required],
       duration:     [Validators.required],
+      image:        [Validators.nullValidator]
     });
   }
 
   ngOnInit() {
+    this.formData = new FormData();
   }
 
    /**
@@ -62,19 +65,23 @@ export class CreateEventComponent implements OnInit {
     }
   }
 
+  public sendImage(formData: FormData, id: Number) {
+    this.eventService.sendImage(formData, id).subscribe(
+      success => {
+        this.success = true;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
   public createEvent(event: GlobalEvent) {
-    console.log('here');
     this.eventService.createEvent(event).subscribe(
       (retEvent: GlobalEvent) => {
-        console.log('here');
-        
         this.event = retEvent;
         this.success = true;
-        console.log(this.success);
-        console.log(retEvent);
-        
-
-        // this.loadCreatedEvent();
+        this.sendImage(this.formData, this.event.id);
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -102,6 +109,12 @@ export class CreateEventComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
+  }
+
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      this.formData.append('image', event.target.files[0]);
+    }
   }
 
   private defaultServiceErrorHandling(error: any) {
