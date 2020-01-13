@@ -9,8 +9,8 @@
                 <div class="row">
                     <h5>{{news.shortDescription}}</h5>
                 </div>
-                <div class="row">
-                    <h6><a routerLink="/event/{{id}}">Go to event</a></h6>
+                <div *ngIf="eventNews" class="row">
+                    <h6><a routerLink="/event/{{eventNews.event.id}}">Go to event</a></h6>
                 </div>
             </div>
         </div>

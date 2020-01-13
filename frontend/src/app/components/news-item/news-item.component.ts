@@ -7,6 +7,8 @@ import { TicketDto } from 'src/app/dtos/ticket-dto';
 import { NewsService } from 'src/app/services/news.service';
 import { News } from 'src/app/dtos/news';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { EventNewsService } from 'src/app/services/event-news.service';
+import { EventNews } from 'src/app/dtos/event-news';
 
 @Component({
   selector: 'app-news-item',
@@ -20,6 +22,7 @@ export class NewsItemComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
   selectSeatBool: boolean = false;
   news: News;
+  eventNews: EventNews = null;
   id: number = 0;
   selectedTickets: Array<Ticket> = new Array<Ticket>();
   submittedTickets: Array<TicketDto> = new Array<TicketDto>();
@@ -31,6 +34,7 @@ export class NewsItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: NewsService,
+    private eventNewsService: EventNewsService,
     private sanitizer: DomSanitizer
   ) { }
   
@@ -57,6 +61,11 @@ export class NewsItemComponent implements OnInit {
             //this.defaultServiceErrorHandling(error);
           }
         );
+      }
+    )
+    this.eventNewsService.getEventForNews(id).subscribe(
+      (eventNews:Array<EventNews>) => {
+        this.eventNews = eventNews[0];
       }
     )
 

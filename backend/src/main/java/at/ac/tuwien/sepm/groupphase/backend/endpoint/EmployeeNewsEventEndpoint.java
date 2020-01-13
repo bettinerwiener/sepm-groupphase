@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EmployeeNewsEventDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EmployeeNewsEventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EmployeeNewsEvent;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
@@ -34,10 +35,13 @@ public class EmployeeNewsEventEndpoint {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find all news entries for all events", authorizations = {@Authorization(value = "apiKey")})
-    public List<EmployeeNewsEventDto> getAll() {
-        List<EmployeeNewsEvent> resultList = this.employeeNewsEventService.findAll();
-        log.info("The resultList has {} elements.", resultList.size());
-        return this.employeeNewsEventMapper.eNEListToENEDtoList(resultList);
+    public List<EmployeeNewsEventDto> getAll(@RequestParam(required = false) Long news) {
+        if (news == null) {
+            List<EmployeeNewsEvent> resultList = this.employeeNewsEventService.findAll();
+            log.info("The resultList has {} elements.", resultList.size());
+            return this.employeeNewsEventMapper.eNEListToENEDtoList(resultList);
+        }
+        return this.employeeNewsEventMapper.eNEListToENEDtoList(this.employeeNewsEventService.getForNews(news));
     }
 
     @PostMapping
@@ -48,5 +52,6 @@ public class EmployeeNewsEventEndpoint {
             this.employeeNewsEventService.create(this.employeeNewsEventMapper.
                 empNewsEventDtoToEmpNewsEvent(employeeNewsEventDto)));
     }
+
 
 }
