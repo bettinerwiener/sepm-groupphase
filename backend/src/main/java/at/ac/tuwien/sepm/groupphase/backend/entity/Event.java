@@ -43,9 +43,12 @@ public class Event {
     @Column(nullable = false)
     private  Double duration;
 
-
     @ManyToOne
     @JoinColumn(name = "employee")
     User employee;
+
+    @Lob
+    @Column(nullable = true, columnDefinition = "BLOB")
+    private byte[] image;
 
 }

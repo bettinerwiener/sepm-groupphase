@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.BitSet;
@@ -57,4 +58,6 @@ public interface EventService {
      *                           something wnet wrong while accessing the database
      */
     Event getById(Long id) throws NotFoundException;
+
+    Event updateWithImage(Long id, MultipartFile image) throws NotFoundException;
 }

@@ -28,14 +28,16 @@ CREATE TABLE IF NOT EXISTS news (
     published_at DATETIME NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS event (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title       VARCHAR(100) NOT NULL,
-    abstract    VARCHAR(255) NOT NULL,
-    contents    VARCHAR(511),
-    category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
-    duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES user(id)
+CREATE TABLE IF NOT EXISTS event
+(
+    id       BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title    VARCHAR(100) NOT NULL,
+    abstract VARCHAR(255) NOT NULL,
+    contents VARCHAR(511),
+    category VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
+    duration DECIMAL CHECK (duration >= 0 AND duration <= 10),
+    employee BIGINT REFERENCES user (id),
+    image    BLOB         NULL
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (

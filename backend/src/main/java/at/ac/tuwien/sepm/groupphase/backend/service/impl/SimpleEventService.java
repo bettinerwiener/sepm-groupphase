@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
@@ -8,12 +9,15 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepositoryCustom;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
+import org.apache.pdfbox.io.IOUtils;
 import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -118,5 +122,25 @@ public class SimpleEventService implements EventService {
             throw new NotFoundException(String.format("Event with id %d could not be found:%s ", id,
                 dae.getMessage()));
         }
+    }
+
+    @Override
+    public Event updateWithImage(Long id, MultipartFile image) throws NotFoundException {
+        LOGGER.info("Updating news entry {} with image ...", id);
+        try {
+            Optional<Event> result= this.eventRepository.findById(id);
+            if (!result.isPresent()) {
+                LOGGER.info("The news entry with id {} could not be found.", id);
+                throw new NotFoundException(String.format("The news entry with id %d could not be found.", id));
+            }
+            Event toUpdate = result.get();
+            toUpdate.setImage(IOUtils.toByteArray(image.getInputStream()));
+            this.eventRepository.saveAndFlush(toUpdate);
+        } catch (IOException | DataAccessException dae) {
+            LOGGER.error("The news with id {} could not be updated: {}", id, dae.getMessage());
+            throw new NotFoundException(String.format("The news with id %d could not be updated: %s",
+                id, dae.getMessage()));
+        }
+        return null;
     }
 }

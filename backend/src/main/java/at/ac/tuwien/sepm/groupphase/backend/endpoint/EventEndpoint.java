@@ -1,8 +1,10 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.NewsDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
@@ -12,14 +14,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.geom.RoundRectangle2D;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -90,4 +95,29 @@ public class EventEndpoint {
     public EventDto getById(@PathVariable("id") Long id) {
         return this.eventMapper.eventToEventDto(this.eventService.getById(id));
     }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Add an image to a news entry", authorizations = {@Authorization(value = "apiKey")})
+    public EventDto update(@RequestParam("image") MultipartFile image, @PathVariable("id") Long id)  {
+        return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Add an image to a news entry", authorizations = {@Authorization(value = "apiKey")})
+    public EventDto updateImage(@RequestParam("image") MultipartFile image, @PathVariable("id") Long id)  {
+        return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
+    }
+
+    @GetMapping(
+        value = "/{id}/image",
+        produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value= "Get the image for a news entry", authorizations = {@Authorization(value = "apiKey")})
+    public @ResponseBody byte[] getImageForNews(@PathVariable("id") Long id) {
+        Event event = this.eventService.getById(id);
+        return event.getImage();
+    }
+
 }
