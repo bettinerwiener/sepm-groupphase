@@ -15,6 +15,7 @@ public interface CustomerNewsService {
      */
     List<CustomerNews> findAll() throws NotFoundException;
 
-
     List<CustomerNews> findCustomerNewsByCustomer(String email, Boolean read) throws NotFoundException;
+
+    CustomerNews setRead(CustomerNews customerNews);
 }

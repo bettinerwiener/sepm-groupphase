@@ -12,9 +12,11 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.CustomerNewsService;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +65,16 @@ public class SimpleCustomerNewsService implements CustomerNewsService {
             throw new NotFoundException(String.format("Finding all news entries failed: %s",
                 dae.getMessage()));
         }
+    }
+
+    public CustomerNews setRead(CustomerNews customerNews) throws NotFoundException {
+        try {
+            customerNews.setRead(true);
+            this.customerNewsRepository.saveAndFlush(customerNews);
+        }catch (DataAccessException dae) {
+            log.error("The customerNews with id {} could not be updated: {}", customerNews.getNews().getId(), dae.getMessage());
+            throw new NotFoundException(String.format("The news with id %d could not be updated: %s", customerNews.getNews().getId(), dae.getMessage()));
+        }
+        return null;
     }
 }

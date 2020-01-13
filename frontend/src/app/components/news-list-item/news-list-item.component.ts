@@ -23,12 +23,15 @@ export class NewsListItemComponent implements OnInit {
   @Input() shortDescription: string;
   @Input() publishedAt: Date;
   @Input() image: string;
+  @Input() custNews: CustomerNews;
+
   image64: any;
   error: boolean = false;
   errorMessage: string = 'There was a problem while loading this news entry';
 
   ngOnInit() {
     this.image64 = window.atob(this.image);
+    console.log(this.custNews.news.title);
   }
 
   constructor(
@@ -36,38 +39,16 @@ export class NewsListItemComponent implements OnInit {
     private authService: AuthService,
     private customerNewsService: CustomerNewsService) { }
 
-  readNews(id: number) {
-    this.router.navigate(['/news/', id]).then(
-      () => window.location.reload());
-    this.setCustomerNewsToRead(id);
+  readNews(id: number, customerNews: CustomerNews) {
+    console.log(customerNews);
+    console.log(customerNews);
+    this.setCustomerNewsToRead(customerNews);
+    // this.router.navigate(['/news/', id]).then(
+    //   () => window.location.reload());
   }
 
-  setCustomerNewsToRead(newsId: number) {
-    const user = new User(
-      null,
-      'dummy',
-      'dummy',
-      this.authService.getUserName(),
-      'dummy',
-      false,
-      true
-    );
-
-    const news = new News(
-      newsId,
-      'dummy',
-      'dummy',
-      'dummy',
-      null,
-      null
-    );
-
-    const customerNews = new CustomerNews(
-      user,
-      news,
-      true
-    );
-
+  setCustomerNewsToRead(customerNews: CustomerNews) {
+    console.log('here');
     this.customerNewsService.setCustomerNewsToRead(customerNews).subscribe(
       () => {},
       error => {

@@ -44,17 +44,13 @@ public class CustomerNewsEndpoint {
         return this.customerNewsMapper.cNEListToCNEDtoList(resultList);
     }
 
-
-    /**
-     * @PutMapping
-     *     @ResponseStatus(HttpStatus.OK)
-     *     @ApiOperation(value = "Update a news to read", authorizations = {@Authorization(value = "apiKey")})
-     *     public CustomerNewsDto setRead(@RequestBody CustomerNewsDto customerNewsDto) {
-     *         return this.customerNewsMapper.customerNewsToCustomerNewsDto(
-     *             this.customerNewsService.setRead(this.customerNewsMapper.
-     *                 customerNewsDtoToCustomerNews(customerNewsDto)));
-     *     }
-     *
-     */
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Update a news to read", authorizations = {@Authorization(value = "apiKey")})
+    public CustomerNewsDto setRead(@RequestBody CustomerNewsDto customerNewsDto) {
+        return this.customerNewsMapper.custNewsToCustomerNewsDto(
+                   this.customerNewsService.setRead(this.customerNewsMapper.
+                       custNewsDtoToCustomerNews(customerNewsDto)));
+     }
 
 }

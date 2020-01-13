@@ -25,7 +25,7 @@ export class CustomerNewsService {
   }
 
   setCustomerNewsToRead(customerNews: CustomerNews): Observable<CustomerNews> {
-    console.log('Set customer news to read');
+    console.log('Set customer news to read' + customerNews.news + ' with customer ' + customerNews.user);
     return this.httpClient.put<CustomerNews>(this.customerNewsBaseUri, customerNews);
 
   }

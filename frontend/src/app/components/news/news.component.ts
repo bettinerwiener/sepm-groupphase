@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { News } from 'src/app/dtos/news';
+import { Component, OnInit, Output } from '@angular/core';
 import { CustomerNews } from 'src/app/dtos/customer-news';
 import { NewsService } from 'src/app/services/news.service';
 import { CustomerNewsService } from 'src/app/services/customer-news.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-news',
