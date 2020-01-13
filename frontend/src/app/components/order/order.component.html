@@ -23,11 +23,11 @@
             </div>
 
             <div class="col-md-3 event-list-item-content-right">
-                <span>Status: <span class="badge badge-secondary" style="color: white" *ngIf="status!='AVAILABLE'"> {{status}}</span>  <span class="badge badge-success" style="color:white" *ngIf="status=='AVAILABLE'"> {{status}}</span></span><br>
+                <span>Status: <span class="badge badge-secondary" style="color: white" *ngIf="status=='RESERVED'"> {{status}}</span>  <span class="badge badge-success" style="color:white" *ngIf="status=='BOUGHT'"> {{status}}</span></span><br>
                 <span>Anzahl Tickets: {{number}}</span><br>
                 <span>Preis: {{price}}€
                 </span><br>
-                <span><a href="javascript:void(0);" (click)="toggleShowTickets()">Tickets </a><a  *ngIf="status=='BOUGHT'"> Rechnung</a></span><br>
+                <span><a href="javascript:void(0);" (click)="toggleShowTickets()">Tickets </a>  <a  *ngIf="status=='BOUGHT'" href="javascript:void(0);" (click)="getInvoice()">Rechnung</a></span><br>
                 </div>
             <div>
 
@@ -35,8 +35,7 @@
 
         </div>
 
-            
-        <table class="table table-borderless table-sm" style="margin-top: 30px; margin-left: 0%;" *ngIf="status=='AVAILABLE'&&showTickets">
+        <table class="table table-borderless table-sm" style="margin-top: 30px; margin-left: 0%;" *ngIf="status=='BOUGHT'&&showTickets">
             <thead>
               <tr>
                 <th scope="col">#Id</th>

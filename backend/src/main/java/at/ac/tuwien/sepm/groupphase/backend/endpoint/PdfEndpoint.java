@@ -44,7 +44,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/pdf")
-
 public class PdfEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -69,6 +68,28 @@ public class PdfEndpoint {
         System.out.println(id);
 
         ByteArrayInputStream bis = pdfService.getTicketPdf(id, authentication.getPrincipal().toString());
+
+        var headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=ticket.pdf");
+
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_PDF)
+            .body(new InputStreamResource(bis));
+
+    }
+
+
+    @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/orders/{id}", method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_PDF_VALUE)
+    @ApiOperation(value = "Get ticket pdf", authorizations = {@Authorization(value = "apiKey")})
+    public ResponseEntity<InputStreamSource> getOrderInvoicePdf(Authentication authentication, @PathVariable Long id) {
+
+        System.out.println(id);
+        ByteArrayInputStream bis = pdfService.getOrderInvoicePdf(id, authentication.getPrincipal().toString());
 
         var headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=ticket.pdf");
