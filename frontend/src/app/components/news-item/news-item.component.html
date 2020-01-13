@@ -1,18 +1,28 @@
-<div class="container" style="margin-top: 15pt; margin-bottom: 50pt">
-    <div class="row" style="position: relative">
-        <img id="image" [src]="imageSource" class="col-4 newsImage">
-        <div class="col-8">
-            <div class="row">
-                <h3>News-Title</h3>
-            </div>
-            <div class="row">
-                <span>Short-Description</span>
+<div style="background-color: rgb(236, 250, 255);">
+    <div *ngIf="news" class="container" style="padding-top: 15pt; padding-bottom: 15pt; margin-bottom: 50pt">
+        <div class="row" style="position: relative;">
+            <img id="image" [src]="imageSource" class="col-8 newsImage">
+            <div class="col-4">
+                <div class="row">
+                    <h1>{{news.title}}</h1>
+                </div>
+                <div class="row">
+                    <h5>{{news.shortDescription}}</h5>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <p>Das ist die LangBeschreibung</p>
+</div>
+<div *ngIf="news" class="container">
+    <div style="margin-left: 15px; margin-top: 15px;">
+        <div class="row">
+            <h4>Description</h4>
+        </div>
+        <div class="row">
+            <p>{{news.entry}}</p>
+        </div>
     </div>
 </div>
 
+<input type="file" (change)="handleFileSelect($event)">
 

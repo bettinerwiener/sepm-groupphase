@@ -33,10 +33,11 @@ public class NewsEndpoint {
     }
 
     @CrossOrigin(origins="*")
-    @GetMapping
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}")
     @ApiOperation(value = "Get news by id")
     public NewsDto getById(@PathVariable("id") Long id){
+        System.out.println("here");
         return this.newsMapper.newsToNewsDto(this.newsService.findById(id));
     }
 
