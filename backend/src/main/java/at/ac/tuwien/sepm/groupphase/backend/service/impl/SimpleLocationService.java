@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,29 @@ public class SimpleLocationService implements LocationService {
     public List<Location> getAll() throws NotFoundException {
         try {
             List<Location> locations = this.locationRepository.findAll();
+            if (locations != null && !locations.isEmpty()) {
+                return locations;
+            }
+            else {
+                log.error("There are no locations in the database.");
+                throw new NotFoundException("No locations have been found.");
+            }
+        } catch (DataAccessException dae) {
+            log.error("No locations have been found: %s", dae.getMessage());
+            throw new NotFoundException(String.format("No locations have been found: %s", dae.getMessage()));
+        }
+    }
+
+    @Override
+    public List<Location> getAllCities() throws NotFoundException {
+        try {
+            List<String> cities = this.locationRepository.findAllCities();
+            List<Location> locations = new ArrayList<>();
+            for (String city: cities) {
+                log.debug(city);
+                log.debug("hallo");
+                locations.add(new Location(city));
+            }
             if (locations != null && !locations.isEmpty()) {
                 return locations;
             }

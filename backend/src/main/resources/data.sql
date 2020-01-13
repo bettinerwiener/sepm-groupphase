@@ -34,7 +34,8 @@ insert into customer_news (user, news, read)
 
 insert into location (id, name, street, city, postal_code)
     values (1, 'Metropol', 'Hernalser Hauptstrasse 12', 'Wien', 1170),
-           (2, 'Metropol', 'Karl-Krause-Strasse 45', 'Graz', 8020);
+           (2, 'Metropol', 'Karl-Krause-Strasse 45', 'Graz', 8020),
+           (3, 'Haydn', ' Mariahilfer Str. 57', 'Wien', 1060);
 
 insert into room (id, name, location)
     values (1, 'Schubert', 1),

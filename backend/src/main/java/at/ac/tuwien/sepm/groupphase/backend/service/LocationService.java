@@ -29,4 +29,11 @@ public interface LocationService {
      * @throws NotCreatedException in case the location could not be persisted
      */
     public Location create(Location location) throws NotCreatedException;
+
+    /**
+     * Returns all city locations in the database
+     * @return a list of locations with a city
+     * @throws NotFoundException in case no lcoation have been found
+     */
+    public List<Location> getAllCities() throws NotFoundException;
 }

@@ -35,6 +35,16 @@ public class LocationEndpoint {
         return locationDtos;
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/cities")
+    @CrossOrigin("*")
+    @ApiOperation(value = "Get all cities", authorizations = {@Authorization(value = "apiKey")})
+    public List<LocationDto> getAllCities() {
+        List<LocationDto> locationDtos = locationService.getAllCities()
+            .stream().map(location -> locationMapper.locationToLocationDto(location)).collect(Collectors.toList());
+        return locationDtos;
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @ApiOperation(value = "Create a new location", authorizations = {@Authorization(value = "apiKey")})

@@ -28,13 +28,13 @@
             <div class="col-md-3">
               <input type="text" class="form-control" placeholder="Duration" name="duration" [(ngModel)]="duration">
             </div>
-            <!--<div class="col-md-3">
+            <div class="col-md-3">
               <select location="location" class="form-control" name="location" aria-placeholder="Location" [(ngModel)]="location">
-                <option *ngFor="let l of locations" [ngValue]="l">{{l.name}}</option>
+                <option *ngFor="let l of locations" [ngValue]="l">{{l.city}}</option>
               </select>
-            </div>-->
+            </div>
             <div class="col">
-              <button type="button" (click)="getEvent(searchTerm, startDate, endDate, price, duration)" class="btn btn-primary">Search</button>
+              <button type="button" (click)="getEvent(searchTerm, startDate, endDate, price, duration, location)" class="btn btn-primary">Search</button>
             </div>
           </div>
 
