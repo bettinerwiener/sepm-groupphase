@@ -24,5 +24,7 @@ public interface OrderService {
      */
     List<Order> findByUserId(Long id) throws NotFoundException;
 
+    Order findById(Long id) throws NotFoundException;
+
 
 }

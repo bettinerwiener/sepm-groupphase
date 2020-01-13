@@ -15,9 +15,17 @@ export class PdfService {
   }
 
   /**
-   * Loads all orders of logged in user from the backend
+   * gets PDF ticket of id
    */
   getTicket(id: number): Observable<Blob> {
     return this.httpClient.get(this.pdfBaseUri + "/ticket/" + id, {responseType: 'blob'});
+  }
+
+
+  /**
+   * gets PDF invoice of id
+   */
+  getInvoice(id: number): Observable<Blob> {
+    return this.httpClient.get(this.pdfBaseUri + "/orders/" + id, {responseType: 'blob'});
   }
 }
