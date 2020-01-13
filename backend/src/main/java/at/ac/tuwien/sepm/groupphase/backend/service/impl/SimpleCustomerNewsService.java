@@ -51,4 +51,17 @@ public class SimpleCustomerNewsService implements CustomerNewsService {
                 dae.getMessage()));
         }
     }
+
+    public List<CustomerNews> findCustomerNewsByCustomer(String email, Boolean read) throws NotFoundException {
+        try {
+            List<CustomerNews> customerNews;
+            customerNews = this.customerNewsRepository.findCustomerNewsByCustomer(email, read);
+            log.debug("The size of customerNews: {}", customerNews.size());
+            return customerNews;
+        } catch (DataAccessException dae) {
+            log.error("Finding all news entries failed: {}", dae.getMessage());
+            throw new NotFoundException(String.format("Finding all news entries failed: %s",
+                dae.getMessage()));
+        }
+    }
 }

@@ -19,6 +19,11 @@ export class CustomerNewsService {
     return this.httpClient.get<CustomerNews[]>(this.customerNewsBaseUri);
   }
 
+  getCustomerNewsByCustomerAndRead(email: string, read: boolean): Observable<CustomerNews[]> {
+    console.log('Get customer news for customer ' + email);
+    return this.httpClient.get<CustomerNews[]>(this.customerNewsBaseUri + '/' + email + '/' + read);
+  }
+
   setCustomerNewsToRead(customerNews: CustomerNews): Observable<CustomerNews> {
     console.log('Set customer news to read');
     return this.httpClient.put<CustomerNews>(this.customerNewsBaseUri, customerNews);

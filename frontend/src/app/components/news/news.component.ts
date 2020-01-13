@@ -3,6 +3,7 @@ import { News } from 'src/app/dtos/news';
 import { CustomerNews } from 'src/app/dtos/customer-news';
 import { NewsService } from 'src/app/services/news.service';
 import { CustomerNewsService } from 'src/app/services/customer-news.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-news',
@@ -12,38 +13,33 @@ import { CustomerNewsService } from 'src/app/services/customer-news.service';
 export class NewsComponent implements OnInit {
 
   boolOldNews: boolean = false;
-  customerNews: CustomerNews[];
-  oldCustomerNews: News[];
-  latestCustomerNews: News[];
+  latestCustomerNews: CustomerNews[];
+  oldCustomerNews: CustomerNews[];
+  username: string;
 
-  constructor(private newsService: NewsService, private customerNewsService: CustomerNewsService) { }
+  constructor(private newsService: NewsService,
+              private customerNewsService: CustomerNewsService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-    this.getAllCustomerNews();
+    this.getLatestCustomerNews();
+    this.getOldCustomerNews();
   }
 
-  private getAllCustomerNews() {
-    this.customerNewsService.getCustomerNews().subscribe(
+  private getOldCustomerNews() {
+    this.customerNewsService.getCustomerNewsByCustomerAndRead(this.authService.getUserName(), true).subscribe(
       (customerNews: CustomerNews[]) => {
-        this.customerNews = customerNews;
-        this.getOldAndLatestCustomerNews();
+        this.oldCustomerNews = customerNews;
       }
     );
   }
 
-  private getOldAndLatestCustomerNews() {
-    let oldNews: News[];
-    let latestNews: News[];
-    this.customerNews.forEach( function(customerNewsEntry) {
-        if (customerNewsEntry.read === true) {
-          oldNews.push(customerNewsEntry.news);
-        } else {
-          latestNews.push(customerNewsEntry.news);
-        }
+  private getLatestCustomerNews() {
+    this.customerNewsService.getCustomerNewsByCustomerAndRead(this.authService.getUserName(), false).subscribe(
+      (customerNews: CustomerNews[]) => {
+        this.latestCustomerNews = customerNews;
       }
     );
-    this.oldCustomerNews = oldNews;
-    this.latestCustomerNews = latestNews;
   }
 
   private getOldNews() {

@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.CustomerNews;
 import at.ac.tuwien.sepm.groupphase.backend.entity.CustomerNewsKey;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,11 @@ public interface CustomerNewsRepository extends JpaRepository<CustomerNews, Cust
     List<CustomerNews> findByNews(News news);
 
     List<CustomerNews> findAll();
+
+    @Query (value = "select c from CustomerNews c " +
+                    "inner join User u on c.user = u.id " +
+                    "where u.email=?1 and c.read=?2")
+    List<CustomerNews> findCustomerNewsByCustomer(String email, Boolean read);
+
+
 }

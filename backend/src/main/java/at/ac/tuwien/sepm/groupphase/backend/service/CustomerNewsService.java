@@ -9,9 +9,12 @@ import java.util.List;
 public interface CustomerNewsService {
 
     /**
-     * Finds all existing links between events and news entries
+     * Finds all existing links between user and news entries
      * @return list of all links persisted in the database
      * @throws NotFoundException in case something goes wrong while accessing the database
      */
     List<CustomerNews> findAll() throws NotFoundException;
+
+
+    List<CustomerNews> findCustomerNewsByCustomer(String email, Boolean read) throws NotFoundException;
 }

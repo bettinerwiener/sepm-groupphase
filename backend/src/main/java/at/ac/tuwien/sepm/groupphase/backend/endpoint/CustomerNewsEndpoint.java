@@ -36,6 +36,15 @@ public class CustomerNewsEndpoint {
         return this.customerNewsMapper.cNEListToCNEDtoList(resultList);
     }
 
+    @GetMapping("/{email}/{read}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Find a certain news entry", authorizations = {@Authorization(value = "apiKey")})
+    public List<CustomerNewsDto> getCustomerNewsByCustomer(@PathVariable("email") String email, @PathVariable("read") Boolean read) {
+        List<CustomerNews> resultList = this.customerNewsService.findCustomerNewsByCustomer(email, read);
+        return this.customerNewsMapper.cNEListToCNEDtoList(resultList);
+    }
+
+
     /**
      * @PutMapping
      *     @ResponseStatus(HttpStatus.OK)

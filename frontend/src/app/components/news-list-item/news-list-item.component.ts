@@ -58,14 +58,14 @@ export class NewsListItemComponent implements OnInit {
       'dummy',
       'dummy',
       'dummy',
-      'dummy',
+      null,
       null
     );
 
     const customerNews = new CustomerNews(
-      true,
       user,
-      news
+      news,
+      true
     );
 
     this.customerNewsService.setCustomerNewsToRead(customerNews).subscribe(

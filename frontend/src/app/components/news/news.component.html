@@ -2,12 +2,12 @@
 <div *ngIf="!boolOldNews">
   <button style="margin-top: 25px; margin-left: 50px;" type="button" (click)="getOldNews()" class="btn btn-primary">Get older News...</button>
   <br>
-  <news-list-item  *ngFor="let n of latestCustomerNews" id={{n.id}} title={{n.title}} shortDescription={{n.shortDescription}} publishedAt={{n.publishedAt}} image={{n.image}}></news-list-item>
+  <news-list-item  *ngFor="let n of latestCustomerNews" id={{n.news.id}} title={{n.news.title}} shortDescription={{n.news.shortDescription}} publishedAt={{n.news.publishedAt}} image={{n.news.image}}></news-list-item>
 </div>
 
 <div *ngIf="boolOldNews">
   <button style="margin-top: 25px; margin-left: 50px;" type="button" (click)="getLatestNews()" class="btn btn-primary">Get latest News...</button>
   <br>
-  <news-list-item  *ngFor="let n of oldCustomerNews" id={{n.id}} title={{n.title}} shortDescription={{n.shortDescription}} publishedAt={{n.publishedAt}} image={{n.image}}></news-list-item>
+  <news-list-item  *ngFor="let n of oldCustomerNews" id={{n.news.id}} title={{n.news.title}} shortDescription={{n.news.shortDescription}} publishedAt={{n.news.publishedAt}} image={{n.news.image}}></news-list-item>
 </div>
 
