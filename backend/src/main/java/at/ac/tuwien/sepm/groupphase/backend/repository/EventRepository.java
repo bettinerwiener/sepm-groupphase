@@ -18,6 +18,7 @@ public interface EventRepository extends JpaRepository <Event, Long>, EventRepos
         "inner join User u on e.employee=u.id " +
         "where e.id=?1")
     Optional<Event> findById(Long id);
+
     @Query(value="select * from event e inner join " +
         "(select i.event, count(t.id) from ticket t  " +
         "inner join is_performed_at i on i.id = t.is_performed_at_id where t.`status` = 'BOUGHT' group by i.event order by count(t.id)) " +

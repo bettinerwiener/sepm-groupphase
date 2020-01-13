@@ -91,13 +91,13 @@ export class EventListItemComponent implements OnInit {
   // }
 
 
-  private sortTickets(a, b) {
-    if ( a[6] === b[6] ) {
-      return 0;
-    } else {
-      return (a[6] < b[6]) ? -1 : 1;
-    }
-  }
+  // private sortTickets(a, b) {
+  //   if ( a[6] === b[6] ) {
+  //     return 0;
+  //   } else {
+  //     return (a[6] < b[6]) ? -1 : 1;
+  //   }
+  // }
 
   private defaultServiceErrorHandling(error: any) {
     console.log(error);

@@ -10,9 +10,6 @@ import javax.persistence.*;
 @Data
 public class CustomerNews {
 
-    @Column
-    private Boolean read;
-
     @Id
     @ManyToOne
     @MapsId("user")
@@ -24,5 +21,8 @@ public class CustomerNews {
     @MapsId("news")
     @JoinColumn(name = "news")
     private News news;
+
+    @Column(nullable=false, name="read")
+    private Boolean read;
 
 }

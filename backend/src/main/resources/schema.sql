@@ -105,10 +105,11 @@ CREATE TABLE IF NOT EXISTS ticket (
 
 
 CREATE TABLE IF NOT EXISTS customer_news (
+     id      BIGINT AUTO_INCREMENT PRIMARY KEY,
      user    BIGINT REFERENCES user(id),
      news        BIGINT REFERENCES news(id),
-     read        SMALLINT CHECK (read IN (0, 1)),
-     CONSTRAINT  customer_news_pk PRIMARY KEY (user, news)
+     read        BOOLEAN NOT NULL,
+     CONSTRAINT  customer_news_unique UNIQUE (user, news)
 );
 
 
