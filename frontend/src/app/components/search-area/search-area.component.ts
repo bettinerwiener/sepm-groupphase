@@ -27,6 +27,7 @@ export class SearchAreaComponent implements OnInit {
 
   ngOnInit() {
     this.getAlllLocations();
+    console.log(this.locations);
     this.initGetEventForCategory();
   }
 
