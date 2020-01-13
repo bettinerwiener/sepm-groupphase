@@ -31,7 +31,4 @@ public class News {
     @Column(nullable = true, columnDefinition = "BLOB")
     private byte[] image;
 
-    @OneToMany(mappedBy = "news", cascade = CascadeType.PERSIST)
-    private Set<CustomerNews> customerNews;
-
 }
