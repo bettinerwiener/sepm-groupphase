@@ -10,6 +10,7 @@ import {Globals} from '../global/globals';
 export class EventNewsService {
 
     eventNewsBaseUri: string = this.globals.backendUri + '/eventnews';
+    newsBaseUri: string = this.globals.backendUri + '/news';
 
     constructor(private httpClient: HttpClient, private globals: Globals) { }
 
@@ -21,11 +22,26 @@ export class EventNewsService {
         return this.httpClient.get<EventNews[]>(this.eventNewsBaseUri);
     }
 
+    getNewsById(id: number): Observable<EventNews> {
+        console.log("Get event news by id " + id);
+        return this.httpClient.get<EventNews>(this.newsBaseUri + '/' + id);
+    }
+    
     /**
      * Create a news entry for an event
      */
     createEventNews(eventNews: EventNews): Observable<EventNews> {
         console.log("Creating news entry for an event");
         return this.httpClient.post<EventNews>(this.eventNewsBaseUri, eventNews);
+    }
+
+    sendImage(formData: FormData, id: Number): Observable<Boolean> {
+        console.log("Sending image separately");
+        return this.httpClient.post<Boolean>(this.newsBaseUri + '/' + id, formData);
+    }
+
+    getImage(id: Number): Observable<Blob> {
+        console.log("Getting image for news entry with id " + id);
+        return this.httpClient.get<Blob>(this.newsBaseUri + '/' + id + '/image');
     }
 }

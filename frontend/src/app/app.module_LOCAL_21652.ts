@@ -36,7 +36,6 @@ import { CreateRoomComponent } from './components/create-room/create-room.compon
 import { CreateSeatplanComponent } from './components/create-seatplan/create-seatplan.component';
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
 import { NewsItemComponent } from './components/news-item/news-item.component';
-import { EditNewsComponent } from './components/edit-news/edit-news.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +69,6 @@ import { EditNewsComponent } from './components/edit-news/edit-news.component';
     CreateSeatplanComponent,
     CreateEventNewsComponent,
     NewsItemComponent,
-    EditNewsComponent,
   ],
   imports: [
     BrowserModule,

@@ -86,4 +86,10 @@ public class SimpleEmployeeNewsEventService implements EmployeeNewsEventService 
                 dae.getMessage()));
         }
     }
+
+    @Override
+    public EmployeeNewsEvent findById(Long id) throws NotFoundException {
+
+        return null;
+    }
 }

@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS news (
     entry       VARCHAR(511) NOT NULL,
     title       VARCHAR(127) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
-    image       VARCHAR(1024) NULL,
+    image       BLOB NULL,
     published_at DATETIME NOT NULL
 );
 
@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
       user_id BIGINT REFERENCES user(id),
+      order_date DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS ticket (

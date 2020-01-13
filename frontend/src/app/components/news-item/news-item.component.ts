@@ -34,6 +34,7 @@ export class NewsItemComponent implements OnInit {
   
   ngOnInit() {
     var id: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.id = id;
     this.service.getNewsById(id).subscribe(
       (news: News) => {
         this.news = news;

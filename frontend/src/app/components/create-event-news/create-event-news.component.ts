@@ -26,6 +26,7 @@ export class CreateEventNewsComponent implements OnInit {
   success: boolean = false;
   rooms: Room[];
   events: GlobalEvent[];
+  formData: FormData;
   submitted: boolean = false;
   errorMessage: string = 'A news entry for the chosen event could not be created.';
 
@@ -45,8 +46,9 @@ export class CreateEventNewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllEvents();
+    this.formData = new FormData();
     this.clearForm();
+    this.getAllEvents();
   }
 
   isAdmin(): boolean {
@@ -57,14 +59,12 @@ export class CreateEventNewsComponent implements OnInit {
     this.submitted = true;
     if (this.createEventNewsForm.valid) {
 
-      const image_str = btoa(this.createEventNewsForm.controls.image.value);
-
       const news = new News(
         null,
         this.createEventNewsForm.controls.title.value,
         this.createEventNewsForm.controls.shortDescription.value,
         this.createEventNewsForm.controls.entry.value,
-        image_str,
+        null,
         null
       );
 
@@ -84,8 +84,6 @@ export class CreateEventNewsComponent implements OnInit {
         user
       );
 
-
-
       this.createEventNews(eventNews);
       this.clearForm();
     } else {
@@ -93,6 +91,16 @@ export class CreateEventNewsComponent implements OnInit {
     }
   }
 
+  public sendImage(formData: FormData, id: Number) {
+    this.eventNewsService.sendImage(formData, id).subscribe(
+      success => {
+        this.success = true;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    )
+  }
   public createEventNews(eventNews: EventNews) {
     this.eventNewsService.createEventNews(eventNews).subscribe(
       (retEventNews: EventNews) => {
@@ -100,6 +108,7 @@ export class CreateEventNewsComponent implements OnInit {
         
         this.eventNews = retEventNews;
         this.success = true;
+        this.sendImage(this.formData, this.eventNews.news.id);
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -118,6 +127,13 @@ export class CreateEventNewsComponent implements OnInit {
     );
   }
 
+  onFileSelect(event) {
+    if (event.target.files.length > 0)
+    {
+      this.formData.append('image', event.target.files[0]);
+    }
+    
+  }
 
   private defaultServiceErrorHandling(error: any) {
     console.log(error);

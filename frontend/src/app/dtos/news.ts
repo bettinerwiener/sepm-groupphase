@@ -6,7 +6,7 @@ export class News {
         public title: string,
         public shortDescription: string,
         public entry: string,
-        public image: string,
+        public image: Blob,
         public publishedAt: Date
     ) {}
 }

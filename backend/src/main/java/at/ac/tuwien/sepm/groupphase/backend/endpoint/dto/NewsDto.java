@@ -4,10 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.io.IOUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 
 @Getter
@@ -29,7 +33,7 @@ public class NewsDto {
 
     private LocalDateTime publishedAt;
 
-    private String image;
+    private byte[] image;
 
     public static final class NewsDtoBuilder {
 
@@ -37,7 +41,7 @@ public class NewsDto {
         private String entry;
         private String title;
         private String shortDescription;
-        private String image;
+        private byte[] image;
         private LocalDateTime publishedAt;
 
         public NewsDtoBuilder() {};
@@ -66,8 +70,12 @@ public class NewsDto {
             return this;
         }
 
-        public NewsDto.NewsDtoBuilder withImage(String image) {
-            this.image = image;
+        public NewsDto.NewsDtoBuilder withImage(MultipartFile image) {
+            try {
+                this.image = IOUtils.toByteArray(image.getInputStream());
+            } catch (IOException ioe) {
+                this.image = null;
+            }
             return this;
         }
 
