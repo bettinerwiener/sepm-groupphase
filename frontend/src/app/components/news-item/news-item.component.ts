@@ -6,6 +6,7 @@ import { Order } from 'src/app/dtos/order';
 import { TicketDto } from 'src/app/dtos/ticket-dto';
 import { NewsService } from 'src/app/services/news-service.service';
 import { News } from 'src/app/dtos/news';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-news-item',
@@ -24,12 +25,13 @@ export class NewsItemComponent implements OnInit {
   submittedTickets: Array<TicketDto> = new Array<TicketDto>();
   load: boolean = false;
   order: Order;
-  base64textString: string;
+  imageURL: SafeUrl;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: NewsService
+    private service: NewsService,
+    private sanitizer: DomSanitizer
   ) { }
   
   ngOnInit() {
@@ -42,32 +44,23 @@ export class NewsItemComponent implements OnInit {
         
       }
     )
-  }
 
-  handleFileSelect(evt){
-    var files = evt.target.files;
-    var file = files[0];
-
-  if (files && file) {
-      var reader = new FileReader();
-
-      reader.onload =this._handleReaderLoaded.bind(this);
-
-      reader.readAsBinaryString(file);
-  }
-}
-
-
-
-_handleReaderLoaded(readerEvt) {
-   var binaryString = readerEvt.target.result;
-          this.base64textString= btoa(binaryString);
-          console.log(btoa(binaryString));
-  }
-
-  onFileSelected(event):void {
-    console.log(event.target.files[0]);
-    
+    this.service.getImage(id).subscribe(
+      (image: any) => {
+        this.news.image = image.body;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.news.image);
+        let result;
+        reader.onloadend = (event:Event) => {
+          result = reader.result;
+          this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
+        };
+        
+      },
+      error => {
+        //this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
   

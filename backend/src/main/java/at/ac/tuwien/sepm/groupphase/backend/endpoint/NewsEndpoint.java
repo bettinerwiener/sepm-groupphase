@@ -30,7 +30,6 @@ public class NewsEndpoint {
         this.newsService = newsService;
     }
 
-    @CrossOrigin(origins="*")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create a news entry", authorizations = {@Authorization(value = "apiKey")})
@@ -53,7 +52,6 @@ public class NewsEndpoint {
     public NewsDto update(@RequestParam("image") MultipartFile image, @PathVariable("id") Long id)  {
         return this.newsMapper.newsToNewsDto(this.newsService.updateWithImage(id, image));
     }
-
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
