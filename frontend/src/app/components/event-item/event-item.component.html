@@ -1,18 +1,20 @@
-<div *ngIf="eventObject" class="container" style="margin-top: 15pt; margin-bottom: 50pt">
-    <div class="row" style="position: relative">
-        <img id="image" [src]="imageSource" class="col-4 eventImage">
-        <div class="col-8">
-            <div class="row">
-                <h3>{{eventObject.title}}</h3>
-            </div>
-            <div class="row">
-                <span>{{eventObject.contents}}</span>
-            </div>
-            <div class="row align-items-end" style="position: absolute; bottom: 0">
-                <fa-icon [icon]="faCalendarDay" size="xs" style="margin-right: 3pt;"></fa-icon>
-                <span> Testdate</span>
-                <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-right: 3pt; margin-left: 10pt;"></fa-icon>
-                <span> Testlocation</span>
+<div style="background-color: rgb(236, 250, 255);">
+    <div *ngIf="eventObject" class="container" style="padding-top: 15pt; padding-bottom: 15pt; margin-bottom: 35pt">
+        <div class="row" style="position: relative">
+            <img id="image" [src]="imageSource" class="col-4 eventImage">
+            <div class="col-8">
+                <div class="row">
+                    <h3>{{eventObject.title}}</h3>
+                </div>
+                <div class="row">
+                    <span>{{eventObject.contents}}</span>
+                </div>
+                <div class="row align-items-end" style="position: absolute; bottom: 0">
+                    <fa-icon [icon]="faCalendarDay" size="xs" style="margin-right: 3pt;"></fa-icon>
+                    <span> Testdate</span>
+                    <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-right: 3pt; margin-left: 10pt;"></fa-icon>
+                    <span> Testlocation</span>
+                </div>
             </div>
         </div>
     </div>
@@ -25,7 +27,8 @@
             <div class="col-md-8 mx-auto event-list-item">
                 <div class="row event-list-item-content">
                     <div class="col-md-9">
-                        <h5> {{performance.room.location.name}} - {{performance.date.substring(0,10)}} {{performance.date.substring(11,16)}}  </h5>
+                        <h5> {{performance.room.location.name}} - {{performance.date.substring(0,10)}}
+                            {{performance.date.substring(11,16)}} </h5>
                         <div id="dateandlocation">
                             <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-bottom: 10px;"></fa-icon>
                             <span>{{performance.room.location.street}}, {{performance.room.location.postalCode}}
@@ -45,13 +48,15 @@
                         <div class="row justify-content-end"></div>
                         <button type="button" (click)="selectSeats(performance)" class="btn btn-primary btn-sm"
                             style="margin-bottom: 5px;">Go back</button>
-                        <app-seatplan *ngIf="load" (selectedSeat)="addSeat($event)" [eventPerformance]="performance"></app-seatplan>
+                        <app-seatplan *ngIf="load" (selectedSeat)="addSeat($event)" [eventPerformance]="performance">
+                        </app-seatplan>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
 
-                        <button type="button" (click)="reserveTickets($event)" class="btn btn-primary btn-sm">Reserve</button>
+                        <button type="button" (click)="reserveTickets($event)"
+                            class="btn btn-primary btn-sm">Reserve</button>
                         <button type="button" (click)="buyTickets($event)" class="btn btn-primary btn-sm"
                             style="margin-left: 5px; background-color: #00960c;">Buy</button>
                     </div>

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Ticket } from 'src/app/dtos/ticket';
 import { Order } from 'src/app/dtos/order';
 import { TicketDto } from 'src/app/dtos/ticket-dto';
-import { NewsService } from 'src/app/services/news-service.service';
+import { NewsService } from 'src/app/services/news.service';
 import { News } from 'src/app/dtos/news';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -40,27 +40,27 @@ export class NewsItemComponent implements OnInit {
     this.service.getNewsById(id).subscribe(
       (news: News) => {
         this.news = news;
-        console.log(news);
         
+        this.service.getImage(id).subscribe(
+          (image: any) => {
+            this.news.image = image.body;
+            const reader = new FileReader();
+            reader.readAsDataURL(this.news.image);
+            let result;
+            reader.onloadend = (event:Event) => {
+              result = reader.result;
+              this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
+            };
+            
+          },
+          error => {
+            //this.defaultServiceErrorHandling(error);
+          }
+        );
       }
     )
 
-    this.service.getImage(id).subscribe(
-      (image: any) => {
-        this.news.image = image.body;
-        const reader = new FileReader();
-        reader.readAsDataURL(this.news.image);
-        let result;
-        reader.onloadend = (event:Event) => {
-          result = reader.result;
-          this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
-        };
-        
-      },
-      error => {
-        //this.defaultServiceErrorHandling(error);
-      }
-    );
+
   }
 
   
