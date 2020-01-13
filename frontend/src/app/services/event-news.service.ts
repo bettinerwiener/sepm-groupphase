@@ -26,6 +26,11 @@ export class EventNewsService {
         console.log("Get event news by id " + id);
         return this.httpClient.get<EventNews>(this.newsBaseUri + '/' + id);
     }
+
+    getEventForNews(id:number):Observable<Array<EventNews>> {
+        console.log("Get event for news " + id);
+        return this.httpClient.get<Array<EventNews>>(this.eventNewsBaseUri + '?news=' + id);
+      }
     
     /**
      * Create a news entry for an event

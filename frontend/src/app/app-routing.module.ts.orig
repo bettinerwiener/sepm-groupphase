@@ -23,8 +23,6 @@ import { CreateLocationComponent } from './components/create-location/create-loc
 import { CreateRoomComponent } from './components/create-room/create-room.component';
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component'
 import { NewsItemComponent } from './components/news-item/news-item.component'
-import { NewsComponent } from './components/news/news.component';
-import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
 import { EditNewsComponent } from './components/edit-news/edit-news.component';
 
 
@@ -40,7 +38,6 @@ const routes: Routes = [
   {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
   {path: 'orders', canActivate: [AuthGuard], component: OrdersComponent},
   {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
-  {path: 'news', canActivate: [AuthGuard], component: NewsComponent},
   {path: 'admin', component: SearchUserComponent},
   {path: 'admin/edit/:username', component: EditUserByAdminComponent},
   {path: 'test', component: SeatplanComponent},
@@ -53,7 +50,6 @@ const routes: Routes = [
   {path: 'create-event-news', component: CreateEventNewsComponent},
   {path: 'news/:id', component: NewsItemComponent},
   {path: 'news/edit/:id', component: EditNewsComponent},
-  {path: 'news-list-item', component: NewsListItemComponent},
 ];
 
 @NgModule({

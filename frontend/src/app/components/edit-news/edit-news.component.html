@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="shortDescription">Short Description</label>
                     <input type="text" minlength="2" maxlength="255" name="shortDescription" class="form-control" 
-                    id= "shortDescription" [ngModel]="news.shortDescription" 
+                    id= "shortDescription" [(ngModel)]="news.shortDescription" 
                     #shortDesc="ngModel" required>
                     <div *ngIf="shortDesc.invalid" class="error">
                     <small class="form-text text-warning">A short description is

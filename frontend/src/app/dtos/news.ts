@@ -1,4 +1,6 @@
 export class News {
+    public abstract:string;
+
     constructor(
         public id: number,
         public title: string,

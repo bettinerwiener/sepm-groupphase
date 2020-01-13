@@ -1,0 +1,28 @@
+<div style="background-color: rgb(236, 250, 255);">
+    <div *ngIf="news" class="container" style="padding-top: 15pt; padding-bottom: 15pt; margin-bottom: 50pt">
+        <div class="row" style="position: relative;">
+            <img *ngIf="imageURL" id="image" [src]="imageURL" class="col-8 newsImage">
+            <div class="col-4">
+                <div class="row">
+                    <h1>{{news.title}}</h1>
+                </div>
+                <div class="row">
+                    <h5>{{news.shortDescription}}</h5>
+                </div>
+                <div *ngIf="eventNews" class="row">
+                    <h6><a routerLink="/event/{{eventNews.event.id}}">Go to event</a></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="news" class="container">
+    <div class="description">
+        <div class="row">
+            <h4>Description</h4>
+        </div>
+        <div class="row">
+            <p>{{news.entry}}</p>
+        </div>
+    </div>
+</div>

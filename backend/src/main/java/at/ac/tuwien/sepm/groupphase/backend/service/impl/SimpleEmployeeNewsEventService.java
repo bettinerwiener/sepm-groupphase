@@ -11,6 +11,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EmployeeNewsEventReposito
 import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EmployeeNewsEventService;
+import jdk.dynalink.NamedOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -92,4 +94,20 @@ public class SimpleEmployeeNewsEventService implements EmployeeNewsEventService 
 
         return null;
     }
+
+    @Override
+    public List<EmployeeNewsEvent> getForNews(Long newsId) throws NotFoundException {
+        try {
+            Optional<News> news = this.newsRepository.findById(newsId);
+            if (!news.isPresent()) {
+                throw new NotFoundException("News entry not found");
+            }
+            List<EmployeeNewsEvent> employeeNewsEvent = this.employeeNewsEventRepository.findByNews(news.get());
+            return employeeNewsEvent;
+        } catch (DataAccessException dae) {
+            throw new NotFoundException(String.format("No event found for news: %s", dae.getMessage()));
+        }
+    }
+
+
 }

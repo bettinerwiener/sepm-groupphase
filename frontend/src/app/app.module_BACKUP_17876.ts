@@ -36,9 +36,7 @@ import { CreateRoomComponent } from './components/create-room/create-room.compon
 import { CreateSeatplanComponent } from './components/create-seatplan/create-seatplan.component';
 import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
 import { NewsItemComponent } from './components/news-item/news-item.component';
-import { NewsComponent } from './components/news/news.component';
 import { EditNewsComponent } from './components/edit-news/edit-news.component';
-import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
 
 @NgModule({
   declarations: [
@@ -72,8 +70,6 @@ import { NewsListItemComponent } from './components/news-list-item/news-list-ite
     CreateSeatplanComponent,
     CreateEventNewsComponent,
     NewsItemComponent,
-    NewsComponent,
-    NewsListItemComponent,
     EditNewsComponent,
   ],
   imports: [
