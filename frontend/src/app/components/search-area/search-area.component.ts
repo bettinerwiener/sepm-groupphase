@@ -27,6 +27,7 @@ export class SearchAreaComponent implements OnInit {
 
   ngOnInit() {
     this.getAlllLocations();
+    console.log(this.locations);
     this.initGetEventForCategory();
   }
 
@@ -52,12 +53,12 @@ export class SearchAreaComponent implements OnInit {
         }
       },
       error => {
-        console.log('No events found with this filter');
-        this.searchedConcerts.emit(null);
-        this.searchedEvents.emit(null);
-        this.searchedTheatres.emit(null);
-        this.searchedFilms.emit(null);
-      }
+        console.log('No events matching this criteria');
+          this.searchedEvents.emit(null);
+          this.searchedFilms.emit(null);
+          this.searchedConcerts.emit(null);
+          this.searchedTheatres.emit(null);
+        }
     );
   }
 
@@ -91,11 +92,11 @@ export class SearchAreaComponent implements OnInit {
         }
       },
       error => {
-        console.log('No events found with this filter');
-        this.searchedConcerts.emit(null);
+        console.log('No events matching this criteria');
         this.searchedEvents.emit(null);
-        this.searchedTheatres.emit(null);
         this.searchedFilms.emit(null);
+        this.searchedConcerts.emit(null);
+        this.searchedTheatres.emit(null);
       }
     );
   }

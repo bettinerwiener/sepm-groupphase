@@ -21,7 +21,9 @@ import {CreateEventComponent} from './components/create-event/create-event.compo
 import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
 import { CreateLocationComponent } from './components/create-location/create-location.component';
 import { CreateRoomComponent } from './components/create-room/create-room.component';
-import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component'
+import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
+import { NewsComponent } from './components/news/news.component';
+import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
 import { EditNewsComponent } from './components/edit-news/edit-news.component';
 
 
@@ -37,6 +39,7 @@ const routes: Routes = [
   {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
   {path: 'orders', canActivate: [AuthGuard], component: OrdersComponent},
   {path: 'message', canActivate: [AuthGuard], component: MessageComponent},
+  {path: 'news', canActivate: [AuthGuard], component: NewsComponent},
   {path: 'admin', component: SearchUserComponent},
   {path: 'admin/edit/:username', component: EditUserByAdminComponent},
   {path: 'test', component: SeatplanComponent},
@@ -47,6 +50,7 @@ const routes: Routes = [
   {path: 'create-location', component: CreateLocationComponent},
   {path: 'create-room', component: CreateRoomComponent},
   {path: 'create-event-news', component: CreateEventNewsComponent},
+  {path: 'news-list-item', component: NewsListItemComponent},
   {path: 'news/:id', component: EditNewsComponent}
 ];
 

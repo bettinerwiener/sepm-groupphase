@@ -10,6 +10,5 @@ public interface NewsMapper {
 
     @Named("news")
     NewsDto newsToNewsDto(News news);
-
     News newsDtoToNews(NewsDto newsDto);
 }

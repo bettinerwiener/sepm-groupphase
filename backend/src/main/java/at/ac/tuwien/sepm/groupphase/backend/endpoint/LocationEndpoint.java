@@ -27,6 +27,7 @@ public class LocationEndpoint {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
+    @CrossOrigin("*")
     @ApiOperation(value = "Get all locations", authorizations = {@Authorization(value = "apiKey")})
     public List<LocationDto> getAll() {
         List<LocationDto> locationDtos = locationService.getAll()
