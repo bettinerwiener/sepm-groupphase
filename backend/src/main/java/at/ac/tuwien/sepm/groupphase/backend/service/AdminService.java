@@ -30,10 +30,10 @@ public interface AdminService {
 
 
     /**
-     * @param user to delete
+     * @param userName of the user to delete
      * @return If delete was successful
      */
-    boolean deleteUser(User user);
+    boolean deleteUser(String userName);
 
     boolean validate(UserLoginDto user);
 }

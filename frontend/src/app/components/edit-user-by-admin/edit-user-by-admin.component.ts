@@ -4,6 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MustMatch} from '../../services/matcher';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -20,18 +22,23 @@ export class EditUserByAdminComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
 
+  veriyfied: boolean = false;
+
 
   constructor(
     private route: ActivatedRoute,
     private service: AdminService,
     private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
         firstName: ['', [Validators.required]],
         lastName: ['', [Validators.required]],
         email: ['', [Validators.required]],
         password: ['', [Validators.required, Validators.minLength(8)]],
-        passwordConf: ['', [Validators.required]]
+        passwordConf: ['', [Validators.required]],
+        passwordAdmin: ['', [Validators.required]]
       },
       {
         validator: MustMatch('password', 'passwordConf')
@@ -82,6 +89,36 @@ export class EditUserByAdminComponent implements OnInit {
 
   changeLocked(): void {
     this.user.locked = !this.user.locked;
+  }
+
+  deleteUser(): void {
+    console.log('Delete some User');
+    this.submitted = true;
+    const user = {
+      email: this.auth.getUserName(),
+      password: this.registerForm.controls.passwordAdmin.value
+    }
+
+    this.service.verifyAdmin(user).subscribe(boolValue => {
+      this.veriyfied = boolValue;
+      if (this.veriyfied) {
+        console.log('right');
+        this.service.deleteUser(this.registerForm.controls.email.value).subscribe(
+          reValue => {
+            this.router.navigate(['/admin']).then(() => {
+              window.location.reload();
+            });
+          }
+        );
+
+      } else {
+        this.error = true;
+        console.log('wrong');
+        this.errorMessage = 'wrong password';
+      }
+    });
+
+
   }
 
 }

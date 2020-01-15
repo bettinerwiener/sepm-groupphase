@@ -47,6 +47,9 @@ public class User {
     @Column(nullable = false, name = "login_count")
     private int loginCount;
 
+    @Column(nullable = false, name = "deleted")
+    private Boolean deleted;
+
     public User() {
     }
 
@@ -58,6 +61,7 @@ public class User {
         this.password = password;
         this.locked = false;
         this.isEmployee =false;
+        this.deleted = false;
 
     }
 

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -29,7 +30,8 @@ public class SimpleAdminService implements AdminService {
     @Override
     public List<User> findUserByName(String username) {
         LOGGER.debug("Admin finding User like: " + username);
-        List<User> users = userRepository.findByEmailContaining(username);
+        List<User> users = userRepository.findByEmailContainingAndDeleted(username, false);
+  //      List<User> users = new LinkedList<User>();
         for (User u : users
         ) {
             u.setPassword("yourtinysecret");
@@ -40,9 +42,15 @@ public class SimpleAdminService implements AdminService {
     @Override
     public User findOneByName(String username) {
         LOGGER.debug("Admin finding User with username: " + username);
-        User user = userRepository.findFirstByEmail(username);
-        user.setPassword("yourtinysecret");
-        return user;
+        if (userRepository.existsByEmail(username)) {
+            User user = userRepository.findFirstByEmailAndDeleted(username, false);
+            if (user != null) {
+                user.setPassword("yourtinysecret");
+            }
+            return user;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -60,20 +68,21 @@ public class SimpleAdminService implements AdminService {
     }
 
     @Override
-    public boolean deleteUser(User user) {
-        LOGGER.debug("Deleting User with ID: " + user.getId());
-        userRepository.deleteById(user.getId());
-        userRepository.flush();
-        if (userRepository.existsById(user.getId())) {
+    public boolean deleteUser(String  username) {
+        User user = userRepository.findFirstByEmailAndDeleted(username, false);
+        if (user == null) {
             return false;
         }
+        LOGGER.debug("Deleting User with ID: " + user.getId());
+        user.setDeleted(true);
+        userRepository.saveAndFlush(user);
         return true;
     }
 
     @Override
     public boolean validate(UserLoginDto user) {
         LOGGER.debug("validate Admin " + user.getEmail());
-        User help = userRepository.findFirstByEmail(user.getEmail());
+        User help = userRepository.findFirstByEmailAndDeleted(user.getEmail(), false);
         return passwordEncoder.matches(user.getPassword(), help.getPassword());
     }
 

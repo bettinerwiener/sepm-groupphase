@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS  user
     password   VARCHAR(255) NOT NULL,
     locked      BOOLEAN,
     is_employee BOOLEAN,
-    login_count INTEGER DEFAULT 0 CHECK (login_count >= 0)
+    login_count INTEGER DEFAULT 0 CHECK (login_count >= 0),
+    deleted     BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS artist (

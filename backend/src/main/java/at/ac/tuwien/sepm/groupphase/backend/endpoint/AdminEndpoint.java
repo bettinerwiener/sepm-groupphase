@@ -68,18 +68,18 @@ public class AdminEndpoint {
     @DeleteMapping(value = "/delete")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Delete User", authorizations = {@Authorization(value = "apiKey")})
-    public boolean deleteUser(@RequestBody UserDto userDto) {
-        LOGGER.info("DELETE /api/vi/admin/delete username: " + userDto.getEmail());
-        return adminService.deleteUser(userMapper.userDtoToUser(userDto));
+    public boolean deleteUser(@RequestParam("name") String userName) {
+        LOGGER.info("DELETE /api/vi/admin/delete?name: " + userName);
+        return adminService.deleteUser(userName);
     }
 
     @Secured("ROLE_ADMIN")
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/validate")
+    @PostMapping(value = "/validate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Validate Admin", authorizations = {@Authorization(value = "apiKey")})
     public boolean validate(@RequestBody UserLoginDto userLoginDto) {
-        LOGGER.info("GET /api/vi/admin/valdate");
+        LOGGER.info("Post /api/vi/admin/valdate " + userLoginDto.getEmail() + userLoginDto.getPassword());
         return adminService.validate(userLoginDto);
     }
 }

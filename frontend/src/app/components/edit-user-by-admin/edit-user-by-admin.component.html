@@ -74,16 +74,39 @@
               <label>locked</label>
               <input type="checkbox" name="isLocked" [checked]="user.locked" (change)="changeLocked()">
             </div>
+
+            <details>
+              <summary>
+                Delete User
+              </summary>
+
+              <div>
+                Geben Sie ihr Password ein!
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="passwordAdmin" formControlName="passwordAdmin" class="form-control" id="passwordAdmin">
+                <div *ngIf="submitted && registerForm.controls.passwordAdmin.errors" class="error">
+                  <small class="form-text text-warning" *ngIf="registerForm.controls.passwordAdmin.errors.required">Your password
+                    is
+                    required!
+                  </small>
+                </div>
+              </div>
+              <div>
+                <button type="button" (click)="deleteUser()" class="btn btn-success float-right">Delete</button>
+              </div>
+            </details>
             <div>
               <button type="button" (click)="updateUser()" class="btn btn-success float-right">Update</button>
             </div>
 
-            <div>
-              <button type="button" class="btn btn-success float-right">Delete</button>
-            </div>
+
 
           </form>
         </div>
+
       </div>
     </div>
   </div>
