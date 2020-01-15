@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS event (
     contents    VARCHAR(511),
     category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
-    employee    BIGINT REFERENCES user(id)
+    employee    BIGINT REFERENCES user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS artist_creates_event (
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS artist_creates_event (
 );
 
 CREATE TABLE IF NOT EXISTS employee_adds_news (
-    employee    BIGINT REFERENCES user(id),
+    employee    BIGINT REFERENCES user(id) ON DELETE SET NULL,
     news     BIGINT REFERENCES news(id),
     event    BIGINT REFERENCES event(id),
     CONSTRAINT employee_adds_news PRIMARY KEY (employee, news, event)
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS section (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     letter      VARCHAR(1) CHECK (letter IN ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')),
     room    BIGINT REFERENCES room(id),
-    seats_selectable SMALLINT CHECK (seats_selectable IN (0, 1))
+    seats_selectable BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS seat (
@@ -85,12 +85,13 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
     event   BIGINT REFERENCES event(id),
     room BIGINT REFERENCES room(id),
     perf_date   DATETIME NOT NULL,
+    price       DECIMAL NOT NULL,
     CONSTRAINT is_performed_at_pk UNIQUE (event, room, perf_date)
 );
 
 CREATE TABLE IF NOT EXISTS customer_order (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      user_id BIGINT REFERENCES user(id),
+      user_id BIGINT REFERENCES user(id) ON DELETE CASCADE,
       order_date DATETIME
 );
 
@@ -105,11 +106,10 @@ CREATE TABLE IF NOT EXISTS ticket (
 
 
 CREATE TABLE IF NOT EXISTS customer_news (
-     id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-     user    BIGINT REFERENCES user(id),
-     news        BIGINT REFERENCES news(id),
+     user    BIGINT REFERENCES user(id) ON DELETE CASCADE,
+     news        BIGINT REFERENCES news(id) ON DELETE CASCADE,
      read        BOOLEAN NOT NULL,
-     CONSTRAINT  customer_news_unique UNIQUE (user, news)
+     CONSTRAINT  customer_news_unique PRIMARY KEY (user, news)
 );
 
 
