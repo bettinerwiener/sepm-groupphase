@@ -25,4 +25,7 @@ public class EventPerformance {
     @Column(nullable = false, name = "perf_date")
     private LocalDateTime date;
 
+    @Column(nullable = false)
+    private Float price;
+
 }
