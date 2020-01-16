@@ -68,7 +68,7 @@ public class RoomRespositoryTest {
 
     @Test
     public void tryFindingNonExistingRoomReturnsNull() {
-        Optional<Room> room = roomRepository.findById(50L);
+        Optional<Room> room = roomRepository.findById(301L);
         assertAll (
             () -> assertFalse(room.isPresent())
         );
@@ -91,7 +91,7 @@ public class RoomRespositoryTest {
     public void createRoomForNonExistingLocationThrowsNotFoundException() {
         Room room = new Room();
         room.setName("Victor Hugo");
-        Optional<Location> location = locationRepository.findById(50L);
+        Optional<Location> location = locationRepository.findById(301L);
         room.setLocation(location.isPresent() ? location.get() : null);
         assertThrows(DataIntegrityViolationException.class, () -> roomRepository.save(room));
         assertAll(

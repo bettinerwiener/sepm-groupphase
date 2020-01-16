@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS artist (
 
 CREATE TABLE IF NOT EXISTS news (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    entry       VARCHAR(511) NOT NULL,
+    entry       VARCHAR(1023) NOT NULL,
     title       VARCHAR(127) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     image       BLOB NULL,
@@ -32,9 +32,10 @@ CREATE TABLE IF NOT EXISTS event (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     title       VARCHAR(100) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
-    contents    VARCHAR(511),
+    contents    VARCHAR(1023),
     category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),
     duration    DECIMAL CHECK (duration >= 0 AND duration <= 10),
+    image       BLOB NULL,
     employee    BIGINT REFERENCES user(id) ON DELETE SET NULL
 );
 
@@ -82,11 +83,11 @@ CREATE TABLE IF NOT EXISTS seat (
 
 CREATE TABLE IF NOT EXISTS is_performed_at (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    event   BIGINT REFERENCES event(id),
+    event   BIGINT REFERENCES event(id) ON DELETE SET NULL,
     room BIGINT REFERENCES room(id),
     perf_date   DATETIME NOT NULL,
     price       DECIMAL NOT NULL,
-    CONSTRAINT is_performed_at_pk UNIQUE (event, room, perf_date)
+    CONSTRAINT is_performed_at_pk UNIQUE (room, perf_date)
 );
 
 CREATE TABLE IF NOT EXISTS customer_order (

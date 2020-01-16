@@ -25,7 +25,7 @@ public class PerformanceDto {
     @NotNull
     private LocalDateTime date;
     @NotNull
-    private Float price;
+    private Float price = 15.9f;
 
     private static final class PerformanceDtoBuilder {
 
@@ -37,7 +37,8 @@ public class PerformanceDto {
         private LocalDateTime date;
         private Float price;
 
-        public PerformanceDtoBuilder() {};
+        public PerformanceDtoBuilder() {
+        };
 
         public PerformanceDto.PerformanceDtoBuilder withId(Long id) {
             this.id = id;
