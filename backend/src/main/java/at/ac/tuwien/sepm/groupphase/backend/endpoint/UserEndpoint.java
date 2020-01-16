@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,14 +40,27 @@ public class UserEndpoint {
 
 
     @CrossOrigin
-    @PostMapping(value= "/register")
+    @PostMapping(value = "/register")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create a user", authorizations = {@Authorization(value = "apiKey")})
     public UserDto post(@RequestBody @Validated UserDto userDto) {
         log.info("POST /api/v1/user/register: creating new user");
 
-        User user= userMapper.userDtoToUser(userDto);
+        User user = userMapper.userDtoToUser(userDto);
         return userMapper.userToUserDto(userService.createUser(user));
 
     }
+
+    @GetMapping(value = "/profile")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get a user", authorizations = {@Authorization(value = "apiKey")})
+    public UserDto getProfile() {
+        log.info("GET /api/v1/user/profile");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userService.getUser(username);
+        return userMapper.userToUserDto(user);
+    }
+
 }

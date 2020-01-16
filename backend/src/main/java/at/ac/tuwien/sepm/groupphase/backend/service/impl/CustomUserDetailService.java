@@ -127,4 +127,14 @@ public class CustomUserDetailService implements UserService {
         }
         return false;
     }
+
+    @Override
+    public User getUser(String username) {
+        User user = userRepository.findFirstByEmailAndDeleted(username, false);
+        if (user == null) {
+            return null;
+        }
+        user.setPassword("yourtinysecret");
+        return user;
+    }
 }
