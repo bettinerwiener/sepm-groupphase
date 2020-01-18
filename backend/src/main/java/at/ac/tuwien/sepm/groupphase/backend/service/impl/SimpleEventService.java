@@ -45,8 +45,9 @@ public class SimpleEventService implements EventService {
                 event.setEmployee(employee);
                 return this.eventRepository.save(event);
             } else {
+
                 throw new NotCreatedException(String.format(
-                    "The event %s could not be created: only an employee can add one", event.getTitle()));
+                    "The event %s could not be created: only an employee can add one", event.getTitle() + " email: " + email));
             }
         } catch (DataAccessException dae) {
             LOGGER.error("EventService: event could not be created: " + dae.getMessage());

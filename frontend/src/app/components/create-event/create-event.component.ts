@@ -30,8 +30,7 @@ export class CreateEventComponent implements OnInit {
       category:     [Validators.required],
       shortDescription:  ['', Validators.required],
       contents:         ['', Validators.required],
-      duration:     [Validators.required],
-      image:        [Validators.nullValidator]
+      duration:     [Validators.required]
     });
   }
 
