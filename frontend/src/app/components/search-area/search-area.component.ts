@@ -67,7 +67,7 @@ export class SearchAreaComponent implements OnInit {
     endDate: Date,
     price: number,
     duration: number,
-    location: EventLocation,
+    location: string,
     artist: Artist) {
       let category: string = this.category;
       if (category === 'films') {
@@ -77,8 +77,8 @@ export class SearchAreaComponent implements OnInit {
       } else if (category === 'theatres') {
         category = 'THEATER';
       }
-      console.log(location);
-    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
+    const eventLocation: EventLocation = new EventLocation(null, null, null, location, null);
+    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {

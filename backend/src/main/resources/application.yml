@@ -35,6 +35,7 @@ security:
     - /api/v1/events
     - /api/v1/events?
     - /api/v1/locations
+    - /api/v1/locations/cities
     - /api/v1/events/topten
     - /api/v1/performances
     - /api/v1/user/register
