@@ -36,7 +36,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      * @param currentTime the current time +30min
      * @return List of all reserved Tickets from Events that start in less than 30min.
      */
-    @Query(value = "SELECT ticket.id, price,is_performed_at_id,customer_order_id, seat_id, status  FROM event " +
+    @Query(value = "SELECT ticket.id, ticket.price,is_performed_at_id,customer_order_id, seat_id, status  FROM event " +
         "JOIN is_performed_at ON(event.id = is_performed_at.event) JOIN ticket ON(is_performed_at.id = ticket.is_performed_at_id) " +
         "WHERE status = 'RESERVED' AND perf_date <= :currentTime", nativeQuery = true)
     List<Ticket> getAllTicketsWhereReservationRunsOut (@Param("currentTime") LocalDateTime currentTime);

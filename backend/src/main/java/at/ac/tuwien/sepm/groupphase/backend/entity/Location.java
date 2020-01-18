@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "location")
 public class Location {
 
     @Id
@@ -24,5 +25,15 @@ public class Location {
 
     @Column(nullable = false, name = "postal_code")
     private Long postalCode;
+
+    public Location(String city){
+        this.id = null;
+        this.name = null;
+        this.street = null;
+        this.city = city;
+        this.postalCode = null;
+    }
+
+    public Location(){}
 
 }

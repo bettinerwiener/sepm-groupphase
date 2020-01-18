@@ -62,7 +62,7 @@ public class OrderRepositoryTest implements OrderTestData {
         orderRepository.save(order);
 
         assertAll(
-            () -> assertEquals(4, orderRepository.findAll().size()),
+            () -> assertEquals(301, orderRepository.findAll().size()),
             () -> assertNotNull(orderRepository.findById(order.getId()))
         );
     }

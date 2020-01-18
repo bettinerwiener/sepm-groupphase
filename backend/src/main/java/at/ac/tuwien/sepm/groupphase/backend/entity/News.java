@@ -15,7 +15,7 @@ public class News {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 511)
+    @Column(nullable = false, length = 1023)
     private String entry;
 
     @Column(nullable = false, length = 127)

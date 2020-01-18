@@ -24,6 +24,8 @@ public class PerformanceDto {
     private Room room;
     @NotNull
     private LocalDateTime date;
+    @NotNull
+    private Float price = 15.9f;
 
     private static final class PerformanceDtoBuilder {
 
@@ -33,8 +35,10 @@ public class PerformanceDto {
         private Room room;
 
         private LocalDateTime date;
+        private Float price;
 
-        public PerformanceDtoBuilder() {};
+        public PerformanceDtoBuilder() {
+        };
 
         public PerformanceDto.PerformanceDtoBuilder withId(Long id) {
             this.id = id;
@@ -53,12 +57,19 @@ public class PerformanceDto {
             return this;
         }
 
+        public PerformanceDto.PerformanceDtoBuilder withPrice(Float Price) {
+            this.price = price != null ? price : 15.90f;
+            return this;
+        }
+
+
         public PerformanceDto build() {
             PerformanceDto performanceDto = new PerformanceDto();
             performanceDto.setId(id);
             performanceDto.setEvent(event);
             performanceDto.setRoom(room);
             performanceDto.setDate(date);
+            performanceDto.setPrice(price);
             return performanceDto;
         }
     }

@@ -60,7 +60,7 @@ public class LocationRepositoryTest {
 
     @Test
     public void findingLocationByNonExistingIdReturnsNull() {
-        Optional<Location> locationOptional = locationRepository.findById(50L);
+        Optional<Location> locationOptional = locationRepository.findById(301L);
         assertAll(
             () -> assertFalse(locationOptional.isPresent())
         );

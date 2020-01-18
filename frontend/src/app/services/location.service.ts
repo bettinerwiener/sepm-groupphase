@@ -19,6 +19,11 @@ export class LocationService {
     return this.httpClient.get<EventLocation[]>(this.locationBaseUri);
   }
 
+  getCities(): Observable<EventLocation[]> {
+    console.log('Get all cities');
+    return this.httpClient.get<EventLocation[]>(this.locationBaseUri + '/cities');
+  }
+
   createLocation(location: EventLocation): Observable<EventLocation> {
     console.log('Post Location with name ' + location.name);
     return this.httpClient.post<EventLocation>(this.locationBaseUri, location);

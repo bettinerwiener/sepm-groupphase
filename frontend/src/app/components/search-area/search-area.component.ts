@@ -26,8 +26,7 @@ export class SearchAreaComponent implements OnInit {
     private locationService: LocationService) { }
 
   ngOnInit() {
-    this.getAlllLocations();
-    console.log(this.locations);
+    this.getAllCities();
     this.initGetEventForCategory();
   }
 
@@ -78,6 +77,7 @@ export class SearchAreaComponent implements OnInit {
       } else if (category === 'theatres') {
         category = 'THEATER';
       }
+      console.log(location);
     this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
@@ -101,8 +101,8 @@ export class SearchAreaComponent implements OnInit {
     );
   }
 
-  private getAlllLocations() {
-    this.locationService.getLocation().subscribe(
+  private getAllCities() {
+    this.locationService.getCities().subscribe(
       (locations: EventLocation[]) => {
         this.locations = locations;
       },
@@ -125,6 +125,5 @@ export class SearchAreaComponent implements OnInit {
       this.errorMessage = error.error.message;
     }
   }
-
 
 }
