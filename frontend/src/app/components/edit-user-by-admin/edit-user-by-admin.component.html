@@ -98,6 +98,12 @@
                 <button type="button" (click)="deleteUser()" class="btn btn-success float-right">Delete</button>
               </div>
             </details>
+            <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong> Update successful!</strong>
+              <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
             <div>
               <button type="button" (click)="updateUser()" class="btn btn-success float-right">Update</button>
             </div>
@@ -111,3 +117,5 @@
     </div>
   </div>
 </div>
+
+

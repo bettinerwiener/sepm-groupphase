@@ -18,6 +18,7 @@ export class EditUserByAdminComponent implements OnInit {
   registerForm: FormGroup;
 
   submitted: boolean = false;
+  success: boolean = false;
 
   error: boolean = false;
   errorMessage: string = '';
@@ -64,10 +65,14 @@ export class EditUserByAdminComponent implements OnInit {
       );
   }
 
+  vanishSuccess() {
+    this.success = false;
+  }
+
   updateUser(): void {
     console.log('Update some User');
     this.submitted = true;
-
+    this.success = true;
 
     this.user.firstName = this.registerForm.controls.firstName.value;
     this.user.lastName = this.registerForm.controls.lastName.value;

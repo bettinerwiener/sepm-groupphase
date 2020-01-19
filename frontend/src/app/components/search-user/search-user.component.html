@@ -13,9 +13,12 @@
             <div class="col-md-6">
               <input #searchBox type="text" class="form-control" placeholder="Search term...">
             </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary" (click)="search(searchBox.value)">Search</button>
+            </div>
           </div>
           <ul class="search.result">
-            <h2>results:</h2>
+            <h2 *ngIf="searched">Results:</h2>
             <li *ngFor="let user of users | async">
               <a routerLink="/admin/edit/{{user.email}}">
                 {{user.email}}
@@ -23,9 +26,12 @@
             </li>
           </ul>
           <br>
+          <div class="col-md-12 text-center mx-auto">
+            <h1>Add User</h1>
+          </div>
           <div class="row">
             <div class="col">
-              <button type="button" class="btn btn-primary" (click)="search(searchBox.value)">Search</button>
+              <button type="button" class="btn btn-primary" routerLink="/register">Add User</button>
             </div>
           </div>
         </form>

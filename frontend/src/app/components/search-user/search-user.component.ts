@@ -12,6 +12,7 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 })
 export class SearchUserComponent implements OnInit {
   users: Observable<User[]>;
+  searched: boolean = false;
   private searchTerms = new Subject<String>();
 
   constructor(private adminService: AdminService) {}
@@ -26,6 +27,7 @@ export class SearchUserComponent implements OnInit {
 
   search(name: String): void {
     this.searchTerms.next(name);
+    this.searched = true;
   }
 
 }

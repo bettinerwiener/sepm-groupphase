@@ -67,11 +67,12 @@ public class CustomUserDetailService implements UserService {
     public User createUser (User user) throws EmailExistsException, NotCreatedException {
         log.info("Creating user",user);
 
-        if (userRepository.findFirstByEmail(user.getEmail()) != null) {
+        if (userRepository.findFirstByEmailAndDeleted(user.getEmail(),false) != null) {
             log.error("email adress already in use", user.getEmail());
             throw new EmailExistsException("There already is an account with the email adress: " + user.getEmail());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setDeleted(false);
         try {
             return this.userRepository.save(user);
         } catch (DataAccessException notCreated) {
