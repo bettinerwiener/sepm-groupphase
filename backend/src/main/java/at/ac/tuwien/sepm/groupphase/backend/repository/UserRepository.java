@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByEmail(String email);
 
-    User findFirstById(Long id);
+    User findFirstByIdAndDeleted(Long id, Boolean deleted);
 
     void deleteById(Long id);
 

@@ -1,5 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.EmailExistsException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
@@ -67,4 +69,14 @@ public interface UserService extends UserDetailsService {
      * @return the lock status
      */
     boolean isLocked(String email);
+
+    User getUser(String username);
+
+    User updateUser(User user);
+
+    boolean deleteUser(String username);
+
+    boolean validate(UserLoginDto userLoginDto);
+
+    boolean exists(String username);
 }

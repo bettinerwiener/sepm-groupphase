@@ -47,7 +47,7 @@ public class User {
     @Column(nullable = false, name = "login_count")
     private int loginCount;
 
-    @Column(nullable = false, name = "deleted")
+    @Column(nullable = false)
     private Boolean deleted;
 
     public User() {

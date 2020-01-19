@@ -49,6 +49,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 throw new BadCredentialsException(user.getEmail() + " is locked!");
             }
 
+            //checks if email exists
+            if (this.userService.exists(user.getEmail())) {
+                throw new BadCredentialsException("Bad Credentials");
+            }
+
             //Compares the user with CustomUserDetailService#loadUserByUsername and check if the credentials are correct
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 user.getEmail(),

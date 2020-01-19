@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import at.ac.tuwien.sepm.groupphase.backend.exception.EmailExistsException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.AdminService;
 import org.slf4j.Logger;
@@ -55,15 +56,30 @@ public class SimpleAdminService implements AdminService {
 
     @Override
     public User updateUser(User user) {
+        User helpUser = userRepository.findFirstByIdAndDeleted(user.getId(), false);
         LOGGER.debug("Updating User with ID: " + user.getId());
+        if (userRepository.existsByEmail(user.getEmail())) {
+            if (helpUser.getEmail().equals(user.getEmail())) {
+                // if this id already owns this email
+            } else {
+                // email is already used by an other user
+                throw new EmailExistsException("Email is already in use!");
+            }
+        }
+
         if (user.getPassword().equals("yourtinysecret")) {
-            user.setPassword(userRepository.findFirstById(user.getId()).getPassword());
-            userRepository.saveAndFlush(user);
+            user.setPassword(helpUser.getPassword());
         } else {
             String pw = user.getPassword();
             user.setPassword(passwordEncoder.encode(pw));
-            userRepository.saveAndFlush(user);
         }
+        user.setLocked(helpUser.getLocked());
+        user.setIsEmployee(helpUser.getIsEmployee());
+
+        user.setDeleted(false);
+
+        userRepository.saveAndFlush(user);
+        user.setPassword("yourtinysecret");
         return user;
     }
 

@@ -57,12 +57,12 @@
               <label for="password">Password bestätigen</label>
               <input type="password" name="passwordConf" formControlName="passwordConf" class="form-control" id="passwordConf">
               <div *ngIf="submitted && registerForm.controls.passwordConf.errors" class="errors">
-                <div *ngIf="registerForm.controls.passwordConf.errors.required">
+                <small *ngIf="registerForm.controls.passwordConf.errors.required">
                   Confirm your Password!
-                </div>
-                <div *ngIf="registerForm.controls.passwordConf.errors.mustMatch">
+                </small>
+                <small *ngIf="registerForm.controls.passwordConf.errors.mustMatch">
                   password doesn't match
-                </div>
+                </small>
               </div>
             </div>
 

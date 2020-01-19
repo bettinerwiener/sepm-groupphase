@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.EmailExistsException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
@@ -137,4 +138,59 @@ public class CustomUserDetailService implements UserService {
         user.setPassword("yourtinysecret");
         return user;
     }
+
+    @Override
+    public User updateUser(User user) {
+        User helpUser = userRepository.findFirstByIdAndDeleted(user.getId(), false);
+
+        if (userRepository.existsByEmail(user.getEmail())) {
+            if (helpUser.getEmail().equals(user.getEmail())) {
+                // if this id already owns this email
+            } else {
+                // email is already used by an other user
+                throw new EmailExistsException("Email is already in use!");
+            }
+        }
+
+        if (user.getPassword().equals("yourtinysecret")) {
+            user.setPassword(helpUser.getPassword());
+        } else {
+            String pw = user.getPassword();
+            user.setPassword(passwordEncoder.encode(pw));
+        }
+        System.out.println("DEBUG" + user.getDeleted());
+        user.setDeleted(false);
+        userRepository.saveAndFlush(user);
+        user.setPassword("yourtinysecret");
+
+
+        return user;
+    }
+
+    @Override
+    public boolean deleteUser(String username) {
+        if (!userRepository.existsByEmail(username)) {
+            throw new NotFoundException("User doesn't exist!");
+        }
+        User user = userRepository.findFirstByEmailAndDeleted(username, false);
+        user.setDeleted(true);
+        userRepository.saveAndFlush(user);
+        return true;
+    }
+
+    @Override
+    public boolean validate(UserLoginDto userLoginDto) {
+        User help = userRepository.findFirstByEmailAndDeleted(userLoginDto.getEmail(), false);
+        return passwordEncoder.matches(userLoginDto.getPassword(),help.getPassword());
+    }
+
+    @Override
+    public boolean exists(String username) {
+        if (userRepository.findFirstByEmailAndDeleted(username, false) == null) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
