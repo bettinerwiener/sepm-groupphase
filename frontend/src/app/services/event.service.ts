@@ -19,7 +19,7 @@ export class EventService {
    */
   getEvent(): Observable<GlobalEvent[]> {
     console.log('Get all events');
-    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri);
+    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri + '/all');
   }
 
   getCreatedEvent(): Observable<GlobalEvent> {
@@ -42,6 +42,6 @@ export class EventService {
    */
   createEvent(event: GlobalEvent): Observable<GlobalEvent> {
     console.log('Post Event with title' + event.title + ', category: ' + event.category);
-    return this.httpClient.post<GlobalEvent>(this.eventBaseUri, event);
+    return this.httpClient.post<GlobalEvent>(this.eventBaseUri + '/all', event);
   }
 }

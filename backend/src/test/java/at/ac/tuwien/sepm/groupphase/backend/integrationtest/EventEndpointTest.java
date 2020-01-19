@@ -26,7 +26,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -115,5 +117,15 @@ public class EventEndpointTest implements EventTestData {
             EventDto[].class));
 
         assertEquals(1, events.size());
+    }
+
+    @Test
+    public void whenCreatePerformance_returns201() throws Exception {
+        this.mockMvc.perform(post(EVENT_BASE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(NEW_EVENT)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
     }
 }

@@ -3,9 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
-import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
@@ -14,9 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.geom.RoundRectangle2D;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.List;
@@ -65,12 +64,14 @@ public class EventEndpoint {
         return eventDtos;
     }
 
+    @Secured("ROLE_ADMIN")
     @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
     public EventDto create(@RequestBody EventDto eventDto, @AuthenticationPrincipal String username) {
-        return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
+        return eventMapper.eventToEventDto(
+            eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
     }
 
     @CrossOrigin(origins="*")
