@@ -20,7 +20,7 @@ export class SearchService {
     endDate: Date,
     price: number,
     duration: number,
-    eventLocation: EventLocation,
+    eventLocation: string,
     artist: Artist
     ): Observable<Array<GlobalEvent>> {
 
@@ -31,9 +31,11 @@ export class SearchService {
     if (endDate) { query += `endDate=${endDate}&`; }
     if (price) { query += `price=${Number(price)}&`; }
     if (duration) { query += `duration=${Number(duration)}&`; }
-    if (eventLocation) { query += `location=${eventLocation}&`; }
+    if (eventLocation) { query += `location=${eventLocation}`; }
     if (artist) { query += `Artist=${artist}`; }
-
+    if (query.endsWith('&')) {
+      query = query.slice(0, -1);
+    }
     console.log('Get event', query);
     return this.httpClient.get<Array<GlobalEvent>>(this.globals.backendUri + '/events' + query);
   }

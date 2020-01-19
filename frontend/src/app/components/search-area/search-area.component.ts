@@ -31,7 +31,7 @@ export class SearchAreaComponent implements OnInit {
   }
 
   initGetEventForCategory() {
-    let category: string = this.category;
+    let category: string = null;
     if (this.category === 'films') {
         category = 'FILM';
       } else if (this.category === 'concerts') {
@@ -43,11 +43,9 @@ export class SearchAreaComponent implements OnInit {
       (events: GlobalEvent[]) => {
         if ( category === 'THEATER') {
           this.searchedTheatres.emit(events);
-        }
-        if ( category === 'FILM') {
+        } else if ( category === 'FILM') {
           this.searchedFilms.emit(events);
-        }
-        if (category === 'CONCERT') {
+        } else if (category === 'CONCERT') {
           this.searchedConcerts.emit(events);
         }
       },
@@ -68,17 +66,17 @@ export class SearchAreaComponent implements OnInit {
     price: number,
     duration: number,
     location: string,
-    artist: Artist) {
-      let category: string = this.category;
-      if (category === 'films') {
+    artist?: Artist) {
+      let category: string = null;
+      if (this.category === 'films') {
         category = 'FILM';
-      } else if (category === 'concerts') {
+      } else if (this.category === 'concerts') {
         category = 'CONCERT';
-      } else if (category === 'theatres') {
+      } else if (this.category === 'theatres') {
         category = 'THEATER';
       }
-    const eventLocation: EventLocation = new EventLocation(null, null, null, location, null);
-    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, eventLocation, artist).subscribe(
+      console.log('The id of the location is ' + location);
+    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {

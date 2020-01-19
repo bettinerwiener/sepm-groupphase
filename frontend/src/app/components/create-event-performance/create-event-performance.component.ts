@@ -63,12 +63,13 @@ export class CreateEventPerformanceComponent implements OnInit {
       );
 
       console.log(formattedDate);
-
+      const price: Number = 15.9;
       const eventPerformance: EventPerformance = new EventPerformance(
         null,
         this.createEventPerformanceForm.controls.event.value,
         this.createEventPerformanceForm.controls.room.value,
-        formattedDate
+        formattedDate,
+        price
       );
 
 

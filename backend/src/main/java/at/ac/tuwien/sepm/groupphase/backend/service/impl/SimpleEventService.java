@@ -1,11 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Location;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepositoryCustom;
+import at.ac.tuwien.sepm.groupphase.backend.repository.LocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import org.aspectj.weaver.ast.Not;
@@ -89,7 +91,7 @@ public class SimpleEventService implements EventService {
     public List<Event> getFiltered(String searchTerm, String category,
                                    LocalDate startDate, LocalDate endDate,
                                    Double price, Double duration,
-                                   Long location, Long artist) {
+                                   String location, Long artist) {
         try {
             List<Event> events = this.eventRepository.findAllByCriteria(searchTerm,
                 category, startDate, endDate, price, duration, location, artist);

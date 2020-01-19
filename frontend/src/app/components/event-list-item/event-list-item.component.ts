@@ -48,6 +48,8 @@ export class EventListItemComponent implements OnInit {
       (retPerformances: EventPerformance[]) => {
         retPerformances.sort(
           (a: EventPerformance, b: EventPerformance) => {
+            a.date = new Date(a.date);
+            b.date = new Date(b.date);
             return a.date.getDate() - b.date.getDate();
           }
         );

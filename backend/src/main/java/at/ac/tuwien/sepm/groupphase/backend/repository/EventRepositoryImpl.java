@@ -19,16 +19,26 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     public List<Event> findAllByCriteria(String searchTerm, String category,
                                          LocalDate startDate, LocalDate endDate,
                                          Double price, Double duration,
-                                         Long location, Long artist) {
+                                         String location, Long artist) {
         boolean first_condition = false;
         String query = "select e from Event e " +
             "join EventPerformance i on e.id = i.event " +
-            "join Ticket t on i.event = t.performance " +
-            "join Room r on r.id = i.room where";
+            "join Room r on r.id = i.room " +
+            "join Location l on l.id = r.location where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            searchTerm = searchTerm.toLowerCase();
-            query = query + " lower(title) like '%" + searchTerm + "%' or lower(abstract) like '%" + searchTerm+
-                "%' or lower(contents) like '%" + searchTerm+ "%'";
+            searchTerm = searchTerm.toLowerCase().trim();
+            String[] searchTerms = searchTerm.split(" ");
+            Boolean first = true;
+            for (String s : searchTerms) {
+                if (first) {
+                    first = false;
+                    query = query + " (lower(title) like '%" + s + "%' or lower(abstract) like '%" + s +
+                        "%' or lower(contents) like '%" + s + "%')";
+                } else {
+                    query = query + " and (lower(title) like '%" + s + "%' or lower(abstract) like '%" + s +
+                        "%' or lower(contents) like '%" + s + "%')";
+                }
+            }
         } else {
             first_condition = true;
         }
@@ -78,9 +88,9 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         }
         if (location != null) {
             if (!first_condition) {
-                query += " and r.location = " + location;
+                query += " and l.city = '" + location + "'";
             } else {
-                query += " r.location = " + location;
+                query += " l.city = '" + location + "'";
             }
 
         }

@@ -34,9 +34,9 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping()
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
     public List<EventDto> getAll(@RequestParam(required = false) String searchTerm,
                                  @RequestParam(required = false) String category,
@@ -44,7 +44,7 @@ public class EventEndpoint {
                                  @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
                                  @RequestParam(required = false) Double price,
                                  @RequestParam(required = false) Double duration,
-                                 @RequestParam(required = false) Long location,
+                                 @RequestParam(required = false) String location,
                                  @RequestParam(required = false) Long artist) {
         List<EventDto> eventDtos;
         if (searchTerm == null && category == null
@@ -64,8 +64,8 @@ public class EventEndpoint {
         return eventDtos;
     }
 
+    @CrossOrigin
     @Secured("ROLE_ADMIN")
-    @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
@@ -74,7 +74,7 @@ public class EventEndpoint {
             eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/topten")
     @ApiOperation(value = "Get top ten events", authorizations = {@Authorization(value = "apiKey")})
@@ -84,7 +84,7 @@ public class EventEndpoint {
         return eventDtos;
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     @ApiOperation(value = "Get event by id", authorizations = {@Authorization(value = "apiKey")})
