@@ -42,7 +42,7 @@ public class EventEndpoint {
 
     @CrossOrigin(origins="*")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping("/all")
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
     public List<EventDto> getAll(@RequestParam(required = false) String searchTerm,
                                  @RequestParam(required = false) String category,

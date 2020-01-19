@@ -54,7 +54,18 @@
                   required!
                 </small>
               </div>
-        </div>
+            </div>
+
+            <div class="form-group">
+              <input type="number" name="price" formControlName="price" class="form-control" id="price"
+                placeholder="Price">
+              <div *ngIf="submitted && createEventPerformanceForm.controls.duration.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventPerformanceForm.controls.duration.errors.required">Price
+                  is
+                  required!
+                </small>
+              </div>
+            </div>
 
             <button type="button" (click)="addEventPerformance()" class="btn btn-success float-right">Create Performance</button>
 

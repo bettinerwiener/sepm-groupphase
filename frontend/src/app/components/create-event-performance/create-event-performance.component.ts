@@ -37,7 +37,8 @@ export class CreateEventPerformanceComponent implements OnInit {
       event: [Validators.required],
       room: [Validators.required],
       date: [Validators.required],
-      time: [Validators.required]
+      time: [Validators.required],
+      price: [Validators.required]
     });
   }
 
@@ -54,24 +55,20 @@ export class CreateEventPerformanceComponent implements OnInit {
   addEventPerformance() {
     this.submitted = true;
     if (this.createEventPerformanceForm.valid) {
-      console.log(this.createEventPerformanceForm.controls.time.value);
-      console.log(this.createEventPerformanceForm.controls.date.value);
-
       const formattedDate = new Date(
         this.createEventPerformanceForm.controls.date.value + ' ' +
         this.createEventPerformanceForm.controls.time.value
       );
 
-      console.log(formattedDate);
-
       const eventPerformance: EventPerformance = new EventPerformance(
         null,
         this.createEventPerformanceForm.controls.event.value,
         this.createEventPerformanceForm.controls.room.value,
-        formattedDate
+        formattedDate,
+        this.createEventPerformanceForm.controls.price.value
       );
 
-
+      console.log(eventPerformance);
 
       this.createEventPerformance(eventPerformance);
       this.clearForm();
