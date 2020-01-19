@@ -74,7 +74,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
         userRepository.save(user);
 
         assertAll(
-            () -> assertEquals(5, userRepository.findAll().size()),
+            () -> assertEquals(305, userRepository.findAll().size()),
             () -> assertNotNull(userRepository.findById(user.getId()))
         );
     }
@@ -82,7 +82,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
     @Test
     public void saveUserThenCheckSizeWhenFindAllThenFindUserByWrongId() {
         User user = new User();
-        user.setId(12L);
+        user.setId(305L);
         user.setFirstName(TEST_FIRST_NAME);
         user.setLastName(TEST_LAST_NAME);
         user.setEmail(TEST_EMAIL);
@@ -94,7 +94,7 @@ public class RegisterUserRepositoryTest implements RegistrationTestData {
         userRepository.save(user);
 
         assertAll(
-            () -> assertEquals(5, userRepository.findAll().size()),
+            () -> assertEquals(305, userRepository.findAll().size()),
             () -> assertNotEquals(user, userRepository.findById(100L))
         );
     }
