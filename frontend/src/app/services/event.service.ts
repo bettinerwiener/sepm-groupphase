@@ -11,6 +11,7 @@ export class EventService {
 
   eventBaseUri: string = this.globals.backendUri + '/events';
   private toptenBaseUri: string = this.eventBaseUri + '/topten';
+  private eventAllBaseUri: string = this.eventBaseUri + '/all';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
@@ -19,7 +20,7 @@ export class EventService {
    */
   getEvent(): Observable<GlobalEvent[]> {
     console.log('Get all events');
-    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri);
+    return this.httpClient.get<GlobalEvent[]>(this.eventAllBaseUri);
   }
 
   getCreatedEvent(): Observable<GlobalEvent> {
