@@ -86,7 +86,7 @@ export class SearchAreaComponent implements OnInit {
         if (startTime != null) {
           let timeString: string[] = startTime.split(':');
           start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
-            Number(timeString[0]), Number(timeString[1]), 0);
+            Number(timeString[0]) + 1, Number(timeString[1]), 0);
         } else {
           start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
             0, 0, 0);
@@ -98,7 +98,7 @@ export class SearchAreaComponent implements OnInit {
       if (endTime != null) {
         let timeString: string[] = endTime.split(':');
         end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
-          Number(timeString[0]), Number(timeString[1]), 0);
+          Number(timeString[0]) + 1, Number(timeString[1]), 0);
       } else {
         end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
           0, 0, 0);
