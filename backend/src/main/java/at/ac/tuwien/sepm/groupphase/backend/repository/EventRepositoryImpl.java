@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -17,7 +19,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
 
     @Override
     public List<Event> findAllByCriteria(String searchTerm, String category,
-                                         LocalDate startDate, LocalDate endDate,
+                                         LocalDateTime startDate, LocalDateTime endDate,
                                          Double price, Double duration,
                                          String location, Long artist) {
         boolean first_condition = false;
@@ -52,19 +54,21 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
 
         }
         if (startDate != null) {
+            Timestamp toCompare = Timestamp.valueOf(startDate);
             if (!first_condition) {
-                query += " and perf_date > '" + startDate + "'";
+                query += " and perf_date > '" + toCompare + "'";
             } else {
-                query += " perf_date > '" + startDate + "'";
+                query += " perf_date > '" + toCompare + "'";
                 first_condition = false;
             }
 
         }
         if (endDate != null) {
+            Timestamp toCompare = Timestamp.valueOf(endDate);
             if (!first_condition) {
-                query += " and perf_date < '" + endDate + "'";
+                query += " and perf_date < '" + toCompare + "'";
             } else {
-                query += " perf_date < '" + endDate + "'";
+                query += " perf_date < '" + toCompare + "'";
                 first_condition = false;
             }
 

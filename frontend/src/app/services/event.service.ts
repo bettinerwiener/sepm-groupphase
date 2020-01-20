@@ -19,7 +19,7 @@ export class EventService {
    */
   getEvent(): Observable<GlobalEvent[]> {
     console.log('Get all events');
-    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri);
+    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri + '/all');
   }
 
   getCreatedEvent(): Observable<GlobalEvent> {

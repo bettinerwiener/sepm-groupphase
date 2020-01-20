@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -89,7 +90,7 @@ public class SimpleEventService implements EventService {
 
     @Override
     public List<Event> getFiltered(String searchTerm, String category,
-                                   LocalDate startDate, LocalDate endDate,
+                                   LocalDateTime startDate, LocalDateTime endDate,
                                    Double price, Double duration,
                                    String location, Long artist) {
         try {

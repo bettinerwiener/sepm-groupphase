@@ -27,8 +27,8 @@ export class SearchService {
     let query = '?';
     if (searchTerm) { query += `searchTerm=${searchTerm}&`; }
     if (category) { query += `category=${category}&`; }
-    if (startDate) { query += `startDate=${startDate}&`; }
-    if (endDate) { query += `endDate=${endDate}&`; }
+    if (startDate) { query += `startDate=${startDate.toISOString()}&`; }
+    if (endDate) { query += `endDate=${endDate.toISOString()}&`; }
     if (price) { query += `price=${Number(price)}&`; }
     if (duration) { query += `duration=${Number(duration)}&`; }
     if (eventLocation) { query += `location=${eventLocation}`; }
@@ -37,7 +37,7 @@ export class SearchService {
       query = query.slice(0, -1);
     }
     console.log('Get event', query);
-    return this.httpClient.get<Array<GlobalEvent>>(this.globals.backendUri + '/events' + query);
+    return this.httpClient.get<Array<GlobalEvent>>(this.globals.backendUri + '/events/all' + query);
   }
 
 }

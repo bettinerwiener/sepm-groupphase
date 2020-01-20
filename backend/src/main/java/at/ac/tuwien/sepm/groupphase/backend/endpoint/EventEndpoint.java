@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,12 +37,12 @@ public class EventEndpoint {
 
     @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping()
+    @GetMapping("/all")
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
     public List<EventDto> getAll(@RequestParam(required = false) String searchTerm,
                                  @RequestParam(required = false) String category,
-                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                                  @RequestParam(required = false) Double price,
                                  @RequestParam(required = false) Double duration,
                                  @RequestParam(required = false) String location,

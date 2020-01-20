@@ -53,7 +53,7 @@ public class EventEndpointTest implements EventTestData {
 
     @Test
     public void givenNothing_whenFindAll_thenListSizeEquals302() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/all")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -106,6 +106,22 @@ public class EventEndpointTest implements EventTestData {
     public void givenNothing_whenFindByCriteria_thenListSizeEquals1() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_FILTER_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventDto[].class));
+
+        assertEquals(2, events.size());
+    }
+
+    @Test
+    public void givenNothingAndNotLoggedIn_whenFindByCriteria_thenListSizeEquals1() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_FILTER_URI))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();

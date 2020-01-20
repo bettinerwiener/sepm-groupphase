@@ -5,6 +5,8 @@ import { Artist } from 'src/app/dtos/artist';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { Subject } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
+import {Time} from '@angular/common';
+import {start} from 'repl';
 
 @Component({
   selector: 'search-area',
@@ -61,13 +63,17 @@ export class SearchAreaComponent implements OnInit {
 
   public getEvent(
     searchTerm: string,
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    startTime: string,
+    endDate: string,
+    endTime: string,
     price: number,
     duration: number,
     location: string,
     artist?: Artist) {
       let category: string = null;
+      let start_date: Date;
+      let end_date: Date;
       if (this.category === 'films') {
         category = 'FILM';
       } else if (this.category === 'concerts') {
@@ -75,8 +81,32 @@ export class SearchAreaComponent implements OnInit {
       } else if (this.category === 'theatres') {
         category = 'THEATER';
       }
-      console.log('The id of the location is ' + location);
-    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
+      if (startDate != null && startDate !== '') {
+        let dateString: string[] = startDate.split('-');
+        if (startTime != null) {
+          let timeString: string[] = startTime.split(':');
+          start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+            Number(timeString[0]), Number(timeString[1]), 0);
+        } else {
+          start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+            0, 0, 0);
+        }
+        console.log(startDate + ', ' + startTime);
+      }
+    if (endDate != null) {
+      let dateString: string[] = endDate.split('-');
+      if (endTime != null) {
+        let timeString: string[] = endTime.split(':');
+        end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+          Number(timeString[0]), Number(timeString[1]), 0);
+      } else {
+        end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+          0, 0, 0);
+      }
+      console.log(startDate + ', ' + startTime);
+    }
+      console.log('The city of the location is ' + location);
+    this.searchService.loadEvent(searchTerm, category, start_date, end_date, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {

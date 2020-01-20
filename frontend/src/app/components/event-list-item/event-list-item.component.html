@@ -8,7 +8,7 @@
                 <h5>{{title}}</h5>
                 <span>{{description}}</span>
                 <br>
-            <div id="dateandlocation">
+            <div *ngIf="hasPerformance" id="dateandlocation">
                 <fa-icon [icon]="faCalendarDay" size="xs" style="vertical-align: middle;"></fa-icon>
                 <span>{{firstPerformanceDate}}</span>
                 <span> until </span>
