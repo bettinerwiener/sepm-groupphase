@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS news (
 
 CREATE TABLE IF NOT EXISTS event (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title       VARCHAR(100) NOT NULL,
+    title       VARCHAR(127) NOT NULL,
     abstract    VARCHAR(255) NOT NULL,
     contents    VARCHAR(1023),
     category        VARCHAR(25) CHECK (category IN ('CONCERT', 'FILM', 'THEATER')),

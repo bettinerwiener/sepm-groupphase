@@ -7,7 +7,6 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
-import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
@@ -17,12 +16,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.geom.RoundRectangle2D;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,17 +41,17 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/all")
     @ApiOperation(value = "Get all events", authorizations = {@Authorization(value = "apiKey")})
     public List<EventDto> getAll(@RequestParam(required = false) String searchTerm,
                                  @RequestParam(required = false) String category,
-                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                                  @RequestParam(required = false) Double price,
                                  @RequestParam(required = false) Double duration,
-                                 @RequestParam(required = false) Long location,
+                                 @RequestParam(required = false) String location,
                                  @RequestParam(required = false) Long artist) {
         List<EventDto> eventDtos;
         if (searchTerm == null && category == null
@@ -70,15 +71,17 @@ public class EventEndpoint {
         return eventDtos;
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
+    @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     @ApiOperation(value = "Create a new event", authorizations = {@Authorization(value = "apiKey")})
     public EventDto create(@RequestBody EventDto eventDto, @AuthenticationPrincipal String username) {
-        return eventMapper.eventToEventDto(eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
+        return eventMapper.eventToEventDto(
+            eventService.create(eventMapper.eventDtoToEvent(eventDto), username));
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/topten")
     @ApiOperation(value = "Get top ten events", authorizations = {@Authorization(value = "apiKey")})
@@ -88,7 +91,7 @@ public class EventEndpoint {
         return eventDtos;
     }
 
-    @CrossOrigin(origins="*")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     @ApiOperation(value = "Get event by id", authorizations = {@Authorization(value = "apiKey")})

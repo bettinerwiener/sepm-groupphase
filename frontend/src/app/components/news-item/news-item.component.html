@@ -26,3 +26,13 @@
         </div>
     </div>
 </div>
+<div *ngIf="this.authService.isAdmin()" class="container">
+  <div class="row">
+    <div class="flex-md-fill">
+
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-info" (click)="editNews(news.id)">Edit news</button>
+    </div>
+  </div>
+</div>

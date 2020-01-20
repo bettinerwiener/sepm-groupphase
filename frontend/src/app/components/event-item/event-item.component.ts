@@ -38,7 +38,7 @@ export class EventItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    var id: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    var id: number = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     this.service.getEvent(id).subscribe(
       (eventObj: EventObject) => {
         this.eventObject = eventObj;
@@ -55,10 +55,10 @@ export class EventItemComponent implements OnInit {
               this.ticketsToArray(tickets, perf);
               this.load = true;
             }
-          )
+          );
         }
       }
-    )
+    );
   }
 
   ticketsToArray(tickets: Array<Ticket>, eventPerformance: EventPerformance) {

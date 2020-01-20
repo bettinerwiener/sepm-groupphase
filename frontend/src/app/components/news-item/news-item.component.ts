@@ -9,6 +9,8 @@ import { News } from 'src/app/dtos/news';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { EventNewsService } from 'src/app/services/event-news.service';
 import { EventNews } from 'src/app/dtos/event-news';
+import {AuthService} from '../../services/auth.service';
+import {CustomerNews} from '../../dtos/customer-news';
 
 @Component({
   selector: 'app-news-item',
@@ -34,17 +36,18 @@ export class NewsItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: NewsService,
+    private authService: AuthService,
     private eventNewsService: EventNewsService,
     private sanitizer: DomSanitizer
   ) { }
-  
+
   ngOnInit() {
     var id: number = parseInt(this.route.snapshot.paramMap.get('id'));
     this.id = id;
     this.service.getNewsById(id).subscribe(
       (news: News) => {
         this.news = news;
-        
+
         this.service.getImage(id).subscribe(
           (image: any) => {
             this.news.image = image.body;
@@ -55,7 +58,7 @@ export class NewsItemComponent implements OnInit {
               result = reader.result;
               this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
             };
-            
+
           },
           error => {
             //this.defaultServiceErrorHandling(error);
@@ -72,6 +75,11 @@ export class NewsItemComponent implements OnInit {
 
   }
 
-  
+  editNews(id: number) {
+    this.router.navigate(['/news/edit/', id]).then(
+      () => window.location.reload());
+  }
+
+
 }
 

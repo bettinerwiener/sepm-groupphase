@@ -56,7 +56,6 @@ export class NewsListItemComponent implements OnInit {
     this.newsService.getNewsById(this.id).subscribe(
       (news: News) => {
         this.news = news;
-        console.log(news);
 
         this.newsService.getImage(this.id).subscribe(
           (image: any) => {
@@ -67,8 +66,6 @@ export class NewsListItemComponent implements OnInit {
             reader.onloadend = (event: Event) => {
               result = reader.result;
               this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
-              console.log(this.imageURL);
-
             };
           }
         );

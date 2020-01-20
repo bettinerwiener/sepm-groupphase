@@ -5,7 +5,7 @@ import { EventService } from 'src/app/services/event.service';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { TicketService } from 'src/app/services/ticket.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
-import { last } from 'rxjs/operators';
+import {first, last} from 'rxjs/operators';
 import { Ticket } from 'src/app/dtos/ticket';
 
 @Component({
@@ -27,6 +27,7 @@ export class EventListItemComponent implements OnInit {
   private sortedPerformanceDates: EventPerformance[];
   firstPerformanceDate: string;
   lastPerformanceDate: string;
+  hasPerformance: boolean = true;
   lowestPrice: number;
   error: boolean = false;
   errorMessage: string = 'There went something wrong while displaying these events';
@@ -46,16 +47,22 @@ export class EventListItemComponent implements OnInit {
   getFirstAndLastPerformance(id: number) {
     this.ticketService.getPerformancesByEventId(id).subscribe(
       (retPerformances: EventPerformance[]) => {
-        retPerformances.sort(
-          (a: EventPerformance, b: EventPerformance) => {
-            return a.date.getDate() - b.date.getDate();
-          }
-        );
-        const firstPerformance = new Date(retPerformances[0].date);
-        this.firstPerformanceDate = firstPerformance.getDate() + '-' + firstPerformance.getMonth() + '-' + firstPerformance.getFullYear();
-        const lastPerformance = new Date(retPerformances[retPerformances.length - 1].date);
+        if (retPerformances.length < 1) {
+          this.hasPerformance = false;
+        } else {
+          this.hasPerformance = true;
+          let dateString: string[] = retPerformances[0].date.toString().split('-');
+          const firstPerformance = new Date(Number(dateString[0]), Number(dateString[1]) - 1,
+            Number(dateString[2].slice(0, 2)), 0, 0, 0);
+          this.firstPerformanceDate = (firstPerformance.getDate()) + '-' +
+            (firstPerformance.getMonth() + 1) + '-' + firstPerformance.getFullYear();
 
-        this.lastPerformanceDate = lastPerformance.getDate() + '-' + lastPerformance.getMonth() + '-' + lastPerformance.getFullYear();
+          dateString = retPerformances[retPerformances.length - 1].date.toString().split('-');
+          const lastPerformance = new Date(Number(dateString[0]), Number(dateString[1]) - 1,
+            Number(dateString[2].slice(0, 2)), 0, 0, 0);
+          this.lastPerformanceDate = (lastPerformance.getDate()) + '-' +
+            (lastPerformance.getMonth() + 1) + '-' + lastPerformance.getFullYear();
+        }
       },
       (error) => {
         this.defaultServiceErrorHandling(error);

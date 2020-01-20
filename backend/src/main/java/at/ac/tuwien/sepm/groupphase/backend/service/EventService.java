@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.BitSet;
 import java.util.List;
 
@@ -46,9 +47,9 @@ public interface EventService {
      * @return a list of events meeting all the search criteria
      */
     List<Event> getFiltered(String searchTerm, String category,
-                            LocalDate startDate, LocalDate endDate,
+                            LocalDateTime startDate, LocalDateTime endDate,
                             Double price, Double duration,
-                            Long location, Long artist);
+                            String location, Long artist);
 
     /**
      * Gets an event with the specified id

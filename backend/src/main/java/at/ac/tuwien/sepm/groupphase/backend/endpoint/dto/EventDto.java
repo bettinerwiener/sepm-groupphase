@@ -19,14 +19,12 @@ public class EventDto extends BaseDto {
     private Long id;
 
     @NotNull
-    @Size(max = 100)
     private String title;
 
     @NotNull
-    @Size(max = 255)
     private String shortDescription;
 
-    @Size(max = 511)
+    @NotNull
     private String contents;
 
     @NotNull
