@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { Router, ɵROUTER_PROVIDERS } from '@angular/router';
 import { Observable } from 'rxjs';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'slider',
@@ -13,8 +14,12 @@ export class SliderComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
+    private sanitizer: DomSanitizer,
     private router: Router) { }
+
   topTenEvents: GlobalEvent[];
+  @Input() image: Blob;
+  imageURL: SafeUrl;
   error: boolean = false;
   errorMessage: string = 'There was a problem loading the topTenEvents';
 
@@ -36,6 +41,21 @@ export class SliderComponent implements OnInit {
   routeToEvent(id: number): void {
     this.router.navigate(['/event/', id]).then(
       () => window.location.reload());
+  }
+
+  getImage(id: number) {
+    this.eventService.getImage(id).subscribe(
+      (image: any) => {
+        this.image = image.body;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.image);
+        let result;
+        reader.onloadend = (event: Event) => {
+          result = reader.result;
+          this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
+        };
+      }
+    );
   }
 
 
