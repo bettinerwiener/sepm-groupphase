@@ -5,6 +5,7 @@ logging:
 
 spring:
   datasource:
+    sqlScriptEncoding: UTF-8
     url: jdbc:h2:file:./database/db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: admin
@@ -33,8 +34,9 @@ security:
     # Browser requests
     - /
     - /api/v1/events/all
-    - /api/v1/events?
+    - /api/v1/events/all?
     - /api/v1/locations
+    - /api/v1/locations/cities
     - /api/v1/events/topten
     - /api/v1/performances
     - /api/v1/user/register

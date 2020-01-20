@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class PerformanceDto {
     @NotNull
     private Room room;
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime date;
     @NotNull
     private Float price = 15.9f;
