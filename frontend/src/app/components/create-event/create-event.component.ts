@@ -67,6 +67,7 @@ export class CreateEventComponent implements OnInit {
   public sendImage(formData: FormData, id: Number) {
     this.eventService.sendImage(formData, id).subscribe(
       success => {
+        console.log('done');
         this.success = true;
       },
       error => {

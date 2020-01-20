@@ -38,6 +38,16 @@ export class EventService {
     return this.httpClient.post<Boolean>(this.eventBaseUri + '/' + id, formData);
 }
 
+  updateImage(formData: FormData, id: Number): Observable<Boolean> {
+    console.log('Sending image separately');
+    return this.httpClient.post<Boolean>(this.eventAllBaseUri + '/' + id, formData);
+  }
+
+  getImage(id: Number) {
+    console.log('Getting image for news entry with id ' + id);
+    return this.httpClient.get(this.eventBaseUri + '/' + id + '/image', {observe: 'response', responseType: 'blob'});
+  }
+
   /**
    * Creates event with following parameters:
    * @param title Title of the evevnt

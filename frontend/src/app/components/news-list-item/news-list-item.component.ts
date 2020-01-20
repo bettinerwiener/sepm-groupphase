@@ -53,22 +53,16 @@ export class NewsListItemComponent implements OnInit {
   }
 
   getImage() {
-    this.newsService.getNewsById(this.id).subscribe(
-      (news: News) => {
-        this.news = news;
-
-        this.newsService.getImage(this.id).subscribe(
-          (image: any) => {
-            this.image = image.body;
-            const reader = new FileReader();
-            reader.readAsDataURL(this.image);
-            let result;
-            reader.onloadend = (event: Event) => {
-              result = reader.result;
-              this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
-            };
-          }
-        );
+    this.newsService.getImage(this.id).subscribe(
+      (image: any) => {
+        this.image = image.body;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.image);
+        let result;
+        reader.onloadend = (event: Event) => {
+          result = reader.result;
+          this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
+        };
       }
     );
   }

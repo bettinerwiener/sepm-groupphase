@@ -7,6 +7,7 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { EventPerformance } from 'src/app/dtos/event-performance';
 import {first, last} from 'rxjs/operators';
 import { Ticket } from 'src/app/dtos/ticket';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'event-list-item',
@@ -24,6 +25,8 @@ export class EventListItemComponent implements OnInit {
   @Input() description: string;
   @Input() location: string;
   @Input() price: number;
+  @Input() image: Blob;
+  imageURL: SafeUrl;
   private sortedPerformanceDates: EventPerformance[];
   firstPerformanceDate: string;
   lastPerformanceDate: string;
@@ -32,10 +35,16 @@ export class EventListItemComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = 'There went something wrong while displaying these events';
 
-  constructor(private router: Router, private eventService: EventService, private ticketService: TicketService) { }
+  constructor(
+    private router: Router,
+    private eventService: EventService,
+    private ticketService: TicketService,
+    private sanitizer: DomSanitizer
+    ) { }
 
   ngOnInit() {
     this.getFirstAndLastPerformance(this.id);
+    this.getImage();
     // this.getLowestPrice(this.id);
   }
 
@@ -70,41 +79,21 @@ export class EventListItemComponent implements OnInit {
     );
   }
 
-  // getLowestPrice(id: number) {
-  //   let ticketPrices: number[];
-  //   this.ticketService.getPerformancesByEventId(id).subscribe(
-  //     (retPerformances: EventPerformance[]) => {
-  //       retPerformances.forEach( function (retPerformance) {
-  //         this.ticketService.getTicketsByPerformanceId(retPerformance.id).subscribe(
-  //           (retTickets: Ticket[]) => {
-  //             console.log(retTickets);
-  //             retTickets.forEach( function (retTicketPrice) {
-  //               ticketPrices.push(retTicketPrice[0]);
-  //             }
-  //             );
-  //           }
-  //         );
-  //       }
-  //       );
-  //     }
-  //   );
-  //   console.log(ticketPrices);
-  //   ticketPrices.sort(
-  //     (a: number, b: number) => {
-  //       return a - b;
-  //     }
-  //   );
-  //   this.lowestPrice = ticketPrices[0];
-  // }
+  getImage() {
+    this.eventService.getImage(this.id).subscribe(
+      (image: any) => {
+        this.image = image.body;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.image);
+        let result;
+        reader.onloadend = (event: Event) => {
+          result = reader.result;
+          this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
+        };
+      }
+    );
+  }
 
-
-  // private sortTickets(a, b) {
-  //   if ( a[6] === b[6] ) {
-  //     return 0;
-  //   } else {
-  //     return (a[6] < b[6]) ? -1 : 1;
-  //   }
-  // }
 
   private defaultServiceErrorHandling(error: any) {
     console.log(error);
