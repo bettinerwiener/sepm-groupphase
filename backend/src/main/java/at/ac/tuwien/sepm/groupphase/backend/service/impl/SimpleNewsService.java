@@ -63,7 +63,6 @@ public class SimpleNewsService implements NewsService {
     @Override
     public News findById(Long id) throws NotFoundException {
         log.info("Finding news entry with id {} ...", id);
-        System.out.println("hereservice");
         try {
             Optional<News> result = this.newsRepository.findById(id);
             if (!result.isPresent()) {
