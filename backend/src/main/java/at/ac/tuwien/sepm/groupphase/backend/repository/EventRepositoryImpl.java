@@ -102,9 +102,9 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         }
         if (artist != null) {
             if (!first_condition) {
-                query += " and a.lastName = " + artist;
+                query += " and a.lastName = '" + artist + "'";
             } else {
-                query += " a.lastName = " + artist;
+                query += " a.lastName = '" + artist + "'";
             }
 
         }

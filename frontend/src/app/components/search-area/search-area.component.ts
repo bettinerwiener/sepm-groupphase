@@ -112,6 +112,7 @@ export class SearchAreaComponent implements OnInit {
       console.log('The city of the location is ' + location);
     this.searchService.loadEvent(searchTerm, category, start_date, end_date, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
+        console.log('here');
         console.log(events);
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {

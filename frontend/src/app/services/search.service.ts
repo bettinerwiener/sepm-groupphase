@@ -32,7 +32,7 @@ export class SearchService {
     if (price) { query += `price=${Number(price)}&`; }
     if (duration) { query += `duration=${Number(duration)}&`; }
     if (eventLocation) { query += `location=${eventLocation}`; }
-    if (artist) { query += `Artist=${artist}`; }
+    if (artist) { query += `artist=${artist}`; }
     if (query.endsWith('&')) {
       query = query.slice(0, -1);
     }
