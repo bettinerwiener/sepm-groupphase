@@ -97,7 +97,7 @@ public class SimpleEventService implements EventService {
     public List<Event> getFiltered(String searchTerm, String category,
                                    LocalDateTime startDate, LocalDateTime endDate,
                                    Double price, Double duration,
-                                   String location, Long artist) {
+                                   String location, String artist) {
         try {
             List<Event> events = this.eventRepository.findAllByCriteria(searchTerm,
                 category, startDate, endDate, price, duration, location, artist);

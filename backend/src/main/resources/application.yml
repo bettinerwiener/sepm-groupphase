@@ -36,6 +36,7 @@ security:
     - /api/v1/events/all
     - /api/v1/events/all?
     - /api/v1/locations
+    - /api/v1/artists
     - /api/v1/locations/cities
     - /api/v1/events/topten
     - /api/v1/performances

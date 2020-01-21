@@ -13,6 +13,6 @@ public interface EventRepositoryCustom {
                                   @Param("startDate") LocalDateTime startDate,
                                   @Param("endDate") LocalDateTime endDate,
                                   @Param("price") Double price, @Param("duration") Double duration,
-                                  @Param("location") String location, @Param("artist") Long artist);
+                                  @Param("location") String location, @Param("artist") String artist);
 }
 

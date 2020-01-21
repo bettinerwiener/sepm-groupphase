@@ -14160,3 +14160,7 @@ insert into ticket (id, customer_order_id, is_performed_at_id, seat_id, status, 
 insert into ticket (id, customer_order_id, is_performed_at_id, seat_id, status, price) values (998, 63, 223, 480, 'BOUGHT', 42.79);
 insert into ticket (id, customer_order_id, is_performed_at_id, seat_id, status, price) values (999, 241, 161, 203, 'RESERVED', 80.56);
 insert into ticket (id, customer_order_id, is_performed_at_id, seat_id, status, price) values (1000, 66, 110, 215, 'BOUGHT', 258.95);
+
+insert into artist_creates_event (event, artist) values (1,1);
+insert into artist_creates_event (event, artist) values (2,1);
+insert into artist_creates_event (event, artist) values (3, 4);

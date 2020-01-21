@@ -21,11 +21,13 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     public List<Event> findAllByCriteria(String searchTerm, String category,
                                          LocalDateTime startDate, LocalDateTime endDate,
                                          Double price, Double duration,
-                                         String location, Long artist) {
+                                         String location, String artist) {
         boolean first_condition = false;
         String query = "select e from Event e " +
             "join EventPerformance i on e.id = i.event " +
             "join Room r on r.id = i.room " +
+            "left join ArtistCreatesEvent ace on e.id = ace.event" +
+            "left join Artist a on a.id = ace.artist " +
             "join Location l on l.id = r.location where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
             searchTerm = searchTerm.toLowerCase().trim();

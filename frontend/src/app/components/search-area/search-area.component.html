@@ -31,6 +31,17 @@
           </div>
           <div class="row">
             <div class="col-md-3">
+              <label for="artist">Artist</label>
+            </div>
+            <div class="col-md-4">
+              <select artist="artist" class="form-control"
+                      id="artist" name="artist" aria-placeholder="artist" [(ngModel)]="artist">
+            <option *ngFor="let a of artists" [ngValue]="a">{{a.firstName}} {{a.lastName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
               <label for="startDate">Event Start</label>
             </div>
             <div class="col-md-4">
@@ -65,7 +76,7 @@
 
             </div>
             <div class="col-md-3 align-content-md-center">
-              <button type="button" (click)="getEvent(searchTerm, startDate, startTime, endDate, endTime, price, duration, location)" class="btn btn-primary">Search</button>
+              <button type="button" (click)="getEvent(searchTerm, startDate, startTime, endDate, endTime, price, duration, location, artist)" class="btn btn-primary">Search</button>
             </div>
           </div>
         </form>

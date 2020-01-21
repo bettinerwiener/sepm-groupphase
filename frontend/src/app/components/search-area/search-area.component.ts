@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
 import {Time} from '@angular/common';
 import {start} from 'repl';
+import { ArtistService } from 'src/app/services/artist.service';
 
 @Component({
   selector: 'search-area',
@@ -22,13 +23,16 @@ export class SearchAreaComponent implements OnInit {
   @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
   @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
   locations: EventLocation[];
+  artists: Artist[];
   errorMessage = 'There went something wrong while searching for events...';
   constructor(
     private searchService: SearchService,
-    private locationService: LocationService) { }
+    private locationService: LocationService,
+    private artistService: ArtistService) { }
 
   ngOnInit() {
     this.getAllCities();
+    this.getAllArtists();
     this.initGetEventForCategory();
   }
 
@@ -70,7 +74,7 @@ export class SearchAreaComponent implements OnInit {
     price: number,
     duration: number,
     location: string,
-    artist?: Artist) {
+    artist: Artist) {
       let category: string = null;
       let start_date: Date;
       let end_date: Date;
@@ -82,9 +86,9 @@ export class SearchAreaComponent implements OnInit {
         category = 'THEATER';
       }
       if (startDate != null && startDate !== '') {
-        let dateString: string[] = startDate.split('-');
+        const dateString: string[] = startDate.split('-');
         if (startTime != null) {
-          let timeString: string[] = startTime.split(':');
+          const timeString: string[] = startTime.split(':');
           start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
             Number(timeString[0]) + 1, Number(timeString[1]), 0);
         } else {
@@ -94,9 +98,9 @@ export class SearchAreaComponent implements OnInit {
         console.log(startDate + ', ' + startTime);
       }
     if (endDate != null) {
-      let dateString: string[] = endDate.split('-');
+      const dateString: string[] = endDate.split('-');
       if (endTime != null) {
-        let timeString: string[] = endTime.split(':');
+        const timeString: string[] = endTime.split(':');
         end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
           Number(timeString[0]) + 1, Number(timeString[1]), 0);
       } else {
@@ -133,6 +137,18 @@ export class SearchAreaComponent implements OnInit {
     this.locationService.getCities().subscribe(
       (locations: EventLocation[]) => {
         this.locations = locations;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  private getAllArtists() {
+    this.artistService.getArtists().subscribe(
+      (artists: Artist[]) => {
+        this.artists = artists;
+        console.log(artists);
       },
       error => {
         this.defaultServiceErrorHandling(error);

@@ -52,7 +52,7 @@ public class EventEndpoint {
                                  @RequestParam(required = false) Double price,
                                  @RequestParam(required = false) Double duration,
                                  @RequestParam(required = false) String location,
-                                 @RequestParam(required = false) Long artist) {
+                                 @RequestParam(required = false) String artist) {
         List<EventDto> eventDtos;
         if (searchTerm == null && category == null
             && startDate == null && endDate == null

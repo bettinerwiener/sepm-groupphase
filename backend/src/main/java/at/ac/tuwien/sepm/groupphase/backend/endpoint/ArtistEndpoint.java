@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class ArtistEndpoint {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @CrossOrigin("*")
     @GetMapping("/api/v1/artists")
     @ApiOperation(value = "Get all artists", authorizations = {@Authorization(value = "apiKey")})
     public List<ArtistDto> getAll() {

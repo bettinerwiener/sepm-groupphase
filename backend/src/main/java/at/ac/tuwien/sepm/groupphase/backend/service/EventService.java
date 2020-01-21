@@ -49,7 +49,7 @@ public interface EventService {
     List<Event> getFiltered(String searchTerm, String category,
                             LocalDateTime startDate, LocalDateTime endDate,
                             Double price, Double duration,
-                            String location, Long artist);
+                            String location, String artist);
 
     /**
      * Gets an event with the specified id
