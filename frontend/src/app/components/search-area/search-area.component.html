@@ -36,7 +36,7 @@
             <div class="col-md-4">
               <select artist="artist" class="form-control"
                       id="artist" name="artist" aria-placeholder="artist" [(ngModel)]="artist">
-            <option *ngFor="let a of artists" [ngValue]="a">{{a.firstName}} {{a.lastName}}</option>
+            <option *ngFor="let a of artists" [ngValue]="a.lastName">{{a.firstName}} {{a.lastName}}</option>
               </select>
             </div>
           </div>

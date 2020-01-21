@@ -26,7 +26,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         String query = "select e from Event e " +
             "join EventPerformance i on e.id = i.event " +
             "join Room r on r.id = i.room " +
-            "left join ArtistCreatesEvent ace on e.id = ace.event" +
+            "left join ArtistCreatesEvent ace on e.id = ace.event " +
             "left join Artist a on a.id = ace.artist " +
             "join Location l on l.id = r.location where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
@@ -102,9 +102,9 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         }
         if (artist != null) {
             if (!first_condition) {
-                query += " and artist = " + artist;
+                query += " and a.lastName = " + artist;
             } else {
-                query += " artist = " + artist;
+                query += " a.lastName = " + artist;
             }
 
         }

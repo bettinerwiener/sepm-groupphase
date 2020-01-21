@@ -74,7 +74,7 @@ export class SearchAreaComponent implements OnInit {
     price: number,
     duration: number,
     location: string,
-    artist: Artist) {
+    artist: string) {
       let category: string = null;
       let start_date: Date;
       let end_date: Date;
@@ -112,6 +112,7 @@ export class SearchAreaComponent implements OnInit {
       console.log('The city of the location is ' + location);
     this.searchService.loadEvent(searchTerm, category, start_date, end_date, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
+        console.log(events);
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {
           this.searchedTheatres.emit(events);
@@ -148,7 +149,6 @@ export class SearchAreaComponent implements OnInit {
     this.artistService.getArtists().subscribe(
       (artists: Artist[]) => {
         this.artists = artists;
-        console.log(artists);
       },
       error => {
         this.defaultServiceErrorHandling(error);

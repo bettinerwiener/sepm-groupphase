@@ -21,7 +21,7 @@ export class SearchService {
     price: number,
     duration: number,
     eventLocation: string,
-    artist: Artist
+    artist: string
     ): Observable<Array<GlobalEvent>> {
 
     let query = '?';
