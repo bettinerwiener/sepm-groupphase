@@ -99,6 +99,15 @@ public class OrderEndpoint {
         return orderMapper.orderToOrderDto(shoppingCartService.ReserveTickets(user,tickets));
     }
 
+    @CrossOrigin
+    @PutMapping(value= "/cancel")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "cancel ticket", authorizations = {@Authorization(value = "apiKey")})
+    public TicketDto cancelTicket(Authentication authentication, @RequestBody TicketDto ticketDto) {
+        User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
+        Ticket ticket = ticketMapper.ticketDtoToTicket(ticketDto);
+        return ticketMapper.ticketToTicketDto(shoppingCartService.CancelTicket(user, ticket));
+    }
 
 }
 

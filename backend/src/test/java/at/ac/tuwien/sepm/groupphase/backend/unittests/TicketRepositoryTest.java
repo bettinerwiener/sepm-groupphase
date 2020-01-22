@@ -81,7 +81,7 @@ public class TicketRepositoryTest implements TicketTestData {
     public void FindUserIdWhoReservedTicket() {
 
         Ticket ticket= ticketRepository.findFirstById(14L);
-        Long userId = ticketRepository.findUserIdWhoReserved(ticket.getId());
+        Long userId = ticketRepository.findUserIdToTicket(ticket.getId());
 
         assertAll(
             () -> assertNotNull(ticketRepository.findById(ticket.getId())),
@@ -96,7 +96,9 @@ public class TicketRepositoryTest implements TicketTestData {
         List<Ticket> tickets= ticketRepository.getAllTicketsWhereReservationRunsOut(currentTime);
 
         assertAll(
+
             () -> assertEquals(290, tickets.size())
+
         );
     }
 
