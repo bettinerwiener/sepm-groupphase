@@ -61,10 +61,9 @@ public class EmployeeNewsEventEndpointTest implements EmployeeNewsEventTestData 
     }
 
     @Test
-    public void findAllEventNewsReturns2() throws Exception {
+    public void findAllEventNewsReturns302() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_NEWS_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
-            .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -74,6 +73,6 @@ public class EmployeeNewsEventEndpointTest implements EmployeeNewsEventTestData 
         List<EmployeeNewsEventDto> eventNews = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EmployeeNewsEventDto[].class));
 
-        assertEquals(2, eventNews.size());
+        assert(302 <= eventNews.size());
     }
 }

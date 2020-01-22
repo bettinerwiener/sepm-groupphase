@@ -26,7 +26,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -50,8 +52,8 @@ public class EventEndpointTest implements EventTestData {
     private SecurityProperties securityProperties;
 
     @Test
-    public void givenNothing_whenFindAll_thenListSizeEquals2() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
+    public void givenNothing_whenFindAll_thenListSizeEquals302() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/all")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -63,7 +65,7 @@ public class EventEndpointTest implements EventTestData {
         List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EventDto[].class));
 
-        assertEquals(2, events.size());
+        assertEquals(302, events.size());
     }
 
     @Test
@@ -84,7 +86,7 @@ public class EventEndpointTest implements EventTestData {
 
 
     @Test
-    public void givenNothing_whenFindTopTen_thenListSizeEquals2() throws Exception {
+    public void givenNothing_whenFindTopTen_thenListSizeEquals10() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI_TOP_TEN)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
@@ -97,7 +99,7 @@ public class EventEndpointTest implements EventTestData {
         List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EventDto[].class));
 
-        assertEquals(2, events.size());
+        assertEquals(10, events.size());
     }
 
     @Test
@@ -114,6 +116,32 @@ public class EventEndpointTest implements EventTestData {
         List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EventDto[].class));
 
-        assertEquals(1, events.size());
+        assertEquals(2, events.size());
+    }
+
+    @Test
+    public void givenNothingAndNotLoggedIn_whenFindByCriteria_thenListSizeEquals1() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_FILTER_URI))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventDto[].class));
+
+        assertEquals(2, events.size());
+    }
+
+    @Test
+    public void whenCreatePerformance_returns201() throws Exception {
+        this.mockMvc.perform(post(EVENT_BASE_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(NEW_EVENT)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
     }
 }

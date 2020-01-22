@@ -15,7 +15,7 @@ public class News {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 511)
+    @Column(nullable = false, length = 1023)
     private String entry;
 
     @Column(nullable = false, length = 127)
@@ -30,8 +30,5 @@ public class News {
     @Lob
     @Column(nullable = true, columnDefinition = "BLOB")
     private byte[] image;
-
-    @OneToMany(mappedBy = "news", cascade = CascadeType.PERSIST)
-    private Set<CustomerNews> customerNews;
 
 }

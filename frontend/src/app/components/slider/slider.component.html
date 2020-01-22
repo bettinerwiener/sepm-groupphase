@@ -1,8 +1,13 @@
 <div class="superslider" id="superslider">
-    <button id="swipeleft" class="swipe" (click)="swipeleft()"><</button>
+    <button id="swipeleft" class="swipe" (click)="swipeleft()"></button>
     <div class="slider" id="slider">
         <div *ngFor="let t of topTenEvents" class="card" style="min-width: 19%; max-height:fit-content">
+          <div *ngIf="imageURL">
+            <img class="card-img-top" id="image" [src]="imageURL">
+          </div>
+          <div *ngIf="!imageURL">
             <img class="card-img-top" src="https://d3vhc53cl8e8km.cloudfront.net/hello-staging/wp-content/uploads/2017/12/22223742/Events-1200x630.jpg" alt="Card image cap" (click)="routeToEvent(t.id)">
+          </div>
             <div class="card-body">
                 <h5 class="card-title" (click)="routeToEvent(t.id)">{{t.title}}</h5>
             </div>

@@ -57,7 +57,7 @@
 
             <div class="form-group">
               <input type="text" name="contents" formControlName="contents" class="form-control" id="contents"
-                placeholder="contents">
+                placeholder="contents" style="height:150px;">
               <div *ngIf="submitted && createEventForm.controls.contents.errors" class="error">
                 <small class="form-text text-warning"
                   *ngIf="createEventForm.controls.contents.errors.required">Description is
@@ -76,6 +76,8 @@
                 </small>
               </div>
             </div>
+
+            <input type="file" name="image" id= "image" placeholder="Image" (change)="onFileSelect($event)">
 
             <button type="button" (click)="addEvent()" class="btn btn-success float-right">Create Event</button>
 

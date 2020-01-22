@@ -2,13 +2,18 @@
     <div class="col-md-8 mx-auto event-list-item">
         <div class="row event-list-item-content">
             <div class="col-md-2">
+              <div *ngIf="imageURL">
+                <img *ngIf="imageURL" id="image" [src]="imageURL" width="90px" height="90px">
+              </div>
+              <div *ngIf="!imageURL">
                 <img src="https://dl1.cbsistatic.com/i/r/2018/08/09/b6ca69f8-f123-408c-9b1f-ea3f9cf1fb17/resize/620xauto/8787947d1d00135d3f2ed512e56bee72/concert-crowd.jpg" width="90px" height="90px">
+              </div>
             </div>
             <div class="col-md-7">
                 <h5>{{title}}</h5>
                 <span>{{description}}</span>
                 <br>
-            <div id="dateandlocation">
+            <div *ngIf="hasPerformance" id="dateandlocation">
                 <fa-icon [icon]="faCalendarDay" size="xs" style="vertical-align: middle;"></fa-icon>
                 <span>{{firstPerformanceDate}}</span>
                 <span> until </span>

@@ -27,9 +27,20 @@ public class LocationEndpoint {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
+    @CrossOrigin("*")
     @ApiOperation(value = "Get all locations", authorizations = {@Authorization(value = "apiKey")})
     public List<LocationDto> getAll() {
         List<LocationDto> locationDtos = locationService.getAll()
+            .stream().map(location -> locationMapper.locationToLocationDto(location)).collect(Collectors.toList());
+        return locationDtos;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/cities")
+    @CrossOrigin("*")
+    @ApiOperation(value = "Get all cities", authorizations = {@Authorization(value = "apiKey")})
+    public List<LocationDto> getAllCities() {
+        List<LocationDto> locationDtos = locationService.getAllCities()
             .stream().map(location -> locationMapper.locationToLocationDto(location)).collect(Collectors.toList());
         return locationDtos;
     }

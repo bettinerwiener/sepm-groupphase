@@ -5,6 +5,9 @@ import { Artist } from 'src/app/dtos/artist';
 import { GlobalEvent } from 'src/app/dtos/global-event';
 import { Subject } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
+import {Time} from '@angular/common';
+import {start} from 'repl';
+import { ArtistService } from 'src/app/services/artist.service';
 
 @Component({
   selector: 'search-area',
@@ -20,18 +23,21 @@ export class SearchAreaComponent implements OnInit {
   @Output() searchedConcerts = new EventEmitter<GlobalEvent[]>();
   @Output() searchedTheatres = new EventEmitter<GlobalEvent[]>();
   locations: EventLocation[];
+  artists: Artist[];
   errorMessage = 'There went something wrong while searching for events...';
   constructor(
     private searchService: SearchService,
-    private locationService: LocationService) { }
+    private locationService: LocationService,
+    private artistService: ArtistService) { }
 
   ngOnInit() {
-    this.getAlllLocations();
+    this.getAllCities();
+    this.getAllArtists();
     this.initGetEventForCategory();
   }
 
   initGetEventForCategory() {
-    let category: string = this.category;
+    let category: string = null;
     if (this.category === 'films') {
         category = 'FILM';
       } else if (this.category === 'concerts') {
@@ -43,38 +49,71 @@ export class SearchAreaComponent implements OnInit {
       (events: GlobalEvent[]) => {
         if ( category === 'THEATER') {
           this.searchedTheatres.emit(events);
-        }
-        if ( category === 'FILM') {
+        } else if ( category === 'FILM') {
           this.searchedFilms.emit(events);
-        }
-        if (category === 'CONCERT') {
+        } else if (category === 'CONCERT') {
           this.searchedConcerts.emit(events);
         }
       },
       error => {
-        this.defaultServiceErrorHandling(error);
-      }
+        console.log('No events matching this criteria');
+          this.searchedEvents.emit(null);
+          this.searchedFilms.emit(null);
+          this.searchedConcerts.emit(null);
+          this.searchedTheatres.emit(null);
+        }
     );
   }
 
   public getEvent(
     searchTerm: string,
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    startTime: string,
+    endDate: string,
+    endTime: string,
     price: number,
     duration: number,
-    location: EventLocation,
-    artist: Artist) {
-      let category: string = this.category;
-      if (category === 'films') {
+    location: string,
+    artist: string) {
+      let category: string = null;
+      let start_date: Date;
+      let end_date: Date;
+      if (this.category === 'films') {
         category = 'FILM';
-      } else if (category === 'concerts') {
+      } else if (this.category === 'concerts') {
         category = 'CONCERT';
-      } else if (category === 'theatres') {
+      } else if (this.category === 'theatres') {
         category = 'THEATER';
       }
-    this.searchService.loadEvent(searchTerm, category, startDate, endDate, price, duration, location, artist).subscribe(
+      if (startDate != null && startDate !== '') {
+        const dateString: string[] = startDate.split('-');
+        if (startTime != null) {
+          const timeString: string[] = startTime.split(':');
+          start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+            Number(timeString[0]) + 1, Number(timeString[1]), 0);
+        } else {
+          start_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+            0, 0, 0);
+        }
+        console.log(startDate + ', ' + startTime);
+      }
+    if (endDate != null) {
+      const dateString: string[] = endDate.split('-');
+      if (endTime != null) {
+        const timeString: string[] = endTime.split(':');
+        end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+          Number(timeString[0]) + 1, Number(timeString[1]), 0);
+      } else {
+        end_date = new Date(Number(dateString[0]), Number(dateString[1]) - 1, Number(dateString[2]),
+          0, 0, 0);
+      }
+      console.log(startDate + ', ' + startTime);
+    }
+      console.log('The city of the location is ' + location);
+    this.searchService.loadEvent(searchTerm, category, start_date, end_date, price, duration, location, artist).subscribe(
       (events: GlobalEvent[]) => {
+        console.log('here');
+        console.log(events);
         this.searchedEvents.emit(events);
         if ( category === 'THEATER') {
           this.searchedTheatres.emit(events);
@@ -87,15 +126,30 @@ export class SearchAreaComponent implements OnInit {
         }
       },
       error => {
+        console.log('No events matching this criteria');
+        this.searchedEvents.emit(null);
+        this.searchedFilms.emit(null);
+        this.searchedConcerts.emit(null);
+        this.searchedTheatres.emit(null);
+      }
+    );
+  }
+
+  private getAllCities() {
+    this.locationService.getCities().subscribe(
+      (locations: EventLocation[]) => {
+        this.locations = locations;
+      },
+      error => {
         this.defaultServiceErrorHandling(error);
       }
     );
   }
 
-  private getAlllLocations() {
-    this.locationService.getLocation().subscribe(
-      (locations: EventLocation[]) => {
-        this.locations = locations;
+  private getAllArtists() {
+    this.artistService.getArtists().subscribe(
+      (artists: Artist[]) => {
+        this.artists = artists;
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -116,6 +170,5 @@ export class SearchAreaComponent implements OnInit {
       this.errorMessage = error.error.message;
     }
   }
-
 
 }

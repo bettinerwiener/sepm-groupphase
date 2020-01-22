@@ -6,6 +6,8 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface NewsService {
 
     /**

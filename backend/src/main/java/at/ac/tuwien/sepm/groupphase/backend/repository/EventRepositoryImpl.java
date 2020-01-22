@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -17,18 +19,30 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
 
     @Override
     public List<Event> findAllByCriteria(String searchTerm, String category,
-                                         LocalDate startDate, LocalDate endDate,
+                                         LocalDateTime startDate, LocalDateTime endDate,
                                          Double price, Double duration,
-                                         Long location, Long artist) {
+                                         String location, String artist) {
         boolean first_condition = false;
         String query = "select e from Event e " +
             "join EventPerformance i on e.id = i.event " +
-            "join Ticket t on i.event = t.performance " +
-            "join Room r on r.id = i.room where";
+            "join Room r on r.id = i.room " +
+            "left join ArtistCreatesEvent ace on e.id = ace.event " +
+            "left join Artist a on a.id = ace.artist " +
+            "join Location l on l.id = r.location where";
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            searchTerm = searchTerm.toLowerCase();
-            query = query + " lower(title) like '%" + searchTerm + "%' or lower(abstract) like '%" + searchTerm+
-                "%' or lower(contents) like '%" + searchTerm+ "%'";
+            searchTerm = searchTerm.toLowerCase().trim();
+            String[] searchTerms = searchTerm.split(" ");
+            Boolean first = true;
+            for (String s : searchTerms) {
+                if (first) {
+                    first = false;
+                    query = query + " (lower(title) like '%" + s + "%' or lower(abstract) like '%" + s +
+                        "%' or lower(contents) like '%" + s + "%')";
+                } else {
+                    query = query + " and (lower(title) like '%" + s + "%' or lower(abstract) like '%" + s +
+                        "%' or lower(contents) like '%" + s + "%')";
+                }
+            }
         } else {
             first_condition = true;
         }
@@ -42,19 +56,21 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
 
         }
         if (startDate != null) {
+            Timestamp toCompare = Timestamp.valueOf(startDate);
             if (!first_condition) {
-                query += " and perf_date > '" + startDate + "'";
+                query += " and perf_date > '" + toCompare + "'";
             } else {
-                query += " perf_date > '" + startDate + "'";
+                query += " perf_date > '" + toCompare + "'";
                 first_condition = false;
             }
 
         }
         if (endDate != null) {
+            Timestamp toCompare = Timestamp.valueOf(endDate);
             if (!first_condition) {
-                query += " and perf_date < '" + endDate + "'";
+                query += " and perf_date < '" + toCompare + "'";
             } else {
-                query += " perf_date < '" + endDate + "'";
+                query += " perf_date < '" + toCompare + "'";
                 first_condition = false;
             }
 
@@ -78,17 +94,17 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         }
         if (location != null) {
             if (!first_condition) {
-                query += " and r.location = " + location;
+                query += " and l.city = '" + location + "'";
             } else {
-                query += " r.location = " + location;
+                query += " l.city = '" + location + "'";
             }
 
         }
         if (artist != null) {
             if (!first_condition) {
-                query += " and artist = " + artist;
+                query += " and a.lastName = '" + artist + "'";
             } else {
-                query += " artist = " + artist;
+                query += " a.lastName = '" + artist + "'";
             }
 
         }

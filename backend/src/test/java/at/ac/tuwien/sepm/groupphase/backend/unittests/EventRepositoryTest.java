@@ -73,7 +73,7 @@ public class EventRepositoryTest implements EventTestData {
 
     @Test
     public void findEventByNonExistingIdReturnsNull() {
-        Optional<Event> event = eventRepository.findById(50L);
+        Optional<Event> event = eventRepository.findById(400L);
         assertAll(
             () -> assertFalse(event.isPresent())
         );

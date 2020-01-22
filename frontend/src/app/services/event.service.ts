@@ -11,6 +11,7 @@ export class EventService {
 
   eventBaseUri: string = this.globals.backendUri + '/events';
   private toptenBaseUri: string = this.eventBaseUri + '/topten';
+  private eventAllBaseUri: string = this.eventBaseUri + '/all';
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
@@ -19,7 +20,7 @@ export class EventService {
    */
   getEvent(): Observable<GlobalEvent[]> {
     console.log('Get all events');
-    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri);
+    return this.httpClient.get<GlobalEvent[]>(this.eventBaseUri + '/all');
   }
 
   getCreatedEvent(): Observable<GlobalEvent> {
@@ -30,6 +31,21 @@ export class EventService {
   getTopTenEvents(): Observable<GlobalEvent[]> {
     console.log('Get top ten events');
     return this.httpClient.get<GlobalEvent[]>(this.toptenBaseUri);
+  }
+
+  sendImage(formData: FormData, id: Number): Observable<Boolean> {
+    console.log('Sending image separately');
+    return this.httpClient.post<Boolean>(this.eventBaseUri + '/' + id, formData);
+}
+
+  updateImage(formData: FormData, id: Number): Observable<Boolean> {
+    console.log('Sending image separately');
+    return this.httpClient.post<Boolean>(this.eventAllBaseUri + '/' + id, formData);
+  }
+
+  getImage(id: Number) {
+    console.log('Getting image for news entry with id ' + id);
+    return this.httpClient.get(this.eventBaseUri + '/' + id + '/image', {observe: 'response', responseType: 'blob'});
   }
 
   /**

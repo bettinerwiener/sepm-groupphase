@@ -2,10 +2,13 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import lombok.*;
+import org.apache.pdfbox.io.IOUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,14 +19,12 @@ public class EventDto extends BaseDto {
     private Long id;
 
     @NotNull
-    @Size(max = 100)
     private String title;
 
     @NotNull
-    @Size(max = 255)
     private String shortDescription;
 
-    @Size(max = 511)
+    @NotNull
     private String contents;
 
     @NotNull
@@ -34,6 +35,8 @@ public class EventDto extends BaseDto {
     @Size(min = 0, max = 10)
     private Double duration;
 
+    private byte[] image;
+
     public static final class EventDtoBuilder {
         private Long id;
         private String title;
@@ -41,6 +44,7 @@ public class EventDto extends BaseDto {
         private String contents;
         private Event.Category category;
         private Double duration;
+        private byte[] image;
 
         private EventDtoBuilder() {
         }
@@ -79,6 +83,15 @@ public class EventDto extends BaseDto {
             return this;
         }
 
+        public EventDto.EventDtoBuilder withImage(MultipartFile image) {
+            try {
+                this.image = IOUtils.toByteArray(image.getInputStream());
+            } catch (IOException ioe) {
+                this.image = null;
+            }
+            return this;
+        }
+
         public EventDto build() {
             EventDto eventDto = new EventDto();
             eventDto.setId(id);
@@ -87,6 +100,7 @@ public class EventDto extends BaseDto {
             eventDto.setContents(contents);
             eventDto.setDuration(duration);
             eventDto.setCategory(category);
+            eventDto.setImage(image);
             return eventDto;
         }
     }

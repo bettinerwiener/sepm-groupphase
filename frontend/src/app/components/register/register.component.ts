@@ -29,8 +29,16 @@ export class RegisterComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
+      password: ['', [Validators.required, Validators.minLength(10)]],
+      passwordConfirm: ['', [Validators.required]]
+    }, { validator: this.comparePasswords });
+  }
+
+  comparePasswords(group: FormGroup) {
+    let password = group.controls.password.value;
+    let passwordConfirm = group.controls.passwordConfirm.value;
+
+    return password === passwordConfirm ? null : { notSame: true }
   }
 
   /**
@@ -63,7 +71,6 @@ export class RegisterComponent implements OnInit {
 
   }
 
-
   /**
    * Error flag will be deactivated, which clears the error message
    */
@@ -84,9 +91,6 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = error.error;
     }
   }
-
-
-
 
 
   private clearForm() {

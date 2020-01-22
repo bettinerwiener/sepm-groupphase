@@ -20,22 +20,24 @@ export class SearchService {
     endDate: Date,
     price: number,
     duration: number,
-    eventLocation: EventLocation,
-    artist: Artist
+    eventLocation: string,
+    artist: string
     ): Observable<Array<GlobalEvent>> {
 
     let query = '?';
     if (searchTerm) { query += `searchTerm=${searchTerm}&`; }
     if (category) { query += `category=${category}&`; }
-    if (startDate) { query += `startDate=${startDate}&`; }
-    if (endDate) { query += `endDate=${endDate}&`; }
+    if (startDate) { query += `startDate=${startDate.toISOString()}&`; }
+    if (endDate) { query += `endDate=${endDate.toISOString()}&`; }
     if (price) { query += `price=${Number(price)}&`; }
     if (duration) { query += `duration=${Number(duration)}&`; }
-    if (eventLocation) { query += `location=${eventLocation}&`; }
-    if (artist) { query += `Artist=${artist}`; }
-
+    if (eventLocation) { query += `location=${eventLocation}`; }
+    if (artist) { query += `artist=${artist}`; }
+    if (query.endsWith('&')) {
+      query = query.slice(0, -1);
+    }
     console.log('Get event', query);
-    return this.httpClient.get<Array<GlobalEvent>>(this.globals.backendUri + '/events' + query);
+    return this.httpClient.get<Array<GlobalEvent>>(this.globals.backendUri + '/events/all' + query);
   }
 
 }

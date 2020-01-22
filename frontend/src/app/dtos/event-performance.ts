@@ -14,5 +14,6 @@ export class EventPerformance {
         public event: GlobalEvent,
         public room: Room,
         public date: Date,
+        public price: number
     ) { }
 }
