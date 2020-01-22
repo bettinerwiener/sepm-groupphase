@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS  user
     password   VARCHAR(255) NOT NULL,
     locked      BOOLEAN,
     is_employee BOOLEAN,
-    login_count INTEGER DEFAULT 0 CHECK (login_count >= 0),
-    deleted     BOOLEAN DEFAULT FALSE
+    login_count INTEGER DEFAULT 0 CHECK (login_count >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS artist (
@@ -50,7 +49,7 @@ CREATE TABLE IF NOT EXISTS employee_adds_news (
     employee    BIGINT REFERENCES user(id) ON DELETE SET NULL,
     news     BIGINT REFERENCES news(id),
     event    BIGINT REFERENCES event(id),
-    CONSTRAINT employee_adds_news PRIMARY KEY (employee, news, event)
+    CONSTRAINT employee_adds_news PRIMARY KEY (news, event)
 );
 
 CREATE TABLE IF NOT EXISTS location (
@@ -99,7 +98,7 @@ CREATE TABLE IF NOT EXISTS customer_order (
 
 CREATE TABLE IF NOT EXISTS ticket (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      customer_order_id BIGINT REFERENCES customer_order(id),
+      customer_order_id BIGINT REFERENCES customer_order(id) ON DELETE SET NULL,
       is_performed_at_id BIGINT REFERENCES is_performed_at(id),
       seat_id BIGINT REFERENCES seat(id),
       status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),

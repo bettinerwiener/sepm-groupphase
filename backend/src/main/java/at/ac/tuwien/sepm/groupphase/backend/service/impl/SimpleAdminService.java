@@ -31,7 +31,7 @@ public class SimpleAdminService implements AdminService {
     @Override
     public List<User> findUserByName(String username) {
         LOGGER.debug("Admin finding User like: " + username);
-        List<User> users = userRepository.findByEmailContainingAndDeleted(username, false);
+        List<User> users = userRepository.findByEmailContaining(username);
   //      List<User> users = new LinkedList<User>();
         for (User u : users
         ) {
@@ -44,7 +44,7 @@ public class SimpleAdminService implements AdminService {
     public User findOneByName(String username) {
         LOGGER.debug("Admin finding User with username: " + username);
         if (userRepository.existsByEmail(username)) {
-            User user = userRepository.findFirstByEmailAndDeleted(username, false);
+            User user = userRepository.findFirstByEmail(username);
             if (user != null) {
                 user.setPassword("yourtinysecret");
             }
@@ -56,7 +56,7 @@ public class SimpleAdminService implements AdminService {
 
     @Override
     public User updateUser(User user) {
-        User helpUser = userRepository.findFirstByIdAndDeleted(user.getId(), false);
+        User helpUser = userRepository.findFirstByEmail(user.getEmail());
         LOGGER.debug("Updating User with ID: " + user.getId());
         if (userRepository.existsByEmail(user.getEmail())) {
             if (helpUser.getEmail().equals(user.getEmail())) {
@@ -76,8 +76,6 @@ public class SimpleAdminService implements AdminService {
         user.setLocked(helpUser.getLocked());
         user.setIsEmployee(helpUser.getIsEmployee());
 
-        user.setDeleted(false);
-
         userRepository.saveAndFlush(user);
         user.setPassword("yourtinysecret");
         return user;
@@ -85,20 +83,20 @@ public class SimpleAdminService implements AdminService {
 
     @Override
     public boolean deleteUser(String  username) {
-        User user = userRepository.findFirstByEmailAndDeleted(username, false);
+        User user = userRepository.findFirstByEmail(username);
         if (user == null) {
             return false;
         }
         LOGGER.debug("Deleting User with ID: " + user.getId());
-        user.setDeleted(true);
-        userRepository.saveAndFlush(user);
+        userRepository.deleteById(user.getId());
+        userRepository.flush();
         return true;
     }
 
     @Override
     public boolean validate(UserLoginDto user) {
         LOGGER.debug("validate Admin " + user.getEmail());
-        User help = userRepository.findFirstByEmailAndDeleted(user.getEmail(), false);
+        User help = userRepository.findFirstByEmail(user.getEmail());
         return passwordEncoder.matches(user.getPassword(), help.getPassword());
     }
 

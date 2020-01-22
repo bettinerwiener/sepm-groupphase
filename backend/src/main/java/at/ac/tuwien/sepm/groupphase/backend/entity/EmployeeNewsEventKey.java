@@ -10,8 +10,6 @@ import java.util.Objects;
 @Data
 public class EmployeeNewsEventKey implements Serializable {
 
-    private Long employee;
-
     private Long news;
 
     private Long event;

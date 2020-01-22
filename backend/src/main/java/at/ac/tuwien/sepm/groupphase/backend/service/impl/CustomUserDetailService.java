@@ -67,12 +67,11 @@ public class CustomUserDetailService implements UserService {
     public User createUser (User user) throws EmailExistsException, NotCreatedException {
         log.info("Creating user",user);
 
-        if (userRepository.findFirstByEmailAndDeleted(user.getEmail(),false) != null) {
+        if (userRepository.findFirstByEmail(user.getEmail()) != null) {
             log.error("email adress already in use", user.getEmail());
             throw new EmailExistsException("There already is an account with the email adress: " + user.getEmail());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setDeleted(false);
         try {
             return this.userRepository.save(user);
         } catch (DataAccessException notCreated) {
@@ -132,7 +131,7 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public User getUser(String username) {
-        User user = userRepository.findFirstByEmailAndDeleted(username, false);
+        User user = userRepository.findFirstByEmail(username);
         if (user == null) {
             return null;
         }
@@ -142,7 +141,7 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public User updateUser(User user) {
-        User helpUser = userRepository.findFirstByIdAndDeleted(user.getId(), false);
+        User helpUser = userRepository.findFirstByEmail(user.getEmail());
 
         if (userRepository.existsByEmail(user.getEmail())) {
             if (helpUser.getEmail().equals(user.getEmail())) {
@@ -159,8 +158,6 @@ public class CustomUserDetailService implements UserService {
             String pw = user.getPassword();
             user.setPassword(passwordEncoder.encode(pw));
         }
-        System.out.println("DEBUG" + user.getDeleted());
-        user.setDeleted(false);
         userRepository.saveAndFlush(user);
         user.setPassword("yourtinysecret");
 
@@ -173,21 +170,22 @@ public class CustomUserDetailService implements UserService {
         if (!userRepository.existsByEmail(username)) {
             throw new NotFoundException("User doesn't exist!");
         }
-        User user = userRepository.findFirstByEmailAndDeleted(username, false);
-        user.setDeleted(true);
-        userRepository.saveAndFlush(user);
+        User user = userRepository.findFirstByEmail(username);
+        userRepository.deleteById(user.getId());
+        userRepository.flush();
         return true;
     }
 
     @Override
     public boolean validate(UserLoginDto userLoginDto) {
-        User help = userRepository.findFirstByEmailAndDeleted(userLoginDto.getEmail(), false);
+        User help = userRepository.findFirstByEmail(userLoginDto.getEmail());
         return passwordEncoder.matches(userLoginDto.getPassword(),help.getPassword());
     }
 
     @Override
     public boolean exists(String username) {
-        if (userRepository.findFirstByEmailAndDeleted(username, false) == null) {
+        if (userRepository.findFirstByEmail(username) == null) {
+
             return true;
         }
 

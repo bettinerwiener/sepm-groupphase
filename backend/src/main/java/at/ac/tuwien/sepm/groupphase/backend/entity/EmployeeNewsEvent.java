@@ -24,7 +24,6 @@ public class EmployeeNewsEvent {
 
     @Id
     @ManyToOne
-    @MapsId("employee")
     @JoinColumn(name = "employee")
     private User employee;
 

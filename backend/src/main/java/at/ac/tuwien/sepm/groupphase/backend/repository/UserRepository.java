@@ -21,7 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     User findFirstByEmail(String email);
 
-    User findFirstByEmailAndDeleted (String email, Boolean deleted);
 
     /**
      * Find user with the given email.
@@ -32,14 +31,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByEmail(String email);
 
-    User findFirstByIdAndDeleted(Long id, Boolean deleted);
 
     void deleteById(Long id);
 
     boolean existsById(Long id);
 
     boolean existsByEmail(String email);
-
-    List<User> findByEmailContainingAndDeleted(String email, Boolean deleted);
 
 }
