@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS customer_order (
 
 CREATE TABLE IF NOT EXISTS ticket (
       id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-      customer_order_id BIGINT REFERENCES customer_order(id),
+      customer_order_id BIGINT REFERENCES customer_order(id) ON DELETE SET NULL,
       is_performed_at_id BIGINT REFERENCES is_performed_at(id),
       seat_id BIGINT REFERENCES seat(id),
       status      VARCHAR(50) CHECK (status IN ('AVAILABLE', 'RESERVED', 'BOUGHT')),

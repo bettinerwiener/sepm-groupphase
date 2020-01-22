@@ -42,7 +42,6 @@ public class SimpleEmployeeNewsEventService implements EmployeeNewsEventService 
 
     @Override
     public EmployeeNewsEvent create(EmployeeNewsEvent employeeNewsEvent) throws NotCreatedException {
-        log.info("employeeNewsEvent: {}", employeeNewsEvent);
         log.info("Creating news entry {} for event {} and user {}...", employeeNewsEvent.getNews().getTitle(),
             employeeNewsEvent.getEvent().getTitle(), employeeNewsEvent.getEmployee().getEmail());
         try {

@@ -48,7 +48,7 @@ public class ArtistEndpointTest implements ArtistTestData {
     private SecurityProperties securityProperties;
 
     @Test
-    public void givenNothing_whenFindAll_thenListSizeEquals302() throws Exception {
+    public void givenNothing_whenFindAll_thenListSizeEquals20() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(ARTIST_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
@@ -61,7 +61,7 @@ public class ArtistEndpointTest implements ArtistTestData {
         List<EventDto> events = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             EventDto[].class));
 
-        assertEquals(302, events.size());
+        assertEquals(20, events.size());
     }
 
 }
