@@ -58,7 +58,6 @@ public class PerformanceEndpointTest implements PerformanceTestData {
     public void givenNothing_whenFindAll_thenListSizeEquals2() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(PERFORMANCE_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
-            .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
