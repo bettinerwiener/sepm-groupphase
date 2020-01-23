@@ -47,10 +47,10 @@ public class SimpleTicketService implements TicketService {
             if (tickets != null && !tickets.isEmpty()) {
                 return tickets;
             } else {
-                throw new NotFoundException("No locations have been found.");
+                throw new NotFoundException("No tickets have been found.");
             }
         } catch (DataAccessException dae) {
-            throw new NotFoundException(String.format("No locations have been found: %s", dae.getMessage()));
+            throw new NotFoundException(String.format("No tickets have been found: %s", dae.getMessage()));
         }
     }
 
@@ -66,10 +66,10 @@ public class SimpleTicketService implements TicketService {
             if (tickets != null && !tickets.isEmpty()) {
                 return tickets;
             } else {
-                throw new NotFoundException("No locations have been found.");
+                throw new NotFoundException("No Tickets have been found.");
             }
         } catch (DataAccessException dae) {
-            throw new NotFoundException(String.format("No locations have been found: %s", dae.getMessage()));
+            throw new NotFoundException(String.format("No Tickets have been found: %s", dae.getMessage()));
         }
     }
 
@@ -96,7 +96,7 @@ public class SimpleTicketService implements TicketService {
         }
     }
 
-    //@Scheduled(fixedDelay = 10000, initialDelay = 10000) TODO: remove before push
+    //@Scheduled(fixedDelay = 10000, initialDelay = 10000)
     protected void removeReservations() throws NotCreatedException {
         log.info("Remove Reservation from expired tickets");
         LocalDateTime currentTime = LocalDateTime.now().plus(30, ChronoUnit.MINUTES);

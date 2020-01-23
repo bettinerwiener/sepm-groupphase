@@ -71,7 +71,7 @@ public class TicketRepositoryTest implements TicketTestData {
         ticket.setStatus(Ticket.Status.BOUGHT);
         ticketRepository.save(ticket);
         assertAll(
-            () -> assertEquals(1000, ticketRepository.findAll().size()),
+            () -> assertEquals(1800, ticketRepository.findAll().size()),
             () -> assertNotNull(ticketRepository.findById(ticket.getId())),
             () -> assertEquals(Ticket.Status.BOUGHT, ticketRepository.findFirstById(13L).getStatus())
         );
@@ -80,12 +80,13 @@ public class TicketRepositoryTest implements TicketTestData {
     @Test
     public void FindUserIdWhoReservedTicket() {
 
-        Ticket ticket= ticketRepository.findFirstById(14L);
+        Ticket ticket= ticketRepository.findFirstById(161L);
         Long userId = ticketRepository.findUserIdToTicket(ticket.getId());
+
 
         assertAll(
             () -> assertNotNull(ticketRepository.findById(ticket.getId())),
-            () -> assertEquals(userId,1L)
+            () -> assertEquals(3L,userId)
         );
     }
 
@@ -97,7 +98,7 @@ public class TicketRepositoryTest implements TicketTestData {
 
         assertAll(
 
-            () -> assertEquals(290, tickets.size())
+            () -> assertEquals(168, tickets.size())
 
         );
     }
