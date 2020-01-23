@@ -48,7 +48,7 @@ public class SimplePerformanceService implements PerformanceService {
                     ticketToAdd.setPerformance(eventPerformance);
                     ticketToAdd.setSeat(seat);
                     ticketToAdd.setStatus(Ticket.Status.AVAILABLE);
-                    ticketToAdd.setPrice(eventPerformance.getPrice());
+                    ticketToAdd.setPrice(eventPerformance.getPrice() * section.getPriceFactor());
                     tickets.add(ticketToAdd);
                 }
             }

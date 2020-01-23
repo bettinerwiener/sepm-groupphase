@@ -71,7 +71,8 @@ CREATE TABLE IF NOT EXISTS section (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     letter      VARCHAR(1) CHECK (letter IN ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')),
     room    BIGINT REFERENCES room(id),
-    seats_selectable BOOLEAN
+    seats_selectable BOOLEAN,
+    price_factor    DECIMAL DEFAULT 1.0 CHECK (price_factor > 0 AND price_factor < 20.0)
 );
 
 CREATE TABLE IF NOT EXISTS seat (
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS is_performed_at (
     event   BIGINT REFERENCES event(id) ON DELETE SET NULL,
     room BIGINT REFERENCES room(id),
     perf_date   DATETIME NOT NULL,
-    price       DECIMAL NOT NULL,
+    price       DECIMAL NOT NULL CHECK (price >= 0),
     CONSTRAINT is_performed_at_pk UNIQUE (room, perf_date)
 );
 

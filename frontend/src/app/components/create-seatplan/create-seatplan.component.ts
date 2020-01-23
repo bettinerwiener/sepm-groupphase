@@ -12,6 +12,8 @@ export class CreateSeatplanComponent implements OnInit {
   selectedSection: string;
   selecting: boolean = false;
   notAssigned: boolean = false;
+  priceFactor: number = 1.0;
+  priceFactorValid: boolean = true;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -40,9 +42,13 @@ export class CreateSeatplanComponent implements OnInit {
     this.selecting = true;
     if (this.selectedSection == "") {
       return;
-    }    
+    }
 
     seat.section.letter = this.selectedSection;
+    seat.section.priceFactor = this.priceFactor;
+    if (this.priceFactor < 0 || this.priceFactor > 20) {
+      this.priceFactorValid = false;
+    }
 
     for (let rowUnit of this.seatplan) {
       for (let seatUnit of rowUnit) {
@@ -56,8 +62,4 @@ export class CreateSeatplanComponent implements OnInit {
 
     this.seatEmitter.emit(this.seatplan);
   }
-
-e
-
-
 }

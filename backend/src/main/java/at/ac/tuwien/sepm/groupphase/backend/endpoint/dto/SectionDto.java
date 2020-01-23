@@ -29,12 +29,16 @@ public class SectionDto extends BaseDto {
     @NotNull
     private Boolean seatsSelectable;
 
+    @NotNull
+    private Float priceFactor;
+
     private static final class SectionDtoBuilder {
 
         private Long id;
         private Section.Letter letter;
         private Room room;
         private Boolean seatsSelectable;
+        private Float priceFactor;
 
         public SectionDtoBuilder() {};
 
@@ -55,6 +59,10 @@ public class SectionDto extends BaseDto {
             this.seatsSelectable = seatsSelectable;
             return this;
         }
+        public SectionDto.SectionDtoBuilder withPriceFactor(Float priceFactor) {
+            this.priceFactor = priceFactor != null ? priceFactor : 1.0f;
+            return this;
+        }
 
         public SectionDto build() {
             SectionDto sectionDto = new SectionDto();
@@ -62,6 +70,7 @@ public class SectionDto extends BaseDto {
             sectionDto.setLetter(letter);
             sectionDto.setRoom(room);
             sectionDto.setSeatsSelectable(seatsSelectable);
+            sectionDto.setPriceFactor(priceFactor);
             return sectionDto;
         }
     }

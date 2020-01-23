@@ -34,6 +34,9 @@ public class Section {
     @Enumerated(EnumType.STRING)
     private Letter letter;
 
+    @Column(nullable = false, name = "price_factor")
+    private Float priceFactor;
+
     @ManyToOne
     @JoinColumn(name = "room")
     private Room room;

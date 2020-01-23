@@ -9,7 +9,12 @@
         <option>E</option>
     </select>
     <div *ngIf="selecting && selectedSection == undefined" class="error">
-        <small class="text-warning">Please choose section.</small>
+      <small class="text-warning">Please choose section.</small>
+    </div>
+    <label for="priceFactor">Price Factor for Section</label>
+    <input id="priceFactor" type="number" min="0" [(ngModel)]="priceFactor" placeholder="Price Factor" />
+    <div *ngIf="!priceFactorValid" class="error">
+      <small class="text-warning">The price factor has to be between 0 and 20.</small>
     </div>
 </div>
 <div class="stage" [style.width]="stagewidth">Stage</div>

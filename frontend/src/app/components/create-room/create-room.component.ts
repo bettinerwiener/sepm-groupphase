@@ -30,7 +30,9 @@ export class CreateRoomComponent implements OnInit {
   seatplanUpdated: Array<Seat>;
   configuring: boolean = false;
   toFewSeats: boolean = false;
+  priceFactorIsValid: boolean = true;
   newSectionLetters: Array<string>;
+  newPriceFactors: Array<number>;
   newSections: Array<Section>;
 
 
@@ -85,19 +87,19 @@ export class CreateRoomComponent implements OnInit {
         this.room = retRoom;
 
         this.createSections(retRoom)
-        
+
         this.sectionService.createSections(this.newSections).subscribe(newSections => {
           this.newSections = newSections;
           this.assignSectionsToSeats();
           console.log("Section ", this.newSections);
           console.log("Seats ", this.seatplanUpdated);
-          
+
 
           this.seatService.createSeats(this.seatplanUpdated).subscribe((seats: Array<Seat>) => {
             this.seatplanUpdated = seats;
             this.success = true;
             console.log("Seatsback: ", seats);
-            
+
           },
             error => {
               this.defaultServiceErrorHandling(error);
@@ -168,7 +170,7 @@ export class CreateRoomComponent implements OnInit {
     for (let i = 0; i < rows; i++) {
       seatplan.push(new Array<Seat>());
       for (let j = 0; j < seats; j++) {
-        seatplan[i].push(new Seat(null, j, String.fromCharCode(65 + i), new Section(null, null, false, null)));
+        seatplan[i].push(new Seat(null, j, String.fromCharCode(65 + i), new Section(null, null, false, null, null)));
       }
     }
 
@@ -178,12 +180,17 @@ export class CreateRoomComponent implements OnInit {
 
   setSeats(seatplan: Array<Array<Seat>>) {
     this.newSectionLetters = new Array<string>();
+    this.newPriceFactors = new Array<number>();
     this.seatplanUpdated = new Array<Seat>();
     for (let row of seatplan) {
       for (let seat of row) {
         this.seatplanUpdated.push(seat);
         if (!this.newSectionLetters.some(secLetter => secLetter == seat.section.letter)) {
           this.newSectionLetters.push(seat.section.letter);
+          this.newPriceFactors.push(seat.section.priceFactor);
+          if (seat.section.priceFactor < 0 || seat.section.priceFactor > 20) {
+            this.priceFactorIsValid = false;
+          }
         }
       }
     }
@@ -198,9 +205,10 @@ export class CreateRoomComponent implements OnInit {
 
   private createSections(room:Room):void{
     this.newSections = new Array<Section>();
-
+    let index: number = 0;
     for (let letter of this.newSectionLetters) {
-      this.newSections.push(new Section(null, letter, false, room));
+      this.newSections.push(new Section(null, letter, false, room, this.newPriceFactors[index]));
+      index++;
     }
   }
 

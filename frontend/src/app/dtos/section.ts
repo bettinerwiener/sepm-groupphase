@@ -5,6 +5,7 @@ export class Section {
     public id: number,
     public letter: string,
     public seatsSelectable: false,
-    public room: Room, ) {
+    public room: Room,
+    public priceFactor: number) {
   }
 }

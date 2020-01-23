@@ -66,6 +66,7 @@
           <app-create-seatplan (seatEmitter)="setSeats($event)" *ngIf="seatSelection" [seatplan]="seatplan"
             class="justify-content-center;"></app-create-seatplan>
         </div>
+
       </div>
       <div *ngIf="submitted && !seatplanUpdated" class="error">
         <small class="form-text text-warning">Please configure seatplan before submitting. (Make sure that all seats are assigned to a sector)</small>

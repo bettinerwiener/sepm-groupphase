@@ -100,7 +100,7 @@ public class EventRepositoryTest implements EventTestData {
     public void findTopEventsReturnsEventWithId1AtTop() {
         List<Event> events = this.eventRepository.findTopEvents();
         assertAll(
-            () -> assertEquals(1L, events.get(0).getId())
+            () -> assertEquals(2L, events.get(0).getId())
         );
     }
 

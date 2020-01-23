@@ -98,7 +98,7 @@ public class TicketRepositoryTest implements TicketTestData {
 
         assertAll(
 
-            () -> assertEquals(168, tickets.size())
+            () -> assertEquals(165, tickets.size())
 
         );
     }
