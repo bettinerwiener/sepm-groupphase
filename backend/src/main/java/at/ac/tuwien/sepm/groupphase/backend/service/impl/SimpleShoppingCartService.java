@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Order;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import at.ac.tuwien.sepm.groupphase.backend.exception.CantCancelTicketException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.TicketNotAvailableException;
@@ -17,6 +18,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,44 +135,58 @@ public class SimpleShoppingCartService implements ShoppingCartService {
     }
 
     @Override
-    public Ticket CancelTicket(User user, Ticket ticket)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
-        log.info("User " + user.getId() + " cancels Ticket " + ticket);
-
+    public List<Ticket> CancelTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,CantCancelTicketException {
+        log.info("User " + user.getId() + " cancels Tickets " + tickets);
+        List<Ticket> canceledTickets = new ArrayList<>();
 
         try{
-            if(this.ticketRepository.findFirstById(ticket.getId())!=null){
+            for (Ticket ticket : tickets) {
+                if (this.ticketRepository.findFirstById(ticket.getId()) != null) {
+
+                    Ticket ticketToCancel = this.ticketRepository.getOne(ticket.getId());
+                    System.out.println(LocalDateTime.now().plus(14, ChronoUnit.DAYS));
+                    System.out.println(ticketRepository.getStartTime(ticketToCancel.getId()));
+                    System.out.println(LocalDateTime.now().plus(14, ChronoUnit.DAYS).isBefore(ticketRepository.getStartTime(ticketToCancel.getId())));
+                    if (ticketToCancel.getStatus() == Ticket.Status.BOUGHT && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
+                        log.error("ticket to cancel bought by another user", ticket);
+                        throw new CantCancelTicketException("Can only cancel tickets you ordered");
+                    } else if (ticketToCancel.getStatus() == Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
+                        log.error("ticket to cancel reserved by other user", ticket);
+                        throw new CantCancelTicketException("Can only cancel tickets you ordered");
+                    } else if (ticketToCancel.getStatus() == Ticket.Status.AVAILABLE) {
+                        log.error("ticket to cancel not reserved or bought by anyone", ticket);
+                        throw new CantCancelTicketException("Can only cancel tickets you ordered");
+                    }else if (LocalDateTime.now().plus(14, ChronoUnit.DAYS).isAfter(ticketRepository.getStartTime(ticketToCancel.getId()))  &&
+                        ticketToCancel.getStatus() == Ticket.Status.BOUGHT ) {   //can only cancel tickets 2 weeks prior to performance
+
+                        log.error("ticket to cancels start date < 14 days", ticket);
+                        throw new CantCancelTicketException("Can only cancel tickets 14 days before the event starts");
+                    }
+
+                } else {
+                    log.error("ticket does not exist", ticket);
+                    throw new NotFoundException("One of the tickets you want to cancel doesnt exist");
+                }
+            }
+
+            for (Ticket ticket : tickets) {
 
                 Ticket ticketToCancel = this.ticketRepository.getOne(ticket.getId());
-
-                if (ticketToCancel.getStatus() == Ticket.Status.BOUGHT && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
-                    log.error("ticket to cancel bought by another user",ticket);
-                    throw new TicketNotAvailableException("Can only cancel tickets you ordered");
-                }else if(ticketToCancel.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId())!= user.getId()){
-                    log.error("ticket to cancel reserved by other user",ticket);
-                    throw new TicketNotAvailableException("Can only cancel tickets you ordered");
-                }else if(ticketToCancel.getStatus()== Ticket.Status.AVAILABLE ){
-                    log.error("ticket to cancel not reserved or bought by anyone",ticket);
-                    throw new TicketNotAvailableException("Can only cancel tickets you ordered");
-                }
-
                 Long orderId = ticketToCancel.getCustomerOrder().getId();
 
                 ticketToCancel.setStatus(Ticket.Status.AVAILABLE);
                 ticketToCancel.setCustomerOrder(null);
                 this.ticketRepository.save(ticketToCancel);
-                if(this.ticketRepository.getNumberOfTicketsInOrder(orderId) == 0){
+                if (this.ticketRepository.getNumberOfTicketsInOrder(orderId) == 0) {
                     this.orderRepository.deleteById(orderId);
                 }
-
-            } else {
-                log.error("ticket does not exist", ticket);
-                throw new NotFoundException("One of the tickets you want to cancel doesnt exist");
+                canceledTickets.add(ticketToCancel);
             }
 
         }catch (DataAccessException dae) {
             LOGGER.error("ShoppingCartService: ticket could not be cancelled: " + dae.getMessage());
             throw new NotCreatedException(String.format("Ticket could not be cancelled: ", dae.getMessage()));
         }
-        return this.ticketRepository.findFirstById(ticket.getId());
+        return canceledTickets;
     }
 }

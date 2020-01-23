@@ -36,8 +36,7 @@ import static at.ac.tuwien.sepm.groupphase.backend.basetest.TestData.ADMIN_ROLES
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -158,7 +157,65 @@ public class OrderEndpointTest implements OrderTestData {
             .content(BUY_ONE_BOUGHT_ONE_AVAILABLE_TICKETS)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isLocked());
-
-
     }
+
+    /**
+     * Test Cancellation
+     */
+
+    @Test
+    public void cancelTwoAvailableTicketsReturn422() throws Exception {
+        this.mockMvc.perform(put(ORDER_CANCEL_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(CANCEL_TWO_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnprocessableEntity());
+    }
+    @Test
+    public void cancelTwoBoughtTicketsReturn200() throws Exception {
+        this.mockMvc.perform(put(ORDER_CANCEL_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(CANCEL_TWO_BOUGHT_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+    @Test
+    public void cancelTwoReservedTicketsReturn200() throws Exception {
+        this.mockMvc.perform(put(ORDER_CANCEL_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(CANCEL_TWO_RESERVED_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+    @Test
+    public void cancelOneBoughtOneAvailableTicketsReturn422() throws Exception {
+        this.mockMvc.perform(put(ORDER_CANCEL_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(CANCEL_ONE_BOUGHT_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnprocessableEntity());
+    }
+    @Test
+    public void cancelTwoBoughtByAnotherUserTicketsReturn422() throws Exception {
+        this.mockMvc.perform(put(ORDER_CANCEL_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(CANCEL_TWO_BOUGHT_BY_ANOTHER_USER_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnprocessableEntity());
+    }
+    @Test
+    public void cancelTwoBoughtButLessThan14DaysToEventTicketsReturn422() throws Exception {
+        this.mockMvc.perform(put(ORDER_CANCEL_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(CANCEL_TWO_BOUGHT_BUT_LESS_THAN_14DAYS_TO_EVENT_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnprocessableEntity());
+    }
+
 }

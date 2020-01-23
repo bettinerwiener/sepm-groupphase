@@ -37,15 +37,14 @@ public interface ShoppingCartService {
 
 
     /**
-     * Create a new reserve Order and reserve all the given tickets
      *
      * @param user making the cancellation
-     * @param ticket ticket to cancel
-     * @return the cancelled ticket
+     * @param tickets ticket to cancel
+     * @return the cancelled tickets
      * @throws NotFoundException if ticket the user wants to cancel doesnt exists
      * @throws NotCreatedException in case something went wrong when accessing the database
      * @throws TicketNotAvailableException in case the ticket is bought or reserved by another
      */
-    Ticket CancelTicket(User user, Ticket ticket);
+    List<Ticket> CancelTickets(User user, List<Ticket> tickets);
 
 }
