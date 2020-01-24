@@ -39,6 +39,8 @@ import { NewsItemComponent } from './components/news-item/news-item.component';
 import { NewsComponent } from './components/news/news.component';
 import { EditNewsComponent } from './components/edit-news/edit-news.component';
 import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,8 @@ import { NewsListItemComponent } from './components/news-list-item/news-list-ite
     NgbModule,
     FormsModule,
     FontAwesomeModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

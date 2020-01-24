@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrdersService} from '../../services/orders.service';
 import {AuthService} from '../../services/auth.service';
 import {Order} from '../../dtos/order';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-orders',
@@ -18,8 +19,8 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.loadOrders();
+    
   }
-
 
   private loadOrders() {
     this.orderService.getOrders().subscribe(
@@ -31,6 +32,11 @@ export class OrdersComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
+  }
+
+  displayError(errorMessage) {
+    this.errorMessage = errorMessage;
+    this.error = true;
   }
 
   private defaultServiceErrorHandling(error: any) {

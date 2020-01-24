@@ -17,6 +17,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
 import at.ac.tuwien.sepm.groupphase.backend.service.OrderService;
 
+import at.ac.tuwien.sepm.groupphase.backend.service.PdfService;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShoppingCartService;
 
 
@@ -27,11 +28,17 @@ import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayInputStream;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,8 +55,10 @@ public class OrderEndpoint {
     private final OrderMapper orderMapper;
     private final TicketMapper ticketMapper;
     private final TicketService ticketService;
+    private final PdfService pdfService;
 
-    public OrderEndpoint(OrderService orderService, OrderMapper orderMapper, CustomUserDetailService userDetailService, TicketMapper ticketMapper, ShoppingCartService shoppingCartService, TicketService ticketService) {
+    public OrderEndpoint(PdfService pdfService, OrderService orderService, OrderMapper orderMapper, CustomUserDetailService userDetailService, TicketMapper ticketMapper, ShoppingCartService shoppingCartService, TicketService ticketService) {
+        this.pdfService = pdfService;
         this.userDetailService = userDetailService;
         this.orderService = orderService;
         this.shoppingCartService =shoppingCartService;
@@ -107,6 +116,33 @@ public class OrderEndpoint {
         User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
         return ticketMapper.ticketToTicketDto(shoppingCartService.CancelTickets(user, tickets));
+    }
+
+    @CrossOrigin
+    @PutMapping(value= "/cancelpurchase", produces = MediaType.APPLICATION_PDF_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "cancel tickets", authorizations = {@Authorization(value = "apiKey")})
+    public ResponseEntity<InputStreamSource> cancelPurchase(Authentication authentication, @RequestBody List<TicketDto> ticketDtos) {
+        User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
+
+        List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
+        ByteArrayInputStream bis = null;
+
+
+
+        bis = pdfService.getCancelInvoicePdf(tickets, authentication.getPrincipal().toString());
+
+
+        shoppingCartService.CancelTickets(user, tickets);
+
+        var headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=invoice.pdf");
+
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_PDF)
+            .body(new InputStreamResource(bis));
     }
 }
 
