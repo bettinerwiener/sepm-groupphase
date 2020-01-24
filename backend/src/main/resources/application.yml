@@ -33,6 +33,7 @@ security:
     white-list:
     # Browser requests
     - /
+    - /api/v1/events/topten
     - /api/v1/events/all
     - /api/v1/events/all?
     - /api/v1/locations

@@ -2,7 +2,7 @@
     <div *ngIf="eventObject" class="container" style="padding-top: 15pt; padding-bottom: 15pt; margin-bottom: 35pt">
         <div class="row" style="position: relative">
           <div *ngIf="imageURL">
-            <img *ngIf="imageURL" id="image" [src]="imageURL" width="90px" height="90px">
+            <img *ngIf="imageURL" id="image" [src]="imageURL" class="col-4 eventImage">
           </div>
           <div *ngIf="!imageURL">
             <img src="https://dl1.cbsistatic.com/i/r/2018/08/09/b6ca69f8-f123-408c-9b1f-ea3f9cf1fb17/resize/620xauto/8787947d1d00135d3f2ed512e56bee72/concert-crowd.jpg" width="90px" height="90px">
