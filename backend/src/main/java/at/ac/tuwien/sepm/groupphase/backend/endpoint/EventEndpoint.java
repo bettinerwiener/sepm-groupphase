@@ -113,6 +113,7 @@ public class EventEndpoint {
         return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
     }
 
+    @CrossOrigin
     @GetMapping(
         value = "/{id}/image",
         produces = MediaType.IMAGE_JPEG_VALUE)
