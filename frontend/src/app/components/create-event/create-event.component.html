@@ -56,8 +56,9 @@
             </div>
 
             <div class="form-group">
-              <input type="text" name="contents" formControlName="contents" class="form-control" id="contents"
+              <textarea type="text" name="contents" formControlName="contents" class="form-control" id="contents"
                 placeholder="contents" style="height:150px;">
+              </textarea>
               <div *ngIf="submitted && createEventForm.controls.contents.errors" class="error">
                 <small class="form-text text-warning"
                   *ngIf="createEventForm.controls.contents.errors.required">Description is
