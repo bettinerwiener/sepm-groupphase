@@ -57,6 +57,9 @@ public class SimplePdfService implements PdfService {
 
         Ticket ticket = ticketService.findById(id);
         User user = userDetailsService.findApplicationUserByEmail(email);
+        if(user.getIsEmployee()){
+            user = userDetailsService.findById(ticket.getCustomerOrder().getUserId());
+        }
         if(ticket.getCustomerOrder().getUserId() != user.getId()) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");
         }
@@ -118,6 +121,9 @@ public class SimplePdfService implements PdfService {
         String date = "22.01.2019";
         Float totalPrice = 0f;
 
+        if(user.getIsEmployee()){
+            user = userDetailsService.findById(tickets.get(0).getCustomerOrder().getUserId());
+        }
         System.out.println(order.getId());
         if(order.getUserId() != user.getId()) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");

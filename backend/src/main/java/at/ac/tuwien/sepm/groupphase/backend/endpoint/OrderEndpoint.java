@@ -28,12 +28,14 @@ import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Role;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -67,6 +69,27 @@ public class OrderEndpoint {
         this.ticketService = ticketService;
     }
 
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{email}")
+    @ApiOperation(value = "Get orders of user", authorizations = {@Authorization(value = "apiKey")})
+    public List<OrderDto> getAllByUserEmail(Authentication authentication, @PathVariable("email") String email) {
+        User user = userDetailService.findApplicationUserByEmail(email);
+        try {
+            List<OrderDto> orderDtos = orderService.findByUserId(user.getId()).stream().
+                map(order -> {
+                    List<Ticket> tickets  = ticketService.findTicketsByOrderId(order.getId());
+                    OrderDto orderDto = orderMapper.orderToOrderDto(order);
+                    orderDto.setTickets(tickets);
+                    return orderDto;
+                }).collect(Collectors.toList());
+            return orderDtos;
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     @ApiOperation(value = "Get all orders", authorizations = {@Authorization(value = "apiKey")})
@@ -95,6 +118,18 @@ public class OrderEndpoint {
         System.out.println(ticketDtos);
         User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
+        return orderMapper.orderToOrderDto(shoppingCartService.BuyTickets(user,tickets));
+    }
+
+    @Secured("ROLE_ADMIN")
+    @CrossOrigin
+    @PostMapping(value= "/buyasadmin")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "make new order", authorizations = {@Authorization(value = "apiKey")})
+    public OrderDto newOrderAsAdmin(Authentication authentication, @RequestBody List<TicketDto> ticketDtos) {
+
+        List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
+        User user = userDetailService.findById(ticketService.findById(tickets.get(0).getId()).getCustomerOrder().getUserId());
         return orderMapper.orderToOrderDto(shoppingCartService.BuyTickets(user,tickets));
     }
 

@@ -23,6 +23,10 @@ export class OrdersService {
     return this.httpClient.get<Order[]>(this.ordersBaseUri);
   }
 
+  getOrdersByEmail(email: string): Observable<Order[]> {
+    return this.httpClient.get<Order[]>(this.ordersBaseUri + "/" + email);
+  }
+
   cancelReservation(toCancel: Number[]): Observable<Ticket[]> {
     console.log("cancelReservation service:")
     console.log(toCancel);
@@ -39,4 +43,10 @@ export class OrdersService {
     return this.httpClient.post<Ticket[]>(this.ordersBaseUri + "/buy", toBuy);
 
   }
+  purchaseTicketsAsAdmin(toBuy: Number[]): Observable<Ticket[]> {
+    console.log("purchaseTickets service:");
+    return this.httpClient.post<Ticket[]>(this.ordersBaseUri + "/buyasadmin", toBuy);
+
+  }
+
 }

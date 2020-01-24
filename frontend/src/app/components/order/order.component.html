@@ -59,7 +59,7 @@
             <td>{{i.price}}€</td>
             <td *ngIf="i.status=='BOUGHT'"><a href="javascript:void(0);" (click)="getTicket(i.id)">Ticket</a></td>
             <td>
-              <input type="checkbox" checked [(ngModel)]="i.selected" />
+              <input type="checkbox" checked [(ngModel)]="i.selected"   />
             </td>
           </tr>
         </tbody>
@@ -70,13 +70,13 @@
 
 
     <div *ngIf="status=='BOUGHT'&&showTickets">
-      <button type="button" class="btn btn-danger col-md-2 offset-md-10" (click)="cancelPurchase()" >Stornieren</button>
+      <button *ngIf="admin!=1" type="button" class="btn btn-danger col-md-2 offset-md-10" (click)="cancelPurchase()" >Stornieren</button>
     </div>
 
     <div *ngIf="status=='RESERVED'&&showTickets" class="col-md-4 offset-md-8 ">
-      <button type="button" class="btn btn-danger" (click)="cancelReservation()" >Stornieren</button>
+      <button *ngIf="admin!=1" type="button" class="btn btn-danger" (click)="cancelReservation()" >Stornieren</button>
       <button type="button" class="btn btn-success" (click)="purchaseTickets()">Kaufen</button>
-
+      
     </div>
     <br>
 

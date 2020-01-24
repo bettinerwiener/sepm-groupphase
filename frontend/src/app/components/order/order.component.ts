@@ -21,6 +21,7 @@ export class OrderComponent implements OnInit {
   title: string;
   @Input() description: string;
   @Input() id: number;
+  @Input() admin: number;
   @Input() date: Date;
   @Input() location: string;
   @Input() number: number;
@@ -89,9 +90,7 @@ export class OrderComponent implements OnInit {
 
   getInvoice() {
     this.pdfService.getInvoice(this.id).subscribe(x => {
-
       var newBlob = new Blob([x], { type: "application/pdf" });
-
       // IE
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
           window.navigator.msSaveOrOpenBlob(newBlob);
@@ -123,13 +122,23 @@ export class OrderComponent implements OnInit {
         toBuy.push({id: i.id});
       }
     }
+    if(this.admin==1) {
+      this.ordersService.purchaseTicketsAsAdmin(toBuy).subscribe(x => {
+        this.toastr.success('Success!', 'Tickets gekauft');
+        window.location.reload()
+      }, error => {
+        this.defaultServiceErrorHandling(error);
+      });
+    } else {
+      this.ordersService.purchaseTickets(toBuy).subscribe(x => {
+        this.toastr.success('Success!', 'Tickets gekauft');
+        window.location.reload()
+      }, error => {
+        this.defaultServiceErrorHandling(error);
+      });
+    }
 
-    this.ordersService.purchaseTickets(toBuy).subscribe(x => {
-      this.toastr.success('Success!', 'Tickets gekauft');
-      window.location.reload()
-    }, error => {
-      this.defaultServiceErrorHandling(error);
-    });
+  
   }
 
   cancelReservation() {

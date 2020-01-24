@@ -41,6 +41,7 @@ import { EditNewsComponent } from './components/edit-news/edit-news.component';
 import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NewsComponent,
     NewsListItemComponent,
     EditNewsComponent,
+    UserOrdersComponent,
   ],
   imports: [
     BrowserModule,

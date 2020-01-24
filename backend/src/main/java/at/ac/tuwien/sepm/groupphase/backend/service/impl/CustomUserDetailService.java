@@ -64,6 +64,14 @@ public class CustomUserDetailService implements UserService {
 
 
     @Override
+    public User findById(Long id) {
+        LOGGER.debug("Find application user by id");
+        User user = userRepository.findById(id).get();
+        if (!(user==null)) return user;
+        throw new NotFoundException(String.format("Could not find the user with the id %s", id));
+
+    }
+    @Override
     public User createUser (User user) throws EmailExistsException, NotCreatedException {
         log.info("Creating user",user);
 
