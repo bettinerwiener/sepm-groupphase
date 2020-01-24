@@ -12,8 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -141,7 +143,11 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public User updateUser(User user) {
-        User helpUser = userRepository.findFirstByEmail(user.getEmail());
+      //  User helpUser = userRepository.findFirstByEmail(user.getEmail());
+      //  User helpUser = userRepository.findFirstById(user.getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User helpUser = userRepository.findFirstByEmail(username);
 
         if (userRepository.existsByEmail(user.getEmail())) {
             if (helpUser.getEmail().equals(user.getEmail())) {
@@ -153,11 +159,16 @@ public class CustomUserDetailService implements UserService {
         }
 
         if (user.getPassword().equals("yourtinysecret")) {
+            System.out.println("isTrue");
+            System.out.println(helpUser.getPassword());
             user.setPassword(helpUser.getPassword());
         } else {
             String pw = user.getPassword();
             user.setPassword(passwordEncoder.encode(pw));
         }
+        System.out.println(user.getPassword());
+        user.setLocked(helpUser.getLocked());
+        user.setIsEmployee(helpUser.getIsEmployee());
         userRepository.saveAndFlush(user);
         user.setPassword("yourtinysecret");
 

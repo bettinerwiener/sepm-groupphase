@@ -59,7 +59,7 @@ public class AdminEndpoint {
     @ApiOperation(value = "Update user", authorizations = {@Authorization(value = "apiKey")})
     public UserDto updateUser(@RequestBody UserDto userDto) {
         LOGGER.info("PUT /api/v1/admin/edit username: " + userDto.getEmail());
-
+        System.out.println(userDto);
         return userMapper.userToUserDto(adminService.updateUser(userMapper.userDtoToUser(userDto)));
     }
 

@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
   registerForm: FormGroup;
 
   submitted: boolean = false;
+  success: boolean = false;
 
   error: boolean = false;
   errorMessage: string = '';
@@ -67,9 +68,8 @@ export class ProfileComponent implements OnInit {
   }
 
   updateUser(): void {
-    console.log('Update some User');
     this.submitted = true;
-
+    this.success = true;
 
     this.user.firstName = this.registerForm.controls.firstName.value;
     this.user.lastName = this.registerForm.controls.lastName.value;
@@ -82,6 +82,7 @@ export class ProfileComponent implements OnInit {
       this.error = true;
       this.errorMessage = 'password doesn\'t match!';
     }
+    this.auth.logoutUser();
 
   }
 

@@ -56,7 +56,9 @@ public class SimpleAdminService implements AdminService {
 
     @Override
     public User updateUser(User user) {
-        User helpUser = userRepository.findFirstByEmail(user.getEmail());
+       // User helpUser = userRepository.findFirstByEmail(user.getEmail());
+        User helpUser = userRepository.getOne(user.getId());
+        System.out.println(helpUser.getPassword());
         LOGGER.debug("Updating User with ID: " + user.getId());
         if (userRepository.existsByEmail(user.getEmail())) {
             if (helpUser.getEmail().equals(user.getEmail())) {
@@ -73,8 +75,6 @@ public class SimpleAdminService implements AdminService {
             String pw = user.getPassword();
             user.setPassword(passwordEncoder.encode(pw));
         }
-        user.setLocked(helpUser.getLocked());
-        user.setIsEmployee(helpUser.getIsEmployee());
 
         userRepository.saveAndFlush(user);
         user.setPassword("yourtinysecret");
