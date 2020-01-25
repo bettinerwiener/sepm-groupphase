@@ -21,7 +21,7 @@ public interface EventRepository extends JpaRepository <Event, Long>, EventRepos
 
     @Query(value="select * from event e inner join " +
         "(select i.event, count(t.id) from ticket t  " +
-        "inner join is_performed_at i on i.id = t.is_performed_at_id where t.`status` = 'BOUGHT' group by i.event order by count(t.id)) " +
+        "inner join is_performed_at i on i.id = t.is_performed_at_id where t.`status` = 'BOUGHT' group by i.event order by count(t.id) desc) " +
         "as q on e.id = q.event",
     nativeQuery = true)
     List<Event> findTopEvents();
