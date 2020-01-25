@@ -1,6 +1,7 @@
 <div style="background-color: rgb(236, 250, 255);">
     <div *ngIf="eventObject" class="container" style="padding-top: 15pt; padding-bottom: 15pt; margin-bottom: 35pt">
         <div class="row" style="position: relative">
+<<<<<<< HEAD
           <div *ngIf="imageURL">
             <img *ngIf="imageURL" id="image" [src]="imageURL" class="col-4 eventImage">
           </div>
@@ -20,6 +21,18 @@
                     <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-right: 3pt; margin-left: 10pt;"></fa-icon>
                     <span> Testlocation</span>
                 </div>
+=======
+            <div *ngIf="imageURL">
+                <img *ngIf="imageURL" id="image" [src]="imageURL" class="col-4 eventImage">
+            </div>
+            <div *ngIf="!imageURL">
+                <img src="https://dl1.cbsistatic.com/i/r/2018/08/09/b6ca69f8-f123-408c-9b1f-ea3f9cf1fb17/resize/620xauto/8787947d1d00135d3f2ed512e56bee72/concert-crowd.jpg"
+                    width="90px" height="90px">
+            </div>
+            <div class="col-7">
+                <h3>{{eventObject.title}}</h3>
+                <span>{{eventObject.contents}}</span>
+>>>>>>> 57846ec25efce0c7f6b5609ec7a17c88c428208e
             </div>
         </div>
     </div>
