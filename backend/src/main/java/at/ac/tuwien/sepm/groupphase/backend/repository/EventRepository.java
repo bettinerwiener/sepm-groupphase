@@ -26,4 +26,7 @@ public interface EventRepository extends JpaRepository <Event, Long>, EventRepos
     nativeQuery = true)
     List<Event> findTopEvents();
 
+    @Query(value = "select e from Event e order by title")
+    List<Event> findAllOrderByTitle();
+
 }
