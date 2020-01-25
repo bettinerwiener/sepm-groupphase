@@ -43,6 +43,11 @@ export class EventService {
     return this.httpClient.post<Boolean>(this.eventAllBaseUri + '/' + id, formData);
   }
 
+  getMinPricePerEvent(id: Number): Observable<Number> {
+    console.log('Get minimum price per event');
+    return this.httpClient.get<Number>(this.eventAllBaseUri + '/minprice/' + id);
+  }
+
   getImage(id: Number) {
     console.log('Getting image for news entry with id ' + id);
     return this.httpClient.get(this.eventBaseUri + '/' + id + '/image', {observe: 'response', responseType: 'blob'});

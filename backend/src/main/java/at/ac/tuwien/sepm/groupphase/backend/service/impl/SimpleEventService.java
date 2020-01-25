@@ -147,4 +147,14 @@ public class SimpleEventService implements EventService {
         }
         return null;
     }
+
+    @Override
+    public Long getMinPricePerTicket(Long id) {
+        try {
+            return this.eventRepository.getMinPricePerEvent(id);
+        } catch (DataAccessException dae) {
+            LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
+            return null;
+        }
+    }
 }
