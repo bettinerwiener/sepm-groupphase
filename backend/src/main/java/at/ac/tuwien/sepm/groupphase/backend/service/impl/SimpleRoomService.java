@@ -42,7 +42,7 @@ public class SimpleRoomService implements RoomService {
     @Override
     public List<Room> getAll() throws NotFoundException {
         try {
-            List<Room> rooms = this.roomRepository.findAll();
+            List<Room> rooms = this.roomRepository.findAllOrderByName();
             if (rooms != null && !rooms.isEmpty()) {
                 return rooms;
             }

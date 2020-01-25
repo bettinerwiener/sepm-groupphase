@@ -37,7 +37,7 @@
             <div class="form-group">
               <select name="location" formControlName="location" class="form-control" id="location"
                 placeholder="Location">
-                <option *ngFor="let l of locations" [ngValue]="l">{{l.name}}</option>
+            <option *ngFor="let l of locations" [ngValue]="l">{{l.name}}, {{l.city}}</option>
               </select>
             </div>
           </form>

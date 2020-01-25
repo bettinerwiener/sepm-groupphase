@@ -34,7 +34,7 @@
             <div class="form-group">
               <select name="room" formControlName="room" class="form-control" id="room"
                 placeholder="Room">
-                <option *ngFor="let r of rooms" [ngValue]="r">{{r.name}}</option>
+            <option *ngFor="let r of rooms" [ngValue]="r">{{r.location.name}}, {{r.name}}</option>
               </select>
             </div>
 

@@ -43,7 +43,7 @@ public class SimpleLocationService implements LocationService {
     @Override
     public List<Location> getAll() throws NotFoundException {
         try {
-            List<Location> locations = this.locationRepository.findAll();
+            List<Location> locations = this.locationRepository.findAllOrderByName();
             if (locations != null && !locations.isEmpty()) {
                 return locations;
             }

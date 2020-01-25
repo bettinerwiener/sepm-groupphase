@@ -62,7 +62,7 @@ public class SimpleEventService implements EventService {
     public List<Event> getAll() {
         LOGGER.info("EventService: getting all events ...");
         try {
-            List<Event> events = this.eventRepository.findAll();
+            List<Event> events = this.eventRepository.findAllOrderByTitle();
             if (events != null || !events.isEmpty()) {
                 return events;
             } else {
