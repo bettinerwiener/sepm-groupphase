@@ -31,6 +31,7 @@ public class TicketEndpoint {
         this.ticketService = ticketService;
     }
 
+    @CrossOrigin
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all tickets", authorizations = {@Authorization(value = "apiKey")})

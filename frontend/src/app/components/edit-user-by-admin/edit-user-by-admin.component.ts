@@ -70,7 +70,6 @@ export class EditUserByAdminComponent implements OnInit {
   }
 
   updateUser(): void {
-    console.log('Update some User');
     this.submitted = true;
     this.success = true;
 
@@ -89,10 +88,12 @@ export class EditUserByAdminComponent implements OnInit {
   }
 
   changeAdmin(): void {
+    console.log("toggled admin")
     this.user.isEmployee = !this.user.isEmployee;
   }
 
   changeLocked(): void {
+    console.log("toggled Lock")
     this.user.locked = !this.user.locked;
   }
 

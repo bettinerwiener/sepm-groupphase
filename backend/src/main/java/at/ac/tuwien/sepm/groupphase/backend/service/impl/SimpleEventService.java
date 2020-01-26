@@ -62,7 +62,7 @@ public class SimpleEventService implements EventService {
     public List<Event> getAll() {
         LOGGER.info("EventService: getting all events ...");
         try {
-            List<Event> events = this.eventRepository.findAll();
+            List<Event> events = this.eventRepository.findAllOrderByTitle();
             if (events != null || !events.isEmpty()) {
                 return events;
             } else {
@@ -146,5 +146,15 @@ public class SimpleEventService implements EventService {
                 id, dae.getMessage()));
         }
         return null;
+    }
+
+    @Override
+    public Long getMinPricePerTicket(Long id) {
+        try {
+            return this.eventRepository.getMinPricePerEvent(id);
+        } catch (DataAccessException dae) {
+            LOGGER.error("No events found matching the criteria: {}", dae.getMessage());
+            return null;
+        }
     }
 }

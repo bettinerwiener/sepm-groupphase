@@ -69,10 +69,6 @@ public class UserEndpoint {
     @ApiOperation(value = "Update a user", authorizations = {@Authorization(value = "apiKey")})
     public UserDto update(@RequestBody UserDto userDto) {
         log.info("POST /api/v1/user/update " + userDto.getEmail());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userService.getUser(username);
-        userDto.setId(user.getId());
         return userMapper.userToUserDto(userService.updateUser(userMapper.userDtoToUser(userDto)));
     }
 

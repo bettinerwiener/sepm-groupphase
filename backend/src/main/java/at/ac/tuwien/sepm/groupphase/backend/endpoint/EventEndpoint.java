@@ -106,13 +106,22 @@ public class EventEndpoint {
         return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
     }
 
+    @CrossOrigin("*")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/all/minprice/{id}")
+    @ApiOperation(value = "Get min price per id", authorizations = {@Authorization(value = "apiKey")})
+    public Long getMinPricePerEvent(@PathVariable("id") Long id) {
+        return this.eventService.getMinPricePerTicket(id);
+    }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Add an image to a news entry", authorizations = {@Authorization(value = "apiKey")})
+    @ApiOperation(value = "Add an image to a event entry", authorizations = {@Authorization(value = "apiKey")})
     public EventDto updateImage(@RequestParam("image") MultipartFile image, @PathVariable("id") Long id)  {
         return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
     }
 
+    @CrossOrigin()
     @GetMapping(
         value = "/{id}/image",
         produces = MediaType.IMAGE_JPEG_VALUE)

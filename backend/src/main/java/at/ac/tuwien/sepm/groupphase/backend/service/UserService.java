@@ -32,6 +32,7 @@ public interface UserService extends UserDetailsService {
      */
     User findApplicationUserByEmail(String email);
 
+    User findById(Long id);
     /**
      * Create a new user
      *
