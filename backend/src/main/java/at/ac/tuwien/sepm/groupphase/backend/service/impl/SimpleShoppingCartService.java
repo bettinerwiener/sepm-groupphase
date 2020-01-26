@@ -23,7 +23,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static at.ac.tuwien.sepm.groupphase.backend.entity.Ticket.Status.BOUGHT;
 
 @Slf4j
 @Service
@@ -40,7 +39,70 @@ public class SimpleShoppingCartService implements ShoppingCartService {
     }
 
     @Override
-    public Order BuyTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
+    public Order BuyReservedTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
+        log.info("User " + user.getId() + " buys " + tickets.size() + " reserved Tickets");
+        boolean first =true;
+        Order order = null;
+        try {
+
+            for (Ticket ticket : tickets) {
+
+                if(this.ticketRepository.findFirstById(ticket.getId())!=null){
+
+                    Ticket ticketToBuy = this.ticketRepository.getOne(ticket.getId());
+
+                    if (ticketToBuy.getStatus() != Ticket.Status.RESERVED) {
+                        log.error("ticket not reserved",ticket);
+                        throw new TicketNotAvailableException("One of the tickets you want to buy is not reserved by you");
+                    }
+
+                    if(first==true)
+                    {
+                        order = ticketToBuy.getCustomerOrder();
+                        first= false;
+                    }
+
+
+                    if(ticketToBuy.getCustomerOrder()!= order){
+                        log.error("tickets of different orders",ticket);
+                        throw new TicketNotAvailableException("Cant buy reserved tickets from different orders");
+
+                    }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToBuy.getId())!= user.getId()){
+                        log.error("ticket reserved by other user",ticket);
+                        throw new TicketNotAvailableException("One of the tickets you want to reserve is reserved by another user");
+                    }
+                } else {
+                    log.error("ticket does not exist", ticket);
+                    throw new NotFoundException("One of the tickets you want to buy doesnt exist");
+                }
+            }
+
+            for (Ticket ticket : tickets) {
+
+                Ticket ticketToBuy = this.ticketRepository.getOne(ticket.getId());
+                ticketToBuy.setStatus(Ticket.Status.BOUGHT);
+                ticketRepository.save(ticketToBuy);
+            }
+
+            List<Ticket> ticketsLeftInOrder = ticketRepository.getReservedTicketsFromOrder(order.getId());
+
+            for (Ticket ticket : ticketsLeftInOrder) {
+
+                ticket.setStatus(Ticket.Status.AVAILABLE);
+                ticket.setCustomerOrder(null);
+                this.ticketRepository.save(ticket);
+            }
+            this.orderRepository.save(order);
+
+        }catch (DataAccessException dae) {
+            log.error("ShoppingCartService: tickets could not be bought: " + dae.getMessage());
+            throw new NotCreatedException(String.format("The tickets could not be bought", dae.getMessage()));
+        }
+        return order;
+    }
+
+    @Override
+    public Order BuyAvailableTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
         log.info("User " + user.getId() + " buys " + tickets.size() + " Tickets");
 
         Order order =new Order();
@@ -56,9 +118,9 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     if (ticketToBuy.getStatus() == Ticket.Status.BOUGHT) {
                         log.error("ticket bought already",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to buy is not available");
-                    }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToBuy.getId())!= user.getId()){
-                        log.error("ticket reserved by other user",ticket);
-                        throw new TicketNotAvailableException("One of the tickets you want to reserve is reserved by another user");
+                    }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED){
+                        log.error("ticket reserved",ticket);
+                        throw new TicketNotAvailableException("Can only make a new order for available tickets");
                     }
                 } else {
                     log.error("ticket does not exist", ticket);
@@ -83,6 +145,9 @@ public class SimpleShoppingCartService implements ShoppingCartService {
         }
         return order;
     }
+
+
+
 
     @Override
     public Order ReserveTickets(User user, List<Ticket> tickets)throws NotFoundException,NotCreatedException,TicketNotAvailableException {
@@ -144,9 +209,7 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                 if (this.ticketRepository.findFirstById(ticket.getId()) != null) {
 
                     Ticket ticketToCancel = this.ticketRepository.getOne(ticket.getId());
-                    System.out.println(LocalDateTime.now().plus(14, ChronoUnit.DAYS));
-                    System.out.println(ticketRepository.getStartTime(ticketToCancel.getId()));
-                    System.out.println(LocalDateTime.now().plus(14, ChronoUnit.DAYS).isBefore(ticketRepository.getStartTime(ticketToCancel.getId())));
+
                     if (ticketToCancel.getStatus() == Ticket.Status.BOUGHT && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
                         log.error("ticket to cancel bought by another user", ticket);
                         throw new CantCancelTicketException("Can only cancel tickets you ordered");

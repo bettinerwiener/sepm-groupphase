@@ -21,7 +21,19 @@ public interface ShoppingCartService {
      * @throws NotCreatedException in case something went wrong when accessing the database
      * @throws TicketNotAvailableException in case the ticket is already bought or reserved by another user
      */
-    Order BuyTickets(User user, List<Ticket> tickets);
+    Order BuyAvailableTickets(User user, List<Ticket> tickets);
+
+    /**
+     * Buy reserved Tickets and delete all remaining in the order
+     *
+     * @param user making the order
+     * @param tickets tickets to buy
+     * @return the created order
+     * @throws NotFoundException if ticket the user wants to buy doesnt exists
+     * @throws NotCreatedException in case something went wrong when accessing the database
+     * @throws TicketNotAvailableException in case the ticket is already bought or reserved by another user
+     */
+    Order BuyReservedTickets(User user, List<Ticket> tickets);
 
     /**
      * Create a new reserve Order and reserve all the given tickets

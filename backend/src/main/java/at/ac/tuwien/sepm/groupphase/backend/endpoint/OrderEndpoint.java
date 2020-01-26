@@ -114,11 +114,19 @@ public class OrderEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "make new order", authorizations = {@Authorization(value = "apiKey")})
     public OrderDto newOrder(Authentication authentication,@RequestBody List<TicketDto> ticketDtos) {
-        System.out.println("Got here");
-        System.out.println(ticketDtos);
         User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
-        return orderMapper.orderToOrderDto(shoppingCartService.BuyTickets(user,tickets));
+        return orderMapper.orderToOrderDto(shoppingCartService.BuyAvailableTickets(user,tickets));
+    }
+
+    @CrossOrigin
+    @PostMapping(value= "/buyreserved")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "make new order", authorizations = {@Authorization(value = "apiKey")})
+    public OrderDto buyReservations(Authentication authentication,@RequestBody List<TicketDto> ticketDtos) {
+        User user = userDetailService.findApplicationUserByEmail(authentication.getPrincipal().toString());
+        List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
+        return orderMapper.orderToOrderDto(shoppingCartService.BuyReservedTickets(user,tickets));
     }
 
     @Secured("ROLE_ADMIN")
@@ -130,7 +138,7 @@ public class OrderEndpoint {
 
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
         User user = userDetailService.findById(ticketService.findById(tickets.get(0).getId()).getCustomerOrder().getUserId());
-        return orderMapper.orderToOrderDto(shoppingCartService.BuyTickets(user,tickets));
+        return orderMapper.orderToOrderDto(shoppingCartService.BuyReservedTickets(user,tickets));
     }
 
     @CrossOrigin

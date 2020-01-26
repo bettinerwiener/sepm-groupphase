@@ -40,7 +40,7 @@ export class OrdersService {
 
   purchaseTickets(toBuy: Number[]): Observable<Ticket[]> {
     console.log("purchaseTickets service:");
-    return this.httpClient.post<Ticket[]>(this.ordersBaseUri + "/buy", toBuy);
+    return this.httpClient.post<Ticket[]>(this.ordersBaseUri + "/buyreserved", toBuy);
 
   }
   purchaseTicketsAsAdmin(toBuy: Number[]): Observable<Ticket[]> {
