@@ -99,6 +99,7 @@ public class EventEndpoint {
         return this.eventMapper.eventToEventDto(this.eventService.getById(id));
     }
 
+    @CrossOrigin
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Add an image to a news entry", authorizations = {@Authorization(value = "apiKey")})
@@ -114,7 +115,7 @@ public class EventEndpoint {
         return this.eventService.getMinPricePerTicket(id);
     }
 
-    @CrossOrigin
+    @CrossOrigin("*")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Add an image to a event entry", authorizations = {@Authorization(value = "apiKey")})
