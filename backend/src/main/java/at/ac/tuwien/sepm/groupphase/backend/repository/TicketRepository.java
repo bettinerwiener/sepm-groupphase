@@ -45,7 +45,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     /**
      * Get the number of tickets in the Order with orderId
-     * @param orderId to get the ticketcount
+     * @param orderId to get the ticketcount from
      * @return Number of Tickets in Order with orderId
      */
     @Query(value = "SELECT COUNT(*) FROM ticket JOIN customer_order ON (customer_order.id=ticket.customer_order_id) WHERE customer_order.id= :orderId", nativeQuery = true)
@@ -58,6 +58,16 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      */
     @Query(value = "SELECT PERF_DATE   FROM ticket JOIN is_performed_at ON (is_performed_at.id= ticket.is_performed_at_id) WHERE ticket.id = :ticketId", nativeQuery = true)
     LocalDateTime getStartTime (@Param("ticketId") Long ticketId);
+
+
+    /**
+     * Get all reserved tickets in given order
+     * @param orderId
+     * @return start time of the performance
+     */
+    @Query(value = "SELECT ticket.id, customer_order_id, is_performed_at_id, seat_id, status, price FROM ticket JOIN customer_order ON (customer_order.id=ticket.customer_order_id) WHERE customer_order.id= :orderId AND ticket.status = 'RESERVED'", nativeQuery = true)
+    List<Ticket> getReservedTicketsFromOrder (@Param("orderId") Long orderId);
+
 
     /*
     @Query(value = "SELECT ticket.customer_order_id FROM ticket JOIN customer_order ON( ticket.customer_order_id = customer_order.id) WHERE ticket.id = :ticketId", nativeQuery = true)

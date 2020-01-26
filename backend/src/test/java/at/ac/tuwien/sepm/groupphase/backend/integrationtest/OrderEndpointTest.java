@@ -131,13 +131,13 @@ public class OrderEndpointTest implements OrderTestData {
     }
 
     @Test
-    public void creatingNewBuyOrderWithReservedByUserAndAvailableReturn201() throws Exception {
+    public void creatingNewBuyOrderWithReservedByUserAndAvailableReturn423() throws Exception {
         this.mockMvc.perform(post(ORDER_BUY_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
             .contentType(MediaType.APPLICATION_JSON)
             .content(BUY_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS)
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated());
+            .andExpect(status().isLocked());
     }
 
     @Test
@@ -158,6 +158,70 @@ public class OrderEndpointTest implements OrderTestData {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isLocked());
     }
+
+    /**
+     * Test Buying of reserved
+     */
+    @Test
+    public void buyTwoReservedReturn201() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUYRESERVED_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_TWO_RESERVED_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void buyReservedWithTwoAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUYRESERVED_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_TWO_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+
+    @Test
+    public void buyReservedWithReservedByUserAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUYRESERVED_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+
+    @Test
+    public void buyReservedWithReservedAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUYRESERVED_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_ONE_RESERVED_BY_OTHER_USER_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+    @Test
+    public void buyReservedWithBoughtAndAvailableReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUYRESERVED_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_ONE_BOUGHT_ONE_AVAILABLE_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+
+    @Test
+    public void buyReservedWithTwoReservedFromDifferentOrdersReturn423() throws Exception {
+        this.mockMvc.perform(post(ORDER_BUYRESERVED_URI)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(BUY_TWO_RESERVED_IN_DIFFERENT_ORDERS_TICKETS)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isLocked());
+    }
+
+
 
     /**
      * Test Cancellation

@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import {OrdersService} from '../../services/orders.service';
-import {AuthService} from '../../services/auth.service';
-import {Order} from '../../dtos/order';
-import { error } from 'protractor';
+import { ActivatedRoute } from '@angular/router';
+import { Order } from 'src/app/dtos/order';
+import { OrdersService } from 'src/app/services/orders.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  selector: 'user-orders',
+  templateUrl: './user-orders.component.html',
+  styleUrls: ['./user-orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class UserOrdersComponent implements OnInit {
+
 
   error = false;
   errorMessage = '';
   orders: Order[];
-   
-  constructor(private orderService: OrdersService, private authService: AuthService) {}
+  email: string;
+  constructor(private orderService: OrdersService, private authService: AuthService, private _Activatedroute:ActivatedRoute) { 
+    this.email = this._Activatedroute.snapshot.paramMap.get("email");
+  }
 
   ngOnInit() {
     this.loadOrders();
@@ -23,7 +26,7 @@ export class OrdersComponent implements OnInit {
   }
 
   private loadOrders() {
-    this.orderService.getOrders().subscribe(
+    this.orderService.getOrdersByEmail(this.email).subscribe(
       (orders: Order[]) => {
         this.orders = orders;
         console.log(this.orders[0]);
@@ -48,5 +51,6 @@ export class OrdersComponent implements OnInit {
       this.errorMessage = error.error;
     }
   }
+
 
 }

@@ -34,6 +34,7 @@ import java.lang.invoke.MethodHandles;
 import java.security.AccessControlException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +57,9 @@ public class SimplePdfService implements PdfService {
 
         Ticket ticket = ticketService.findById(id);
         User user = userDetailsService.findApplicationUserByEmail(email);
+        if(user.getIsEmployee()){
+            user = userDetailsService.findById(ticket.getCustomerOrder().getUserId());
+        }
         if(ticket.getCustomerOrder().getUserId() != user.getId()) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");
         }
@@ -117,6 +121,9 @@ public class SimplePdfService implements PdfService {
         String date = "22.01.2019";
         Float totalPrice = 0f;
 
+        if(user.getIsEmployee()){
+            user = userDetailsService.findById(tickets.get(0).getCustomerOrder().getUserId());
+        }
         System.out.println(order.getId());
         if(order.getUserId() != user.getId()) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");
@@ -164,6 +171,94 @@ public class SimplePdfService implements PdfService {
             }
 
             placeText(contentStream,page, "Summe: " + totalPrice + "€", 400, 220 + counter*20, 13);
+
+
+
+
+            contentStream.close();
+
+        } catch (Exception e) {
+            log.error("Ticket pdf creation failed: {}", e.getMessage());
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try{
+            doc.save(out);
+        } catch (Exception e) {
+            log.error("Ticket pdf could not be saved: {}", e.getMessage());
+        }
+
+        return new ByteArrayInputStream(out.toByteArray());
+
+    }
+
+    public ByteArrayInputStream getCancelInvoicePdf(List<Ticket> t, String email) {
+
+        List<Ticket> tickets  = new ArrayList<>();
+
+        for (Ticket x: t) {
+            tickets.add(ticketService.findById(x.getId()));
+        }
+
+        Order order = tickets.get(0).getCustomerOrder();
+
+        User user = userDetailsService.findApplicationUserByEmail(email);
+
+        String companyName = "Ticketline GmbH";
+        String companyCity = "Wien 1230";
+        String companyStreet = "Breitenfurterstraße 380C/5/8";
+        String customerString = user.getFirstName() + " " + user.getLastName();
+        //Temporary
+        String date = "22.01.2019";
+        Float totalPrice = 0f;
+
+        System.out.println(order.getId());
+        if(order.getUserId() != user.getId()) {
+            throw new NotFoundException("No Ticket with that id found that is owned by this user");
+        }
+
+        PDDocument doc = new PDDocument();
+        PDPage page = new PDPage(PDRectangle.A4);
+        doc.addPage(page);
+
+        //ADD CHECK IF TICKET STATUS IS BOUGHT!
+        //ZEILENUMBRUCH BEI ZU BREITEM TITEL USW.?
+        try {
+
+            int counter = 0;
+            PDPageContentStream contentStream = new PDPageContentStream(doc, page);
+
+            placeText(contentStream,page, "Stornorechnung #" + order.getId(),  75, 80, 17);
+            placeText(contentStream,page, user.getFirstName() + " " + user.getLastName(),  75, 100, 14);
+
+
+            placeText(contentStream,page, companyName, 410, 80 + 15*2, 11);
+            placeText(contentStream,page, companyStreet, 410, 80 + 15*1, 11);
+            placeText(contentStream,page, companyCity, 410, 80, 11);
+
+            for(Ticket ticket: tickets) {
+
+                EventPerformance performance = ticket.getPerformance();
+                Event event = performance.getEvent();
+                Seat seat = ticket.getSeat();
+                Float price = ticket.getPrice();
+                totalPrice += price;
+
+                placeText(contentStream,page, "Menge", 75, 180, 11);
+                placeText(contentStream,page, "Bezeichnung", 135, 180, 11);
+                placeText(contentStream,page, "Preis", 470, 180, 11);
+
+
+                placeText(contentStream,page, "1", 75, 210 + counter*20, 11);
+
+                placeText(contentStream,page, event.getTitle() + " - " + performance.getRoom().getLocation().getName() + ", " + performance.getRoom().getName() + "(" + seat.getSection().getLetter() + "," + seat.getRowLetter() + seat.getSeatNumber() + ")", 135, 210 + counter*20, 11);
+
+                placeText(contentStream,page, "-"+ ticket.getPrice().toString()+"€", 470 ,210 + counter*20, 11);
+
+                counter++;
+            }
+
+            placeText(contentStream,page, "Summe: -" + totalPrice + "€", 400, 220 + counter*20, 13);
 
 
 

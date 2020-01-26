@@ -26,7 +26,7 @@ import { NewsItemComponent } from './components/news-item/news-item.component'
 import { NewsComponent } from './components/news/news.component';
 import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
 import { EditNewsComponent } from './components/edit-news/edit-news.component';
-
+import {UserOrdersComponent} from './components/user-orders/user-orders.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -54,6 +54,7 @@ const routes: Routes = [
   {path: 'news/:id', component: NewsItemComponent},
   {path: 'news/edit/:id', component: EditNewsComponent},
   {path: 'news-list-item', component: NewsListItemComponent},
+  {path: 'orders/:email', canActivate: [AuthGuard], component: UserOrdersComponent},
 ];
 
 @NgModule({

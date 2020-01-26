@@ -92,7 +92,7 @@ public class PdfEndpoint {
         ByteArrayInputStream bis = pdfService.getOrderInvoicePdf(id, authentication.getPrincipal().toString());
 
         var headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=ticket.pdf");
+        headers.add("Content-Disposition", "inline; filename=invoice.pdf");
 
         return ResponseEntity
             .ok()
