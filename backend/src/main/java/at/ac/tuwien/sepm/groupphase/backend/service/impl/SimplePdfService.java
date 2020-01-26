@@ -38,8 +38,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Servicec
 @Slf4j
+@Service
 public class SimplePdfService implements PdfService {
 
     private TicketService ticketService;
@@ -54,6 +54,7 @@ public class SimplePdfService implements PdfService {
 
     @Override
     public ByteArrayInputStream getTicketPdf(Long id, String email) throws NotFoundException {
+
 
         Ticket ticket = ticketService.findById(id);
         User user = userDetailsService.findApplicationUserByEmail(email);

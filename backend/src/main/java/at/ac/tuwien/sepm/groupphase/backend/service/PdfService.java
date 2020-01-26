@@ -21,8 +21,22 @@ public interface PdfService {
      */
     ByteArrayInputStream getTicketPdf(Long id, String email) throws NotFoundException;
 
+    /**
+     * Produces an invoice in pdf for the specified order id
+     * @param id of the order
+     * @param email of the user
+     * @return a ByteArrayInpuStream holding the binary pdf invoice
+     * @throws NotFoundException
+     */
     ByteArrayInputStream getOrderInvoicePdf(Long id, String email) throws NotFoundException;
 
+    /**
+     * Produces a cancel invoice in pdf for the specified order id
+     * @param tickets list of the tickets to generate the invoice for
+     * @param email of the user
+     * @return a ByteArrayInpuStream holding the binary pdf cancel invoice
+     * @throws NotFoundException
+     */
     ByteArrayInputStream getCancelInvoicePdf(List<Ticket> tickets, String email) throws NotFoundException;
 
 }
