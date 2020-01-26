@@ -124,7 +124,7 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     }else if (LocalDateTime.now().isAfter(ticketRepository.getStartTime(ticketToBuy.getId()))) {
                     log.error("cant buy tickets for perfomances in the past", ticket);
                     throw new CantCancelTicketException("Can not buy tickets for perfomances in the past");
-                }
+                    }
 
                 } else {
                     log.error("ticket does not exist", ticket);
@@ -176,6 +176,9 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToReserve.getId())== user.getId()){
                         log.error("ticket reserved by same user already",ticket);
                         throw new TicketNotAvailableException("You already reserved one or more of the tickets");
+                    } else if (LocalDateTime.now().isAfter(ticketRepository.getStartTime(ticketToReserve.getId()))) {
+                        log.error("cant reserve tickets for perfomances in the past", ticket);
+                        throw new CantCancelTicketException("Can not reserve tickets for perfomances in the past");
                     }
                 } else {
                     log.error("ticket does not exist", ticket);
