@@ -25,6 +25,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.service.impl.CustomUserDetailService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
@@ -42,6 +43,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/v1/pdf")
 public class PdfEndpoint {
@@ -65,8 +67,7 @@ public class PdfEndpoint {
     @ApiOperation(value = "Get ticket pdf", authorizations = {@Authorization(value = "apiKey")})
     public ResponseEntity<InputStreamSource> getTicketPdf(Authentication authentication, @PathVariable Long id) {
 
-        System.out.println(id);
-
+        log.info("GET ticket with id ", id);
         ByteArrayInputStream bis = pdfService.getTicketPdf(id, authentication.getPrincipal().toString());
 
         var headers = new HttpHeaders();
@@ -85,9 +86,9 @@ public class PdfEndpoint {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/orders/{id}", method = RequestMethod.GET,
         produces = MediaType.APPLICATION_PDF_VALUE)
-    @ApiOperation(value = "Get ticket pdf", authorizations = {@Authorization(value = "apiKey")})
+    @ApiOperation(value = "Get order pdf", authorizations = {@Authorization(value = "apiKey")})
     public ResponseEntity<InputStreamSource> getOrderInvoicePdf(Authentication authentication, @PathVariable Long id) {
-
+        log.info("GET order invoice with id ", id);
         System.out.println(id);
         ByteArrayInputStream bis = pdfService.getOrderInvoicePdf(id, authentication.getPrincipal().toString());
 

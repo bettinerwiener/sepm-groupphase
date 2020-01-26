@@ -24,6 +24,12 @@ public interface OrderService {
      */
     List<Order> findByUserId(Long id) throws NotFoundException;
 
+    /**
+     * Get a one order by id
+     * @param id of the order
+     * @return one order with specified id
+     * @throws NotFoundException in case no orders have been found
+     */
     Order findById(Long id) throws NotFoundException;
 
 
