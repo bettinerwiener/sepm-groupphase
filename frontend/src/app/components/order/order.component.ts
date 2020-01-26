@@ -120,6 +120,7 @@ export class OrderComponent implements OnInit {
     for(let i of this.tickets) {
       if(i.selected) {
         toBuy.push({id: i.id});
+        console.log(i.id)
       }
     }
     if(this.admin==1) {
@@ -203,7 +204,7 @@ export class OrderComponent implements OnInit {
   }
 
 
-  private defaultServiceErrorHandling(error: any) {
+  async defaultServiceErrorHandling(error: any) {
     console.log(error);
     this.error = true;
     if (typeof error.error === 'object') {
@@ -211,7 +212,9 @@ export class OrderComponent implements OnInit {
     } else {
       this.errorMessage = error.error;
     }
-    this.toastr.error(error.message, error.status, {
+    let text = await new Response(error.error).text()
+  
+    this.toastr.error(text, error.status, {
       timeOut: 3000
     });
   }

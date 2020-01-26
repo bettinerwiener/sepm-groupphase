@@ -13,6 +13,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 
+import at.ac.tuwien.sepm.groupphase.backend.exception.CantCancelTicketException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 
 import at.ac.tuwien.sepm.groupphase.backend.service.OrderService;
@@ -135,7 +136,6 @@ public class OrderEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "make new order", authorizations = {@Authorization(value = "apiKey")})
     public OrderDto newOrderAsAdmin(Authentication authentication, @RequestBody List<TicketDto> ticketDtos) {
-
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
         User user = userDetailService.findById(ticketService.findById(tickets.get(0).getId()).getCustomerOrder().getUserId());
         return orderMapper.orderToOrderDto(shoppingCartService.BuyReservedTickets(user,tickets));
@@ -171,10 +171,7 @@ public class OrderEndpoint {
         List<Ticket> tickets = ticketMapper.ticketDtoToTicket(ticketDtos);
         ByteArrayInputStream bis = null;
 
-
-
         bis = pdfService.getCancelInvoicePdf(tickets, authentication.getPrincipal().toString());
-
 
         shoppingCartService.CancelTickets(user, tickets);
 

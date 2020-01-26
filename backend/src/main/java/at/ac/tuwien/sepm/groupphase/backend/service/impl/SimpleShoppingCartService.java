@@ -67,7 +67,7 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                         log.error("tickets of different orders",ticket);
                         throw new TicketNotAvailableException("Cant buy reserved tickets from different orders");
 
-                    }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToBuy.getId())!= user.getId()){
+                    }else if((ticketToBuy.getStatus()== Ticket.Status.RESERVED) && (this.ticketRepository.findUserIdToTicket(ticketToBuy.getId()).compareTo(user.getId())!=0)){
                         log.error("ticket reserved by other user",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to reserve is reserved by another user");
                     }
@@ -166,7 +166,7 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     if (ticketToReserve.getStatus() == Ticket.Status.BOUGHT) {
                         log.error("ticket bought already",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to reserve is not available");
-                    }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToReserve.getId())!= user.getId()){
+                    }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && (this.ticketRepository.findUserIdToTicket(ticketToReserve.getId()).compareTo(user.getId())!=0)){
                         log.error("ticket reserved by other user",ticket);
                         throw new TicketNotAvailableException("One of the tickets you want to reserve is reserved by another user");
                     }else if(ticketToReserve.getStatus()== Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToReserve.getId())== user.getId()){
@@ -210,10 +210,10 @@ public class SimpleShoppingCartService implements ShoppingCartService {
 
                     Ticket ticketToCancel = this.ticketRepository.getOne(ticket.getId());
 
-                    if (ticketToCancel.getStatus() == Ticket.Status.BOUGHT && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
+                    if (ticketToCancel.getStatus() == Ticket.Status.BOUGHT && (this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()).compareTo(user.getId())!=0)) {
                         log.error("ticket to cancel bought by another user", ticket);
                         throw new CantCancelTicketException("Can only cancel tickets you ordered");
-                    } else if (ticketToCancel.getStatus() == Ticket.Status.RESERVED && this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()) != user.getId()) {
+                    } else if (ticketToCancel.getStatus() == Ticket.Status.RESERVED && (this.ticketRepository.findUserIdToTicket(ticketToCancel.getId()).compareTo(user.getId())!=0)) {
                         log.error("ticket to cancel reserved by other user", ticket);
                         throw new CantCancelTicketException("Can only cancel tickets you ordered");
                     } else if (ticketToCancel.getStatus() == Ticket.Status.AVAILABLE) {

@@ -1,3 +1,19 @@
+<!-- Modal -->
+<div class="modal fade" [attr.id]="'h'+this.id" tabindex="-1" role="dialog" [attr.aria-labelledby]="this.id" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        Die nicht gekauften Tickets dieser Bestellungen werden storniert.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+        <button type="button" class="btn btn-primary" (click)="purchaseTickets()" >Kaufen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container" style="padding-bottom: 15px;">
   <div class="col-md-8 mx-auto event-list-item">
 
@@ -75,7 +91,7 @@
 
     <div *ngIf="status=='RESERVED'&&showTickets" class="col-md-4 offset-md-8 ">
       <button *ngIf="admin!=1" type="button" class="btn btn-danger" (click)="cancelReservation()" >Stornieren</button>
-      <button type="button" class="btn btn-success" (click)="purchaseTickets()">Kaufen</button>
+      <button type="button" class="btn btn-success" data-toggle="modal" [attr.data-target]="'#h'+this.id" >Kaufen</button>
       
     </div>
     <br>
