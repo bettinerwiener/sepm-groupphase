@@ -47,6 +47,7 @@ public class LocationEndpoint {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @CrossOrigin("*")
     @ApiOperation(value = "Create a new location", authorizations = {@Authorization(value = "apiKey")})
     public LocationDto create(@RequestBody LocationDto locationDto) {
         LocationDto resultLocation = locationMapper.locationToLocationDto(locationService
