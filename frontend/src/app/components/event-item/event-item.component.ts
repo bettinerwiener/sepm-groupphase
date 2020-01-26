@@ -9,6 +9,9 @@ import { Order } from 'src/app/dtos/order';
 import { TicketDto } from 'src/app/dtos/ticket-dto';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { EventService } from 'src/app/services/event.service';
+import {AuthService} from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-event-item',
@@ -39,8 +42,12 @@ export class EventItemComponent implements OnInit {
     private router: Router,
     private service: TicketService,
     private eventService: EventService,
-    private sanitizer: DomSanitizer
-  ) { }
+    private sanitizer: DomSanitizer,
+    public authService: AuthService,
+    private toastr: ToastrService
+  ) {
+
+  }
 
   selectSeats(performance: EventPerformance): void {
     performance.seatSelection = !performance.seatSelection;
@@ -155,6 +162,7 @@ export class EventItemComponent implements OnInit {
     );
 
     this.selectedTickets = new Array<Ticket>();
+    this.toastr.success('Success!', 'Ticket(s) have been bought!');
     setTimeout(() => {
       window.location.reload();
     }, 1000);
@@ -180,6 +188,7 @@ export class EventItemComponent implements OnInit {
     );
 
     this.selectedTickets = new Array<Ticket>();
+    this.toastr.success('Success!', 'Ticket(s) have been reserved!');
     setTimeout(() => {
       window.location.reload();
     }, 1000);
