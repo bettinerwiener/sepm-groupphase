@@ -9,6 +9,8 @@ import { Order } from 'src/app/dtos/order';
 import { TicketDto } from 'src/app/dtos/ticket-dto';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { EventService } from 'src/app/services/event.service';
+import {AuthService} from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-event-item',
@@ -35,8 +37,11 @@ export class EventItemComponent implements OnInit {
     private router: Router,
     private service: TicketService,
     private eventService: EventService,
-    private sanitizer: DomSanitizer
-  ) { }
+    private sanitizer: DomSanitizer,
+    public authService: AuthService
+  ) {
+
+  }
 
   selectSeats(performance: EventPerformance): void {
     performance.seatSelection = !performance.seatSelection;

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Servicec
+@Service
 @Slf4j
 public class SimplePdfService implements PdfService {
 

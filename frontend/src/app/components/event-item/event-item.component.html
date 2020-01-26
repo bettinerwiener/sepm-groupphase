@@ -51,9 +51,9 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
 
-                        <button type="button" (click)="reserveTickets($event)"
+                        <button type="button" (click)="reserveTickets($event)" *ngIf="authService.isLoggedIn()"
                             class="btn btn-primary btn-sm">Reserve</button>
-                        <button type="button" (click)="buyTickets($event)" class="btn btn-primary btn-sm"
+                        <button type="button" (click)="buyTickets($event)" class="btn btn-primary btn-sm" *ngIf="authService.isLoggedIn()"
                             style="margin-left: 5px; background-color: #00960c;">Buy</button>
                     </div>
                 </div>
