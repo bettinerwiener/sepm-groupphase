@@ -61,4 +61,6 @@ public interface EventService {
     Event getById(Long id) throws NotFoundException;
 
     Event updateWithImage(Long id, MultipartFile image) throws NotFoundException;
+
+    Long getMinPricePerTicket(Long id);
 }

@@ -24,7 +24,6 @@ export class EventListItemComponent implements OnInit {
   @Input() title: string;
   @Input() description: string;
   @Input() location: string;
-  @Input() price: number;
   @Input() image: Blob;
   imageURL: SafeUrl;
   private sortedPerformanceDates: EventPerformance[];
@@ -32,6 +31,7 @@ export class EventListItemComponent implements OnInit {
   lastPerformanceDate: string;
   hasPerformance: boolean = true;
   lowestPrice: number;
+  ticketsBool: boolean = true;
   error: boolean = false;
   errorMessage: string = 'There went something wrong while displaying these events';
 
@@ -45,7 +45,7 @@ export class EventListItemComponent implements OnInit {
   ngOnInit() {
     this.getFirstAndLastPerformance(this.id);
     this.getImage();
-    // this.getLowestPrice(this.id);
+    this.getMinPrice();
   }
 
   getId(id: number) {
@@ -71,6 +71,21 @@ export class EventListItemComponent implements OnInit {
             Number(dateString[2].slice(0, 2)), 0, 0, 0);
           this.lastPerformanceDate = (lastPerformance.getDate()) + '-' +
             (lastPerformance.getMonth() + 1) + '-' + lastPerformance.getFullYear();
+        }
+      },
+      (error) => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
+
+  getMinPrice() {
+    this.eventService.getMinPricePerEvent(this.id).subscribe(
+      (price: number) => {
+        if (price != null ) {
+          this.lowestPrice = price;
+        } else {
+          this.ticketsBool = false;
         }
       },
       (error) => {

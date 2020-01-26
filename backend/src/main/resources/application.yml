@@ -33,6 +33,7 @@ security:
     white-list:
     # Browser requests
     - /
+    - /api/v1/tickets?
     - /api/v1/events/all
     - /api/v1/events/{id}
     - /api/v1/events/all?

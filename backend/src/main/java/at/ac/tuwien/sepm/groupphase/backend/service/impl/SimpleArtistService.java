@@ -23,7 +23,7 @@ public class SimpleArtistService implements ArtistService {
     @Override
     public List<Artist> getAll() throws NotFoundException {
         try {
-            List<Artist> artists = this.artistRepository.findAll();
+            List<Artist> artists = this.artistRepository.findAllOrderByLastName();
             return artists;
         } catch (DataAccessException dae) {
             log.error("No artists could be found: {}", dae.getMessage());
