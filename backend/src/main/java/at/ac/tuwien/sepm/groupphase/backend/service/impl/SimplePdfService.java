@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
+@Servicec
 @Slf4j
 public class SimplePdfService implements PdfService {
 
@@ -60,7 +60,7 @@ public class SimplePdfService implements PdfService {
         if(user.getIsEmployee()){
             user = userDetailsService.findById(ticket.getCustomerOrder().getUserId());
         }
-        if(ticket.getCustomerOrder().getUserId() != user.getId()) {
+        if(ticket.getCustomerOrder().getUserId().compareTo(user.getId())!=0) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");
         }
 
@@ -125,7 +125,7 @@ public class SimplePdfService implements PdfService {
             user = userDetailsService.findById(tickets.get(0).getCustomerOrder().getUserId());
         }
         System.out.println(order.getId());
-        if(order.getUserId() != user.getId()) {
+        if(order.getUserId().compareTo(user.getId())!=0) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");
         }
 
@@ -213,7 +213,7 @@ public class SimplePdfService implements PdfService {
         Float totalPrice = 0f;
 
         System.out.println(order.getId());
-        if(order.getUserId() != user.getId()) {
+        if(order.getUserId().compareTo(user.getId())!=0) {
             throw new NotFoundException("No Ticket with that id found that is owned by this user");
         }
 
