@@ -106,7 +106,7 @@ public class EventEndpoint {
         return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
     }
 
-    @CrossOrigin
+    @CrossOrigin("*")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/all/minprice/{id}")
     @ApiOperation(value = "Get min price per id", authorizations = {@Authorization(value = "apiKey")})
@@ -121,7 +121,7 @@ public class EventEndpoint {
         return this.eventMapper.eventToEventDto(this.eventService.updateWithImage(id, image));
     }
 
-    @CrossOrigin
+    @CrossOrigin()
     @GetMapping(
         value = "/{id}/image",
         produces = MediaType.IMAGE_JPEG_VALUE)
