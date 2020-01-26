@@ -121,7 +121,11 @@ public class SimpleShoppingCartService implements ShoppingCartService {
                     }else if(ticketToBuy.getStatus()== Ticket.Status.RESERVED){
                         log.error("ticket reserved",ticket);
                         throw new TicketNotAvailableException("Can only make a new order for available tickets");
-                    }
+                    }else if (LocalDateTime.now().isAfter(ticketRepository.getStartTime(ticketToBuy.getId()))) {
+                    log.error("cant buy tickets for perfomances in the past", ticket);
+                    throw new CantCancelTicketException("Can not buy tickets for perfomances in the past");
+                }
+
                 } else {
                     log.error("ticket does not exist", ticket);
                     throw new NotFoundException("One of the tickets you want to buy doesnt exist");
