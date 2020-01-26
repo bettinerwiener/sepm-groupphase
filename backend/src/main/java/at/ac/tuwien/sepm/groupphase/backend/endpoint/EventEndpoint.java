@@ -114,6 +114,7 @@ public class EventEndpoint {
         return this.eventService.getMinPricePerTicket(id);
     }
 
+    @CrossOrigin
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Add an image to a event entry", authorizations = {@Authorization(value = "apiKey")})
