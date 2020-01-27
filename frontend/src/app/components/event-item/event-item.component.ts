@@ -28,14 +28,14 @@ export class EventItemComponent implements OnInit {
   eventObject: EventObject;
   performances: Array<EventPerformance>;
   id: number = 0;
-  totalPrice:number = 0;
-  amount:number = 0;
+  totalPrice: number = 0;
+  amount: number = 0;
   selectedTickets: Array<Ticket> = new Array<Ticket>();
   submittedTickets: Array<TicketDto> = new Array<TicketDto>();
   load: boolean = false;
   order: Order;
   pricePerSection: Array<Array<number>>;
-  submit:boolean = false;
+  submit: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,11 +63,9 @@ export class EventItemComponent implements OnInit {
 
     this.service.getPerformancesByEventId(id).subscribe(
       (performances: Array<EventPerformance>) => {
-        console.log(performances);
-        
         this.performances = performances;
         this.pricePerSection = new Array();
-        var i:number = 0;
+        let i: number = 0;
         for (const perf of performances) {
           this.service.getTicketsByPerformanceId(perf.id).subscribe(
             (tickets: Array<Ticket>) => {
@@ -83,22 +81,18 @@ export class EventItemComponent implements OnInit {
     console.log(this.image);
   }
 
-  fillSectionPrices(i:number, tickets:Array<Ticket>){
+  fillSectionPrices(i: number, tickets: Array<Ticket>) {
     this.pricePerSection[i] = new Array();
-    for(let ticket of tickets){
-      if(ticket.seat.section.letter == 'A'){
+    for (const ticket of tickets) {
+      if (ticket.seat.section.letter == 'A') {
         this.pricePerSection[i][0] = ticket.price;
-      }
-      else if(ticket.seat.section.letter == 'B'){
+      } else if (ticket.seat.section.letter == 'B') {
         this.pricePerSection[i][1] = ticket.price;
-      }
-      else if(ticket.seat.section.letter == 'C'){
+      } else if (ticket.seat.section.letter == 'C') {
         this.pricePerSection[i][2] = ticket.price;
-      }
-      else if(ticket.seat.section.letter == 'D'){
+      } else if (ticket.seat.section.letter == 'D') {
         this.pricePerSection[i][3] = ticket.price;
-      }
-      else if(ticket.seat.section.letter == 'E'){
+      } else if (ticket.seat.section.letter == 'E') {
         this.pricePerSection[i][4] = ticket.price;
       }
     }
@@ -135,10 +129,10 @@ export class EventItemComponent implements OnInit {
     this.calcPrices();
   }
 
-  calcPrices():void {
+  calcPrices(): void {
     this.totalPrice = 0;
     this.amount = 0;
-    for(let tempSeat of this.selectedTickets){
+    for (const tempSeat of this.selectedTickets) {
       this.totalPrice += tempSeat.price;
       this.amount++;
     }
@@ -146,7 +140,7 @@ export class EventItemComponent implements OnInit {
 
   buyTickets(eventPerformance: EventPerformance): void {
     this.submit = true;
-    if(this.amount == 0){
+    if (this.amount == 0) {
       return;
     }
     this.submittedTickets = new Array<TicketDto>();
@@ -172,7 +166,7 @@ export class EventItemComponent implements OnInit {
     this.submit = true;
     this.submittedTickets = new Array<TicketDto>();
 
-    if(this.amount == 0){
+    if (this.amount == 0) {
       return;
     }
 

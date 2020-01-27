@@ -70,9 +70,6 @@
             <artifactId>springfox-bean-validators</artifactId>
             <version>${springfox.swagger.version}</version>
         </dependency>
-<<<<<<< HEAD
-        <!-- lombok annotations -->
-=======
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -94,17 +91,12 @@
             <version>2.0.13</version>
         </dependency>
         <!-- lombok support added -->
->>>>>>> develop_alt
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
             <scope>provided</scope>
         </dependency>
-<<<<<<< HEAD
-=======
-
->>>>>>> develop_alt
         <!-- security -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
