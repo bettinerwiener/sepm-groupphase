@@ -27,14 +27,14 @@ public interface OrderTestData {
     };
 
 
-    String BUY_TWO_AVAILABLE_TICKETS = "[ { \"id\":\"2\" }, { \"id\":\"8\" }]";
+    String BUY_TWO_AVAILABLE_TICKETS = "[ { \"id\":\"1177\" }, { \"id\":\"1180\" }]";
     String BUY_TWO_RESERVED_TICKETS = "[ { \"id\":\"69\" }, { \"id\":\"369\" }]";
     String BUY_ONE_RESERVED_BY_OTHER_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"6\" }, { \"id\":\"8\" }]";
     String BUY_ONE_BOUGHT_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"3\" }, { \"id\":\"8\" }]";
     String BUY_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"669\" }, { \"id\":\"8\" }]";
     String BUY_TWO_RESERVED_IN_DIFFERENT_ORDERS_TICKETS = "[ { \"id\":\"212\" }, { \"id\":\"69\" }]";
 
-    String RESERVE_TWO_AVAILABLE_TICKETS = "[ { \"id\":\"2\" }, { \"id\":\"8\" }]";
+    String RESERVE_TWO_AVAILABLE_TICKETS = "[ { \"id\":\"1177\" }, { \"id\":\"1180\" }]";
     String RESERVE_ONE_RESERVED_BY_OTHER_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"6\" }, { \"id\":\"8\" }]";
     String RESERVE_ONE_BOUGHT_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"3\" }, { \"id\":\"8\" }]";
     String RESERVE_ONE_RESERVED_BY_USER_ONE_AVAILABLE_TICKETS = "[ { \"id\":\"669\" }, { \"id\":\"8\" }]";
