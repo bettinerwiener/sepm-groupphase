@@ -100,10 +100,10 @@
                                     </span>
                                     <span class="col-3">{{pricePerSection[performance.id][4]}} €</span>
                                 </div>
-                                
+
                             </div>
                         </div>
-                        <button type="button" (click)="reserveTickets($event)"
+                        <button type="button" (click)="reserveTickets($event)" *ngIf="authService.isLoggedIn()"
                             class="btn btn-primary btn-sm">Reserve</button>
                         <button type="button" (click)="buyTickets($event)" class="btn btn-primary btn-sm" *ngIf="authService.isLoggedIn()"
                             style="margin-left: 5px; background-color: #00960c;">Buy</button>
