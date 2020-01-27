@@ -14,9 +14,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import { ConcertComponent } from './components/concert/concert.component';
 import { TheatreComponent } from './components/theatre/theatre.component';
-import { CabaretComponent } from './components/cabaret/cabaret.component';
-import { MoviesComponent } from './components/movies/movies.component';
-import { RegisterComponent } from './components/register/register.component'
+import { FilmComponent } from './components/film/film.component';
+import { RegisterComponent } from './components/register/register.component';
 import { SearchAreaComponent } from './components/search-area/search-area.component';
 import { LocationsComponent } from './components/locations/locations.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -24,6 +23,26 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { EventListItemComponent } from './components/event-list-item/event-list-item.component';
+import { OrderComponent } from './components/order/order.component';
+import { SearchUserComponent } from './components/search-user/search-user.component';
+import { EditUserByAdminComponent } from './components/edit-user-by-admin/edit-user-by-admin.component';
+
+import { CreateEventComponent } from './components/create-event/create-event.component';
+import { EventItemComponent } from './components/event-item/event-item.component';
+import { CreateLocationComponent} from './components/create-location/create-location.component';
+import { SeatplanComponent } from './components/seatplan/seatplan.component';
+import { CreateEventPerformanceComponent } from './components/create-event-performance/create-event-performance.component';
+import { CreateRoomComponent } from './components/create-room/create-room.component';
+import { CreateSeatplanComponent } from './components/create-seatplan/create-seatplan.component';
+import { CreateEventNewsComponent } from './components/create-event-news/create-event-news.component';
+import { NewsItemComponent } from './components/news-item/news-item.component';
+import { NewsComponent } from './components/news/news.component';
+import { EditNewsComponent } from './components/edit-news/edit-news.component';
+import { NewsListItemComponent } from './components/news-list-item/news-list-item.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,18 +51,34 @@ import { EventListItemComponent } from './components/event-list-item/event-list-
     HomeComponent,
     LoginComponent,
     MessageComponent,
+    FilmComponent,
     ConcertComponent,
     TheatreComponent,
-    CabaretComponent,
     RegisterComponent,
     SearchAreaComponent,
-    MoviesComponent,
     LocationsComponent,
     ProfileComponent,
     OrdersComponent,
     CartComponent,
     EventListItemComponent,
     SliderComponent,
+    OrderComponent,
+
+    SearchUserComponent,
+    EditUserByAdminComponent,
+    CreateEventComponent,
+    EventItemComponent,
+    SeatplanComponent,
+    CreateEventPerformanceComponent,
+    CreateLocationComponent,
+    CreateRoomComponent,
+    CreateSeatplanComponent,
+    CreateEventNewsComponent,
+    NewsItemComponent,
+    NewsComponent,
+    NewsListItemComponent,
+    EditNewsComponent,
+    UserOrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +88,8 @@ import { EventListItemComponent } from './components/event-list-item/event-list-
     NgbModule,
     FormsModule,
     FontAwesomeModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

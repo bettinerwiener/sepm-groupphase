@@ -1,0 +1,21 @@
+<div class="container" style="padding-bottom: 15px;">
+  <div class="col-md-8 mx-auto news-list-item">
+      <div class="row news-list-item-content">
+          <div class="col-md-2">
+            <img *ngIf="imageURL" id="image" [src]="imageURL" width="90px" height="90px">
+          </div>
+          <div class="col-md-7">
+              <h5>{{title}}</h5>
+              <span>{{shortDescription}}</span>
+              <br>
+          <div id="dateandlocation">
+              <fa-icon [icon]="faCalendarDay" size="xs" style="vertical-align: middle;"></fa-icon>
+              <span>{{publishedAt}}</span>
+          </div>
+          </div>
+          <div class="col-md-3 text-center news-list-item-content-right">
+              <button style="margin-top: 25px" type="button" (click)="readNews(id, custNews)" class="btn btn-primary">Read more...</button>
+          <div>
+      </div>
+  </div>
+</div>

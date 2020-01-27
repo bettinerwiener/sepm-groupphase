@@ -1,1 +1,5 @@
-<search-area category="theatre plays"></search-area>
+<search-area category="theatres" (searchedTheatres)='getTheatres($event)'></search-area>
+
+<div *ngIf="theatres">
+  <event-list-item *ngFor="let t of theatres" id={{t.id}} title={{t.title}} description={{t.shortDescription}} price="130"></event-list-item>
+</div>

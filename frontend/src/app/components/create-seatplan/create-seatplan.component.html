@@ -1,0 +1,29 @@
+<div class="form-group">
+    <select [(ngModel)]="selectedSection" name="section" class="form-control" id="section" placeholder="Choose section"
+        [ngModelOptions]="{standalone: true}">
+        <option disabled selected>Please chose section</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+        <option>D</option>
+        <option>E</option>
+    </select>
+    <div *ngIf="selecting && selectedSection == undefined" class="error">
+      <small class="text-warning">Please choose section.</small>
+    </div>
+    <label for="priceFactor">Price Factor for Section</label>
+    <input id="priceFactor" type="number" min="0" [(ngModel)]="priceFactor" placeholder="Price Factor" />
+    <div *ngIf="!priceFactorValid" class="error">
+      <small class="text-warning">The price factor has to be between 0 and 20.</small>
+    </div>
+</div>
+<div class="stage" [style.width]="stagewidth">Stage</div>
+<div class="seatplan">
+    <div *ngFor="let row of seatplan" class="singleRow">
+        <button (click)="select(seat)" *ngFor="let seat of row"
+            [ngClass]="{'btn': true, 'grey': (seat.section.letter == null), 'seat': true,
+            'blue': (seat.section.letter === 'A'), 'red': (seat.section.letter === 'B'), 'orange': (seat.section.letter === 'C'), 'yellow': (seat.section.letter === 'D'), 'aqua': (seat.section.letter === 'E')}"
+            data-toggle="button" aria-pressed="false" autocomplete="off">
+        </button>
+    </div>
+</div>

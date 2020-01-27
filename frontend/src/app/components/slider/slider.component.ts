@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
+import { GlobalEvent } from 'src/app/dtos/global-event';
+import { Router, ɵROUTER_PROVIDERS } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'slider',
@@ -7,18 +12,76 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SliderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private eventService: EventService,
+    private sanitizer: DomSanitizer,
+    private router: Router) { }
+
+  topTenEvents: GlobalEvent[];
+  @Input() image: Blob;
+  imageURL: SafeUrl;
+  error: boolean = false;
+  errorMessage: string = 'There was a problem loading the topTenEvents';
 
   ngOnInit() {
+    this.loadTopTenEvents();
   }
 
-  swiperight():void {
-    var element = document.getElementById("slider");
-    element.scroll({top: 0, left: 10000, behavior: "smooth"})
+  loadTopTenEvents() {
+    this.eventService.getTopTenEvents().subscribe(
+      (retTopTenEvents: GlobalEvent[]) => {
+        this.topTenEvents = retTopTenEvents;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
-  swipeleft():void {
-    var element = document.getElementById("slider");
-    element.scroll({top: 0, left: 0, behavior: "smooth"})
+  routeToEvent(id: number): void {
+    this.router.navigate(['/event/', id]).then(
+      () => window.location.reload());
   }
+
+  getImage(id: number) {
+    this.eventService.getImage(id).subscribe(
+      (image: any) => {
+        this.image = image.body;
+        const reader = new FileReader();
+        reader.readAsDataURL(this.image);
+        let result;
+        reader.onloadend = (event: Event) => {
+          result = reader.result;
+          this.imageURL = this.sanitizer.bypassSecurityTrustUrl(result);
+        };
+      }
+    );
+  }
+
+
+
+  swiperight(): void {
+    const element = document.getElementById('slider');
+    element.scroll({top: 0, left: 10000, behavior: 'smooth'});
+  }
+
+  swipeleft(): void {
+    const element = document.getElementById('slider');
+    element.scroll({top: 0, left: 0, behavior: 'smooth'});
+  }
+
+private defaultServiceErrorHandling(error: any) {
+  console.log(error);
+  this.error = true;
+  if (error.status === 0) {
+    // If status is 0, the backend is probably down
+    this.errorMessage = 'The backend seems not to be reachable';
+  } else if (error.error.message === 'No message available') {
+    // If no detailed error message is provided, fall back to the simple error name
+    this.errorMessage = error.error.error;
+  } else {
+    this.errorMessage = error.error.message;
+  }
+}
+
 }

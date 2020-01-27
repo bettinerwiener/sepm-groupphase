@@ -1,0 +1,77 @@
+<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Problems while creating this location!</strong> {{ errorMessage }}
+  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Successfully created location!</strong> {{ location.name }}
+  <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="pt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formLocationEvent"></span>
+
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">Create a new location</h3>
+        </div>
+
+        <div class="card-body">
+          <form class="form" [formGroup]="createLocationForm" (ngSubmit)="createLocation()">
+
+            <div class="form-group">
+              <input type="text" name="name" formControlName="name" class="form-control" id="name"
+                aria-describedby="titleHelp" placeholder="Name">
+              <div *ngIf="submitted && createLocationForm.controls.name.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createEventForm.controls.title.errors.required">Name is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="street" formControlName="street" class="form-control"
+                id="street" placeholder="Street">
+              <div *ngIf="submitted && createLocationForm.controls.street.errors" class="error">
+                <small class="form-text text-warning"
+                  *ngIf="createLocationForm.controls.street.errors.required">Street is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="city" formControlName="city" class="form-control" id="city"
+                placeholder="City">
+              <div *ngIf="submitted && createEventForm.controls.contents.errors" class="error">
+                <small class="form-text text-warning"
+                  *ngIf="createLocationForm.controls.city.errors.required">City is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="number" name="postalCode" formControlName="postalCode" class="form-control" id="postalCode"
+                placeholder="Postal code">
+              <div *ngIf="submitted && createLocationForm.controls.duration.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createLocationForm.controls.postalCode.errors.required">PostalCode is required!
+                </small>
+              </div>
+            </div>
+
+            <button type="button" (click)="addLocation()" class="btn btn-success float-right">Create Location</button>
+
+          </form>
+        </div>
+
+      </div>
+
+
+  </div>
+</div>

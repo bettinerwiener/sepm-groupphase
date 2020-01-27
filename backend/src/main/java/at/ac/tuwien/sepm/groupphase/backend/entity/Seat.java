@@ -1,52 +1,28 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Seat {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column (name = "row_letter", nullable = false)
-    private String row;
+    private String rowLetter;
 
     @Column (name = "seat_number", nullable = false)
-    private int number;
+    private int seatNumber;
 
     @ManyToOne
     @JoinColumn(name = "section")
     private Section section;
 
-    public Seat() {};
-    public Seat(int number, String row, Section section) {
-        this.number = number;
-        this.row = row;
-        this.section = section;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getRow() {
-        return row;
-    }
-
-    public void setRow(String row) {
-        this.row = row;
-    }
-
-    public Section getSection() {
-        return section;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
 }

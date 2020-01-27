@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { GlobalEvent } from 'src/app/dtos/global-event';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-concert',
@@ -6,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./concert.component.scss']
 })
 export class ConcertComponent implements OnInit {
+
+  concerts: GlobalEvent[];
+
+  getConcerts(concerts: GlobalEvent[]): void {
+    this.concerts = concerts;
+  }
 
   constructor() { }
 

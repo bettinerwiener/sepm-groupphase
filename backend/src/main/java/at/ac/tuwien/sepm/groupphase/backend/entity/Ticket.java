@@ -1,12 +1,17 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+import org.hibernate.annotations.Proxy;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
+@Table(name = "ticket")
+@Data
+//@Proxy(lazy = false)
 public class Ticket {
-
-    private enum Status {
+    public enum Status {
         AVAILABLE,
         RESERVED,
         BOUGHT
@@ -16,60 +21,20 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_order_id")
+    private Order customerOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "is_performed_at_id")
+    private EventPerformance performance;
+
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
+    private Float price;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-
-    @ManyToOne
-    @JoinColumn(name = "event")
-    private Event event;
-
-    @ManyToOne
-    @JoinColumn(name = "location")
-    private Location location;
-
-    @ManyToMany(mappedBy = "tickets")
-    private Set<User> employees;
-
-    @ManyToMany(mappedBy = "tickets")
-    private Set<User> users;
-
-    public Ticket() {};
-
-    public Ticket(Event event, Location location, Status status) {
-        this.event = event;
-        this.location = location;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 }

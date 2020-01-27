@@ -5,6 +5,7 @@ logging:
 
 spring:
   datasource:
+    sqlScriptEncoding: UTF-8
     url: jdbc:h2:file:./database/db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: admin
@@ -18,7 +19,7 @@ spring:
     # Allows to fetch lazy properties outside of the original transaction. Although this sounds helpful, the property
     # is disabled since it breaks the principle of least astonishment and leads to bad performance. The learn more,
     # follow this link: https://bit.ly/2LaX9ku
-    open-in-view: false
+    open-in-view: true
   h2:
     console:
       enabled: true
@@ -30,17 +31,30 @@ security:
     prefix: "Bearer "
     login-uri: /api/v1/authentication
     white-list:
-      # Browser requests
-      - /
-      - /favicon.ico
-      - /csrf
-      # Swagger
-      - /v2/api-docs
-      - /swagger-resources/**
-      - /webjars/**
-      - /swagger-ui.html
-      # H2
-      - /h2-console/**
+    # Browser requests
+    - /
+    - /api/v1/tickets?
+    - /api/v1/events/all
+    - /api/v1/events/all/minprice/{id}
+    - /api/v1/events/{id}
+    - /api/v1/events/all?
+    - /api/v1/locations
+    - /api/v1/artists
+    - /api/v1/tickets
+    - /api/v1/locations/cities
+    - /api/v1/events/topten
+    - /api/v1/events/{id}/image
+    - /api/v1/performances
+    - /api/v1/user/register
+    - /favicon.ico
+    - /csrf
+    # Swagger
+    - /v2/api-docs
+    - /swagger-resources/**
+    - /webjars/**
+    - /swagger-ui.html
+    # H2
+    - /h2-console/**
   jwt:
     # Use http://www.allkeysgenerator.com/ to generate secrets
     secret: ?E(H+MbQeThWmZq4t7w!z%C*F-J@NcRfUjXn2r5u8x/A?D(G+KbPdSgVkYp3s6v9

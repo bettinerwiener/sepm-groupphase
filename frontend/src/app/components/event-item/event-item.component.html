@@ -1,0 +1,115 @@
+<div style="background-color: rgb(236, 250, 255);">
+    <div *ngIf="eventObject" class="container" style="padding-top: 15pt; padding-bottom: 15pt; margin-bottom: 35pt">
+        <div class="row" style="position: relative">
+            <div *ngIf="imageURL">
+                <img *ngIf="imageURL" id="image" [src]="imageURL" class="col-4 eventImage">
+            </div>
+            <div *ngIf="!imageURL">
+                <img src="https://dl1.cbsistatic.com/i/r/2018/08/09/b6ca69f8-f123-408c-9b1f-ea3f9cf1fb17/resize/620xauto/8787947d1d00135d3f2ed512e56bee72/concert-crowd.jpg"
+                    width="90px" height="90px">
+            </div>
+            <div class="col-7">
+                <h3>{{eventObject.title}}</h3>
+                <span>{{eventObject.contents}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="performances && eventObject">
+    <div class="container">
+        <div *ngFor="let performance of performances; let i = index" [attr.data-index]="i" style="margin-bottom: 5px;">
+            <div class="col-md-8 mx-auto event-list-item">
+                <div class="row event-list-item-content">
+                    <div class="col-md-9">
+                        <h5> {{performance.room.location.name}} - {{performance.date.substring(0,10)}}
+                            {{performance.date.substring(11,16)}} </h5>
+                        <div id="dateandlocation">
+                            <fa-icon [icon]="faMapMarkerAlt" size="xs" style="margin-bottom: 10px;"></fa-icon>
+                            <span>{{performance.room.location.street}}, {{performance.room.location.postalCode}}
+                                {{performance.room.location.city}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center event-list-item-content-right"
+                        style="margin-top:auto; margin-bottom: auto;">
+                        <button type="button" (click)="selectSeats(performance)" class="btn btn-primary">Select
+                            seats</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="performance.seatSelection">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="row justify-content-end"></div>
+                        <button type="button" (click)="selectSeats(performance)" class="btn btn-primary btn-sm"
+                            style="margin-bottom: 5px;">Go back</button>
+                        <app-seatplan *ngIf="load" (selectedSeat)="addSeat($event)" [eventPerformance]="performance">
+                        </app-seatplan>
+                        <div *ngIf="!amount && submit">
+                            <small class="form-text text-warning">No seats selected!
+                            </small>
+                          </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <span class="col-3">Amount</span>
+                                    <span class="col-5">Price</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-3">{{amount}}</span>
+                                    <span class="col-5">{{totalPrice}} €</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <span class="col-3">Category</span>
+                                    <span class="col-6">Price per Ticket</span>
+                                </div>
+                                <div *ngIf="pricePerSection[performance.id][0]" class="row">
+                                    <span class="col-md-3">
+                                        <div class="center-block" style="margin: 7px 0 0 25px; height: 15px; width: 15px; background-color: blue;"></div>
+                                    </span>
+                                    <span class="col-3">{{pricePerSection[performance.id][0]}} €</span>
+                                </div>
+                                <div *ngIf="pricePerSection[performance.id][1]" class="row">
+                                    <span class="col-md-3">
+                                        <div class="center-block" style="margin: 7px 0 0 25px; height: 15px; width: 15px; background-color: red;"></div>
+                                    </span>
+                                    <span class="col-3">{{pricePerSection[performance.id][1]}} €</span>
+                                </div>
+                                <div *ngIf="pricePerSection[performance.id][2]" class="row">
+                                    <span class="col-md-3">
+                                        <div class="center-block" style="margin: 7px 0 0 25px; height: 15px; width: 15px; background-color: orange;"></div>
+                                    </span>
+                                    <span class="col-3">{{pricePerSection[performance.id][2]}} €</span>
+                                </div>
+                                <div *ngIf="pricePerSection[performance.id][3]" class="row">
+                                    <span class="col-md-3">
+                                        <div class="center-block" style="margin: 7px 0 0 25px; height: 15px; width: 15px; background-color: #ffee00;"></div>
+                                    </span>
+                                    <span class="col-3">{{pricePerSection[performance.id][3]}} €</span>
+                                </div>
+                                <div *ngIf="pricePerSection[performance.id][4]" class="row">
+                                    <span class="col-md-3">
+                                        <div class="center-block" style="margin: 7px 0 0 25px; height: 15px; width: 15px; background-color: aqua;"></div>
+                                    </span>
+                                    <span class="col-3">{{pricePerSection[performance.id][4]}} €</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <button type="button" (click)="reserveTickets($event)"
+                            class="btn btn-primary btn-sm">Reserve</button>
+                        <button type="button" (click)="buyTickets($event)" class="btn btn-primary btn-sm" *ngIf="authService.isLoggedIn()"
+                            style="margin-left: 5px; background-color: #00960c;">Buy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

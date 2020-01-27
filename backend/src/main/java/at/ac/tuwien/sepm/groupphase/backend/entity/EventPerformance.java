@@ -1,58 +1,31 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "is_performed_at")
-@IdClass(EventPerformanceKey.class)
+@Data
 public class EventPerformance {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    Long id;
+
     @ManyToOne
-    @MapsId("event")
     @JoinColumn(name = "event")
     private Event event;
 
-    @Id
     @ManyToOne
-    @MapsId("location")
-    @JoinColumn(name = "location")
-    private Location location;
+    @JoinColumn(name = "room")
+    private Room room;
 
-    @Id
+    @Column(nullable = false, name = "perf_date")
+    private LocalDateTime date;
+
     @Column(nullable = false)
-    private Date date;
+    private Float price;
 
-    public EventPerformance() {}
-
-    public EventPerformance(Event event, Location location, Date date) {
-        this.event = event;
-        this.location = location;
-        this.date = date;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }

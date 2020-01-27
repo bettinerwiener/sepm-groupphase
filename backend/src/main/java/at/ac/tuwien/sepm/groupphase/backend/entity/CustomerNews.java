@@ -1,14 +1,14 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "customer_news")
 @IdClass(CustomerNewsKey.class)
+@Data
 public class CustomerNews {
-
-    @Column
-    private Boolean read;
 
     @Id
     @ManyToOne
@@ -22,34 +22,7 @@ public class CustomerNews {
     @JoinColumn(name = "news")
     private News news;
 
-    public CustomerNews() {};
+    @Column(nullable=false, name="read")
+    private Boolean read;
 
-    public CustomerNews(User user, News news) {
-        this.user = user;
-        this.news = news;
-    }
-
-    public Boolean getRead() {
-        return read;
-    }
-
-    public void setRead(Boolean read) {
-        this.read = read;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public News getNews() {
-        return news;
-    }
-
-    public void setNews(News news) {
-        this.news = news;
-    }
 }

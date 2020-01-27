@@ -8,11 +8,36 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    /**
+     * Find first user with the given email.
+     *
+     * @param email
+     * @return first user with given email
+     */
+    User findFirstByEmail(String email);
+
+    User findFirstById(Long id);
+
+
+    /**
+     * Find user with the given email.
+     * @param email
+     * @return user with given email
+     */
+    List<User> findByEmailContaining (String email);
 
     List<User> findByEmail(String email);
 
+
+    void deleteById(Long id);
+
+    boolean existsById(Long id);
+
+    boolean existsByEmail(String email);
 
 }

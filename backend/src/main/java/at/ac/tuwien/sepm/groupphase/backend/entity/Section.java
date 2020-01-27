@@ -1,12 +1,18 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Data
 public class Section {
 
-    private enum Letter {
+    public enum Letter {
         A,
         B,
         C,
@@ -17,64 +23,22 @@ public class Section {
         H
     }
 
-    private enum PriceCategory {
-        EXPENSIVE,
-        CHEAP
-    }
-
     @Id
-    private Letter id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false, name = "seats_selectable")
     private Boolean seatsSelectable;
 
-    @Column(nullable = false, name = "price_category")
-    private PriceCategory priceCategory;
+    @Column(nullable = false, name = "letter")
+    @Enumerated(EnumType.STRING)
+    private Letter letter;
+
+    @Column(nullable = false, name = "price_factor")
+    private Float priceFactor;
 
     @ManyToOne
     @JoinColumn(name = "room")
     private Room room;
 
-    @OneToMany(mappedBy = "section")
-    Set<Seat> seats;
-
-    public Section() {};
-    public Section(Letter id, Boolean seatsSelectable, PriceCategory priceCategory, Room room) {
-        this.id = id;
-        this.seatsSelectable = seatsSelectable;
-        this.priceCategory = priceCategory;
-        this.room = room;
-    }
-
-    public Letter getId() {
-        return id;
-    }
-
-    public void setId(Letter id) {
-        this.id = id;
-    }
-
-    public Boolean getSeatsSelectable() {
-        return seatsSelectable;
-    }
-
-    public void setSeatsSelectable(Boolean seatsSelectable) {
-        this.seatsSelectable = seatsSelectable;
-    }
-
-    public PriceCategory getPriceCategory() {
-        return priceCategory;
-    }
-
-    public void setPriceCategory(PriceCategory priceCategory) {
-        this.priceCategory = priceCategory;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
 }

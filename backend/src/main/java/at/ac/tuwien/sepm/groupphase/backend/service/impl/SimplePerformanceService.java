@@ -1,0 +1,110 @@
+package at.ac.tuwien.sepm.groupphase.backend.service.impl;
+
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotCreatedException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.PerformanceRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.SectionRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.PerformanceService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@Slf4j
+public class SimplePerformanceService implements PerformanceService {
+
+    private PerformanceRepository performanceRepository;
+    private TicketRepository ticketRepository;
+    private SeatRepository seatRepository;
+    private SectionRepository sectionRepository;
+
+    public SimplePerformanceService(PerformanceRepository performanceRepository,
+                                    TicketRepository ticketRepository, SeatRepository seatRepository,
+                                    SectionRepository sectionRepository) {
+        this.performanceRepository = performanceRepository;
+        this.ticketRepository = ticketRepository;
+        this.seatRepository = seatRepository;
+        this.sectionRepository = sectionRepository;
+    }
+
+    @Override
+    public EventPerformance create(EventPerformance eventPerformance) throws NotCreatedException {
+        log.info("Creating performance for event {} ...", eventPerformance.getEvent().getTitle());
+        try {
+            this.performanceRepository.save(eventPerformance);
+            List<Ticket> tickets = new ArrayList<>();
+            for (Section section : this.sectionRepository.findByRoom(eventPerformance.getRoom())) {
+                log.info("Seats for section letter {}", section.getLetter());
+                for (Seat seat : this.seatRepository.findBySection(section)) {
+                    Ticket ticketToAdd = new Ticket();
+                    ticketToAdd.setPerformance(eventPerformance);
+                    ticketToAdd.setSeat(seat);
+                    ticketToAdd.setStatus(Ticket.Status.AVAILABLE);
+                    ticketToAdd.setPrice(eventPerformance.getPrice() * section.getPriceFactor());
+                    tickets.add(ticketToAdd);
+                }
+            }
+            this.ticketRepository.saveAll(tickets);
+            this.ticketRepository.flush();
+            return eventPerformance;
+        } catch (DataAccessException dae) {
+            log.error("The performance could not be created: {}", dae.getMessage());
+            throw new NotCreatedException(String.format("The performance could not be created: %s", dae.getMessage()));
+        }
+    }
+
+    @Override
+    public List<EventPerformance> getAll() throws NotFoundException {
+        log.info("Getting all performances ...");
+        try {
+            List<EventPerformance> eventPerformances = this.performanceRepository.findAll();
+            log.info("The number of performances is {}", eventPerformances.size());
+            if (eventPerformances != null && !eventPerformances.isEmpty()) {
+                return eventPerformances;
+            } else {
+                log.error("No performances could be found");
+                eventPerformances = new ArrayList<>();
+                return eventPerformances;
+            }
+        } catch (DataAccessException dae) {
+            log.error("No performances could be found: {}",
+                dae.getMessage());
+            throw new NotFoundException(String.format("No performances could be found: %s",
+                dae.getMessage()));
+        }
+    }
+
+    @Override
+    public List<EventPerformance> findByEvent(Long event) throws NotFoundException {
+        log.info("Getting all performances for event {} ...", event);
+        try {
+            List<EventPerformance> eventPerformances = this.performanceRepository.findByEventId(event);
+            if (eventPerformances != null && !eventPerformances.isEmpty()) {
+                return eventPerformances;
+            } else {
+                log.error("No performances for the requested location {} could be found",
+                    event);
+                eventPerformances = new ArrayList<>();
+                return eventPerformances;
+            }
+        } catch (DataAccessException dae) {
+            log.error("No performances for the requested location {} could be found: {}",
+                event, dae.getMessage());
+            throw new NotFoundException(String.format("No performances for the requested location %d could be found: %s",
+                event, dae.getMessage()));
+        }
+    }
+
+    @Override
+    public List<EventPerformance> findByRoom(Room room) throws NotFoundException {
+        return null;
+    }
+}

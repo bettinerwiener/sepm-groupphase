@@ -1,9 +1,19 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
+import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import lombok.Data;
+
 import javax.persistence.*;
+import javax.validation.constraints.Null;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(
+    uniqueConstraints = @UniqueConstraint(columnNames={"title", "category"})
+)
+@Data
 public class Event {
 
     public enum Category {
@@ -22,153 +32,23 @@ public class Event {
     @Column(nullable = false, name = "abstract", length = 255)
     private String shortDescription;
 
-    @Column(length = 511)
+    @Column(length = 1023)
     private String contents;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     /* think about the data type */
     @Column(nullable = false)
-    private Long duration;
-
-    @OneToMany(mappedBy = "event")
-    Set<Ticket> tickets;
-
-    @OneToMany(mappedBy = "event")
-    Set<EventPerformance> eventPerformances;
-
-    @OneToMany(mappedBy = "event")
-    Set<EmployeeNewsEvent> employeeNewsEvents;
+    private  Double duration;
 
     @ManyToOne
     @JoinColumn(name = "employee")
-    private Employee employee;
+    User employee;
 
-    @ManyToMany(mappedBy = "events")
-    Set<Artist> artists;
+    @Lob
+    @Column(nullable = true, columnDefinition = "BLOB")
+    private byte[] image;
 
-    public Event() {}
-
-    public Event(String title, String shortDescription, String contents, Category category, Long duration) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-    }
-
-    public Event(Long id, String title, String shortDescription, String contents,
-                 Category category, Long duration) {
-        this.id = id;
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-    }
-
-
-    public Event(String title, String shortDescription, String contents, Category category, Long duration,
-                 Set<Ticket> tickets, Set<EventPerformance> eventPerformances,
-                 Set<EmployeeNewsEvent> employeeNewsEvents, Employee employee, Set<Artist> artists) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-        this.tickets = tickets;
-        this.eventPerformances = eventPerformances;
-        this.employeeNewsEvents = employeeNewsEvents;
-        this.employee = employee;
-        this.artists = artists;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Long duration) {
-        this.duration = duration;
-    }
-
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public Set<EventPerformance> getEventPerformances() {
-        return eventPerformances;
-    }
-
-    public void setEventPerformances(Set<EventPerformance> eventPerformances) {
-        this.eventPerformances = eventPerformances;
-    }
-
-    public Set<EmployeeNewsEvent> getEmployeeNewsEvents() {
-        return employeeNewsEvents;
-    }
-
-    public void setEmployeeNewsEvents(Set<EmployeeNewsEvent> employeeNewsEvents) {
-        this.employeeNewsEvents = employeeNewsEvents;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Set<Artist> getArtists() {
-        return artists;
-    }
-
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
-    }
 }

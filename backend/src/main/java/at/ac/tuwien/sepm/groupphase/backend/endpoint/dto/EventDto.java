@@ -1,24 +1,30 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import lombok.*;
+import org.apache.pdfbox.io.IOUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@ToString
 public class EventDto extends BaseDto {
 
     private Long id;
 
     @NotNull
-    @Size(max = 100)
     private String title;
 
     @NotNull
-    @Size(max = 255)
     private String shortDescription;
 
-    @Size(max = 511)
+    @NotNull
     private String contents;
 
     @NotNull
@@ -26,75 +32,76 @@ public class EventDto extends BaseDto {
 
     /* think about the data type */
     @NotNull
-    private Long duration;
+    @Size(min = 0, max = 10)
+    private Double duration;
 
-    public EventDto() {}
+    private byte[] image;
 
-    public EventDto(String title, String shortDescription,
-                    String contents, Event.Category category, Long duration) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
+    public static final class EventDtoBuilder {
+        private Long id;
+        private String title;
+        private String shortDescription;
+        private String contents;
+        private Event.Category category;
+        private Double duration;
+        private byte[] image;
+
+        private EventDtoBuilder() {
+        }
+
+        public static EventDto.EventDtoBuilder anEventDto() {
+            return new EventDto.EventDtoBuilder();
+        }
+
+        public EventDto.EventDtoBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public EventDto.EventDtoBuilder withShortDescription(String shortDescription) {
+            this.shortDescription = shortDescription;
+            return this;
+        }
+
+        public EventDto.EventDtoBuilder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public EventDto.EventDtoBuilder withContents(String contents) {
+            this.contents = contents;
+            return this;
+        }
+
+        public EventDto.EventDtoBuilder withDuration(Double Duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public EventDto.EventDtoBuilder withCategory(Event.Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public EventDto.EventDtoBuilder withImage(MultipartFile image) {
+            try {
+                this.image = IOUtils.toByteArray(image.getInputStream());
+            } catch (IOException ioe) {
+                this.image = null;
+            }
+            return this;
+        }
+
+        public EventDto build() {
+            EventDto eventDto = new EventDto();
+            eventDto.setId(id);
+            eventDto.setShortDescription(shortDescription);
+            eventDto.setTitle(title);
+            eventDto.setContents(contents);
+            eventDto.setDuration(duration);
+            eventDto.setCategory(category);
+            eventDto.setImage(image);
+            return eventDto;
+        }
     }
-
-    public EventDto(Long id, String title, String shortDescription,
-                    String contents, Event.Category category, Long duration) {
-        this.id = id;
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.contents = contents;
-        this.category = category;
-        this.duration = duration;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public Event.Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Event.Category category) {
-        this.category = category;
-    }
-
-    public Long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Long duration) {
-        this.duration = duration;
-    }
-
 }

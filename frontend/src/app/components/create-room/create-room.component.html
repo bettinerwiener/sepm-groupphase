@@ -1,0 +1,78 @@
+<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Problems while creating this room!</strong> {{ errorMessage }}
+  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Successfully created room!</strong>
+  <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="pt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formCreateRoom"></span>
+
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">Create a new Room</h3>
+        </div>
+
+        <div class="card-body">
+          <form class="form" [formGroup]="createRoomForm">
+
+            <div class="form-group">
+              <input type="text" name="name" formControlName="name" class="form-control" id="name"
+                aria-describedby="titleHelp" placeholder="Name">
+              <div *ngIf="submitted && createRoomForm.controls.name.errors" class="error">
+                <small class="form-text text-warning" *ngIf="createRoomForm.controls.name.errors.required">Name is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <select name="location" formControlName="location" class="form-control" id="location"
+                placeholder="Location">
+            <option *ngFor="let l of locations" [ngValue]="l">{{l.name}}, {{l.city}}</option>
+              </select>
+            </div>
+          </form>
+
+          <form class="form" [formGroup]="createSeatplanForm">
+
+            <div class="form-group" style="display: inline-flex;">
+              <input type="number" name="rowNumber" formControlName="rowNumber" class="form-control" id="rowNumber"
+                aria-describedby="titleHelp" placeholder="number of rows" style="max-width: 35%;">
+
+
+              <input type="number" name="seatsPerRow" formControlName="seatsPerRow" class="form-control"
+                id="seatsPerRow" aria-describedby="titleHelp" placeholder="number of seats per rows"
+                style="max-width: 55%; margin-left: 1%;">
+
+
+              <button type="button" (click)="configure()" class="btn btn-success float-right"
+                style="margin-left: 1%;">Configure</button>
+            </div>
+            <div *ngIf="configuring && toFewSeats" class="error">
+              <small class="form-text text-warning">Please input number greater than 0.</small>
+            </div>
+          </form>
+
+
+          <app-create-seatplan (seatEmitter)="setSeats($event)" *ngIf="seatSelection" [seatplan]="seatplan"
+            class="justify-content-center;"></app-create-seatplan>
+        </div>
+
+      </div>
+      <div *ngIf="submitted && !seatplanUpdated" class="error">
+        <small class="form-text text-warning">Please configure seatplan before submitting. (Make sure that all seats are assigned to a sector)</small>
+      </div>
+      <button type="button" (click)="addRoom()" class="btn btn-success float-right" style="margin-top: 5px">Create
+        Room
+      </button>
+    </div>
+  </div>

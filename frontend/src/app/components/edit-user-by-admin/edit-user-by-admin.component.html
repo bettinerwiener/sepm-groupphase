@@ -1,0 +1,121 @@
+<div class="pt-5" *ngIf="user">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formRegister"></span>
+
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">{{user.email}}</h3>
+        </div>
+
+        <div class="card-body">
+          <form class="form" [formGroup]="registerForm">
+
+            <div class="form-group">
+              <label for="inputFirstName">First Name</label>
+              <input type="text" name="firstName" formControlName="firstName" class="form-control" id="inputFirstName"
+                     aria-describedby="firstNameHelp">
+            </div>
+
+            <div class="form-group">
+              <label for="inputLastName">Last Name</label>
+              <input type="text" name="lastName" formControlName="lastName" class="form-control" id="inputLastName"
+                     aria-describedby="lastNameHelp">
+              <div *ngIf="submitted && registerForm.controls.lastName.errors" class="error">
+                <small class="form-text text-warning" *ngIf="registerForm.controls.lastName.errors.required">Your email is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputEmail">Email</label>
+              <input type="text" name="email" formControlName="email" class="form-control" id="inputEmail"
+                     aria-describedby="emailHelp">
+              <div *ngIf="submitted && registerForm.controls.email.errors" class="error">
+                <small class="form-text text-warning" *ngIf="registerForm.controls.email.errors.required">Your email is
+                  required!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" formControlName="password" class="form-control" id="password">
+              <div *ngIf="submitted && registerForm.controls.password.errors" class="error">
+                <small class="form-text text-warning" *ngIf="registerForm.controls.password.errors.required">Your password
+                  is
+                  required!
+                </small>
+                <small class="form-text text-warning" *ngIf="registerForm.controls.password.errors.minlength">Your password
+                  must be at least 8 characters long!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password bestätigen</label>
+              <input type="password" name="passwordConf" formControlName="passwordConf" class="form-control" id="passwordConf">
+              <div *ngIf="submitted && registerForm.controls.passwordConf.errors" class="errors">
+                <small *ngIf="registerForm.controls.passwordConf.errors.required">
+                  Confirm your Password!
+                </small>
+                <small *ngIf="registerForm.controls.passwordConf.errors.mustMatch">
+                  password doesn't match
+                </small>
+              </div>
+            </div>
+
+            <div>
+              <label>Admin</label>
+              <input type="checkbox" name="isEmployee" [checked]="user.isEmployee" (change)="changeAdmin()">
+            </div>
+            <div>
+              <label>locked</label>
+              <input type="checkbox" name="isLocked" [checked]="user.locked" (change)="changeLocked()">
+            </div>
+
+            <details>
+              <summary>
+                Delete User
+              </summary>
+
+              <div>
+                Geben Sie ihr Password ein!
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="passwordAdmin" formControlName="passwordAdmin" class="form-control" id="passwordAdmin">
+                <div *ngIf="submitted && registerForm.controls.passwordAdmin.errors" class="error">
+                  <small class="form-text text-warning" *ngIf="registerForm.controls.passwordAdmin.errors.required">Your password
+                    is
+                    required!
+                  </small>
+                </div>
+              </div>
+              <div>
+                <button type="button" (click)="deleteUser()" class="btn btn-success float-right">Delete</button>
+              </div>
+            </details>
+            <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong> Update successful!</strong>
+              <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div>
+              <button type="button" (click)="updateUser()" class="btn btn-success float-right">Update</button>
+            </div>
+
+
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,5 +1,9 @@
-<search-area category="events"></search-area>
+<search-area category="" (searchedEvents)='getEvents($event)'></search-area>
 
-<div>
+<div *ngIf="events">
+  <event-list-item *ngFor="let e of events" id={{e.id}} title={{e.title}} description={{e.shortDescription}} price=""></event-list-item>
+</div>
+
+<div *ngIf="!events">
   <slider></slider>
 </div>

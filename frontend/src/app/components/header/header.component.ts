@@ -8,16 +8,19 @@ import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  faShoppingCart = faShoppingCart
-  faUser = faUser
+
+  faShoppingCart = faShoppingCart;
+  faUser = faUser;
   username;
+
   constructor(public authService: AuthService) { }
 
   ngOnInit() {
+    console.log(this.authService.getUserName());
     if (this.authService.isLoggedIn()) {
       this.username = this.authService.getUserName();
     } else {
-      this.username = 'Max Mustermann'
+      this.username = 'Max Mustermann';
     }
   }
 

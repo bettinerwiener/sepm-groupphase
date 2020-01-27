@@ -11,26 +11,37 @@
             <a class="nav-link" routerLink="/concerts" routerLinkActive="active">Concerts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/movies" routerLinkActive="active">Movies</a>
+            <a class="nav-link" routerLink="/films" routerLinkActive="active">Films</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" routerLink="/theatre" routerLinkActive="active">Theatre</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/cabaret" routerLinkActive="active">Cabaret</a>
-        </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" routerLink="/locations" routerLinkActive="active">Locations</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/news" routerLinkActive="active">News</a>
         </li>
-      <li class="nav-item">
-        <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/message" routerLinkActive="active">News</a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-event" routerLinkActive="active">Create Event</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-event-performance" routerLinkActive="active">Create Event Performance</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-location" routerLinkActive="active">Create Location</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-room" routerLinkActive="active">Create Room</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/create-event-news" routerLinkActive="active">Create News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active">User-Service</a>
+        </li>
     </ul>
     <ul class="navbar-nav mr-5">
-        <a class="nav-link" routerLink="/cart" routerLink="/cart">
-          <fa-icon [icon]="faShoppingCart" size="lg" style="color:white"></fa-icon>
-        </a>
-
         <!--ADD *ngIf="authService.isLoggedIn()"-->
 
 

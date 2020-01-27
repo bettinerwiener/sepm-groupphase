@@ -1,0 +1,60 @@
+.seatplan {
+    display: inline-grid;
+}
+
+.singleRow {
+    display: inline-flex;
+}
+
+.seat {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    z-index: 1000;
+}
+
+.stage {
+    height: 30px;
+    width: 390px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    text-align: center;
+
+}
+
+.blue {
+    background-color: blue;
+    z-index: 10;
+}
+
+.red {
+    background-color: red;
+    z-index: 10;
+}
+
+.orange {
+    background-color: orange;
+    z-index: 10;
+}
+
+.yellow {
+    background-color: #ffee00;
+    z-index: 10;
+}
+
+.aqua {
+    background-color: aqua;
+    z-index: 10;
+}
+
+.grey {
+    background-color: grey;
+    z-index: 50;
+}
+
+
+
